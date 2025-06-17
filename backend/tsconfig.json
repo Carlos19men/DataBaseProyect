@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "es2020",      /* Usa una versión moderna de JS compatible con Node.js. */
+    "module": "commonjs",    /* Estándar para Node.js. */
+
+    /* Modules */
+    "rootDir": "./",         /* La raíz de tus archivos fuente TS es la propia carpeta 'backend/'. */
+    "outDir": "./dist",      /* Los archivos JS compilados irán a 'backend/dist/'. */
+    "resolveJsonModule": true, /* Permite importar archivos .json. */
+
+    /* JavaScript Support (Si planeas mezclar JS y TS en backend/) */
+    "allowJs": true,         /* Permite incluir archivos JS en tu proyecto TypeScript. */
+    "checkJs": true,         /* TypeScript también verificará errores en tus archivos JS. */
+
+    /* Emit */
+    "sourceMap": true,       /* Genera sourcemaps para facilitar la depuración. */
+    // "noEmitOnError": true,   /* Opcional: No emite archivos JS si hay errores de compilación. */
+
+    /* Interop Constraints */
+    "esModuleInterop": true, /* Crucial para manejar imports/exports entre CommonJS y ES. */
+    "forceConsistentCasingInFileNames": true, /* Asegura consistencia en nombres de archivos/importaciones. */
+
+    /* Type Checking (¡Mantén estas en 'true' para aprovechar TypeScript!) */
+    "strict": true,          /* Habilita todas las opciones de verificación estricta. */
+    "useUnknownInCatchVariables": true, /* Usa 'unknown' en lugar de 'any' para errores de catch. */
+    "noUnusedLocals": true,  /* Lanza error si hay variables locales no usadas. */
+    "noUnusedParameters": true, /* Lanza error si hay parámetros de función no usados. */
+    "noImplicitReturns": true, /* Asegura que todas las rutas de una función retornen un valor. */
+    "noFallthroughCasesInSwitch": true, /* Evita errores de "fallthrough" en `switch`. */
+
+    /* Completeness */
+    "skipLibCheck": true     /* Omite la verificación de tipos de los archivos .d.ts en node_modules. */
+  },
+  "include": [
+    "./**/*.ts",             /* Incluye todos los archivos .ts dentro de 'backend/' y sus subcarpetas. */
+    // Si tienes archivos JavaScript que quieres que TypeScript también verifique:
+    // "./**/*.js"
+  ],
+  "exclude": [
+    "node_modules",          /* Excluye la carpeta node_modules. */
+    "dist",                  /* ¡Importante! Excluye la carpeta de salida para evitar bucles. */
+    "**/*.spec.ts"           /* Opcional: Excluye archivos de prueba si usas esta convención. */
+  ]
+}
