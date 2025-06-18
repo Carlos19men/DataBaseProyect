@@ -1,4 +1,2 @@
-./node_modules
-./backend/node_modules
-./backend/.env
-./index.js
+backend/.env
+backend/node_modules
