@@ -1,4 +1,4 @@
-node_modules
-backend\node_modules
-backend\.env
-index.js
+.\node_modules
+.\backend\node_modules
+.\backend\.env
+.\index.js
