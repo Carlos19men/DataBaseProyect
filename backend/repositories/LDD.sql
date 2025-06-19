@@ -79,7 +79,7 @@ create table Vehiculos(
 	aceite_utilizado_caja varchar(25),
 	resumen_mantenimiento varchar(255),
 	tiempo_uso decimal(10,1),
-	kilometraje decimal(10,2),
+	kilometraje decimal(10,2) check(kilometraje > 0),
 	id_modelo int not null,
 	id_marca int not null,
 	CI_dueño varchar(15) not null,
@@ -118,16 +118,16 @@ create table Facturas(
 
 create table MetodosPago(
 	id_pago int not null,
-	tipo_moneda varchar(40),
-	monto_ef decimal(10,2),
+	tipo_moneda varchar(40) check( UPPER(tipo_moneda) in ('DOLARES','BOLIVARES')),
+	monto_ef decimal(10,2) check(monto_ef > 0),
 	fechaPago_Tar date,
 	tipo_tarjeta varchar(40),
 	banco varchar(30),
 	nro_tarjeta varchar(30),
-	monto_tar decimal(10,2),
+	monto_tar decimal(10,2) check(monto_tar > 0),
 	referenciaPM varchar(30),
 	fecha_PM date,
-	monto_PM decimal(10,2),
+	monto_PM decimal(10,2) check(monto_PM > 0),
 	telefono varchar(15),
 	
 	primary key(id_pago)
@@ -147,13 +147,13 @@ create table OrdenesCompra(
 create table Productos(
 	id_producto int not null,
 	nombre varchar(50) not null,
-	tipo varchar(20) not null,
-	precio decimal(10,2) not null,
+	tipo varchar(20) not null check(UPPER(tipo) in ('ECOLÓGICO','NO ECOLÓGICO')),
+	precio decimal(10,2) not null check(precio > 0),
 	descripcion varchar(150),
-	minimo int not null,
-	maximo int not null,
+	minimo int not null check(minimo > 0),
+	maximo int not null check(maximo > minimo),
 	tratamiento_residuos varchar(255),
-	nivel_contaminacion int,
+	nivel_contaminacion int check(nivel_contaminacion >= 1 and nivel_contaminacion <= 5),
 	info_manejo varchar(255),
 	id_familia int,
 	
@@ -172,7 +172,7 @@ create table Proveedores(
 	RIF varchar(20) not null,
 	razon_social varchar(50) not null,
 	direccion varchar(100) not null,
-	local varchar(15) not null,
+	local_ varchar(15) not null,
 	telefono varchar(15) not null,
 	persona_contacto varchar(80),
 	
@@ -183,10 +183,9 @@ create table Proveedores(
 create table PlanesMantenimiento(
 	cod_marca int not null,
 	nro_modelo int not null,
-	kilometraje decimal(10,2) not null,
+	kilometraje decimal(10,2) not null check(kilometraje > 0),
 	nombre varchar(50),
-	descripcion varchar(200) not null,
-	costo decimal(10,2) not null,
+	descripcion varchar(200),
 	
 	primary key(cod_marca,nro_modelo, kilometraje),
 	foreign key(cod_marca, nro_modelo) references Modelos(cod_marca, nro_modelo)
@@ -197,13 +196,13 @@ create table Actividades (
 	nro_correlativo int not null,
 	nombre varchar(50) not null,
 	descripcion varchar(200) not null,
-	costo decimal(10,2) not null,
+	costo decimal(10,2) not null check(costo > 0),
 	
 	primary key(nro_servicio, nro_correlativo),
 	foreign key(nro_servicio) references Servicios(nro_servicio)
 );
 
-create table Asignados(
+create table EmpleadosAsignados(
 	CI_empleado varchar(15) not null,
 	nro_servicio int not null,
 	
@@ -212,7 +211,7 @@ create table Asignados(
 	foreign key(nro_servicio) references Servicios(nro_servicio)
 );
 
-create table Especializaciones(
+create table EspecializacionEmpleados(
 	CI_empleado int not null,
 	nro_servicio int not null,
 	
@@ -233,17 +232,18 @@ create table ActividadProducto(
 	id_producto int not null,
 	nro_servicio int not null,
 	nro_correlativo int not null,
-	cant_utilizada int not null,
+	cant_utilizada int not null check(cant_utilizada > 0),
 	
-	primary key(id_producto, nro_servicio,nro_correlativo),
-	foreign key(nro_servicio, nro_correlativo) references Actividades(nro_servicio, nro_correlativo)
+	primary key(id_producto, nro_servicio, nro_correlativo),
+	foreign key(nro_servicio, nro_correlativo) references Actividades(nro_servicio, nro_correlativo),
+    foreign key(id_producto) references Productos(id_producto)
 );
 
 create table Compras(
 	nro_ordencompra int not null,
 	id_producto int not null,
-	cantidad_producto int not null,
-	precio_und int not null,
+	cantidad_producto int not null check(cantidad_producto > 0),
+	precio_und decimal(10,2) not null check(precio_und > 0),
 	
 	primary key(nro_ordencompra),
 	foreign key(id_producto) references Productos(id_producto)
@@ -252,7 +252,7 @@ create table Compras(
 create table ActividadesPlan(
 	cod_marca int not null,
 	nro_modelo int not null,
-	kilometraje decimal(10,2) not null,
+	kilometraje decimal(10,2) not null check(kilometraje > 0),
 	nro_servicio int not null,
 	nro_correlativo int not null,
 	
@@ -275,9 +275,9 @@ create table ActividadesOS(
 	nro_servicio int not null,
 	nro_correlativo int not null,
 	id_producto int not null,
-	precio_producto decimal(10,2) not null,
-	precio_actividad decimal(10,2) not null,
-	cantidad int not null,
+	precio_producto decimal(10,2) not null check(precio_producto > 0),
+	precio_actividad decimal(10,2) not null check(precio_actividad > 0),
+	cantidad int not null chec(cantidad > 0),
 	
 	primary key(cod_OS, nro_servicio, nro_correlativo, id_producto),
 	foreign key(cod_OS) references OrdenesServicio(cod_OS),
@@ -288,7 +288,7 @@ create table ActividadesOS(
 create table Almacena(
 	RIF_establecimiento varchar(20) not null,
 	id_producto int not null,
-	cantidad int not null,
+	cantidad int not null check(cantidad > 0),
 	
 	primary key(RIF_establecimiento, id_producto),
 	foreign key(RIF_establecimiento) references Establecimientos(RIF),
@@ -300,9 +300,9 @@ create table Actualiza(
 	id_producto int not null,
 	fecha_ajuste date not null,
 	hora_ajuste time not null,
-	cantidad int not null,
-	tipo varchar(25) not null,
-	comentario varchar(200) not null,
+	cantidad int not null check(cantidad > 0),
+	tipo varchar(25) not null check(UPPER(tipo) in ('FALTANTE','SOBRANTE')),
+	comentario varchar(200),
 	
 	primary key(RIF_establecimiento, id_producto, fecha_ajuste, hora_ajuste),
 	foreign key(RIF_establecimiento) references Establecimientos(RIF),
