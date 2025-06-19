@@ -76,7 +76,7 @@ create table Modelos(
 	aceite_caja varchar(30) not null,
 	aceite_motor varchar(30) not null,
 	octanaje varchar(2) not null check(octanaje in ('91', '95', '98')), 
-	tipo_refrigerante varchar(25) not null,
+	tipo_refrigerante varchar(50) not null,
 	peso int not null,
 	descripcion varchar(200) not null,
 	nro_puestos int not null,
@@ -343,7 +343,6 @@ create table telefonosCliente(
 	foreign key (CI_cliente) references Clientes(CI_cliente) ON DELETE CASCADE
 );
 
-
 --Drops tables 
 DROP TABLE telefonosCliente;    
 DROP TABLE Almacena; 
@@ -378,4 +377,12 @@ DROP TABLE Modelos;
 DROP TABLE Marcas;
 
 DROP DATABASE MU_DB; 
+
+-- Drops views.
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_NAME = 'InfoPagos_Efectivo')
+BEGIN
+	DROP VIEW InfoPagos_Efectivo;
+END;
+drop VIEW InfoPagos_Tarjeta;
+drop VIEW InfoPagos_PagoMovil;
 

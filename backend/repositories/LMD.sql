@@ -38,6 +38,7 @@ INSERT INTO FamiliaProductos (id_familia, nombre) VALUES
 (4, 'Cauchos'),
 (5, 'Refrigerantes');
 
+-- Todas las consultas del apartado 1, funcionan correctamente.
 
 -- 2. Manejo de la Dependencia Circular Empleados <-> Establecimientos
 -- (Insertamos con NULL, luego actualizamos las relaciones)
@@ -72,6 +73,7 @@ UPDATE Establecimientos SET CI_encargado = '18000000' WHERE RIF = 'V100000004';
 UPDATE Empleados SET RIF_establecimiento = 'V100000005' WHERE CI_emp = '19000000';
 UPDATE Establecimientos SET CI_encargado = '19000000' WHERE RIF = 'V100000005';
 
+-- Todas las consultas del apartado 2, funcionan correctamente.
 
 -- 3. Tablas que dependen de las anteriores (y de las ya insertadas)
 
@@ -96,6 +98,7 @@ INSERT INTO Productos (id_producto, nombre, tipo, precio, descripcion, minimo, m
 (4, 'Neumático Radial R16', 'NO ECOLÓGICO', 90.00, 'Neumático para uso en ciudad y carretera.', 8, 40, 'Gestionar en planta de reciclaje de cauchos.', 5, 'Mantener presión adecuada.', 4),
 (5, 'Refrigerante Concentrado', 'ECOLÓGICO', 18.75, 'Refrigerante orgánico de larga duración.', 15, 60, 'Biodegradable, pero desechar responsablemente.', 2, 'Diluir según instrucciones.', 5);
 
+-- Todas las consultas del apartado 3, funcionan correctamente.
 
 -- 4. Tablas que dependen de las creadas en el paso 3
 
@@ -134,6 +137,7 @@ INSERT INTO OrdenesServicio (cod_OS, fecha_entrada, hora_entrada, hora_estimada_
 (4, '2025-06-21', '08:45:00', '09:15:00', '09:00:00', '2025-06-21', 'Rotacion de cauchos', 'Pedro Ruiz', 1004),
 (5, '2025-06-22', '11:00:00', '14:00:00', '13:30:00', '2025-06-22', 'Mantenimiento de enfriamiento', 'Laura Diaz', 1005);
 
+-- Todas las consultas del apartado 4, funcionan correctamente.
 
 -- 5. Tablas que dependen de las creadas en el paso 4 (o ya existentes)
 
@@ -220,3 +224,38 @@ INSERT INTO ServiciosOfrecidos (RIF_establecimiento, nro_servicio) VALUES
 ('V100000002', 3),
 ('V100000003', 4),
 ('V100000004', 5);
+
+-- Todas las consultas del apartado 5, funcionan correctamente.
+
+-- Tests Select.
+SELECT * FROM Clientes;
+SELECT * FROM Marcas;
+SELECT * FROM MetodosPago;
+SELECT * FROM Proveedores;
+SELECT * FROM FamiliaProductos;
+SELECT * FROM Empleados;
+SELECT * FROM Establecimientos;
+SELECT * FROM Modelos;
+SELECT * FROM Servicios;
+SELECT * FROM Productos;
+SELECT * FROM Vehiculos;
+SELECT * FROM PlanesMantenimiento;
+SELECT * FROM Actividades;
+SELECT * FROM OrdenesCompra;
+SELECT * FROM OrdenesServicio;
+SELECT * FROM Facturas;
+SELECT * FROM Almacena;
+SELECT * FROM ActualizacionesInventarios;
+SELECT * FROM Compras;
+SELECT * FROM PagosFactura;
+SELECT * FROM ActividadesPlan;
+SELECT * FROM ActividadesOS;
+SELECT * FROM ProveedoresAsociados;
+SELECT * FROM telefonosCliente;
+SELECT * FROM EmpleadosAsignados;
+SELECT * FROM EspecializacionEmpleados;
+SELECT * FROM ServiciosOfrecidos;
+
+SELECT * FROM InfoPagos_Efectivo;
+SELECT * FROM InfoPagos_Tarjeta;
+SELECT * FROM InfoPagos_PagoMovil;
