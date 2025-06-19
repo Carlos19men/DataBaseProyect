@@ -223,7 +223,7 @@ create table EmpleadosAsignados(
 	nro_servicio int not null,
 	
 	primary key(CI_empleado, nro_servicio),
-	foreign key(CI_empleado) references Empleados(CI_emp), ON DELETE CASCADE
+	foreign key(CI_empleado) references Empleados(CI_emp) ON DELETE CASCADE,
 	foreign key(nro_servicio) references Servicios(nro_servicio) ON DELETE CASCADE
 );
 
@@ -344,36 +344,37 @@ create table telefonosCliente(
 
 
 --Drops tables 
-ALTER TABLE Establecimientos drop constraint CI_encargado; 
-DROP TABLE Establecimientos; 
+DROP TABLE telefonosCliente;    
+DROP TABLE Almacena; 
+DROP TABLE ActividadesOS;
+DROP TABLE PagosFactura;
+DROP TABLE ActividadesPlan;
+DROP TABLE Compras;
+DROP TABLE ActividadProductos;
+DROP TABLE ServiciosOfrecidos;
+DROP TABLE EspecializacionEmpleados;
+DROP TABLE EmpleadosAsignados;
+DROP TABLE Actividades;
+DROP TABLE PlanesMantenimiento;
+DROP TABLE ProveedoresAsociados;  
+DROP TABLE OrdenesCompra;
+DROP TABLE Proveedores;
+DROP TABLE Facturas;
+DROP TABLE OrdenesServicio;
+DROP TABLE Vehiculos;
 ALTER TABLE Empleados drop constraint RIF_establecimiento ; 
-DROP TABLE Empleados; 
+ALTER TABLE Establecimientos drop constraint CI_encargado; 
 ALTER TABLE Servicios drop constraint CI_superv;
 DROP TABLE Servicios; 
-DROP TABLE Clientes; 
-DROP TABLE Marcas;
-DROP TABLE Modelos;
-DROP TABLE Vehiculos;
-DROP TABLE OrdenesServicio;
-DROP TABLE Facturas;
-DROP TABLE MetodosPago;
-DROP TABLE OrdenesCompra;
+DROP TABLE Empleados; 
+DROP TABLE ActualizacionesInventarios; 
+DROP TABLE Establecimientos;
 DROP TABLE Productos;
 DROP TABLE FamiliaProductos;
-DROP TABLE Proveedores;
-DROP TABLE PlanesMantenimiento;
-DROP TABLE Actividades;
-DROP TABLE EmpleadosAsignados;
-DROP TABLE EspecializacionEmpleados;
-DROP TABLE ServiciosOfrecidos;
-DROP TABLE ActividadProductos;
-DROP TABLE Compras;
-DROP TABLE ActividadesPlan;
-DROP TABLE PagosFactura;
-DROP TABLE ActividadesOS;
-DROP TABLE Almacena;
-DROP TABLE ActualizacionesInventarios; 
-DROP TABLE ProveedoresAsociados;    
-DROP TABLE telefonosCliente;    
+DROP TABLE MetodosPago;
+DROP TABLE Clientes;
+DROP TABLE Modelos;
+DROP TABLE Marcas;
 
 DROP DATABASE MU_DB; 
+
