@@ -36,9 +36,23 @@ create table Servicios(
 );
 
 --agregamos las llaves foraneas
-alter table Empleados add constraint RIF_establecimiento foreign key (RIF_establecimiento) references Establecimientos(RIF);
-alter table Establecimientos add constraint CI_encargado foreign key (CI_encargado) references Empleados(CI_emp);
-alter table Servicios add constraint CI_superv foreign key(CI_superv) references Empleados(CI_emp);
+alter table Empleados 
+    add constraint RIF_establecimiento 
+    foreign key (RIF_establecimiento) 
+    references Establecimientos(RIF) 
+    ON DELETE SET NULL
+    ON UPDATE CASCADE; 
+
+alter table Establecimientos 
+    add constraint CI_encargado 
+    foreign key (CI_encargado) 
+    references Empleados(CI_emp);
+
+
+alter table Servicios 
+    add constraint CI_superv 
+    foreign key(CI_superv) 
+    references Empleados(CI_emp);
 
 create table Clientes(
 	CI_cliente varchar(15) not null,
@@ -68,7 +82,7 @@ create table Modelos(
 	nro_puestos int not null,
 	
 	primary key(cod_marca, nro_modelo),
-	foreign key(cod_marca) references Marcas(cod_marca)
+	foreign key(cod_marca) references Marcas(cod_marca) ON UPDATE CASCADE
 );
 
 
@@ -85,8 +99,8 @@ create table Vehiculos(
 	CI_dueño varchar(15) not null,
 	
 	primary key(codigo),
-	foreign key(id_marca,id_modelo) references Modelos(cod_marca, nro_modelo),
-    foreign key(CI_dueño) references Clientes(CI_cliente)
+	foreign key(id_marca,id_modelo) references Modelos(cod_marca, nro_modelo),  -- ON DELETE NO ACTION (POR DEFECTO)
+    foreign key(CI_dueño) references Clientes(CI_cliente) ON DELETE CASCADE
 );
 
 create table OrdenesServicio(
@@ -101,7 +115,7 @@ create table OrdenesServicio(
 	codigo_vehiculo int not null,
 	
 	primary key(cod_OS),
-	foreign key(codigo_vehiculo) references Vehiculos(codigo)
+	foreign key(codigo_vehiculo) references Vehiculos(codigo) ON DELETE CASCADE
 );
 
 create table Facturas(
@@ -113,7 +127,7 @@ create table Facturas(
 	fecha_emision date not null,
 	
 	primary key(nro_factura),
-	foreign key(cod_OS) references OrdenesServicio(cod_OS)
+	foreign key(cod_OS) references OrdenesServicio(cod_OS) ON DELETE CASCADE
 );
 
 create table MetodosPago(
@@ -141,7 +155,7 @@ create table OrdenesCompra(
 	RIF_est varchar(20) not null,
 	
 	primary key(nro_OC),
-	foreign key(RIF_est) references Establecimientos(RIF)
+	foreign key(RIF_est) references Establecimientos(RIF) ON DELETE CASCADE
 );
 
 create table FamiliaProductos(
@@ -165,7 +179,7 @@ create table Productos(
 	id_familia int,
 	
 	primary key(id_producto),
-	foreign key(id_familia) references FamiliaProductos(id_familia)
+	foreign key(id_familia) references FamiliaProductos(id_familia) ON DELETE SET NULL
 );
 
 
@@ -190,7 +204,7 @@ create table PlanesMantenimiento(
 	descripcion varchar(200),
 	
 	primary key(cod_marca,nro_modelo, kilometraje),
-	foreign key(cod_marca, nro_modelo) references Modelos(cod_marca, nro_modelo)
+	foreign key(cod_marca, nro_modelo) references Modelos(cod_marca, nro_modelo) ON DELETE CASCADE
 );
 
 create table Actividades (
@@ -201,7 +215,7 @@ create table Actividades (
 	costo decimal(10,2) not null check(costo > 0),
 	
 	primary key(nro_servicio, nro_correlativo),
-	foreign key(nro_servicio) references Servicios(nro_servicio)
+	foreign key(nro_servicio) references Servicios(nro_servicio) ON DELETE CASCADE
 );
 
 create table EmpleadosAsignados(
@@ -209,8 +223,8 @@ create table EmpleadosAsignados(
 	nro_servicio int not null,
 	
 	primary key(CI_empleado, nro_servicio),
-	foreign key(CI_empleado) references Empleados(CI_emp),
-	foreign key(nro_servicio) references Servicios(nro_servicio)
+	foreign key(CI_empleado) references Empleados(CI_emp), ON DELETE CASCADE
+	foreign key(nro_servicio) references Servicios(nro_servicio) ON DELETE CASCADE
 );
 
 create table EspecializacionEmpleados(
@@ -218,8 +232,8 @@ create table EspecializacionEmpleados(
 	nro_servicio int not null,
 	
 	primary key(CI_empleado, nro_servicio),
-	foreign key(CI_empleado) references Empleados(CI_emp),
-	foreign key(nro_servicio) references Servicios(nro_servicio)
+	foreign key(CI_empleado) references Empleados(CI_emp) ON DELETE CASCADE,
+	foreign key(nro_servicio) references Servicios(nro_servicio) ON DELETE CASCADE
 );
 
 create table ServiciosOfrecidos(
@@ -227,7 +241,7 @@ create table ServiciosOfrecidos(
 	nro_servicio int not null,
 	
 	primary key(RIF_establecimiento, nro_servicio),
-	foreign key(RIF_establecimiento) references Establecimientos(RIF)
+	foreign key(RIF_establecimiento) references Establecimientos(RIF) ON DELETE CASCADE
 );
 
 create table ActividadProductos(
@@ -237,8 +251,8 @@ create table ActividadProductos(
 	cant_utilizada int not null check(cant_utilizada > 0),
 	
 	primary key(id_producto, nro_servicio, nro_correlativo),
-	foreign key(nro_servicio, nro_correlativo) references Actividades(nro_servicio, nro_correlativo),
-    foreign key(id_producto) references Productos(id_producto)
+	foreign key(nro_servicio, nro_correlativo) references Actividades(nro_servicio, nro_correlativo) ON DELETE CASCADE,
+    foreign key(id_producto) references Productos(id_producto) ON DELETE CASCADE
 );
 
 create table Compras(
@@ -248,7 +262,7 @@ create table Compras(
 	precio_und decimal(10,2) not null check(precio_und > 0),
 	
 	primary key(nro_ordencompra),
-	foreign key(id_producto) references Productos(id_producto)
+	foreign key(id_producto) references Productos(id_producto) ON DELETE CASCADE
 ); 
 
 create table ActividadesPlan(
@@ -259,8 +273,8 @@ create table ActividadesPlan(
 	nro_correlativo int not null,
 	
 	primary key(cod_marca, nro_modelo, kilometraje, nro_servicio, nro_correlativo),
-	foreign key(cod_marca, nro_modelo) references Modelos(cod_marca, nro_modelo),
-	foreign key(nro_servicio, nro_correlativo) references Actividades(nro_servicio, nro_correlativo)
+	foreign key(cod_marca, nro_modelo) references Modelos(cod_marca, nro_modelo) ON DELETE CASCADE,
+	foreign key(nro_servicio, nro_correlativo) references Actividades(nro_servicio, nro_correlativo) ON DELETE CASCADE
 );
 
 create TABLE PagosFactura(
@@ -268,8 +282,8 @@ create TABLE PagosFactura(
 	id_pago int not null,
 	
 	primary key(nro_factura, id_pago),
-	foreign key(nro_factura) references Facturas(nro_factura),
-	foreign key(id_pago) references MetodosPago(id_pago)
+	foreign key(nro_factura) references Facturas(nro_factura) ON DELETE CASCADE,
+	foreign key(id_pago) references MetodosPago(id_pago) ON DELETE CASCADE
 );
 
 create table ActividadesOS(
@@ -282,8 +296,8 @@ create table ActividadesOS(
 	cantidad int not null check(cantidad > 0),
 	
 	primary key(cod_OS, nro_servicio, nro_correlativo, id_producto),
-	foreign key(cod_OS) references OrdenesServicio(cod_OS),
-	foreign key(nro_servicio,nro_correlativo) references Actividades(nro_servicio, nro_correlativo),
+	foreign key(cod_OS) references OrdenesServicio(cod_OS) ON DELETE CASCADE,
+	foreign key(nro_servicio,nro_correlativo) references Actividades(nro_servicio, nro_correlativo) ON DELETE CASCADE,
 	foreign key(id_producto) references Productos(id_producto)
 );  
 
@@ -293,8 +307,8 @@ create table Almacena(
 	cantidad int not null check(cantidad > 0),
 	
 	primary key(RIF_establecimiento, id_producto),
-	foreign key(RIF_establecimiento) references Establecimientos(RIF),
-	foreign key(id_producto) references Productos(id_producto)
+	foreign key(RIF_establecimiento) references Establecimientos(RIF) ON DELETE CASCADE,
+	foreign key(id_producto) references Productos(id_producto) ON DELETE CASCADE
 );
 
 create table ActualizacionesInventarios(
@@ -307,8 +321,8 @@ create table ActualizacionesInventarios(
 	comentario varchar(200),
 	
 	primary key(RIF_establecimiento, id_producto, fecha_ajuste, hora_ajuste),
-	foreign key(RIF_establecimiento) references Establecimientos(RIF),
-	foreign key(id_producto) references Productos(id_producto)
+	foreign key(RIF_establecimiento) references Establecimientos(RIF) ON DELETE CASCADE,
+	foreign key(id_producto) references Productos(id_producto) ON DELETE CASCADE
 );
 
 create table ProveedoresAsociados( 
@@ -316,8 +330,8 @@ create table ProveedoresAsociados(
 	nro_orden int not null,
 	
 	primary key(RIF_proveedor, nro_orden),
-	foreign key (RIF_proveedor) references Proveedores(RIF),
-	foreign key (nro_orden) references OrdenesCompra(nro_OC)
+	foreign key (RIF_proveedor) references Proveedores(RIF) ON DELETE CASCADE,
+	foreign key (nro_orden) references OrdenesCompra(nro_OC) ON DELETE CASCADE
 );
 
 create table telefonosCliente(
@@ -325,7 +339,7 @@ create table telefonosCliente(
 	CI_cliente varchar(15) not null,
 	
 	primary key(numero, CI_cliente),
-	foreign key (CI_cliente) references Clientes(CI_cliente)
+	foreign key (CI_cliente) references Clientes(CI_cliente) ON DELETE CASCADE
 );
 
 
