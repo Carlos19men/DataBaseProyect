@@ -3,61 +3,42 @@ create database MU_DB;
 
 USE MU_DB; 
 
+--creamo los establecimientos 
+create table Establecimientos(
+	RIF varchar(20)not null,
+	CI_encargado varchar(15),
+	nombre varchar(50) not null,
+	ciudad varchar(40) not null,
+	fecha_encargado date,
+	
+	primary key(RIF)
+);
+
+--creamos los empleados 
 create table Empleados(
 	CI_emp varchar(15) not null,
 	nombre varchar(50) not null,
 	apellido varchar(50) not null,
 	telefono varchar(15) not null,
 	direccion varchar(150) not null,
-	sueldo int not null,
-	RIF_establecimiento int not null,
+	sueldo int,
+	RIF_establecimiento int,
 	
 	primary key(CI_emp),
-	foreign key(RIF_establecimiento) references Establecimientos(RIF)
-);
-
-create table Establecimientos(
-	RIF varchar(20)not null,
-	CI_encargado varchar(15) not null,
-	nombre varchar(50) not null,
-	ciudad varchar(40) not null,
-	fecha_encargado date,
-	
-	primary key(RIF),
-	foreign key(CI_encargado) references Empleados(CI_emp)
 );
 
 create table Servicios(
 	nro_servicio int not null,
-	CI_superv varchar(15) not null,
+	CI_superv varchar(15),
 	nombre_ser varchar(50) not null,
 	
-	primary key(nro_servicio),
-	foreign key(CI_superv) references Empleados(CI_emp);
+	primary key(nro_servicio)
 );
 
-create table Marcas(
-	cod_marca int not null,
-	nombre_marca varchar(50) not null,
-	
-	primary key(cod_marca)
-);
-
-create table Vehiculos(
-	codigo int not null,
-	placa varchar(20) not null,
-	aceite_utilizado_motor varchar(25) not null,
-	aceite_utilizado_caja varchar(25) not null,
-	resumen_mantenimiento varchar(255) not null,
-	tiempo_uso decimal(10,1) not null,
-	kilometraje decimal(10,2) not null,
-	id_modelo int not null,
-	id_marca int not null,
-	CI_dueño varchar(15) not null,
-	
-	primary key(codigo),
-	foreign key(id_marca,id_modelo) references Modelos(cod_marca, nro_modelo) 
-);
+--agregamos las llaves foraneas
+alter table Empleados add foreign key (RIF_establecimiento) references Establecimientos(RIF);
+alter table Establecimientos add foreign key (CI_encargado) references Empleados(CI_emp);
+alter table Servicios add foreign key(CI_superv) references Empleados(CI_emp);
 
 create table Clientes(
 	CI_cliente varchar(15) not null,
@@ -68,12 +49,67 @@ create table Clientes(
 	primary key(CI_cliente)
 );
 
+create table Marcas(
+	cod_marca int not null,
+	nombre_marca varchar(50) not null,
+	
+	primary key(cod_marca)
+);
+
+create table Modelos(
+	cod_marca int not null,
+	nro_modelo int not null,
+	aceite_caja varchar(30) not null,
+	aceite_motor varchar(30), not null,
+	octanaje varchar(2) not null, 
+	tipo_refrigerante varchar(25) not null,
+	peso int not null,
+	descripcion varchar(200) not null,
+	nro_puestos int not null,
+	
+	primary key(cod_marca, nro_modelo),
+	foreign key(cod_marca) references Marcas(cod_marca)
+);
+
+
+create table Vehiculos(
+	codigo int not null,
+	placa varchar(20) not null,
+	aceite_utilizado_motor varchar(25),
+	aceite_utilizado_caja varchar(25),
+	resumen_mantenimiento varchar(255),
+	tiempo_uso decimal(10,1),
+	kilometraje decimal(10,2),
+	id_modelo int not null,
+	id_marca int not null,
+	CI_dueño varchar(15),
+	
+	primary key(codigo),
+	foreign key(id_marca,id_modelo) references Modelos(cod_marca, nro_modelo),
+    foreign key(CI_dueño) references Clientes(CI_cliente)
+);
+
+create table OrdenesServicio(
+	cod_OS int not null,
+	fecha_entrada date not null,
+	hora_entrada time,
+	hora_estimada_salida time,
+	hora_real_salida time,
+	fecha_salida date,
+	justificacion varchar(255),
+	persona_autorizada varchar(50),
+	codigo_vehiculo int not null,
+	
+	primary key(cod_OS),
+	foreign key(codigo_vehiculo) references Vehiculos(codigo)
+);
+
 create table Facturas(
 	nro_factura int not null,
-	cod_OS int not null,
-	descuento decimal(10,3) not null,
-	iva int not null,
-	monto_total decimal(10,2) not null,
+	cod_OS int not null unique,
+	descuento decimal(10,3),
+	iva int,
+	monto_total decimal(10,2),
 	fecha_emision date not null,
 	
 	primary key(nro_factura),
@@ -81,8 +117,7 @@ create table Facturas(
 );
 
 create table MetodosPago(
-	id_pago int not null,)
-);
+	id_pago int not null,
 	tipo_moneda varchar(40),
 	monto_ef decimal(10,2),
 	fechaPago_Tar date,
@@ -98,20 +133,7 @@ create table MetodosPago(
 	primary key(id_pago)
 );
 
-create table OrdenesServicio(
-	cod_OS int not null,
-	fecha_entrada date not null,
-	hora_entrada time not null,
-	hora_estimada_salida time not null,
-	hora_real_salida time not null,
-	fecha_salida date not null,
-	justificacion varchar(255) not null,
-	persona_autorizada varchar(50),
-	codigo_vehiculo int not null,
-	
-	primary key(cod_OS),
-	foreign key(codigo_vehiculo) references Vehiculos(codigo)
-);
+
 
 create table OrdenesCompra(
 	nro_OC int not null,
@@ -127,13 +149,13 @@ create table Productos(
 	nombre varchar(50) not null,
 	tipo varchar(20) not null,
 	precio decimal(10,2) not null,
-	descripcion varchar(150) not null,
+	descripcion varchar(150),
 	minimo int not null,
 	maximo int not null,
 	tratamiento_residuos varchar(255),
 	nivel_contaminacion int,
 	info_manejo varchar(255),
-	id_familia int not null,
+	id_familia int,
 	
 	primary key(id_producto),
 	foreign key(id_familia) references FamiliaProductos(id_familia)
@@ -157,20 +179,6 @@ create table Proveedores(
 	primary key(RIF)
 );
 
-create table Modelos(
-	cod_marca int not null,
-	nro_modelo int not null,
-	aceite_caja varchar(30) not null,
-	aceite_motor varchar(30), not null,
-	octanaje varchar(2) not null, 
-	tipo_refrigerante varchar(25) not null,
-	peso int not null,
-	descripcion varchar(200) not null,
-	nro_puestos int not null,
-	
-	primary key(cod_marca, nro_modelo),
-	foreign key(cod_marca) references Marcas(cod_marca)
-);
 
 create table PlanesMantenimiento(
 	cod_marca int not null,
