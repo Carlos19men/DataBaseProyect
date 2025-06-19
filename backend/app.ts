@@ -1,6 +1,6 @@
 import express, { json } from "express";
 import { corsMidleware } from "./middelware/cors";
-import { connectToDatabase } from "./modules/SQLServer/modules";
+import { connectToDatabase } from "./config/SQLserverConection";
 
 connectToDatabase()
 
