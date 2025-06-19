@@ -21,7 +21,7 @@ create table Empleados(
 	apellido varchar(50) not null,
 	telefono varchar(15) not null,
 	direccion varchar(150) not null,
-	sueldo decimal(10,2) check(sueldo > 0),
+	sueldo int,
 	RIF_establecimiento varchar(20),
 	
 	primary key(CI_emp),
@@ -36,9 +36,9 @@ create table Servicios(
 );
 
 --agregamos las llaves foraneas
-alter table Empleados add foreign key (RIF_establecimiento) references Establecimientos(RIF);
-alter table Establecimientos add foreign key (CI_encargado) references Empleados(CI_emp);
-alter table Servicios add foreign key(CI_superv) references Empleados(CI_emp);
+alter table Empleados add constraint RIF_establecimiento foreign key (RIF_establecimiento) references Establecimientos(RIF);
+alter table Establecimientos add constraint CI_encargado foreign key (CI_encargado) references Empleados(CI_emp);
+alter table Servicios add constraint CI_superv foreign key(CI_superv) references Empleados(CI_emp);
 
 create table Clientes(
 	CI_cliente varchar(15) not null,
@@ -144,7 +144,6 @@ create table OrdenesCompra(
 	foreign key(RIF_est) references Establecimientos(RIF)
 );
 
-
 create table FamiliaProductos(
 	id_familia int not null,
 	nombre varchar(50) not null,
@@ -168,6 +167,7 @@ create table Productos(
 	primary key(id_producto),
 	foreign key(id_familia) references FamiliaProductos(id_familia)
 );
+
 
 
 create table Proveedores(
@@ -214,7 +214,7 @@ create table EmpleadosAsignados(
 );
 
 create table EspecializacionEmpleados(
-	CI_empleado int not null,
+	CI_empleado varchar(15) not null,
 	nro_servicio int not null,
 	
 	primary key(CI_empleado, nro_servicio),
@@ -330,10 +330,11 @@ create table telefonosCliente(
 
 
 --Drops tables 
-ALTER TABLE Establecimientos drop column CI_encargado; 
+ALTER TABLE Establecimientos drop constraint CI_encargado; 
 DROP TABLE Establecimientos; 
-ALTER TABLE Empleados drop column RIF_establecimiento ; 
+ALTER TABLE Empleados drop constraint RIF_establecimiento ; 
 DROP TABLE Empleados; 
+ALTER TABLE Servicios drop constraint CI_superv;
 DROP TABLE Servicios; 
 DROP TABLE Clientes; 
 DROP TABLE Marcas;
@@ -359,4 +360,6 @@ DROP TABLE ActividadesOS;
 DROP TABLE Almacena;
 DROP TABLE ActualizacionesInventarios; 
 DROP TABLE ProveedoresAsociados;    
-DROP TABLE telefonosCliente;                
+DROP TABLE telefonosCliente;    
+
+DROP DATABASE MU_DB; 
