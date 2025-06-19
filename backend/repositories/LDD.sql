@@ -21,8 +21,8 @@ create table Empleados(
 	apellido varchar(50) not null,
 	telefono varchar(15) not null,
 	direccion varchar(150) not null,
-	sueldo int,
-	RIF_establecimiento int,
+	sueldo decimal(10,2) check(sueldo > 0),
+	RIF_establecimiento varchar(20),
 	
 	primary key(CI_emp),
 );
@@ -144,6 +144,14 @@ create table OrdenesCompra(
 	foreign key(RIF_est) references Establecimientos(RIF)
 );
 
+
+create table FamiliaProductos(
+	id_familia int not null,
+	nombre varchar(50) not null,
+
+	primary key(id_familia)
+);
+
 create table Productos(
 	id_producto int not null,
 	nombre varchar(50) not null,
@@ -161,12 +169,6 @@ create table Productos(
 	foreign key(id_familia) references FamiliaProductos(id_familia)
 );
 
-create table FamiliaProductos(
-	id_familia int not null,
-	nombre varchar(50) not null,
-
-	primary key(id_familia)
-);
 
 create table Proveedores(
 	RIF varchar(20) not null,
@@ -328,7 +330,9 @@ create table telefonosCliente(
 
 
 --Drops tables 
+ALTER TABLE Establecimientos drop column CI_encargado; 
 DROP TABLE Establecimientos; 
+ALTER TABLE Empleados drop column RIF_establecimiento ; 
 DROP TABLE Empleados; 
 DROP TABLE Servicios; 
 DROP TABLE Clientes; 
