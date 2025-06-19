@@ -151,7 +151,7 @@ create table Productos(
 	precio decimal(10,2) not null check(precio > 0),
 	descripcion varchar(150),
 	minimo int not null check(minimo > 0),
-	maximo int not null check(maximo > minimo),
+	maximo int not null check(maximo > 0),
 	tratamiento_residuos varchar(255),
 	nivel_contaminacion int check(nivel_contaminacion >= 1 and nivel_contaminacion <= 5),
 	info_manejo varchar(255),
