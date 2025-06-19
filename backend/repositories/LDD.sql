@@ -228,7 +228,7 @@ create table ServiciosOfrecidos(
 	foreign key(RIF_establecimiento) references Establecimientos(RIF)
 );
 
-create table ActividadProducto(
+create table ActividadProductos(
 	id_producto int not null,
 	nro_servicio int not null,
 	nro_correlativo int not null,
@@ -295,7 +295,7 @@ create table Almacena(
 	foreign key(id_producto) references Productos(id_producto)
 );
 
-create table Actualiza(
+create table ActualizacionesInventarios(
 	RIF_establecimiento varchar(20) not null,
 	id_producto int not null,
 	fecha_ajuste date not null,
@@ -309,7 +309,7 @@ create table Actualiza(
 	foreign key(id_producto) references Productos(id_producto)
 ):
 
-create table Asociados( 
+create table ProveedoresAsociados( 
 	RIF_proveedor varchar(20) not null,
 	nro_orden int not null,
 	
@@ -318,10 +318,41 @@ create table Asociados(
 	foreign key (nro_orden) references OrdenesCompra(nro_OC)
 );
 
-create table telefonos(
+create table telefonosCliente(
 	numero varchar(15) not null,
 	CI_cliente varchar(15) not null,
 	
 	primary key(numero, CI_cliente),
 	foreign key (CI_cliente) references Clientes(CI_cliente)
 );
+
+
+--Drops tables 
+DROP TABLE Establecimientos; 
+DROP TABLE Empleados; 
+DROP TABLE Servicios; 
+DROP TABLE Clientes; 
+DROP TABLE Marcas;
+DROP TABLE Modelos;
+DROP TABLE Vehiculos;
+DROP TABLE OrdenesServicio;
+DROP TABLE Facturas;
+DROP TABLE MetodosPago;
+DROP TABLE OrdenesCompra;
+DROP TABLE Productos;
+DROP TABLE FamiliaProductos;
+DROP TABLE Proveedores;
+DROP TABLE PlanesMantenimiento;
+DROP TABLE Actividades;
+DROP TABLE EmpleadosAsignados;
+DROP TABLE EspecializacionEmpleados;
+DROP TABLE ServiciosOfrecidos;
+DROP TABLE ActividadProductos;
+DROP TABLE Compras;
+DROP TABLE ActividadesPlan;
+DROP TABLE PagosFactura;
+DROP TABLE ActividadesOS;
+DROP TABLE Almacena;
+DROP TABLE ActualizacionesInventarios; 
+DROP TABLE ProveedoresAsociados;    
+DROP TABLE telefonosCliente;                
