@@ -60,7 +60,7 @@ create table Modelos(
 	cod_marca int not null,
 	nro_modelo int not null,
 	aceite_caja varchar(30) not null,
-	aceite_motor varchar(30), not null,
+	aceite_motor varchar(30) not null,
 	octanaje varchar(2) not null check(octanaje in ('91', '95', '98')), 
 	tipo_refrigerante varchar(25) not null,
 	peso int not null,
@@ -265,7 +265,7 @@ create TABLE PagosFactura(
 	nro_factura int not null,
 	id_pago int not null,
 	
-	primary key(nro_factura, id_pago)
+	primary key(nro_factura, id_pago),
 	foreign key(nro_factura) references Facturas(nro_factura),
 	foreign key(id_pago) references MetodosPago(id_pago)
 );
@@ -277,7 +277,7 @@ create table ActividadesOS(
 	id_producto int not null,
 	precio_producto decimal(10,2) not null check(precio_producto > 0),
 	precio_actividad decimal(10,2) not null check(precio_actividad > 0),
-	cantidad int not null chec(cantidad > 0),
+	cantidad int not null check(cantidad > 0),
 	
 	primary key(cod_OS, nro_servicio, nro_correlativo, id_producto),
 	foreign key(cod_OS) references OrdenesServicio(cod_OS),
@@ -307,7 +307,7 @@ create table ActualizacionesInventarios(
 	primary key(RIF_establecimiento, id_producto, fecha_ajuste, hora_ajuste),
 	foreign key(RIF_establecimiento) references Establecimientos(RIF),
 	foreign key(id_producto) references Productos(id_producto)
-):
+);
 
 create table ProveedoresAsociados( 
 	RIF_proveedor varchar(20) not null,
