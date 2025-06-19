@@ -1,0 +1,12 @@
+.App {
+  text-align: center;
+}
+nav{
+  background-color: #2DD377;
+  height: 125px; 
+  padding:0;
+  margin:0;
+  text-align: center;
+  font-size: 64px;
+  font-family: poppins, sans-serif;
+}
