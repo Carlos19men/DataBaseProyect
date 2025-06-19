@@ -241,7 +241,8 @@ create table ServiciosOfrecidos(
 	nro_servicio int not null,
 	
 	primary key(RIF_establecimiento, nro_servicio),
-	foreign key(RIF_establecimiento) references Establecimientos(RIF) ON DELETE CASCADE
+	foreign key(RIF_establecimiento) references Establecimientos(RIF) ON DELETE CASCADE, 
+    foreign key(nro_servicio) references Servicios(nro_servicio) ON DELETE CASCADE; 
 );
 
 create table ActividadProductos(
