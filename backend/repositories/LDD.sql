@@ -3,7 +3,7 @@ create database MU_DB;
 
 USE MU_DB; 
 
---creamo los establecimientos 
+--creamos los establecimientos 
 create table Establecimientos(
 	RIF varchar(20)not null,
 	CI_encargado varchar(15),
@@ -61,7 +61,7 @@ create table Modelos(
 	nro_modelo int not null,
 	aceite_caja varchar(30) not null,
 	aceite_motor varchar(30), not null,
-	octanaje varchar(2) not null, 
+	octanaje varchar(2) not null check(octanaje in ('91', '95', '98')), 
 	tipo_refrigerante varchar(25) not null,
 	peso int not null,
 	descripcion varchar(200) not null,
@@ -82,7 +82,7 @@ create table Vehiculos(
 	kilometraje decimal(10,2),
 	id_modelo int not null,
 	id_marca int not null,
-	CI_dueño varchar(15),
+	CI_dueño varchar(15) not null,
 	
 	primary key(codigo),
 	foreign key(id_marca,id_modelo) references Modelos(cod_marca, nro_modelo),
@@ -92,9 +92,9 @@ create table Vehiculos(
 create table OrdenesServicio(
 	cod_OS int not null,
 	fecha_entrada date not null,
-	hora_entrada time,
-	hora_estimada_salida time,
-	hora_real_salida time,
+	hora_entrada time not null,
+	hora_estimada_salida time not null,
+	hora_real_salida time not null,
 	fecha_salida date,
 	justificacion varchar(255),
 	persona_autorizada varchar(50),
@@ -108,8 +108,8 @@ create table Facturas(
 	nro_factura int not null,
 	cod_OS int not null unique,
 	descuento decimal(10,3),
-	iva int,
-	monto_total decimal(10,2),
+	iva int not null check(iva > 0),
+	monto_total decimal(10,2) check(monto_total > 0),
 	fecha_emision date not null,
 	
 	primary key(nro_factura),
