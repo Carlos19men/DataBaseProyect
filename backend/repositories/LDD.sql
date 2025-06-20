@@ -24,7 +24,7 @@ create table Empleados(
 	sueldo int,
 	RIF_establecimiento varchar(20),
 	
-	primary key(CI_emp),
+	primary key(CI_emp)
 );
 
 create table Servicios(
@@ -65,7 +65,7 @@ create table Clientes(
 
 create table Marcas(
 	cod_marca int not null,
-	nombre_marca varchar(50) not null,
+	nombre_marca varchar(50) not null unique,
 	
 	primary key(cod_marca)
 );
@@ -73,10 +73,11 @@ create table Marcas(
 create table Modelos(
 	cod_marca int not null,
 	nro_modelo int not null,
+	nombre varchar(100) not null,
 	aceite_caja varchar(30) not null,
 	aceite_motor varchar(30) not null,
-	octanaje varchar(2) not null check(octanaje in ('91', '95', '98')), 
-	tipo_refrigerante varchar(50) not null,
+	octanaje varchar(2) not null check(octanaje in ('87','91', '95', '98')), 
+	tipo_refrigerante varchar(25) not null,
 	peso int not null,
 	descripcion varchar(200) not null,
 	nro_puestos int not null,
@@ -84,6 +85,7 @@ create table Modelos(
 	primary key(cod_marca, nro_modelo),
 	foreign key(cod_marca) references Marcas(cod_marca) ON UPDATE CASCADE
 );
+
 
 
 create table Vehiculos(
@@ -212,11 +214,12 @@ create table Actividades (
 	nro_correlativo int not null,
 	nombre varchar(50) not null,
 	descripcion varchar(200) not null,
-	costo decimal(10,2) not null check(costo > 0),
+	costo decimal(10,2) not null check(costo >= 0),
 	
 	primary key(nro_servicio, nro_correlativo),
 	foreign key(nro_servicio) references Servicios(nro_servicio) ON DELETE CASCADE
 );
+
 
 create table EmpleadosAsignados(
 	CI_empleado varchar(15) not null,
@@ -241,8 +244,7 @@ create table ServiciosOfrecidos(
 	nro_servicio int not null,
 	
 	primary key(RIF_establecimiento, nro_servicio),
-	foreign key(RIF_establecimiento) references Establecimientos(RIF) ON DELETE CASCADE, 
-    foreign key(nro_servicio) references Servicios(nro_servicio) ON DELETE CASCADE; 
+	foreign key(RIF_establecimiento) references Establecimientos(RIF) ON DELETE CASCADE
 );
 
 create table ActividadProductos(
@@ -343,6 +345,7 @@ create table telefonosCliente(
 	foreign key (CI_cliente) references Clientes(CI_cliente) ON DELETE CASCADE
 );
 
+
 --Drops tables 
 DROP TABLE telefonosCliente;    
 DROP TABLE Almacena; 
@@ -377,12 +380,4 @@ DROP TABLE Modelos;
 DROP TABLE Marcas;
 
 DROP DATABASE MU_DB; 
-
--- Drops views.
-IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_NAME = 'InfoPagos_Efectivo')
-BEGIN
-	DROP VIEW InfoPagos_Efectivo;
-END;
-drop VIEW InfoPagos_Tarjeta;
-drop VIEW InfoPagos_PagoMovil;
 
