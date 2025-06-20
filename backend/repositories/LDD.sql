@@ -77,9 +77,9 @@ create table Modelos(
 	aceite_caja varchar(30) not null,
 	aceite_motor varchar(30) not null,
 	octanaje varchar(2) not null check(octanaje in ('87','91', '95', '98')), 
-	tipo_refrigerante varchar(50) not null,
+	tipo_refrigerante varchar(25) not null,
 	peso int not null,
-	descripcion varchar(255) not null,
+	descripcion varchar(200) not null,
 	nro_puestos int not null,
 	
 	primary key(cod_marca, nro_modelo),
@@ -95,7 +95,7 @@ create table Vehiculos(
 	aceite_utilizado_caja varchar(25),
 	resumen_mantenimiento varchar(255),
 	tiempo_uso decimal(10,1),
-	kilometraje decimal(10,2) check(kilometraje > 0),
+	kilometraje decimal(10,2) check(kilometraje >= 0),
 	id_modelo int not null,
 	id_marca int not null,
 	CI_dueño varchar(15) not null,
@@ -104,6 +104,8 @@ create table Vehiculos(
 	foreign key(id_marca,id_modelo) references Modelos(cod_marca, nro_modelo),  -- ON DELETE NO ACTION (POR DEFECTO)
     foreign key(CI_dueño) references Clientes(CI_cliente) ON DELETE CASCADE
 );
+
+
 
 create table OrdenesServicio(
 	cod_OS int not null,
@@ -244,8 +246,7 @@ create table ServiciosOfrecidos(
 	nro_servicio int not null,
 	
 	primary key(RIF_establecimiento, nro_servicio),
-	foreign key(RIF_establecimiento) references Establecimientos(RIF) ON DELETE CASCADE,
-	foreign key(nro_servicio) references Servicios(nro_servicio) ON DELETE CASCADE
+	foreign key(RIF_establecimiento) references Establecimientos(RIF) ON DELETE CASCADE
 );
 
 create table ActividadProductos(
@@ -271,7 +272,7 @@ create table Compras(
 
 create table ActividadesPlan(
 	cod_marca int not null,
-	nro_modelo int not null,
+	nro_modelo int not null,VE
 	kilometraje decimal(10,2) not null check(kilometraje > 0),
 	nro_servicio int not null,
 	nro_correlativo int not null,
