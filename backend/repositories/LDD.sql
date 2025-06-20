@@ -94,7 +94,7 @@ create table Vehiculos(
 	aceite_utilizado_motor varchar(25),
 	aceite_utilizado_caja varchar(25),
 	resumen_mantenimiento varchar(255),
-	tiempo_uso decimal(10,1),
+	meses_uso INT CHECK(meses_uso >= 0),
 	kilometraje decimal(10,2) check(kilometraje >= 0),
 	id_modelo int not null,
 	id_marca int not null,
@@ -104,7 +104,6 @@ create table Vehiculos(
 	foreign key(id_marca,id_modelo) references Modelos(cod_marca, nro_modelo),  -- ON DELETE NO ACTION (POR DEFECTO)
     foreign key(CI_dueño) references Clientes(CI_cliente) ON DELETE CASCADE
 );
-
 
 
 create table OrdenesServicio(

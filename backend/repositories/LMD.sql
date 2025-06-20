@@ -472,10 +472,141 @@ INSERT INTO ServiciosOfrecidos (RIF_establecimiento, nro_servicio) VALUES
 ('J-44556677-8', 12), -- Revisión y Recarga de Aire Acondicionado
 ('J-44556677-8', 13), -- Servicio de Inyectores
 ('J-44556677-8', 14), -- Diagnóstico de Tren Delantero
-('J-44556677-8', 15), -- Detallado Interior Premium
+('J-44556677-8', 15), -- Detallado Interior Premium  
 ('J-44556677-8', 16), -- Mantenimiento Básico Preventivo Integral
 ('J-44556677-8', 17), -- Restauración y Protección de Pintura
 ('J-44556677-8', 18), -- Servicio Integral de Frenos
 ('J-44556677-8', 19)  -- Paquete de Limpieza y Protección Exterior Superior
 ;
 
+INSERT INTO Clientes (CI_cliente, nombre_Cli, apellido_cli,email) VALUES 
+('10234567', 'Ana', 'González', 'ana.gonzalez@email.com'),
+('11345678', 'Luis', 'Pérez', 'luis.perez@email.com'),
+('12456789', 'María', 'Rodríguez', 'maria.rodriguez@email.com'),
+('13567890', 'Carlos', 'López', 'carlos.lopez@email.com'),
+('14678901', 'Laura', 'Martínez', 'laura.martinez@email.com'),
+('15789012', 'Pedro', 'Díaz', 'pedro.diaz@email.com'),
+('16890123', 'Sofía', 'Sánchez', 'sofia.sanchez@email.com'),
+('17901234', 'José', 'Ramírez', 'jose.ramirez@email.com'),
+('18012345', 'Valentina', 'Torres', 'valentina.torres@email.com'),
+('19123456', 'Miguel', 'Flores', 'miguel.flores@email.com'),
+('20234567', 'Isabella', 'Rojas', 'isabella.rojas@email.com'),
+('21345678', 'Daniel', 'Morales', 'daniel.morales@email.com'),
+('22456789', 'Camila', 'García', 'camila.garcia@email.com'),
+('23567890', 'Alejandro', 'Hernández', 'alejandro.hernandez@email.com'),
+('24678901', 'Andrea', 'Castro', 'andrea.castro@email.com'),
+('25789012', 'Ricardo', 'Silva', 'ricardo.silva@email.com'),
+('26890123', 'Valeria', 'Ruiz', 'valeria.ruiz@email.com'),
+('27901234', 'Francisco', 'Álvarez', 'francisco.alvarez@email.com'),
+('28012345', 'Paola', 'Jiménez', 'paola.jimenez@email.com'),
+('29123456', 'Gabriel', 'Vargas', 'gabriel.vargas@email.com');
+
+
+--agregamos numeros de telefonos 
+INSERT INTO telefonosCliente (numero,CI_cliente) VALUES
+('04141234567', '10234567'),
+('04241234567', '10234567'),
+('04142345678', '11345678'),
+('04242345678', '11345678'),
+('04143456789', '12456789'),
+('04243456789', '12456789'),
+('04144567890', '13567890'),
+('04244567890', '13567890'),
+('04145678901', '14678901'),
+('04245678901', '14678901'),
+('04146789012', '15789012'),
+('04246789012', '15789012'),
+('04147890123', '16890123'),
+('04247890123', '16890123'),
+('04148901234', '17901234'),
+('04248901234', '17901234'),
+('04149012345', '18012345'),
+('04249012345', '18012345'),
+('04140123456', '19123456'),
+('04240123456', '19123456'),
+('04141122334', '20234567'),
+('04241122334', '20234567'),
+('04142233445', '21345678'),
+('04242233445', '21345678'),
+('04143344556', '22456789'),
+('04243344556', '22456789'),
+('04144455667', '23567890'),
+('04244455667', '23567890'),
+('04145566778', '24678901'),
+('04245566778', '24678901'),
+('04146677889', '25789012'),
+('04246677889', '25789012'),
+('04147788990', '26890123'),
+('04247788990', '26890123'),
+('04148899001', '27901234'),
+('04248899001', '27901234'),
+('04149900112', '28012345'),
+('04249900112', '28012345'),
+('04140011223', '29123456'),
+('04240011223', '29123456');
+
+--agregamos vehiculos 
+INSERT INTO Vehiculos (codigo,placa,aceite_utilizado_motor,aceite_utilizado_caja,meses_uso,id_modelo,id_marca,CI_dueño) VALUES 
+(1, 'ABC1234', '10W-40 Sintetico', 'ATF Dexron III', 24, 1, 1, '10234567'), -- Marca 1, Modelo 1
+(2, 'XYZ5678', '5W-30 Mineral', 'Manual 75W-90', 36, 2, 1, '10234567'), -- Marca 1, Modelo 2
+(3, 'DEF9012', '15W-40 Diesel', 'ATF Mercon V', 18, 3, 1, '11345678'), -- Marca 1, Modelo 3
+(4, 'GHI3456', '5W-40 Sintetico', 'CVT Fluid', 48, 4, 2, '11345678'), -- Marca 2, Modelo 4
+(5, 'JKL7890', '20W-50 Mineral', 'ATF Dexron VI', 12, 5, 2, '12456789'), -- Marca 2, Modelo 5
+(6, 'MNO1234', '10W-30 Semi-Sintetico', 'Manual 80W-90', 30, 1, 2, '12456789'), -- Marca 2, Modelo 1
+(7, 'PQR5678', '5W-30 Sintetico', 'DCT Fluid', 60, 2, 3, '13567890'), -- Marca 3, Modelo 2
+(8, 'STU9012', '15W-30 Mineral', 'ATF +4', 42, 3, 3, '13567890'), -- Marca 3, Modelo 3
+(9, 'VWX3456', '0W-20 Sintetico', 'ATF Dexron VI', 6, 4, 3, '14678901'), -- Marca 3, Modelo 4
+(10, 'YZA7890', '10W-40 Sintetico', 'CVT Fluid', 28, 5, 4, '14678901'), -- Marca 4, Modelo 5
+(11, 'BCD1234', '5W-30 Mineral', 'ATF Mercon LV', 15, 1, 4, '15789012'), -- Marca 4, Modelo 1
+(12, 'EFG5678', '15W-40 Diesel', 'Manual 75W-80', 50, 2, 4, '15789012'), -- Marca 4, Modelo 2
+(13, 'HIJ9012', '5W-40 Sintetico', 'DCT Fluid', 20, 3, 5, '16890123'), -- Marca 5, Modelo 3
+(14, 'KLM3456', '20W-50 Mineral', 'ATF Dexron III', 33, 4, 5, '16890123'), -- Marca 5, Modelo 4
+(15, 'NOP7890', '10W-30 Semi-Sintetico', 'ATF +4', 72, 5, 5, '17901234'), -- Marca 5, Modelo 5
+(16, 'QRS1234', '5W-30 Sintetico', 'CVT Fluid', 10, 1, 6, '17901234'), -- Marca 6, Modelo 1
+(17, 'TUV5678', '15W-30 Mineral', 'Manual 80W-90', 22, 2, 6, '18012345'), -- Marca 6, Modelo 2
+(18, 'WXY9012', '0W-20 Sintetico', 'ATF Mercon V', 4, 3, 6, '18012345'), -- Marca 6, Modelo 3
+(19, 'ZAB3456', '10W-40 Sintetico', 'ATF Dexron VI', 31, 4, 7, '19123456'), -- Marca 7, Modelo 4
+(20, 'CDE7890', '5W-30 Mineral', 'Manual 75W-90', 25, 5, 7, '19123456'), -- Marca 7, Modelo 5
+(21, 'FGH1234', '15W-40 Diesel', 'ATF +4', 19, 1, 7, '20234567'), -- Marca 7, Modelo 1
+(22, 'IJK5678', '5W-40 Sintetico', 'CVT Fluid', 55, 2, 8, '20234567'), -- Marca 8, Modelo 2
+(23, 'LMN9012', '20W-50 Mineral', 'DCT Fluid', 14, 3, 8, '21345678'), -- Marca 8, Modelo 3
+(24, 'OPQ3456', '10W-30 Semi-Sintetico', 'ATF Dexron III', 38, 4, 8, '21345678'), -- Marca 8, Modelo 4
+(25, 'RST7890', '5W-30 Sintetico', 'Manual 80W-90', 65, 5, 9, '22456789'), -- Marca 9, Modelo 5
+(26, 'UVW1234', '15W-30 Mineral', 'ATF Mercon V', 7, 1, 9, '23567890'), -- Marca 9, Modelo 1
+(27, 'XYZ5678', '0W-20 Sintetico', 'CVT Fluid', 29, 2, 9, '24678901'), -- Marca 9, Modelo 2
+(28, 'ABC9012', '10W-40 Sintetico', 'ATF Dexron VI', 21, 3, 10, '25789012'), -- Marca 10, Modelo 3
+(29, 'DEF3456', '5W-30 Mineral', 'Manual 75W-80', 46, 4, 10, '26890123'), -- Marca 10, Modelo 4
+(30, 'GHI7890', '15W-40 Diesel', 'DCT Fluid', 34, 5, 10, '27901234'), -- Marca 10, Modelo 5
+(31, 'HJK1234', '10W-40 Sintetico', 'Manual 75W-90', 20, 1, 1, '28012345'), -- Marca 1, Modelo 1 (Paola Jiménez)
+(32, 'LMN5678', '5W-30 Mineral', 'ATF Dexron III', 32, 2, 1, '28012345'), -- Marca 1, Modelo 2 (Paola Jiménez)
+(33, 'OPQ9012', '15W-40 Diesel', 'CVT Fluid', 15, 3, 1, '29123456'), -- Marca 1, Modelo 3 (Gabriel Vargas)
+(34, 'RST3456', '5W-40 Sintetico', 'ATF Mercon V', 40, 4, 2, '29123456'), -- Marca 2, Modelo 4 (Gabriel Vargas)
+(35, 'UVW7890', '20W-50 Mineral', 'Manual 80W-90', 10, 5, 2, '10234567'), -- Marca 2, Modelo 5 (Ana González)
+(36, 'XYZ1234', '10W-30 Semi-Sintetico', 'DCT Fluid', 28, 1, 2, '10234567'), -- Marca 2, Modelo 1 (Ana González)
+(37, 'ABC5678', '5W-30 Sintetico', 'ATF +4', 50, 2, 3, '11345678'), -- Marca 3, Modelo 2 (Luis Pérez)
+(38, 'DEF9012', '15W-30 Mineral', 'ATF Dexron VI', 25, 3, 3, '11345678'), -- Marca 3, Modelo 3 (Luis Pérez)
+(39, 'GHI3456', '0W-20 Sintetico', 'Manual 75W-80', 8, 4, 3, '12456789'), -- Marca 3, Modelo 4 (María Rodríguez)
+(40, 'JKL7890', '10W-40 Sintetico', 'CVT Fluid', 35, 5, 4, '12456789'), -- Marca 4, Modelo 5 (María Rodríguez)
+(41, 'MNO1234', '5W-30 Mineral', 'ATF Mercon LV', 17, 1, 4, '13567890'), -- Marca 4, Modelo 1 (Carlos López)
+(42, 'PQR5678', '15W-40 Diesel', 'DCT Fluid', 45, 2, 4, '13567890'), -- Marca 4, Modelo 2 (Carlos López)
+(43, 'STU9012', '5W-40 Sintetico', 'ATF Dexron III', 23, 3, 5, '14678901'), -- Marca 5, Modelo 3 (Laura Martínez)
+(44, 'VWX3456', '20W-50 Mineral', 'Manual 80W-90', 30, 4, 5, '14678901'), -- Marca 5, Modelo 4 (Laura Martínez)
+(45, 'YZA7890', '10W-30 Semi-Sintetico', 'ATF +4', 68, 5, 5, '15789012'), -- Marca 5, Modelo 5 (Pedro Díaz)
+(46, 'BCD1234', '5W-30 Sintetico', 'CVT Fluid', 12, 1, 6, '15789012'), -- Marca 6, Modelo 1 (Pedro Díaz)
+(47, 'EFG5678', '15W-30 Mineral', 'DCT Fluid', 28, 2, 6, '16890123'), -- Marca 6, Modelo 2 (Sofía Sánchez)
+(48, 'HIJ9012', '0W-20 Sintetico', 'ATF Mercon V', 5, 3, 6, '16890123'), -- Marca 6, Modelo 3 (Sofía Sánchez)
+(49, 'KLM3456', '10W-40 Sintetico', 'Manual 75W-80', 35, 4, 7, '17901234'), -- Marca 7, Modelo 4 (José Ramírez)
+(50, 'NOP7890', '5W-30 Mineral', 'ATF Dexron VI', 20, 5, 7, '17901234'); 
+
+--proveedores 
+INSERT INTO Proveedores (RIF, razon_social, direccion, local_, telefono, persona_contacto) VALUES
+('J-50011223-5', 'Suministros Automotrices del Centro', 'Av. Bolívar, Galpón #12, Zona Industrial La Hamaca', 'Maracay', '02432123456', 'Roberto Castro'),
+('J-50033445-7', 'Químicos y Lubricantes Caracas S.A.', 'Calle Elice, Edif. Torre Mayor, Piso 8, Ofc. 802', 'Caracas', '02129876543', 'Daniela Ríos'),
+('J-50055667-9', 'Ferretería Industrial del Sur', 'Carretera Nacional, Km 5, Sector El Palmar', 'Ciudad Bolívar', '02856234567', 'Gustavo Peña'),
+('J-50077889-1', 'Componentes Eléctricos Orientales', 'Calle Principal, Centro Comercial Plaza, Nivel 1', 'Puerto La Cruz', '02812801234', 'Andrea Salazar'),
+('J-50099001-3', 'Tapicería y Acabados Vehiculares', 'Av. Ppal de Lechería, Centro Empresarial Las Villas', 'Lechería', '02812867890', 'Manuel Soto'),
+('J-50110112-5', 'Importadora de Repuestos del Norte', 'Av. 20 con Calle 70, Local 15', 'Barquisimeto', '02512612345', 'Patricia Guzmán'),
+('J-50131415-7', 'TecnoFrenos Venezuela', 'Calle Madrid, Qta. La Rosaleda, Urb. Las Mercedes', 'Caracas', '02129934567', 'Carlos Rojas'),
+('J-50152627-9', 'Distribución de Aceites La Faja', 'Av. Principal, Sector La Curva, Galpón C-4', 'El Tigre', '02832410987', 'Verónica Linares'),
+('J-50173839-1', 'Herramientas de Precisión C.A.', 'Calle San Francisco, Edif. Don Pedro, Local PB', 'Valencia', '02418501234', 'Felipe Montes'),
+('J-50194041-3', 'Soluciones de Diagnóstico Auto', 'Av. Urdaneta, Centro Clínico Urdaneta, Anexo A', 'Maracaibo', '02617987654', 'Mariana Blanco');
