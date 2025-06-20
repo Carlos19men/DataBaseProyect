@@ -77,9 +77,9 @@ create table Modelos(
 	aceite_caja varchar(30) not null,
 	aceite_motor varchar(30) not null,
 	octanaje varchar(2) not null check(octanaje in ('87','91', '95', '98')), 
-	tipo_refrigerante varchar(25) not null,
+	tipo_refrigerante varchar(50) not null,
 	peso int not null,
-	descripcion varchar(200) not null,
+	descripcion varchar(255) not null,
 	nro_puestos int not null,
 	
 	primary key(cod_marca, nro_modelo),
@@ -244,7 +244,8 @@ create table ServiciosOfrecidos(
 	nro_servicio int not null,
 	
 	primary key(RIF_establecimiento, nro_servicio),
-	foreign key(RIF_establecimiento) references Establecimientos(RIF) ON DELETE CASCADE
+	foreign key(RIF_establecimiento) references Establecimientos(RIF) ON DELETE CASCADE,
+	foreign key(nro_servicio) references Servicios(nro_servicio) ON DELETE CASCADE
 );
 
 create table ActividadProductos(
