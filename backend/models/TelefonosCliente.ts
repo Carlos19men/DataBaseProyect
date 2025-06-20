@@ -27,7 +27,7 @@ export class phonesCustomer{
         //agg the ci
         request.input('CI',CI);
 
-        const result = await request.query('SELECT * FROM GetTelefonosCliente(@CI);')
+        const result = await request.query('SELECT * FROM GetTelefonosClientes(@CI);')
 
         console.log(result['recordset'])
         return result
