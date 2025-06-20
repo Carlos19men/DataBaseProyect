@@ -2,7 +2,7 @@ USE MU_DB; -- Make sure this is the correct database.
 GO
 
 --obtenemos los telefonos de un cliente especifico 
-CREATE FUNCTION GetTelefonosCliente(
+CREATE FUNCTION GetTelefonosClientes(
     @cedula VARCHAR(100) -- Good, you've added the length!
 )
 RETURNS TABLE
@@ -15,9 +15,9 @@ RETURN
     WHERE CI_cliente = @cedula
 );
 GO
-
 --select * from GetTelefonosCliente('cedula'); 
 
+--Registrar nuevos telefonos 
 IF OBJECT_ID('dbo.registrarTelefonos', 'P') IS NOT NULL
     DROP PROCEDURE dbo.registrarTelefonos;
 GO
@@ -135,7 +135,6 @@ GO
 
 
 --editar un numero existente
-
 IF OBJECT_ID('dbo.editarTelefono','P') IS NOT NULL
 	DROP PROCEDURE dbo.editarTelefono; 
 GO
