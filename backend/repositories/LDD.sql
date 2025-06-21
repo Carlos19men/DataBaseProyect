@@ -90,7 +90,7 @@ create table Modelos(
 
 create table Vehiculos(
 	codigo int not null,
-	placa varchar(20) not null,
+	placa varchar(20) not null UNIQUE,
 	aceite_utilizado_motor varchar(25),
 	aceite_utilizado_caja varchar(25),
 	resumen_mantenimiento varchar(255),
@@ -104,7 +104,7 @@ create table Vehiculos(
 	foreign key(id_marca,id_modelo) references Modelos(cod_marca, nro_modelo),  -- ON DELETE NO ACTION (POR DEFECTO)
     foreign key(CI_dueño) references Clientes(CI_cliente) ON DELETE CASCADE
 );
-
+ 
 
 create table OrdenesServicio(
 	cod_OS int not null,
