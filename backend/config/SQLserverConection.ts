@@ -10,7 +10,7 @@ const config = {
     server: process.env.DB_SERVER as string, // Afirmación de tipo
     database: process.env.DB_NAME as string, // Afirmación de tipo
     user: process.env.DB_USER as string,
-    password: '12345678',
+    password: process.env.DB_PASSWORD as string,
     options: {
         trustedConnection: true,
         integratedSecurity: true,
