@@ -28,7 +28,7 @@ create table Empleados(
 );
 
 create table Servicios(
-	nro_servicio int not null,
+	nro_servicio int identity(1,1) not null,
 	CI_superv varchar(15),
 	nombre_ser varchar(50) not null,
 	
@@ -64,7 +64,7 @@ create table Clientes(
 );
 
 create table Marcas(
-	cod_marca int not null,
+	cod_marca int identity(1,1) not null,
 	nombre_marca varchar(50) not null unique,
 	
 	primary key(cod_marca)
@@ -72,7 +72,7 @@ create table Marcas(
 
 create table Modelos(
 	cod_marca int not null,
-	nro_modelo int not null,
+	nro_modelo int identity(1,1) not null,
 	nombre varchar(100) not null,
 	aceite_caja varchar(30) not null,
 	aceite_motor varchar(30) not null,
@@ -89,7 +89,7 @@ create table Modelos(
 
 
 create table Vehiculos(
-	codigo int not null,
+	codigo int identity(1,1) not null,
 	placa varchar(20) not null UNIQUE,
 	aceite_utilizado_motor varchar(25),
 	aceite_utilizado_caja varchar(25),
@@ -105,9 +105,8 @@ create table Vehiculos(
     foreign key(CI_dueño) references Clientes(CI_cliente) ON DELETE CASCADE
 );
  
-
 create table OrdenesServicio(
-	cod_OS int not null,
+	cod_OS int identity(1,1) not null,
 	fecha_entrada date not null,
 	hora_entrada time not null,
 	hora_estimada_salida time not null,
@@ -122,7 +121,7 @@ create table OrdenesServicio(
 );
 
 create table Facturas(
-	nro_factura int not null,
+	nro_factura int identity(1,1) not null,
 	cod_OS int not null unique,
 	descuento decimal(10,3),
 	iva int not null check(iva > 0),
@@ -134,7 +133,7 @@ create table Facturas(
 );
 
 create table MetodosPago(
-	id_pago int not null,
+	id_pago int identity(1,1) not null,
 	tipo_moneda varchar(40) check( UPPER(tipo_moneda) in ('DOLARES','BOLIVARES')),
 	monto_ef decimal(10,2) check(monto_ef > 0),
 	fechaPago_Tar date,
@@ -153,7 +152,7 @@ create table MetodosPago(
 
 
 create table OrdenesCompra(
-	nro_OC int not null,
+	nro_OC int identity(1,1) not null,
 	fecha_compra date not null,
 	RIF_est varchar(20) not null,
 	
@@ -162,14 +161,14 @@ create table OrdenesCompra(
 );
 
 create table FamiliaProductos(
-	id_familia int not null,
+	id_familia int identity(1,1) not null,
 	nombre varchar(50) not null,
 
 	primary key(id_familia)
 );
 
 create table Productos(
-	id_producto int not null,
+	id_producto int identity(1,1) not null,
 	nombre varchar(50) not null,
 	tipo varchar(20) not null check(UPPER(tipo) in ('ECOLÓGICO','NO ECOLÓGICO')),
 	precio decimal(10,2) not null check(precio > 0),
@@ -212,14 +211,15 @@ create table PlanesMantenimiento(
 
 create table Actividades (
 	nro_servicio int not null,
-	nro_correlativo int not null,
-	nombre varchar(50) not null,
+	nro_correlativo int identity(1,1) not null,
+	nombre varchar(255) not null,
 	descripcion varchar(200) not null,
 	costo decimal(10,2) not null check(costo >= 0),
 	
 	primary key(nro_servicio, nro_correlativo),
 	foreign key(nro_servicio) references Servicios(nro_servicio) ON DELETE CASCADE
 );
+
 
 
 create table EmpleadosAsignados(
@@ -260,12 +260,12 @@ create table ActividadProductos(
 );
 
 create table Compras(
-	nro_ordencompra int not null,
+	nro_compra int identity(1,1) not null,
 	id_producto int not null,
 	cantidad_producto int not null check(cantidad_producto > 0),
 	precio_und decimal(10,2) not null check(precio_und > 0),
 	
-	primary key(nro_ordencompra),
+	primary key(nro_compra),
 	foreign key(id_producto) references Productos(id_producto) ON DELETE CASCADE
 ); 
 
@@ -308,7 +308,7 @@ create table ActividadesOS(
 create table Almacena(
 	RIF_establecimiento varchar(20) not null,
 	id_producto int not null,
-	cantidad int not null check(cantidad > 0),
+	cantidad int not null check(cantidad >= 0),
 	
 	primary key(RIF_establecimiento, id_producto),
 	foreign key(RIF_establecimiento) references Establecimientos(RIF) ON DELETE CASCADE,

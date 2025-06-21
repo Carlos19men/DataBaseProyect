@@ -3,98 +3,90 @@ USE MU_DB;
 
 --INSERTAMOS EN LA TABLA MARCAS 
 
-INSERT INTO Marcas (cod_marca,nombre_marca) VALUES
-(1,'Toyota'),
-(2,'Ford'),
-(3,'Chevrolet'),
-(4,'Volkswagen'),
-(5,'Mercedes-Benz'),
-(6,'BMW'),
-(7,'Honda'),
-(8,'Hyundai'),
-(9,'Nissan'),
-(10,'Audi');
- 
+INSERT INTO Marcas (nombre_marca) VALUES
+('Toyota'),
+('Ford'),
+('Chevrolet'),
+('Volkswagen'),
+('Mercedes-Benz'),
+('BMW'),
+('Honda'),
+('Hyundai'),
+('Nissan'),
+('Audi');
 
---insertamos los modelos 
-INSERT INTO Modelos (cod_marca, nro_modelo, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puestos) VALUES
-(1,1, 'Corolla Sedán XLE', 'ATF WS', '0W-20 Sintético','91', 'SLLC Rojo', 1350, 'Sedán compacto y confiable, bajo consumo.', 4),
-(1,2, 'Hilux SRV 4x4', 'ATF WS', '5W-30 Sintético', '91', 'SLLC Rojo', 2100, 'Camioneta robusta para trabajo y aventura.', 4),
-(1,3, 'RAV4 Híbrida Limited', 'ATF WS', '0W-20 Sintético','91', 'SLLC Rosa', 1700, 'SUV híbrida, espaciosa y eficiente.', 5),
-(1,4, 'Camry XSE V6', 'ATF WS', '5W-30 Sintético', '95', 'SLLC Rojo', 1650, 'Sedán mediano de lujo con potente motor V6.', 4),
-(1,5, 'Land Cruiser Prado TX-L', 'ATF WS', '5W-30 Sintético', '91', 'SLLC Rojo', 2300, 'SUV todoterreno premium, gran capacidad.', 5);
+ 
+ -- 1. Modelos para Toyota (cod_marca = 1)
+INSERT INTO Modelos (cod_marca, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puestos) VALUES
+(1, 'Corolla Sedán XLE', 'ATF WS', '0W-20 Sintético','91', 'SLLC Rojo', 1350, 'Sedán compacto y confiable, bajo consumo.', 4),
+(1, 'Hilux SRV 4x4', 'ATF WS', '5W-30 Sintético', '91', 'SLLC Rojo', 2100, 'Camioneta robusta para trabajo y aventura.', 4),
+(1, 'RAV4 Híbrida Limited', 'ATF WS', '0W-20 Sintético','91', 'SLLC Rosa', 1700, 'SUV híbrida, espaciosa y eficiente.', 5),
+(1, 'Camry XSE V6', 'ATF WS', '5W-30 Sintético', '95', 'SLLC Rojo', 1650, 'Sedán mediano de lujo con potente motor V6.', 4),
+(1, 'Land Cruiser Prado TX-L', 'ATF WS', '5W-30 Sintético', '91', 'SLLC Rojo', 2300, 'SUV todoterreno premium, gran capacidad.', 5),
 
 -- 2. Modelos para Ford (cod_marca = 2)
-INSERT INTO Modelos (cod_marca, nro_modelo, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puestos) VALUES
-(2,1, 'F-150 XLT', 'Mercon LV', '5W-30 Sintético','87', 'Motorcraft Gold', 2350, 'Camioneta pickup líder en ventas, versátil.', 4),
-(2,2, 'Mustang GT', 'Mercon LV', '5W-20 Sintético', '95', 'Motorcraft Orange', 1700, 'Deportivo icónico con motor V8 potente.', 2),
-(2,3, 'Explorer Limited', 'Mercon LV', '5W-30 Sintético','87', 'Motorcraft Gold', 2050, 'SUV familiar con tres filas de asientos.', 5),
-(2,4, 'Ranger XLT', 'Mercon LV', '5W-30 Sintético', '91', 'Motorcraft Gold', 1900, 'Pickup mediana robusta y confiable.', 4),
-(2,5, 'Escape Titanium', 'Mercon LV', '5W-20 Sintético', '87', 'Motorcraft Orange', 1550, 'Crossover compacto, ágil y tecnológico.', 5);
+(2, 'F-150 XLT', 'Mercon LV', '5W-30 Sintético','87', 'Motorcraft Gold', 2350, 'Camioneta pickup líder en ventas, versátil.', 4),
+(2, 'Mustang GT', 'Mercon LV', '5W-20 Sintético', '95', 'Motorcraft Orange', 1700, 'Deportivo icónico con motor V8 potente.', 2),
+(2, 'Explorer Limited', 'Mercon LV', '5W-30 Sintético','87', 'Motorcraft Gold', 2050, 'SUV familiar con tres filas de asientos.', 5),
+(2, 'Ranger XLT', 'Mercon LV', '5W-30 Sintético', '91', 'Motorcraft Gold', 1900, 'Pickup mediana robusta y confiable.', 4),
+(2, 'Escape Titanium', 'Mercon LV', '5W-20 Sintético', '87', 'Motorcraft Orange', 1550, 'Crossover compacto, ágil y tecnológico.', 5),
 
 -- 3. Modelos para Chevrolet (cod_marca = 3)
-INSERT INTO Modelos (cod_marca, nro_modelo, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puestos) VALUES
-(3,1, 'Silverado LTZ', 'Dexron VI', '5W-30 Sintético', '98', 'Dex-Cool', 2400, 'Camioneta de tamaño completo, potente y duradera.', 4),
-(3,2, 'Camaro SS', 'Dexron VI', '5W-30 Sintético', '87', 'Dex-Cool', 1750, 'Muscle car deportivo y de alto rendimiento.', 2),
-(3,3, 'Tahoe Premier', 'Dexron VI', '0W-20 Sintético','87', 'Dex-Cool', 2500, 'SUV grande, ideal para familias numerosas.', 5),
-(3,4, 'Equinox RS', 'Dexron VI', '0W-20 Sintético', '87', 'Dex-Cool', 1600, 'Crossover compacto con diseño moderno.', 5),
-(3,5, 'Malibu LT', 'Dexron VI', '5W-30 Sintético', '87', 'Dex-Cool', 1450, 'Sedán mediano elegante y confortable.', 4);
+(3, 'Silverado LTZ', 'Dexron VI', '5W-30 Sintético', '98', 'Dex-Cool', 2400, 'Camioneta de tamaño completo, potente y duradera.', 4),
+(3, 'Camaro SS', 'Dexron VI', '5W-30 Sintético', '87', 'Dex-Cool', 1750, 'Muscle car deportivo y de alto rendimiento.', 2),
+(3, 'Tahoe Premier', 'Dexron VI', '0W-20 Sintético','87', 'Dex-Cool', 2500, 'SUV grande, ideal para familias numerosas.', 5),
+(3, 'Equinox RS', 'Dexron VI', '0W-20 Sintético', '87', 'Dex-Cool', 1600, 'Crossover compacto con diseño moderno.', 5),
+(3, 'Malibu LT', 'Dexron VI', '5W-30 Sintético', '87', 'Dex-Cool', 1450, 'Sedán mediano elegante y confortable.', 4),
 
 -- 4. Modelos para Volkswagen (cod_marca = 4)
-INSERT INTO Modelos (cod_marca, nro_modelo, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puestos) VALUES
-(4, 1, 'Golf GTI', 'DSG Fluid', '5W-40 Sintético', '95', 'G13 Plus', 1400, 'Hatchback deportivo, divertido de conducir.', 5),
-(4, 2, 'Jetta Highline', 'DSG Fluid', '0W-20 Sintético', '91', 'G13 Plus', 1380, 'Sedán compacto con interior espacioso.', 4),
-(4, 3, 'Tiguan Allspace', 'DSG Fluid', '5W-30 Sintético', '91', 'G13 Plus', 1800, 'SUV familiar con opción de 7 asientos.', 5),
-(4, 4, 'Passat Elegance', 'DSG Fluid', '0W-20 Sintético', '91', 'G13 Plus', 1550, 'Sedán de tamaño mediano con acabados premium.', 4),
-(4, 5, 'Amarok V6 TDI', 'ATF 8HP', '5W-30 Sintético', '91', 'G13 Plus', 2200, 'Pickup robusta con motor diésel potente.', 4);
+(4, 'Golf GTI', 'DSG Fluid', '5W-40 Sintético', '95', 'G13 Plus', 1400, 'Hatchback deportivo, divertido de conducir.', 5),
+(4, 'Jetta Highline', 'DSG Fluid', '0W-20 Sintético', '91', 'G13 Plus', 1380, 'Sedán compacto con interior espacioso.', 4),
+(4, 'Tiguan Allspace', 'DSG Fluid', '5W-30 Sintético', '91', 'G13 Plus', 1800, 'SUV familiar con opción de 7 asientos.', 5),
+(4, 'Passat Elegance', 'DSG Fluid', '0W-20 Sintético', '91', 'G13 Plus', 1550, 'Sedán de tamaño mediano con acabados premium.', 4),
+(4, 'Amarok V6 TDI', 'ATF 8HP', '5W-30 Sintético', '91', 'G13 Plus', 2200, 'Pickup robusta con motor diésel potente.', 4),
 
 -- 5. Modelos para Mercedes-Benz (cod_marca = 5)
-INSERT INTO Modelos (cod_marca, nro_modelo, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puestos) VALUES
-(5, 1, 'Clase C 300', 'MB 236.15', '5W-40 Sintético', '95', 'MB 325.0', 1600, 'Sedán de lujo, elegante y tecnológico.', 4),
-(5, 2, 'Clase E 450', 'MB 236.15', '5W-40 Sintético', '95', 'MB 325.0', 1850, 'Sedán ejecutivo con gran confort y potencia.', 4),
-(5, 3, 'GLC 300', 'MB 236.15', '5W-30 Sintético', '95', 'MB 325.0', 1800, 'SUV compacto premium, versátil y sofisticado.', 5),
-(5, 4, 'Clase A 200', 'MB 236.15', '0W-30 Sintético', '95', 'MB 325.0', 1400, 'Compacto premium, ideal para la ciudad.', 5),
-(5, 5, 'GLE 450', 'MB 236.15', '0W-30 Sintético', '95', 'MB 325.0', 2200, 'SUV de lujo de tamaño mediano, espacioso y potente.', 5);
+(5, 'Clase C 300', 'MB 236.15', '5W-40 Sintético', '95', 'MB 325.0', 1600, 'Sedán de lujo, elegante y tecnológico.', 4),
+(5, 'Clase E 450', 'MB 236.15', '5W-40 Sintético', '95', 'MB 325.0', 1850, 'Sedán ejecutivo con gran confort y potencia.', 4),
+(5, 'GLC 300', 'MB 236.15', '5W-30 Sintético', '95', 'MB 325.0', 1800, 'SUV compacto premium, versátil y sofisticado.', 5),
+(5, 'Clase A 200', 'MB 236.15', '0W-30 Sintético', '95', 'MB 325.0', 1400, 'Compacto premium, ideal para la ciudad.', 5),
+(5, 'GLE 450', 'MB 236.15', '0W-30 Sintético', '95', 'MB 325.0', 2200, 'SUV de lujo de tamaño mediano, espacioso y potente.', 5),
 
 -- 6. Modelos para BMW (cod_marca = 6)
-INSERT INTO Modelos (cod_marca, nro_modelo, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puestos) VALUES
-(6, 1, 'Serie 3 330i', 'ZF LifeguardFluid 8', '5W-30 Sintético', '95', 'BMW LL-01', 1550, 'Sedán deportivo, excelente dinámica de conducción.', 4),
-(6, 2, 'Serie 5 540i', 'ZF LifeguardFluid 8', '5W-30 Sintético', '98', 'BMW LL-01', 1750, 'Sedán ejecutivo, combina lujo y deportividad.', 4),
-(6, 3, 'X5 xDrive40i', 'ZF LifeguardFluid 8', '0W-30 Sintético', '95', 'BMW LL-01', 2150, 'SUV premium de tamaño mediano, versátil.', 5),
-(6, 4, 'X3 xDrive30i', 'ZF LifeguardFluid 8', '0W-30 Sintético', '95', 'BMW LL-01', 1850, 'SUV compacto premium, ágil y espacioso.', 5),
-(6, 5, 'Serie 1 118i', 'ZF LifeguardFluid 8', '0W-20 Sintético', '91', 'BMW LL-01', 1350, 'Hatchback compacto, dinámico y eficiente.', 5);
+(6, 'Serie 3 330i', 'ZF LifeguardFluid 8', '5W-30 Sintético', '95', 'BMW LL-01', 1550, 'Sedán deportivo, excelente dinámica de conducción.', 4),
+(6, 'Serie 5 540i', 'ZF LifeguardFluid 8', '5W-30 Sintético', '98', 'BMW LL-01', 1750, 'Sedán ejecutivo, combina lujo y deportividad.', 4),
+(6, 'X5 xDrive40i', 'ZF LifeguardFluid 8', '0W-30 Sintético', '95', 'BMW LL-01', 2150, 'SUV premium de tamaño mediano, versátil.', 5),
+(6, 'X3 xDrive30i', 'ZF LifeguardFluid 8', '0W-30 Sintético', '95', 'BMW LL-01', 1850, 'SUV compacto premium, ágil y espacioso.', 5),
+(6, 'Serie 1 118i', 'ZF LifeguardFluid 8', '0W-20 Sintético', '91', 'BMW LL-01', 1350, 'Hatchback compacto, dinámico y eficiente.', 5),
 
 -- 7. Modelos para Honda (cod_marca = 7)
-INSERT INTO Modelos (cod_marca, nro_modelo, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puestos) VALUES
-(7, 1, 'Civic EX', 'Honda DW-1', '0W-20 Sintético', '91', 'Honda Type 2', 1300, 'Sedán compacto, confiable y con buen rendimiento.', 4),
-(7, 2, 'CR-V Touring', 'Honda DW-1', '0W-20 Sintético', '91', 'Honda Type 2', 1580, 'SUV compacto, espacioso y versátil.', 5),
-(7, 3, 'Accord Sport', 'Honda DW-1', '0W-20 Sintético', '91', 'Honda Type 2', 1450, 'Sedán mediano elegante y bien equipado.', 4),
-(7, 4, 'Pilot EX-L', 'Honda DW-1', '0W-20 Sintético', '87', 'Honda Type 2', 1900, 'SUV familiar con tres filas de asientos.', 5),
-(7, 5, 'HR-V Sport', 'Honda DW-1', '0W-20 Sintético', '87', 'Honda Type 2', 1300, 'Crossover subcompacto, práctico para la ciudad.', 5);
+(7, 'Civic EX', 'Honda DW-1', '0W-20 Sintético', '91', 'Honda Type 2', 1300, 'Sedán compacto, confiable y con buen rendimiento.', 4),
+(7, 'CR-V Touring', 'Honda DW-1', '0W-20 Sintético', '91', 'Honda Type 2', 1580, 'SUV compacto, espacioso y versátil.', 5),
+(7, 'Accord Sport', 'Honda DW-1', '0W-20 Sintético', '91', 'Honda Type 2', 1450, 'Sedán mediano elegante y bien equipado.', 4),
+(7, 'Pilot EX-L', 'Honda DW-1', '0W-20 Sintético', '87', 'Honda Type 2', 1900, 'SUV familiar con tres filas de asientos.', 5),
+(7, 'HR-V Sport', 'Honda DW-1', '0W-20 Sintético', '87', 'Honda Type 2', 1300, 'Crossover subcompacto, práctico para la ciudad.', 5),
 
 -- 8. Modelos para Hyundai (cod_marca = 8)
-INSERT INTO Modelos (cod_marca, nro_modelo, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puestos) VALUES
-(8, 1, 'Elantra GLS', 'Hyundai SP-IV', '5W-30 Sintético', '87', 'Hyundai Long Life', 1300, 'Sedán compacto moderno y económico.', 4),
-(8, 2, 'Tucson Limited', 'Hyundai SP-IV', '0W-20 Sintético', '87', 'Hyundai Long Life', 1600, 'SUV compacto con diseño vanguardista.', 5),
-(8, 3, 'Santa Fe Calligraphy', 'Hyundai SP-IV', '0W-20 Sintético', '87', 'Hyundai Long Life', 1950, 'SUV mediano, espacioso y con buen equipamiento.', 5),
-(8, 4, 'Kona N Line', 'Hyundai SP-IV', '0W-20 Sintético', '91', 'Hyundai Long Life', 1400, 'SUV subcompacto, juvenil y ágil.', 5),
-(8, 5, 'Sonata N Line', 'Hyundai SP-IV', '5W-30 Sintético', '91', 'Hyundai Long Life', 1550, 'Sedán mediano con diseño deportivo y tecnología.', 4);
+(8, 'Elantra GLS', 'Hyundai SP-IV', '5W-30 Sintético', '87', 'Hyundai Long Life', 1300, 'Sedán compacto moderno y económico.', 4),
+(8, 'Tucson Limited', 'Hyundai SP-IV', '0W-20 Sintético', '87', 'Hyundai Long Life', 1600, 'SUV compacto con diseño vanguardista.', 5),
+(8, 'Santa Fe Calligraphy', 'Hyundai SP-IV', '0W-20 Sintético', '87', 'Hyundai Long Life', 1950, 'SUV mediano, espacioso y con buen equipamiento.', 5),
+(8, 'Kona N Line', 'Hyundai SP-IV', '0W-20 Sintético', '91', 'Hyundai Long Life', 1400, 'SUV subcompacto, juvenil y ágil.', 5),
+(8, 'Sonata N Line', 'Hyundai SP-IV', '5W-30 Sintético', '91', 'Hyundai Long Life', 1550, 'Sedán mediano con diseño deportivo y tecnología.', 4),
 
 -- 9. Modelos para Nissan (cod_marca = 9)
-INSERT INTO Modelos (cod_marca, nro_modelo, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puestos) VALUES
-(9, 1, 'Sentra SR', 'Nissan NS-3', '0W-20 Sintético', '87', 'Nissan Long Life', 1350, 'Sedán compacto, cómodo y confiable.', 4),
-(9, 2, 'Titan Pro-4X', 'Nissan Matic-S', '5W-30 Sintético', '87', 'Nissan Long Life', 2500, 'Camioneta pickup de trabajo pesado.', 4),
-(9, 3, 'Rogue SL', 'Nissan NS-3', '0W-20 Sintético', '87', 'Nissan Long Life', 1650, 'Crossover popular, familiar y versátil.', 5),
-(9, 4, 'Altima SR', 'Nissan NS-3', '0W-20 Sintético', '87', 'Nissan Long Life', 1500, 'Sedán mediano, eficiente y de buen manejo.', 4),
-(9, 5, 'Frontier Pro-4X', 'Nissan Matic-S', '5W-30 Sintético', '87', 'Nissan Long Life', 1900, 'Pickup mediana, robusta y apta para off-road.', 4);
+(9, 'Sentra SR', 'Nissan NS-3', '0W-20 Sintético', '87', 'Nissan Long Life', 1350, 'Sedán compacto, cómodo y confiable.', 4),
+(9, 'Titan Pro-4X', 'Nissan Matic-S', '5W-30 Sintético', '87', 'Nissan Long Life', 2500, 'Camioneta pickup de trabajo pesado.', 4),
+(9, 'Rogue SL', 'Nissan NS-3', '0W-20 Sintético', '87', 'Nissan Long Life', 1650, 'Crossover popular, familiar y versátil.', 5),
+(9, 'Altima SR', 'Nissan NS-3', '0W-20 Sintético', '87', 'Nissan Long Life', 1500, 'Sedán mediano, eficiente y de buen manejo.', 4),
+(9, 'Frontier Pro-4X', 'Nissan Matic-S', '5W-30 Sintético', '87', 'Nissan Long Life', 1900, 'Pickup mediana, robusta y apta para off-road.', 4),
 
 -- 10. Modelos para Audi (cod_marca = 10)
-INSERT INTO Modelos (cod_marca, nro_modelo, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puestos) VALUES
-(10, 1, 'A4 S Line', 'ZF LifeguardFluid 8', '5W-30 Sintético', '95', 'G13 Plus', 1600, 'Sedán deportivo y elegante, buen rendimiento.', 4),
-(10, 2, 'Q5 S Line', 'ZF LifeguardFluid 8', '0W-20 Sintético', '95', 'G13 Plus', 1850, 'SUV de lujo compacto, ideal para la ciudad.', 5),
-(10, 3, 'A3 Sportback', 'DSG Fluid', '0W-20 Sintético', '91', 'G13 Plus', 1450, 'Hatchback premium, ágil y tecnológico.', 5),
-(10, 4, 'Q7 Prestige', 'ZF LifeguardFluid 8', '0W-20 Sintético', '95', 'G13 Plus', 2250, 'SUV de lujo grande, espacioso y potente.', 5),
-(10, 5, 'A6 S Line', 'ZF LifeguardFluid 8', '5W-30 Sintético', '95', 'G13 Plus', 1800, 'Sedán ejecutivo, combina lujo y tecnología avanzada.', 4);
+(10, 'A4 S Line', 'ZF LifeguardFluid 8', '5W-30 Sintético', '95', 'G13 Plus', 1600, 'Sedán deportivo y elegante, buen rendimiento.', 4),
+(10, 'Q5 S Line', 'ZF LifeguardFluid 8', '0W-20 Sintético', '95', 'G13 Plus', 1850, 'SUV de lujo compacto, ideal para la ciudad.', 5),
+(10, 'A3 Sportback', 'DSG Fluid', '0W-20 Sintético', '91', 'G13 Plus', 1450, 'Hatchback premium, ágil y tecnológico.', 5),
+(10, 'Q7 Prestige', 'ZF LifeguardFluid 8', '0W-20 Sintético', '95', 'G13 Plus', 2250, 'SUV de lujo grande, espacioso y potente.', 5),
+(10, 'A6 S Line', 'ZF LifeguardFluid 8', '5W-30 Sintético', '95', 'G13 Plus', 1800, 'Sedán ejecutivo, combina lujo y tecnología avanzada.', 4);
+
 
 --Insertamos los establecimientos 
 INSERT INTO Establecimientos (RIF,nombre, ciudad) 
@@ -272,115 +264,116 @@ UPDATE Establecimientos SET CI_encargado = '12345790', fecha_encargado = getDAte
 
 
 --insertamos los servicios 
-INSERT INTO Servicios (nro_servicio, nombre_ser) VALUES 
-	(1,'Lavado y Pulitura de Carrocería'),
-	(2,'Lavado y Pulitura de  Motor y Chasis'),
-	(3,'Cambio de Aceite'),
-	(4,'Limpieza de TApicería '),
-	(5,'Pulitura de Cristales y Sellado'),
-    (6,'Descontaminación de Pintura'),
-    (7,'Limpieza y Acondicionamiento de Cuero'),
-    (8,'Tratamiento Hidrofóbico para Carrocería'),
-    (9,'Revisión y Ajuste de Frenos'),
-    (10,'Cambio de Pastillas y Discos de Freno'),
-    (11,'Reemplazo de Amortiguadores y Espirales'),
-    (12,'Revisión y Recarga de Aire Acondicionado'),
-    (13,'Servicio de Inyectores'),
-    (14,'Diagnóstico de Tren Delantero'),
-	(15, 'Detallado Interior Premium'),
-	(16, 'Mantenimiento Básico Preventivo Integral'),
-	(17, 'Restauración y Protección de Pintura'),
-	(18, 'Servicio Integral de Frenos'),
-	(19, 'Paquete de Limpieza y Protección Exterior Superior');
+INSERT INTO Servicios ( nombre_ser) VALUES 
+('Lavado y Pulitura de Carrocería'),
+('Lavado y Pulitura de  Motor y Chasis'),
+('Cambio de Aceite'),
+('Limpieza de Tapicería '),
+('Pulitura de Cristales y Sellado'),
+('Descontaminación de Pintura'),
+('Limpieza y Acondicionamiento de Cuero'),
+('Tratamiento Hidrofóbico para Carrocería'),
+('Revisión y Ajuste de Frenos'),
+('Cambio de Pastillas y Discos de Freno'),
+('Reemplazo de Amortiguadores y Espirales'),
+('Revisión y Recarga de Aire Acondicionado'),
+('Servicio de Inyectores'),
+('Diagnóstico de Tren Delantero'),
+('Detallado Interior Premium'),
+('Mantenimiento Básico Preventivo Integral'),
+('Restauración y Protección de Pintura'),
+('Servicio Integral de Frenos'),
+('Paquete de Limpieza y Protección Exterior Superior');
 
 --Insertamos actividades
 -- Actividades para el Servicio: 1 - Lavado y Pulitura de Carrocería
-INSERT INTO Actividades (nro_servicio, nro_correlativo, nombre, descripcion, costo) VALUES
-(1, 1, 'Aspirado del Vehículo', 'Eliminación de polvo y suciedad del interior del vehículo.', 1.50),
-(1, 2, 'Lavado de Carrocería', 'Limpieza profunda de la superficie exterior del vehículo con jabón especializado.', 2.50),
-(1, 3, 'Pulitura de Carrocería', 'Aplicación y frotado de pulimento para restaurar el brillo y eliminar pequeñas imperfecciones.', 5.00),
-(1, 4, 'Lavado de Rines y Cauchos', 'Limpieza y desengrase de rines y neumáticos para eliminar suciedad y polvo de frenos.', 1.00),
+INSERT INTO Actividades (nro_servicio, nombre, descripcion, costo) VALUES
+-- Actividades para el Servicio: 1 - Lavado y Pulitura de Carrocería
+(1, 'Aspirado del Vehículo', 'Eliminación de polvo y suciedad del interior del vehículo.', 1.50),
+(1, 'Lavado de Carrocería', 'Limpieza profunda de la superficie exterior del vehículo con jabón especializado.', 2.50),
+(1, 'Pulitura de Carrocería', 'Aplicación y frotado de pulimento para restaurar el brillo y eliminar pequeñas imperfecciones.', 5.00),
+(1, 'Lavado de Rines y Cauchos', 'Limpieza y desengrase de rines y neumáticos para eliminar suciedad y polvo de frenos.', 1.00),
 
 -- Actividades para el Servicio: 2 - Lavado y Pulitura de Motor y Chasis
-(2, 5, 'Lavado del Motor', 'Limpieza del motor utilizando métodos en seco o con líquidos especiales.', 3.00),
-(2, 6, 'Lavado del Chasis', 'Limpieza de la parte inferior del vehículo para eliminar barro y suciedad acumulada.', 3.00),
-(2, 7, 'Aplicación de Grafito en Chasis', 'Aplicación de grafito para proteger el chasis contra la corrosión y reducir fricción.', 4.00),
+(2, 'Lavado del Motor', 'Limpieza del motor utilizando métodos en seco o con líquidos especiales.', 3.00),
+(2, 'Lavado del Chasis', 'Limpieza de la parte inferior del vehículo para eliminar barro y suciedad acumulada.', 3.00),
+(2, 'Aplicación de Grafito en Chasis', 'Aplicación de grafito para proteger el chasis contra la corrosión y reducir fricción.', 4.00),
 
 -- Actividades para el Servicio: 3 - Cambio de Aceite
-(3, 8, 'Extracción de Aceite Usado', 'Drenado completo del aceite de motor usado.', 0.00),
-(3, 9, 'Reemplazo de Filtro de Aceite', 'Remoción del filtro viejo e instalación de uno nuevo.', 0.00),
-(3, 10, 'Relleno con Nuevo Aceite', 'Adición de la cantidad correcta de aceite nuevo al motor.', 0.00),
+(3, 'Extracción de Aceite Usado', 'Drenado completo del aceite de motor usado.', 0.00),
+(3, 'Reemplazo de Filtro de Aceite', 'Remoción del filtro viejo e instalación de uno nuevo.', 0.00),
+(3, 'Relleno con Nuevo Aceite', 'Adición de la cantidad correcta de aceite nuevo al motor.', 0.00),
 
 -- Actividades para el Servicio: 4 - Limpieza de Tapicería
-(4, 11, 'Aspirado Profundo de Tapicería', 'Aspirado exhaustivo para eliminar polvo, migas y suciedad suelta.', 1.50),
-(4, 12, 'Lavado de Tapicería', 'Aplicación de productos y limpieza húmeda de todas las superficies de tela.', 2.00),
-(4, 13, 'Secado de Tapicería', 'Proceso de secado para evitar humedad y malos olores.', 1.50),
-(4, 14, 'Desodorización Interior', 'Aplicación de productos para eliminar malos olores y dejar una fragancia fresca.', 0.00),
-(4, 15, 'Desmanchado de Tapicería', 'Tratamiento específico para eliminar manchas difíciles en la tapicería.', 2.00),
+(4, 'Aspirado Profundo de Tapicería', 'Aspirado exhaustivo para eliminar polvo, migas y suciedad suelta.', 1.50),
+(4, 'Lavado de Tapicería', 'Aplicación de productos y limpieza húmeda de todas las superficies de tela.', 2.00),
+(4, 'Secado de Tapicería', 'Proceso de secado para evitar humedad y malos olores.', 1.50),
+(4, 'Desodorización Interior', 'Aplicación de productos para eliminar malos olores y dejar una fragancia fresca.', 0.00),
+(4, 'Desmanchado de Tapicería', 'Tratamiento específico para eliminar manchas difíciles en la tapicería.', 2.00),
 
 -- Actividades para el Servicio: 5 - Pulitura de Cristales y Sellado
-(5, 16, 'Limpieza Detallada de Cristales', 'Limpieza minuciosa de todas las superficies de cristal, interior y exterior.', 3.00),
-(5, 17, 'Pulitura de Cristales', 'Proceso para eliminar marcas de agua, pequeños arañazos y mejorar la transparencia.', 7.00),
-(5, 18, 'Aplicación de Sellador Hidrofóbico', 'Aplicación de un producto que repele el agua para mejorar la visibilidad y facilidad de limpieza.', 5.00),
+(5, 'Limpieza Detallada de Cristales', 'Limpieza minuciosa de todas las superficies de cristal, interior y exterior.', 3.00),
+(5, 'Pulitura de Cristales', 'Proceso para eliminar marcas de agua, pequeños arañazos y mejorar la transparencia.', 7.00),
+(5, 'Aplicación de Sellador Hidrofóbico', 'Aplicación de un producto que repele el agua para mejorar la visibilidad y facilidad de limpieza.', 5.00),
 
 -- Actividades para el Servicio: 6 - Descontaminación de Pintura
-(6, 19, 'Lavado y Secado Pre-tratamiento', 'Lavado inicial para eliminar suciedad superficial antes de la descontaminación.', 3.00),
-(6, 20, 'Aplicación de Descontaminante Férrico', 'Rociado de producto para disolver partículas de hierro incrustadas.', 8.00),
-(6, 21, 'Uso de Barra de Arcilla (Clay Bar)', 'Proceso manual con clay bar para eliminar contaminantes adheridos a la pintura.', 12.00),
-(6, 22, 'Enjuague y Secado Final', 'Enjuague y secado para preparar la superficie para el siguiente paso (pulido o protección).', 2.00),
+(6, 'Lavado y Secado Pre-tratamiento', 'Lavado inicial para eliminar suciedad superficial antes de la descontaminación.', 3.00),
+(6, 'Aplicación de Descontaminante Férrico', 'Rociado de producto para disolver partículas de hierro incrustadas.', 8.00),
+(6, 'Uso de Barra de Arcilla (Clay Bar)', 'Proceso manual con clay bar para eliminar contaminantes adheridos a la pintura.', 12.00),
+(6, 'Enjuague y Secado Final', 'Enjuague y secado para preparar la superficie para el siguiente paso (pulido o protección).', 2.00),
 
 -- Actividades para el Servicio: 7 - Limpieza y Acondicionamiento de Cuero
-(7, 23, 'Aspirado de Superficies de Cuero', 'Remoción de polvo y residuos de todas las áreas de cuero.', 2.00),
-(7, 24, 'Limpieza Profunda de Cuero', 'Aplicación y frotado de limpiador específico para cuero para eliminar suciedad y grasa.', 10.00),
-(7, 25, 'Acondicionamiento y Nutrición de Cuero', 'Aplicación de un bálsamo o acondicionador para hidratar y proteger el cuero.', 8.00),
+(7, 'Aspirado de Superficies de Cuero', 'Remoción de polvo y residuos de todas las áreas de cuero.', 2.00),
+(7, 'Limpieza Profunda de Cuero', 'Aplicación y frotado de limpiador específico para cuero para eliminar suciedad y grasa.', 10.00),
+(7, 'Acondicionamiento y Nutrición de Cuero', 'Aplicación de un bálsamo o acondicionador para hidratar y proteger el cuero.', 8.00),
 
 -- Actividades para el Servicio: 8 - Tratamiento Hidrofóbico para Carrocería
-(8, 26, 'Preparación de Superficie', 'Lavado, secado y descontaminación ligera para asegurar la adhesión del tratamiento.', 10.00),
-(8, 27, 'Aplicación de Capa Base Hidrofóbica', 'Aplicación meticulosa del recubrimiento cerámico o sellador hidrofóbico.', 25.00),
-(8, 28, 'Curado y Secado Inicial', 'Tiempo de espera y secado para que el producto se adhiera correctamente a la pintura.', 5.00),
-(8, 29, 'Inspección Final y Retiro de Excesos', 'Revisión minuciosa y pulido suave para un acabado perfecto.', 5.00),
+(8, 'Preparación de Superficie', 'Lavado, secado y descontaminación ligera para asegurar la adhesión del tratamiento.', 10.00),
+(8, 'Aplicación de Capa Base Hidrofóbica', 'Aplicación meticulosa del recubrimiento cerámico o sellador hidrofóbico.', 25.00),
+(8, 'Curado y Secado Inicial', 'Tiempo de espera y secado para que el producto se adhiera correctamente a la pintura.', 5.00),
+(8, 'Inspección Final y Retiro de Excesos', 'Revisión minuciosa y pulido suave para un acabado perfecto.', 5.00),
 
 -- Actividades para el Servicio: 9 - Revisión y Ajuste de Frenos
-(9, 30, 'Inspección Visual de Componentes de Freno', 'Revisión de pastillas, discos, cálipers, latiguillos y nivel de líquido de frenos.', 10.00),
-(9, 31, 'Limpieza y Lubricación de Cáliper', 'Limpieza de los componentes del cáliper y lubricación de pines de deslizamiento.', 15.00),
-(9, 32, 'Ajuste del Freno de Mano', 'Verificación y ajuste de la tensión del cable del freno de estacionamiento.', 10.00),
-(9, 33, 'Prueba de Frenado y Seguridad', 'Prueba en carretera para verificar el correcto funcionamiento del sistema.', 5.00),
+(9, 'Inspección Visual de Componentes de Freno', 'Revisión de pastillas, discos, cálipers, latiguillos y nivel de líquido de frenos.', 10.00),
+(9, 'Limpieza y Lubricación de Cáliper', 'Limpieza de los componentes del cáliper y lubricación de pines de deslizamiento.', 15.00),
+(9, 'Ajuste del Freno de Mano', 'Verificación y ajuste de la tensión del cable del freno de estacionamiento.', 10.00),
+(9, 'Prueba de Frenado y Seguridad', 'Prueba en carretera para verificar el correcto funcionamiento del sistema.', 5.00),
 
 -- Actividades para el Servicio: 10 - Cambio de Pastillas y Discos de Freno
-(10, 34, 'Desmontaje de Rueda y Cáliper', 'Retiro de la rueda y desarme del conjunto del cáliper de freno.', 15.00),
-(10, 35, 'Remoción de Pastillas y Discos Viejos', 'Extracción de las pastillas gastadas y los discos de freno usados.', 15.00),
-(10, 36, 'Limpieza de la Masa y Soporte', 'Limpieza de la superficie de montaje del disco y el soporte del cáliper.', 10.00),
-(10, 37, 'Instalación de Pastillas y Discos Nuevos', 'Montaje de los nuevos discos y pastillas de freno.', 20.00),
-(10, 38, 'Purga del Sistema de Frenos (si es necesario)', 'Eliminación de aire del sistema hidráulico para asegurar una presión adecuada.', 15.00),
-(10, 39, 'Montaje de Rueda y Prueba Final', 'Reinstalación de la rueda y prueba de frenado para verificar la eficacia.', 10.00),
+(10, 'Desmontaje de Rueda y Cáliper', 'Retiro de la rueda y desarme del conjunto del cáliper de freno.', 15.00),
+(10, 'Remoción de Pastillas y Discos Viejos', 'Extracción de las pastillas gastadas y los discos de freno usados.', 15.00),
+(10, 'Limpieza de la Masa y Soporte', 'Limpieza de la superficie de montaje del disco y el soporte del cáliper.', 10.00),
+(10, 'Instalación de Pastillas y Discos Nuevos', 'Montaje de los nuevos discos y pastillas de freno.', 20.00),
+(10, 'Purga del Sistema de Frenos (si es necesario)', 'Eliminación de aire del sistema hidráulico para asegurar una presión adecuada.', 15.00),
+(10, 'Montaje de Rueda y Prueba Final', 'Reinstalación de la rueda y prueba de frenado para verificar la eficacia.', 10.00),
 
 -- Actividades para el Servicio: 11 - Reemplazo de Amortiguadores y Espirales
-(11, 40, 'Desmontaje de Rueda y Conjunto de Suspensión', 'Remoción de la rueda y los componentes antiguos del amortiguador/espiral.', 20.00),
-(11, 41, 'Instalación de Amortiguadores y Espirales Nuevos', 'Montaje de los nuevos componentes de suspensión en su lugar.', 30.00),
-(11, 42, 'Revisión de Componentes Adyacentes', 'Inspección de bujes, rótulas y otros elementos cercanos por desgaste.', 10.00),
-(11, 43, 'Montaje de Rueda y Ajuste Inicial', 'Reinstalación de la rueda y ajuste básico de torque.', 10.00),
-(11, 44, 'Prueba de Conducción', 'Verificación del comportamiento del vehículo después del reemplazo.', 10.00),
+(11, 'Desmontaje de Rueda y Conjunto de Suspensión', 'Remoción de la rueda y los componentes antiguos del amortiguador/espiral.', 20.00),
+(11, 'Instalación de Amortiguadores y Espirales Nuevos', 'Montaje de los nuevos componentes de suspensión en su lugar.', 30.00),
+(11, 'Revisión de Componentes Adyacentes', 'Inspección de bujes, rótulas y otros elementos cercanos por desgaste.', 10.00),
+(11, 'Montaje de Rueda y Ajuste Inicial', 'Reinstalación de la rueda y ajuste básico de torque.', 10.00),
+(11, 'Prueba de Conducción', 'Verificación del comportamiento del vehículo después del reemplazo.', 10.00),
 
 -- Actividades para el Servicio: 12 - Revisión y Recarga de Aire Acondicionado
-(12, 45, 'Diagnóstico de Presión y Fugas A/C', 'Verificación de la presión del sistema y búsqueda de posibles fugas.', 15.00),
-(12, 46, 'Recuperación de Refrigerante Antiguo', 'Extracción segura del refrigerante y aceite viejos del sistema.', 10.00),
-(12, 47, 'Realización de Vacío en el Sistema', 'Eliminación de aire y humedad del circuito para una recarga eficiente.', 15.00),
-(12, 48, 'Recarga de Refrigerante y Aceite de Compresor', 'Relleno del sistema con la cantidad y tipo correcto de refrigerante y lubricante.', 20.00),
-(12, 49, 'Prueba de Funcionamiento del A/C', 'Verificación de la temperatura de salida y eficiencia del sistema.', 5.00),
+(12, 'Diagnóstico de Presión y Fugas A/C', 'Verificación de la presión del sistema y búsqueda de posibles fugas.', 15.00),
+(12, 'Recuperación de Refrigerante Antiguo', 'Extracción segura del refrigerante y aceite viejos del sistema.', 10.00),
+(12, 'Realización de Vacío en el Sistema', 'Eliminación de aire y humedad del circuito para una recarga eficiente.', 15.00),
+(12, 'Recarga de Refrigerante y Aceite de Compresor', 'Relleno del sistema con la cantidad y tipo correcto de refrigerante y lubricante.', 20.00),
+(12, 'Prueba de Funcionamiento del A/C', 'Verificación de la temperatura de salida y eficiencia del sistema.', 5.00),
 
 -- Actividades para el Servicio: 13 - Servicio de Inyectores
-(13, 50, 'Diagnóstico Inicial de Inyectores', 'Pruebas preliminares para identificar inyectores defectuosos o sucios (prueba de goteo, pulverización).', 15.00),
-(13, 51, 'Desmontaje de Inyectores del Motor', 'Remoción cuidadosa de los inyectores del riel de combustible.', 20.00),
-(13, 52, 'Limpieza Ultrasónica de Inyectores', 'Proceso de limpieza profunda de los inyectores en una máquina de ultrasonido.', 25.00),
-(13, 53, 'Prueba de Patrón y Caudal Post-Limpieza', 'Verificación de la uniformidad de pulverización y el caudal de los inyectores limpiados.', 15.00),
-(13, 54, 'Reemplazo de Sellos y Empaques (O-rings)', 'Instalación de nuevos sellos y empaques para asegurar un sellado hermético.', 5.00),
-(13, 55, 'Reinstalación de Inyectores en el Motor', 'Montaje seguro de los inyectores y conexión de las líneas de combustible.', 15.00),
+(13, 'Diagnóstico Inicial de Inyectores', 'Pruebas preliminares para identificar inyectores defectuosos o sucios (prueba de goteo, pulverización).', 15.00),
+(13, 'Desmontaje de Inyectores del Motor', 'Remoción cuidadosa de los inyectores del riel de combustible.', 20.00),
+(13, 'Limpieza Ultrasónica de Inyectores', 'Proceso de limpieza profunda de los inyectores en una máquina de ultrasonido.', 25.00),
+(13, 'Prueba de Patrón y Caudal Post-Limpieza', 'Verificación de la uniformidad de pulverización y el caudal de los inyectores limpiados.', 15.00),
+(13, 'Reemplazo de Sellos y Empaques (O-rings)', 'Instalación de nuevos sellos y empaques para asegurar un sellado hermético.', 5.00),
+(13, 'Reinstalación de Inyectores en el Motor', 'Montaje seguro de los inyectores y conexión de las líneas de combustible.', 15.00),
 
 -- Actividades para el Servicio: 14 - Diagnóstico de Tren Delantero
-(14, 56, 'Inspección Visual Detallada', 'Examen de rótulas, terminales de dirección, bujes de suspensión, amortiguadores y espirales.', 10.00),
-(14, 57, 'Prueba de Holguras y Movimiento', 'Verificación de cualquier juego excesivo en los componentes del tren delantero.', 15.00),
-(14, 58, 'Evaluación de Alineación y Desgaste Irregular de Neumáticos', 'Revisión del desgaste de los neumáticos y la geometría de la dirección.', 10.00),
-(14, 59, 'Informe de Recomendaciones', 'Elaboración de un informe con las fallas encontradas y las reparaciones sugeridas.', 5.00);
+(14, 'Inspección Visual Detallada', 'Examen de rótulas, terminales de dirección, bujes de suspensión, amortiguadores y espirales.', 10.00),
+(14, 'Prueba de Holguras y Movimiento', 'Verificación de cualquier juego excesivo en los componentes del tren delantero.', 15.00),
+(14, 'Evaluación de Alineación y Desgaste Irregular de Neumáticos', 'Revisión del desgaste de los neumáticos y la geometría de la dirección.', 10.00),
+(14, 'Informe de Recomendaciones', 'Elaboración de un informe con las fallas encontradas y las reparaciones sugeridas.', 5.00);
  
 --Agregamos los servicios a los establecimientos 
 INSERT INTO ServiciosOfrecidos (RIF_establecimiento, nro_servicio) VALUES
@@ -479,6 +472,7 @@ INSERT INTO ServiciosOfrecidos (RIF_establecimiento, nro_servicio) VALUES
 ('J-44556677-8', 19)  -- Paquete de Limpieza y Protección Exterior Superior
 ;
 
+
 INSERT INTO Clientes (CI_cliente, nombre_Cli, apellido_cli,email) VALUES 
 ('10234567', 'Ana', 'González', 'ana.gonzalez@email.com'),
 ('11345678', 'Luis', 'Pérez', 'luis.perez@email.com'),
@@ -545,58 +539,87 @@ INSERT INTO telefonosCliente (numero,CI_cliente) VALUES
 ('04140011223', '29123456'),
 ('04240011223', '29123456');
 
+use MU_DB; 
 --agregamos vehiculos 
-INSERT INTO Vehiculos (codigo,placa,aceite_utilizado_motor,aceite_utilizado_caja,meses_uso,id_modelo,id_marca,CI_dueño) VALUES 
-(1, 'ABC1234', '10W-40 Sintetico', 'ATF Dexron III', 24, 1, 1, '10234567'), -- Marca 1, Modelo 1
-(2, 'XYZ5678', '5W-30 Mineral', 'Manual 75W-90', 36, 2, 1, '10234567'), -- Marca 1, Modelo 2
-(3, 'DEF9012', '15W-40 Diesel', 'ATF Mercon V', 18, 3, 1, '11345678'), -- Marca 1, Modelo 3
-(4, 'GHI3456', '5W-40 Sintetico', 'CVT Fluid', 48, 4, 2, '11345678'), -- Marca 2, Modelo 4
-(5, 'JKL7890', '20W-50 Mineral', 'ATF Dexron VI', 12, 5, 2, '12456789'), -- Marca 2, Modelo 5
-(6, 'MNO1234', '10W-30 Semi-Sintetico', 'Manual 80W-90', 30, 1, 2, '12456789'), -- Marca 2, Modelo 1
-(7, 'PQR5678', '5W-30 Sintetico', 'DCT Fluid', 60, 2, 3, '13567890'), -- Marca 3, Modelo 2
-(8, 'STU9012', '15W-30 Mineral', 'ATF +4', 42, 3, 3, '13567890'), -- Marca 3, Modelo 3
-(9, 'VWX3456', '0W-20 Sintetico', 'ATF Dexron VI', 6, 4, 3, '14678901'), -- Marca 3, Modelo 4
-(10, 'YZA7890', '10W-40 Sintetico', 'CVT Fluid', 28, 5, 4, '14678901'), -- Marca 4, Modelo 5
-(11, 'BCD1234', '5W-30 Mineral', 'ATF Mercon LV', 15, 1, 4, '15789012'), -- Marca 4, Modelo 1
-(12, 'EFG5678', '15W-40 Diesel', 'Manual 75W-80', 50, 2, 4, '15789012'), -- Marca 4, Modelo 2
-(13, 'HIJ9012', '5W-40 Sintetico', 'DCT Fluid', 20, 3, 5, '16890123'), -- Marca 5, Modelo 3
-(14, 'KLM3456', '20W-50 Mineral', 'ATF Dexron III', 33, 4, 5, '16890123'), -- Marca 5, Modelo 4
-(15, 'NOP7890', '10W-30 Semi-Sintetico', 'ATF +4', 72, 5, 5, '17901234'), -- Marca 5, Modelo 5
-(16, 'QRS1234', '5W-30 Sintetico', 'CVT Fluid', 10, 1, 6, '17901234'), -- Marca 6, Modelo 1
-(17, 'TUV5678', '15W-30 Mineral', 'Manual 80W-90', 22, 2, 6, '18012345'), -- Marca 6, Modelo 2
-(18, 'WXY9012', '0W-20 Sintetico', 'ATF Mercon V', 4, 3, 6, '18012345'), -- Marca 6, Modelo 3
-(19, 'ZAB3456', '10W-40 Sintetico', 'ATF Dexron VI', 31, 4, 7, '19123456'), -- Marca 7, Modelo 4
-(20, 'CDE7890', '5W-30 Mineral', 'Manual 75W-90', 25, 5, 7, '19123456'), -- Marca 7, Modelo 5
-(21, 'FGH1234', '15W-40 Diesel', 'ATF +4', 19, 1, 7, '20234567'), -- Marca 7, Modelo 1
-(22, 'IJK5678', '5W-40 Sintetico', 'CVT Fluid', 55, 2, 8, '20234567'), -- Marca 8, Modelo 2
-(23, 'LMN9012', '20W-50 Mineral', 'DCT Fluid', 14, 3, 8, '21345678'), -- Marca 8, Modelo 3
-(24, 'OPQ3456', '10W-30 Semi-Sintetico', 'ATF Dexron III', 38, 4, 8, '21345678'), -- Marca 8, Modelo 4
-(25, 'RST7890', '5W-30 Sintetico', 'Manual 80W-90', 65, 5, 9, '22456789'), -- Marca 9, Modelo 5
-(26, 'UVW1234', '15W-30 Mineral', 'ATF Mercon V', 7, 1, 9, '23567890'), -- Marca 9, Modelo 1
-(27, 'XYZ5678', '0W-20 Sintetico', 'CVT Fluid', 29, 2, 9, '24678901'), -- Marca 9, Modelo 2
-(28, 'ABC9012', '10W-40 Sintetico', 'ATF Dexron VI', 21, 3, 10, '25789012'), -- Marca 10, Modelo 3
-(29, 'DEF3456', '5W-30 Mineral', 'Manual 75W-80', 46, 4, 10, '26890123'), -- Marca 10, Modelo 4
-(30, 'GHI7890', '15W-40 Diesel', 'DCT Fluid', 34, 5, 10, '27901234'), -- Marca 10, Modelo 5
-(31, 'HJK1234', '10W-40 Sintetico', 'Manual 75W-90', 20, 1, 1, '28012345'), -- Marca 1, Modelo 1 (Paola Jiménez)
-(32, 'LMN5678', '5W-30 Mineral', 'ATF Dexron III', 32, 2, 1, '28012345'), -- Marca 1, Modelo 2 (Paola Jiménez)
-(33, 'OPQ9012', '15W-40 Diesel', 'CVT Fluid', 15, 3, 1, '29123456'), -- Marca 1, Modelo 3 (Gabriel Vargas)
-(34, 'RST3456', '5W-40 Sintetico', 'ATF Mercon V', 40, 4, 2, '29123456'), -- Marca 2, Modelo 4 (Gabriel Vargas)
-(35, 'UVW7890', '20W-50 Mineral', 'Manual 80W-90', 10, 5, 2, '10234567'), -- Marca 2, Modelo 5 (Ana González)
-(36, 'XYZ1234', '10W-30 Semi-Sintetico', 'DCT Fluid', 28, 1, 2, '10234567'), -- Marca 2, Modelo 1 (Ana González)
-(37, 'ABC5678', '5W-30 Sintetico', 'ATF +4', 50, 2, 3, '11345678'), -- Marca 3, Modelo 2 (Luis Pérez)
-(38, 'DEF9012', '15W-30 Mineral', 'ATF Dexron VI', 25, 3, 3, '11345678'), -- Marca 3, Modelo 3 (Luis Pérez)
-(39, 'GHI3456', '0W-20 Sintetico', 'Manual 75W-80', 8, 4, 3, '12456789'), -- Marca 3, Modelo 4 (María Rodríguez)
-(40, 'JKL7890', '10W-40 Sintetico', 'CVT Fluid', 35, 5, 4, '12456789'), -- Marca 4, Modelo 5 (María Rodríguez)
-(41, 'MNO1234', '5W-30 Mineral', 'ATF Mercon LV', 17, 1, 4, '13567890'), -- Marca 4, Modelo 1 (Carlos López)
-(42, 'PQR5678', '15W-40 Diesel', 'DCT Fluid', 45, 2, 4, '13567890'), -- Marca 4, Modelo 2 (Carlos López)
-(43, 'STU9012', '5W-40 Sintetico', 'ATF Dexron III', 23, 3, 5, '14678901'), -- Marca 5, Modelo 3 (Laura Martínez)
-(44, 'VWX3456', '20W-50 Mineral', 'Manual 80W-90', 30, 4, 5, '14678901'), -- Marca 5, Modelo 4 (Laura Martínez)
-(45, 'YZA7890', '10W-30 Semi-Sintetico', 'ATF +4', 68, 5, 5, '15789012'), -- Marca 5, Modelo 5 (Pedro Díaz)
-(46, 'BCD1234', '5W-30 Sintetico', 'CVT Fluid', 12, 1, 6, '15789012'), -- Marca 6, Modelo 1 (Pedro Díaz)
-(47, 'EFG5678', '15W-30 Mineral', 'DCT Fluid', 28, 2, 6, '16890123'), -- Marca 6, Modelo 2 (Sofía Sánchez)
-(48, 'HIJ9012', '0W-20 Sintetico', 'ATF Mercon V', 5, 3, 6, '16890123'), -- Marca 6, Modelo 3 (Sofía Sánchez)
-(49, 'KLM3456', '10W-40 Sintetico', 'Manual 75W-80', 35, 4, 7, '17901234'), -- Marca 7, Modelo 4 (José Ramírez)
-(50, 'NOP7890', '5W-30 Mineral', 'ATF Dexron VI', 20, 5, 7, '17901234'); 
+INSERT INTO Vehiculos (placa,aceite_utilizado_motor,aceite_utilizado_caja,meses_uso,id_modelo,id_marca,CI_dueño,kilometraje,resumen_mantenimiento) VALUES 
+-- Agregamos vehiculos con kilometraje y resumen_mantenimient
+-- Modelos 1-5 (Toyota, id_marca=1)
+('ABC1234', '10W-40 Sintetico', 'ATF Dexron III', 24, 1, 1, '10234567', 45000, 'Cambio de aceite, filtro de aire, revisión general.'), -- Corolla Sedán XLE
+('XYZ5678', '5W-30 Mineral', 'Manual 75W-90', 36, 2, 1, '10234567', 75000, 'Revisión de frenos, cambio de aceite de caja, rotación de neumáticos.'), -- Hilux SRV 4x4
+('DEF9012', '15W-40 Diesel', 'ATF Mercon V', 18, 3, 1, '11345678', 30000, 'Mantenimiento de 30K, revisión híbrida, cambio de filtros.'), -- RAV4 Híbrida Limited
+
+-- Modelos 6-10 (Ford, id_marca=2)
+('GHI3456', '5W-40 Sintetico', 'CVT Fluid', 48, 6, 2, '11345678', 90000, 'Cambio de bujías, limpieza de inyectores, alineación.'), -- F-150 XLT
+('JKL7890', '20W-50 Mineral', 'ATF Dexron VI', 12, 7, 2, '12456789', 20000, 'Primer mantenimiento, revisión de líquidos, balanceo.'), -- Mustang GT
+('MNO1234', '10W-30 Semi-Sintetico', 'Manual 80W-90', 30, 8, 2, '12456789', 55000, 'Cambio de aceite y filtro, revisión de suspensión.'), -- Explorer Limited
+
+-- Modelos 11-15 (Chevrolet, id_marca=3)
+('PQR5678', '5W-30 Sintetico', 'DCT Fluid', 60, 11, 3, '13567890', 110000, 'Reemplazo de pastillas de freno delanteras, cambio de correa.'), -- Silverado LTZ
+('STU9012', '15W-30 Mineral', 'ATF +4', 42, 12, 3, '13567890', 80000, 'Revisión de motor, cambio de aceite de caja, revisión de neumáticos.'), -- Camaro SS
+('VWX3456', '0W-20 Sintetico', 'ATF Dexron VI', 6, 13, 3, '14678901', 12000, 'Mantenimiento inicial, chequeo de fluidos.'), -- Tahoe Premier
+
+-- Modelos 16-20 (Volkswagen, id_marca=4)
+('YZA7890', '10W-40 Sintetico', 'CVT Fluid', 28, 16, 4, '14678901', 48000, 'Cambio de aceite, filtro de polen, inspección de luces.'), -- Golf GTI
+('BCD1234', '5W-30 Mineral', 'ATF Mercon LV', 15, 17, 4, '15789012', 28000, 'Revisión de frenos, alineación, balanceo.'), -- Jetta Highline
+('EFG5678', '15W-40 Diesel', 'Manual 75W-80', 50, 18, 4, '15789012', 95000, 'Servicio mayor, revisión de turbo, cambio de filtros diésel.'), -- Tiguan Allspace
+
+-- Modelos 21-25 (Mercedes-Benz, id_marca=5)
+('HIJ9012', '5W-40 Sintetico', 'DCT Fluid', 20, 21, 5, '16890123', 35000, 'Mantenimiento de rutina, revisión electrónica.'), -- Clase C 300
+('KLM3456', '20W-50 Mineral', 'ATF Dexron III', 33, 22, 5, '16890123', 60000, 'Cambio de aceite de motor y caja, revisión de transmisión.'), -- Clase E 450
+('NOP7890', '10W-30 Semi-Sintetico', 'ATF +4', 72, 23, 5, '17901234', 130000, 'Revisión profunda, cambio de amortiguadores, sistema de escape.'), -- GLC 300
+
+-- Modelos 26-30 (BMW, id_marca=6)
+('QRS1234', '5W-30 Sintetico', 'CVT Fluid', 10, 26, 6, '17901234', 18000, 'Primer servicio, revisión de sistema iDrive.'), -- Serie 3 330i
+('TUV5678', '15W-30 Mineral', 'Manual 80W-90', 22, 27, 6, '18012345', 40000, 'Cambio de aceite, filtro de cabina, revisión de frenos.'), -- Serie 5 540i
+('WXY9012', '0W-20 Sintetico', 'ATF Mercon V', 4, 28, 6, '18012345', 8000, 'Chequeo pre-venta, alineación.'), -- X5 xDrive40i
+
+-- Modelos 31-35 (Honda, id_marca=7)
+('ZAB3456', '10W-40 Sintetico', 'ATF Dexron VI', 31, 31, 7, '19123456', 58000, 'Servicio de 60K, cambio de bujías, revisión de tren delantero.'), -- Civic EX
+('CDE7890', '5W-30 Mineral', 'Manual 75W-90', 25, 32, 7, '19123456', 42000, 'Cambio de aceite y filtro, limpieza de aire acondicionado.'), -- CR-V Touring
+('FGH1234', '15W-40 Diesel', 'ATF +4', 19, 33, 7, '20234567', 36000, 'Mantenimiento preventivo, revisión de líquidos.'), -- Accord Sport
+
+-- Modelos 36-40 (Hyundai, id_marca=8)
+('IJK5678', '5W-40 Sintetico', 'CVT Fluid', 55, 36, 8, '20234567', 105000, 'Reemplazo de neumáticos, revisión de suspensión y dirección.'), -- Elantra GLS
+('LMN9012', '20W-50 Mineral', 'DCT Fluid', 14, 37, 8, '21345678', 26000, 'Mantenimiento estándar, revisión de sensores.'), -- Tucson Limited
+('OPQ3456', '10W-30 Semi-Sintetico', 'ATF Dexron III', 38, 38, 8, '21345678', 70000, 'Servicio mayor, cambio de fluidos de transmisión.'), -- Santa Fe Calligraphy
+
+-- Modelos 41-45 (Nissan, id_marca=9)
+('RST7890', '5W-30 Sintetico', 'Manual 80W-90', 65, 41, 9, '22456789', 120000, 'Revisión de motor, cambio de faja de tiempo, bomba de agua.'), -- Sentra SR
+('UVW1234', '15W-30 Mineral', 'ATF Mercon V', 7, 42, 9, '23567890', 14000, 'Primer servicio, chequeo de sistemas 4x4.'), -- Titan Pro-4X
+('XYZ5679', '0W-20 Sintetico', 'CVT Fluid', 29, 43, 9, '24678901', 50000, 'Mantenimiento de 50K, revisión de caja CVT.'), -- Rogue SL
+
+-- Modelos 46-50 (Audi, id_marca=10)
+('ABC9012', '10W-40 Sintetico', 'ATF Dexron VI', 21, 46, 10, '25789012', 39000, 'Servicio intermedio, cambio de pastillas delanteras.'), -- A4 S Line
+('DEF3456', '5W-30 Mineral', 'Manual 75W-80', 46, 47, 10, '26890123', 85000, 'Revisión de transmisión, cambio de refrigerante.'), -- Q5 S Line
+('GHI7890', '15W-40 Diesel', 'DCT Fluid', 34, 48, 10, '27901234', 62000, 'Mantenimiento de DSG, limpieza de turbo.'), -- A3 Sportback
+
+-- Resto de Vehiculos, ajustados con kilometraje y resumen de mantenimiento:
+('HJK1234', '10W-40 Sintetico', 'Manual 75W-90', 20, 4, 1, '28012345', 38000, 'Mantenimiento regular, revisión de aire acondicionado.'),    -- Camry XSE V6
+('LMN5678', '5W-30 Mineral', 'ATF Dexron III', 32, 5, 1, '28012345', 68000, 'Cambio de aceite y filtros, revisión de sistema 4x4.'),   -- Land Cruiser Prado TX-L
+('OPQ9012A', '15W-40 Diesel', 'CVT Fluid', 15, 1, 1, '29123456', 29000, 'Inspección de 30K, ajuste de suspensión.'), -- Corolla Sedán XLE
+
+('RST3456A', '5W-40 Sintetico', 'ATF Mercon V', 40, 9, 2, '29123456', 78000, 'Revisión de inyectores, cambio de filtro de combustible.'), -- Ranger XLT
+('UVW7890', '20W-50 Mineral', 'Manual 80W-90', 10, 10, 2, '10234567', 19000, 'Mantenimiento de 20K, revisión de seguridad.'), -- Escape Titanium
+('XYZ1234', '10W-30 Semi-Sintetico', 'DCT Fluid', 28, 6, 2, '10234567', 52000, 'Cambio de aceite de motor y caja, revisión de frenos.'), -- F-150 XLT
+
+('ABC5678', '5W-30 Sintetico', 'ATF +4', 50, 14, 3, '11345678', 92000, 'Mantenimiento de transmisión, cambio de líquido de frenos.'), -- Equinox RS
+('DEF9012A', '15W-30 Mineral', 'ATF Dexron VI', 25, 15, 3, '11345678', 47000, 'Revisión de pastillas traseras, cambio de filtro de aire.'), -- Malibu LT
+('GHI3456A', '0W-20 Sintetico', 'Manual 75W-80', 8, 11, 3, '12456789', 15000, 'Servicio inicial, chequeo de luces y batería.'), -- Silverado LTZ
+
+('JKL7890A', '10W-40 Sintetico', 'CVT Fluid', 35, 19, 4, '12456789', 67000, 'Cambio de aceite, limpieza de cuerpo de aceleración.'), -- Passat Elegance
+('MNO1234A', '5W-30 Mineral', 'ATF Mercon LV', 17, 20, 4, '13567890', 31000, 'Revisión de turbo, cambio de aceite y filtros.'), -- Amarok V6 TDI
+('PQR5678A', '15W-40 Diesel', 'DCT Fluid', 45, 16, 4, '13567890', 82000, 'Mantenimiento de 80K, revisión de embrague DSG.'), -- Golf GTI
+
+('STU9012A', '5W-40 Sintetico', 'ATF Dexron III', 23, 24, 5, '14678901', 43000, 'Cambio de aceite, inspección multipunto.'), -- Clase A 200
+('VWX3456A', '20W-50 Mineral', 'Manual 80W-90', 30, 25, 5, '14678901', 56000, 'Revisión general, cambio de líquido de dirección.'), -- GLE 450
+('YZA7890A', '10W-30 Semi-Sintetico', 'ATF +4', 68, 21, 5, '15789012', 125000, 'Mantenimiento de 120K, reemplazo de bomba de combustible.'), -- Clase C 300
+
+('BCD1234A', '5W-30 Sintetico', 'CVT Fluid', 12, 29, 6, '15789012', 22000, 'Servicio Básico, revisión de sensores de estacionamiento.'), -- X3 xDrive30i
+('EFG5678A', '15W-30 Mineral', 'DCT Fluid', 28, 30, 6, '16890123', 50000, 'Cambio de aceite de caja, revisión de la electrónica.'), -- Serie 1 118i
+('HIJ9012A', '0W-20 Sintetico', 'ATF Mercon V', 5, 26, 6, '16890123', 9000, 'Inspección de 10K, chequeo de luces interiores.'), -- Serie 3 330i
+
+('KLM3456A', '10W-40 Sintetico', 'Manual 75W-80', 35, 34, 7, '17901234', 64000, 'Cambio de bujías, revisión de suspensión delantera.'), -- Pilot EX-L
+('NOP7890A', '5W-30 Mineral', 'ATF Dexron VI', 20, 35, 7, '17901234', 37000, 'Mantenimiento estándar, limpieza de filtro de aire.'); -- HR-V Sport
 
 --proveedores 
 INSERT INTO Proveedores (RIF, razon_social, direccion, local_, telefono, persona_contacto) VALUES
