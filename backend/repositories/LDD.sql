@@ -160,6 +160,8 @@ create table OrdenesCompra(
 	foreign key(RIF_est) references Establecimientos(RIF) ON DELETE CASCADE
 );
 
+
+
 create table FamiliaProductos(
 	id_familia int identity(1,1) not null,
 	nombre varchar(50) not null,
@@ -260,12 +262,13 @@ create table ActividadProductos(
 );
 
 create table Compras(
-	nro_compra int identity(1,1) not null,
+	nro_compra int not null,
 	id_producto int not null,
 	cantidad_producto int not null check(cantidad_producto > 0),
 	precio_und decimal(10,2) not null check(precio_und > 0),
 	
-	primary key(nro_compra),
+	primary key(nro_compra,id_producto),
+	foreign key(nro_compra) references OrdenesCompra(nro_OC) ON DELETE CASCADE,
 	foreign key(id_producto) references Productos(id_producto) ON DELETE CASCADE
 ); 
 
