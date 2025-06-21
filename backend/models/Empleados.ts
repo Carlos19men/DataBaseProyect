@@ -73,7 +73,7 @@ export class Empleado {
         return result;
     }
 
-    static async deleteEmpleado({ CI }: { CI: string; }) {
+    static async deleteEmpleado({CI }: { CI: string; }) {
         if (CI === undefined || CI === null || CI.length === 0) {
             return { error: "Se necesita la cédula" };
         }
@@ -84,5 +84,51 @@ export class Empleado {
 
         console.log(result['recordset']);
         return result;
+    }
+
+    static async addEmpleado({CI, name, lastName, cellphone, address, salary, RIF}: {CI: string, name: string, lastName: string, cellphone: string, address: string, salary: number, RIF: string}) {
+        if (CI === undefined || CI.length === 0) {
+            return { error: "Se necesita la cédula" };
+        }
+
+        if (name === undefined || name.length === 0) {
+            return { error: "Se necesita el nombre" };
+        }
+
+        if (lastName === undefined || lastName.length === 0) {
+            return { error: "Se necesita el apellido" };
+        }
+
+        if (cellphone === undefined || cellphone.length === 0) {
+            return { error: "Se necesita el teléfono" };
+        }
+
+        if (address === undefined || address.length === 0) {
+            return { error: "Se necesita la dirección" };
+        }
+
+        if (salary === undefined || typeof salary !== 'number') {
+            return { error: "Se necesita que el sueldo sea un número" };
+        }
+
+        if (RIF === undefined || RIF.length === 0) {
+            return { error: "Se necesita el RIF" };
+        }
+
+        const request = getDbPool().request();
+        request.input('CI', CI);
+        request.input('name', name);
+        request.input('lastName', lastName);
+        request.input('cellphone', cellphone);
+        request.input('address', address);
+        request.input('salary', salary);
+        request.input('RIF', RIF);
+
+        const result = await request.query('EXEC AgregarEmpleado @CI, @name, @lastName, @cellphone, @address, @salary, @RIF;');
+        
+        console.log(result['recordset']);
+        return result;
+
+
     }
 }
