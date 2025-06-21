@@ -1,3 +1,4 @@
+import { copyFileSync } from "fs";
 import { getDbPool } from "../config/SQLserverConection";
 
 export class Empleado {
@@ -21,6 +22,22 @@ export class Empleado {
         console.log(result['recordset']);
         return result['recordset'];
     }
+
+    static async getbyRIF({RIF}: {RIF: string | null}){
+        if(RIF === undefined || RIF === null || RIF.length === 0){
+            return {error: "Se requiere el RIF"};
+        }
+
+        const request = getDbPool().request();
+        request.input('RIF', RIF);
+        
+        const query = `Select CI_emp, nombre, apellido from Empleados where RIF_establecimiento = @RIF;`
+
+        const result = await request.query(query);
+        console.log(result['recordset']);
+        return result['recordset'];
+    }
+
 
     static async editEmployee({ CI, name, lastName ,telefono, direccion, sueldo }: { CI: string | null, name: string | null, lastName: string | null, telefono: string | null, direccion: string | null, sueldo: number | null }) {
 
