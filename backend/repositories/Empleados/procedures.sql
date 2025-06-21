@@ -25,21 +25,40 @@ create proc EditarEmpleado
 AS
 BEGIN
     Set nocount on;
-
-    If @nombre is not null
-        Update Empleados set nombre = @nombre where CI_emp = @CI;
     
-    If @apellido is not null
-        Update Empleados set apellido = @apellido where CI_emp = @CI;
-    
-    If @telefono is not null
-        Update Empleados set telefono = @telefono where CI_emp = @CI;
-    
-    If @direccion is not null
-        Update Empleados set direccion = @direccion where CI_emp = @CI;
-    
-    If @sueldo is not null
-        Update Empleados set sueldo = @sueldo where CI_emp = @CI;   
+    Update Empleados 
+    SET nombre = ISNULL(@nombre, nombre), 
+        apellido = ISNULL(@apellido, apellido),
+        telefono = ISNULL(@telefono, telefono), 
+        direccion = ISNULL(@direccion, direccion), 
+        sueldo = ISNULL(@sueldo, sueldo) 
+    WHERE CI_emp = @CI;
 END;
 
 drop procedure EditarEmpleado;
+
+
+create proc AgregarEmpleado
+    @CI VARCHAR(50),
+    @RIF_establecimiento VARCHAR(50),
+    @nombre VARCHAR(50),
+    @apellido VARCHAR(50),
+    @telefono VARCHAR(50),
+    @direccion VARCHAR(100),
+    @sueldo DECIMAL(10,2)
+AS
+BEGIN
+    Set nocount on;
+
+    -- Se verifica si el usuario existe.
+    IF EXISTS (SELECT 1 FROM Empleados WHERE CI_emp = @CI)
+    BEGIN
+        RAISERROR('El empleado ya existe.', 16, 1);
+        RETURN;
+    END
+
+    -- Insert new employee
+    INSERT INTO Empleados (CI_emp, RIF_establecimiento, nombre, apellido, telefono, direccion, sueldo)
+    VALUES (@CI, @RIF_establecimiento, @nombre, @apellido, @telefono, @direccion, @sueldo);
+END;
+drop procedure AgregarEmpleado;
