@@ -1,14 +1,10 @@
 import {  getDbPool } from "../config/SQLserverConection";
 
-// const pool = getDbPool;
-
 export class customer {
 
     static async getAll(){
 
-        const pool = getDbPool()
-
-        const result = await pool.query('select * from ObtenerClientes ORDER BY apellido;')
+        const result = await getDbPool().query('select * from ObtenerClientes ORDER BY apellido;')
 
         console.log(result['recordset'])
 
