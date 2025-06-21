@@ -74,5 +74,50 @@ export class customer {
         return result['recordset']
     }
     
+    static async newCustomer({CI,name,lastName,email}:{CI:string,name:string,lastName:string,email:string}){
+
+        if(CI === undefined || CI === null || CI.length === 0) {
+            return { error: "CI is required"}
+        }
+        if(name === undefined || name === null || name.length === 0) {
+            return { error: "name is required"}
+        }
+        if(lastName === undefined || lastName === null || lastName.length === 0) {
+            return { error: "lastName is required"}
+        }
+        if(email === undefined || email === null || email.length === 0) {
+            return { error: "email is required"}
+        }
+
+        //agregamos la request
+        const request = getDbPool().request()
+
+        //agregamos los parametros 
+        request.input('CI', CI);
+        request.input('name', name);
+        request.input('lastName', lastName);
+        request.input('email', email);
+
+        const result = await request.query('EXEC agregarCliente @CI,@name,@lastName,@email;')
+
+        console.log(result['recordset'])
+
+        return result['recordset']
+    }
+
+    static async deleteByCi({CI}:{CI:string}){
+        if(CI === undefined || CI === null || CI.length === 0) {
+            return { error: "CI is required"}
+        }
+
+        const request = getDbPool().request()
+
+        request.input('CI', CI);
+
+        const result = await request.query('EXEC eliminarCliente @CI;')
+
+        console.log(result['recordset'])
+        return result['recordset']
+    }
 }
 
