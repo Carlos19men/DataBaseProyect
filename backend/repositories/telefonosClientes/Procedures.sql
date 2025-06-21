@@ -54,6 +54,7 @@ BEGIN
 			-- CORRECCIÓN: El nombre del SAVEPOINT debe ser usado consistentemente en el CATCH.
 			SAVE TRANSACTION SP_puntoControl;
 
+		-- Lógica del procedimiento
 		--IF la cedula existe es porque ya tiene numeros asociados 
 		IF EXISTS (SELECT 1 FROM telefonosCliente WHERE CI_cliente = @CI)
 		BEGIN 
@@ -70,8 +71,6 @@ BEGIN
 		BEGIN
 			THROW 50002, 'Lo números ingresados no son validos',1;
 		END; 
-
-		-- Lógica del procedimiento
 		-- CORRECCIÓN: El mensaje en THROW debe ser claro sobre la acción (o falta de ella).
 		IF EXISTS (SELECT 1 FROM telefonosCliente WHERE numero = @tel1) OR
 			EXISTS (SELECT 1 FROM telefonosCliente WHERE numero = @tel2)
