@@ -13,9 +13,6 @@ RETURN(
 	WHERE CI_cliente = @CI
 );
 
-
-
-
 --nuevo cliente 
 
 IF OBJECT_ID('dbo.nuevoCliente', 'P') IS NOT NULL

@@ -16,12 +16,13 @@ export class Empleado {
 
         const request = getDbPool().request();
         request.input('CI', CI);
-        const result = await request.query('SELECT * FROM ObtenerEmpleado(@CI);');
+
+        const result = await request.query('SELECT * from Empleados where CI_emp = @CI;');
         console.log(result['recordset']);
-        return result;
+        return result['recordset'];
     }
 
-    static async editEmpleado({ CI, name, lastName ,telefono, direccion, sueldo }: { CI: string | null, name: string | null, lastName: string | null, telefono: string | null, direccion: string | null, sueldo: number | null }) {
+    static async editEmployee({ CI, name, lastName ,telefono, direccion, sueldo }: { CI: string | null, name: string | null, lastName: string | null, telefono: string | null, direccion: string | null, sueldo: number | null }) {
 
         if (CI !== null) {
             if (CI === undefined || CI.length === 0) {
@@ -67,21 +68,32 @@ export class Empleado {
         request.input('direccion', direccion);
         request.input('sueldo', sueldo);
 
-        const result = await request.query('EXEC EditarEmpleado @CI, @name, @lastName, @telefono, @direccion, @sueldo;');
-        
+        // Using isNULL to keep existing values if the new value is null.
+        const query = `UPDATE Empleados SET 
+        nombre = isNULL(@name, nombre), 
+        apellido = isNULL(@lastName, apellido), 
+        telefono = isNULL(@telefono, telefono), 
+        direccion = isNULL(@direccion, direccion), 
+        sueldo = isNULL(@sueldo, sueldo) 
+        WHERE CI_emp = @CI; `;
+
+        const result = await request.query(query);
         console.log(result['recordset']);
         return result;
     }
 
-    static async deleteEmpleado({CI }: { CI: string; }) {
+    static async deleteEmpleado({CI}: { CI: string; }) {
         if (CI === undefined || CI === null || CI.length === 0) {
             return { error: "Se necesita la cédula" };
         }
 
         const request = getDbPool().request();
         request.input('CI', CI);
-        const result = await request.query('EXEC EliminarEmpleado @CI;');
-
+        const result = await request.query('delete from Empleados where CI_emp = @CI;');
+        
+        if (result.rowsAffected[0] === 0) {
+            return { error: "No se encontró el empleado con la cédula proporcionada." };
+        }
         console.log(result['recordset']);
         return result;
     }
@@ -124,11 +136,13 @@ export class Empleado {
         request.input('salary', salary);
         request.input('RIF', RIF);
 
-        const result = await request.query('EXEC AgregarEmpleado @CI, @name, @lastName, @cellphone, @address, @salary, @RIF;');
+        const query = 
+            'Insert into Empleados (CI_emp, nombre, apellido, telefono, direccion, sueldo, RIF) ' +
+            'values (@CI, @name, @lastName, @cellphone, @address, @salary, @RIF);';
+
+        const result = await request.query(query);
         
         console.log(result['recordset']);
         return result;
-
-
     }
 }
