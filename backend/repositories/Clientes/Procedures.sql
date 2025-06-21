@@ -10,8 +10,10 @@ RETURN(
 	--GET customer by CI
 	SELECT CI_cliente as CI, apellido_cli as apellido, nombre_cli as nombre, email as correo 
 	FROM Clientes
-	WHERE CI_cliente = @CI
+	WHERE CI_cliente = @CI;
 );
+
+
 
 --nuevo cliente 
 
