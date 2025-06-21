@@ -271,7 +271,7 @@ create table Compras(
 
 create table ActividadesPlan(
 	cod_marca int not null,
-	nro_modelo int not null,VE
+	nro_modelo int not null,
 	kilometraje decimal(10,2) not null check(kilometraje > 0),
 	nro_servicio int not null,
 	nro_correlativo int not null,
