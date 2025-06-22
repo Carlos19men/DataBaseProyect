@@ -1,3 +1,6 @@
+USE MU_DB; 
+GO
+
 create VIEW InfoPagos_Efectivo AS
 SELECT id_pago, tipo_moneda, monto_ef
 from MetodosPago

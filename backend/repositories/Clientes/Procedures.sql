@@ -1,4 +1,5 @@
 USE MU_DB; 
+GO
 
 --función para retornar obtener cliente por la cedula 
 CREATE FUNCTION ObtenerCliente(
@@ -10,8 +11,10 @@ RETURN(
 	--GET customer by CI
 	SELECT CI_cliente as CI, apellido_cli as apellido, nombre_cli as nombre, email as correo 
 	FROM Clientes
-	WHERE CI_cliente = @CI;
+	WHERE CI_cliente = @CI
 );
+
+GO
 --nuevo cliente 
 
 IF OBJECT_ID('dbo.nuevoCliente', 'P') IS NOT NULL
@@ -56,8 +59,9 @@ BEGIN
 		--validamos que la cedulta no esté registrada 
 		IF EXISTS (SELECT * FROM ObtenerCliente(@CI))
 		BEGIN 
-			THROW 50001,'Este cliente ya se encuentra registrado',1; 
+			;THROW 50001,'Este cliente ya se encuentra registrado',1; 
 		END; 
+
 
 
 		--REGISTRAMOS EL NUEVO CLIENTE 
@@ -151,7 +155,7 @@ BEGIN
 		--Verificamos si la cedula se encuentra registrada 
 		IF NOT EXISTS (SELECT * FROM ObtenerCliente(@CI))
 		BEGIN 
-			THROW 50001,'Este cliente no se encuentra registrado',1; 
+			;THROW 50001,'Este cliente no se encuentra registrado',1; 
 		END;
 
 		--verificamos si los campos se van a modificar 
@@ -220,7 +224,7 @@ END;
 GO
 
 IF OBJECT_ID('eliminarCliente', 'P') IS NOT NULL
-    DROP PROCEDURE dbo.registrarTelefonos;
+    DROP PROCEDURE dbo.eliminarCliente;
 GO
 
 CREATE PROCEDURE eliminarCliente 
@@ -259,7 +263,7 @@ BEGIN
 		IF EXISTS (SELECT * FROM ObtenerCliente(@CI))
 		BEGIN
 			--SI EXISTE LO BORRAMOS 
-			DELETE Clientes WHERE CI_cliente = @CI; 
+			DELETE FROM Clientes WHERE CI_cliente = @CI; 
 		END; 
 
 		THROW 50001,'Este cliente no se encuentra registrado',1; 
