@@ -94,9 +94,6 @@ export class CustomerController {
             res.status(500).json({ message: 'Error interno del servidor al obtener cliente.' });
             return;
         }
-
-
-    
     }
     
 
