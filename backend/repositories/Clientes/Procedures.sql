@@ -112,7 +112,7 @@ END;
 GO
 
 IF OBJECT_ID('dbo.editarCliente', 'P') IS NOT NULL
-    DROP PROCEDURE dbo.registrarTelefonos;
+    DROP PROCEDURE dbo.editarCliente;
 GO
 
 --editar cliente 
