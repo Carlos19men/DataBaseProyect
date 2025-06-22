@@ -12,13 +12,10 @@ RETURN(
 	FROM Clientes
 	WHERE CI_cliente = @CI;
 );
-
-
-
 --nuevo cliente 
 
 IF OBJECT_ID('dbo.nuevoCliente', 'P') IS NOT NULL
-    DROP PROCEDURE dbo.registrarTelefonos;
+    DROP PROCEDURE dbo.nuevoCliente;
 GO
 
 
