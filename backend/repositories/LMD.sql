@@ -633,3 +633,4 @@ INSERT INTO Proveedores (RIF, razon_social, direccion, local_, telefono, persona
 ('J-50152627-9', 'Distribución de Aceites La Faja', 'Av. Principal, Sector La Curva, Galpón C-4', 'El Tigre', '02832410987', 'Verónica Linares'),
 ('J-50173839-1', 'Herramientas de Precisión C.A.', 'Calle San Francisco, Edif. Don Pedro, Local PB', 'Valencia', '02418501234', 'Felipe Montes'),
 ('J-50194041-3', 'Soluciones de Diagnóstico Auto', 'Av. Urdaneta, Centro Clínico Urdaneta, Anexo A', 'Maracaibo', '02617987654', 'Mariana Blanco');
+

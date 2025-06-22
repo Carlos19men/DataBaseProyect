@@ -3,7 +3,8 @@ select CI_emp, RIF_establecimiento, nombre, apellido
 from Empleados;
 go
 
-create FUNCTION ObtenerEmpleado(
+/*
+create FUNCTION getEmployee(
     @CI VARCHAR(50)
 )
 RETURNS TABLE
@@ -13,39 +14,39 @@ RETURN (
     SELECT CI_emp as CI, RIF_establecimiento, nombre, apellido
     FROM Empleados
     WHERE CI_emp = @CI
-);
+); */
 
-create proc EditarEmpleado
+/*create proc editEmployee
     @CI VARCHAR(50),
-    @nombre VARCHAR(50),
-    @apellido VARCHAR(50),
-    @telefono VARCHAR(50),
-    @direccion VARCHAR(100),
-    @sueldo DECIMAL(10,2)
+    @name VARCHAR(50),
+    @lastname VARCHAR(50),
+    @cellphone VARCHAR(50),
+    @address VARCHAR(100),
+    @salary DECIMAL(10,2)
 AS
 BEGIN
     Set nocount on;
     
     Update Empleados 
-    SET nombre = ISNULL(@nombre, nombre), 
-        apellido = ISNULL(@apellido, apellido),
-        telefono = ISNULL(@telefono, telefono), 
-        direccion = ISNULL(@direccion, direccion), 
-        sueldo = ISNULL(@sueldo, sueldo) 
+    SET nombre = ISNULL(@name, nombre), 
+        apellido = ISNULL(@lastname, apellido),
+        telefono = ISNULL(@cellphone, telefono), 
+        direccion = ISNULL(@address, direccion), 
+        sueldo = ISNULL(@salary, sueldo) 
     WHERE CI_emp = @CI;
-END;
+END; 
 
-drop procedure EditarEmpleado;
+drop procedure editEmployee; */
 
 
-create proc AgregarEmpleado
+create proc AddEmployee
     @CI VARCHAR(50),
-    @RIF_establecimiento VARCHAR(50),
-    @nombre VARCHAR(50),
-    @apellido VARCHAR(50),
-    @telefono VARCHAR(50),
-    @direccion VARCHAR(100),
-    @sueldo DECIMAL(10,2)
+    @RIF VARCHAR(50),
+    @name VARCHAR(50),
+    @lastname VARCHAR(50),
+    @cellphone VARCHAR(50),
+    @address VARCHAR(100),
+    @salary DECIMAL(10,2)
 AS
 BEGIN
     Set nocount on;
@@ -58,7 +59,24 @@ BEGIN
     END
 
     -- Insert new employee
-    INSERT INTO Empleados (CI_emp, RIF_establecimiento, nombre, apellido, telefono, direccion, sueldo)
-    VALUES (@CI, @RIF_establecimiento, @nombre, @apellido, @telefono, @direccion, @sueldo);
+    INSERT INTO Empleados (CI_emp, RIF, nombre, apellido, telefono, direccion, sueldo)
+    VALUES (@CI, @RIF, @name, @lastname, @cellphone, @address, @salary);
 END;
-drop procedure AgregarEmpleado;
+drop procedure AddEmployee;
+
+create proc deleteEmployee
+    @CI varchar(50)
+as BEGIN
+    set NOCOUNT on;
+
+    if exists(Select 1 from Empleados where CI_emp = @CI)
+    BEGIN
+        Delete from Empleados where CI_emp = @CI;
+    end    
+    ELSE BEGIN
+        RAISERROR('El empleado no existe en la base de datos',16,1);
+    end
+end;
+
+drop procedure deleteEmployee;
+
