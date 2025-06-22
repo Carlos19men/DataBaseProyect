@@ -11,7 +11,7 @@ export class customer {
         return result['recordset']
     }
 
-    static async getByCI({ CI }: { CI: string; }){
+    static async getByCI(CI:string){
 
         if(CI === undefined || CI === null || CI.length === 0) {
             return { error: "CI is required"}
@@ -25,10 +25,10 @@ export class customer {
         const result = await request.query('SELECT * FROM ObtenerCliente(@CI);');
 
         console.log(result['recordset'])
-        return result
+        return result['recordset'][0] || { error: "Customer not found" }; // Return the first record or an error if not found
     }
 
-    static async editCustomer({CI,name,lastName,email}:{CI:string | null,name:string | null, lastName:string | null, email: string | null;}){
+    static async edit({CI,name,lastName,email}:{CI:string | null,name:string | null, lastName:string | null, email: string | null;}){
 
 
         if(CI !== null) {
@@ -70,7 +70,7 @@ export class customer {
         return result['recordset']
     }
     
-    static async newCustomer({CI,name,lastName,email}:{CI:string,name:string,lastName:string,email:string}){
+    static async new({CI,name,lastName,email}:{CI:string,name:string,lastName:string,email:string}){
 
         if(CI === undefined || CI === null || CI.length === 0) {
             return { error: "CI is required"}
@@ -101,7 +101,7 @@ export class customer {
         return result['recordset']
     }
 
-    static async deleteByCi({CI}:{CI:string}){
+    static async delete(CI:string){
         if(CI === undefined || CI === null || CI.length === 0) {
             return { error: "CI is required"}
         }
