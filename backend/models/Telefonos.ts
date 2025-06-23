@@ -16,7 +16,7 @@ export class phonesCustomerModel{
         return result['recordset']
     }
 
-    static async getByCI({ CI }: { CI: string; }){
+    static async getByCI(CI: string){
 
         if(CI === undefined || CI === null || CI.length === 0) {
             return { error: "CI is required"}
@@ -30,7 +30,7 @@ export class phonesCustomerModel{
         const result = await request.query('SELECT * FROM GetTelefonosClientes(@CI);')
 
         console.log(result['recordset'])
-        return result
+        return result['recordset'][0]
     }
 
     static async newPhones({ CI, num1,num2}:{CI:string, num1:string,num2:string;}){
@@ -94,7 +94,7 @@ export class phonesCustomerModel{
 async function main() {
     await connectToDatabase();
     console.log("si");
-    await phonesCustomerModel001.newPhones({ CI: '10234567', num1: '456546',num2:'546465'}); // Espera a que getAll() termine
+    await phonesCustomerModel.newPhones({ CI: '10234567', num1: '456546',num2:'546465'}); // Espera a que getAll() termine
 }
   
   main().catch((err) => console.error("Error en la ejecución principal:", err));

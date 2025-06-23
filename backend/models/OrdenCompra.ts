@@ -1,6 +1,6 @@
 import {  getDbPool } from "../config/SQLserverConection";
 
-export class BuysOrder{
+export class buysOrderModel{
     static async getAll(){
 
         const result = await getDbPool().query('SELECT * FROM obtenerOrdenesCompras ORDER BY fecha_compra;')
