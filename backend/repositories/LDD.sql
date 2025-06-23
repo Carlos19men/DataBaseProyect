@@ -86,8 +86,6 @@ create table Modelos(
 	foreign key(cod_marca) references Marcas(cod_marca) ON UPDATE CASCADE
 );
 
-
-
 create table Vehiculos(
 	codigo int identity(1,1) not null,
 	placa varchar(20) not null UNIQUE,
@@ -104,7 +102,7 @@ create table Vehiculos(
 	foreign key(id_marca,id_modelo) references Modelos(cod_marca, nro_modelo),  -- ON DELETE NO ACTION (POR DEFECTO)
     foreign key(CI_dueño) references Clientes(CI_cliente) ON DELETE CASCADE
 );
- 
+
 create table OrdenesServicio(
 	cod_OS int identity(1,1) not null,
 	fecha_entrada date not null,
@@ -149,12 +147,11 @@ create table MetodosPago(
 	primary key(id_pago)
 );
 
-
-
 create table OrdenesCompra(
 	nro_OC int identity(1,1) not null,
 	fecha_compra date not null,
 	RIF_est varchar(20) not null,
+	monto_total int CHECK(monto_total > 0),
 	
 	primary key(nro_OC),
 	foreign key(RIF_est) references Establecimientos(RIF) ON DELETE CASCADE
@@ -186,8 +183,6 @@ create table Productos(
 	foreign key(id_familia) references FamiliaProductos(id_familia) ON DELETE SET NULL
 );
 
-
-
 create table Proveedores(
 	RIF varchar(20) not null,
 	razon_social varchar(50) not null,
@@ -198,7 +193,6 @@ create table Proveedores(
 	
 	primary key(RIF)
 );
-
 
 create table PlanesMantenimiento(
 	cod_marca int not null,
@@ -221,8 +215,6 @@ create table Actividades (
 	primary key(nro_servicio, nro_correlativo),
 	foreign key(nro_servicio) references Servicios(nro_servicio) ON DELETE CASCADE
 );
-
-
 
 create table EmpleadosAsignados(
 	CI_empleado varchar(15) not null,
