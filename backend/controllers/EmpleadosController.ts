@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import {employee} from '../models/Empleados';
+import {employeeModel} from '../models/Empleados';
 
 interface Employee {
     CI: string;
@@ -9,15 +9,15 @@ interface Employee {
 }
 
 export class EmployeeController {
-    model: employee;
+    model: employeeModel;
 
-    constructor(model: employee) {
+    constructor(model: employeeModel) {
         this.model = model;
     }
 
     getAll = async(req: Request, res: Response<Employee[] | {message: string}>): Promise<void> => {
        try {
-        const employees: Employee[] = await employee.getAll();
+        const employees: Employee[] = await employeeModel.getAll();
 
         if(!employees || employees.length === 0){
             res.status(404).json({"message": "No se encontraron empleados"});
@@ -45,7 +45,7 @@ export class EmployeeController {
         }
 
         try {
-            const employee_data: Employee = await employee.getByCI(CI);
+            const employee_data: Employee = await employeeModel.getByCI(CI);
 
             if(!employee_data){
                 res.status(404).json({message: "No se consiguió un empleado con esa cédula"})
