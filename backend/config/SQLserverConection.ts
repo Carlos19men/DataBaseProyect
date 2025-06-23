@@ -10,7 +10,7 @@ const config = {
     server: process.env.DB_SERVER as string, // Afirmación de tipo
     database: process.env.DB_NAME as string, // Afirmación de tipo
     user: process.env.DB_USER as string,
-    password: process.env.DB_PASSWORD as string,
+    password: process.env.DB_PASS as string,
     options: {
         trustedConnection: true,
         integratedSecurity: true,
@@ -18,6 +18,7 @@ const config = {
     },
 };
 
+console.log(config)
 
 // Variable para almacenar el pool de conexiones resuelto, tipada
 let pool: ConnectionPool | null = null; // <--- CAMBIO AQUÍ: Ahora almacena la ConnectionPool directamente

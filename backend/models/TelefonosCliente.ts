@@ -93,11 +93,8 @@ export class phonesCustomer{
 //este bloque es para probar solamente con este documento 
 async function main() {
     await connectToDatabase();
-  
-    
-  
     console.log("si");
     await phonesCustomer.newPhones({ CI: '10234567', num1: '456546',num2:'546465'}); // Espera a que getAll() termine
-  }
+}
   
   main().catch((err) => console.error("Error en la ejecución principal:", err));
