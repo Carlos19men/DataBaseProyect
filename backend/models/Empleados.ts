@@ -1,6 +1,6 @@
 import { getDbPool } from "../config/SQLserverConection";
 
-export class employeeModel {
+export class Empleado {
 
     static async getAll() {
         const pool = getDbPool();
@@ -9,7 +9,7 @@ export class employeeModel {
         return result['recordset'];
     }
 
-    static async getByCI({ CI }: { CI: string; }) {
+    static async getByCI(CI: string) {
         if (CI === undefined || CI === null || CI.length === 0) {
             return { error: "Se necesita la cédula" };
         }
@@ -17,9 +17,9 @@ export class employeeModel {
         const request = getDbPool().request();
         request.input('CI', CI);
 
-        const result = await request.query('SELECT * from Empleados where CI_emp = @CI;');
+        const result = await request.query('SELECT CI_emp, nombre, apellido, RIF_establecimiento from Empleados where CI_emp = @CI;');
         console.log(result['recordset']);
-        return result['recordset'];
+        return result['recordset'][0];
     }
 
     static async getbyRIF({RIF}: {RIF: string | null}){
