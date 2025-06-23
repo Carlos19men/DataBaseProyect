@@ -634,3 +634,17 @@ INSERT INTO Proveedores (RIF, razon_social, direccion, local_, telefono, persona
 ('J-50173839-1', 'Herramientas de Precisión C.A.', 'Calle San Francisco, Edif. Don Pedro, Local PB', 'Valencia', '02418501234', 'Felipe Montes'),
 ('J-50194041-3', 'Soluciones de Diagnóstico Auto', 'Av. Urdaneta, Centro Clínico Urdaneta, Anexo A', 'Maracaibo', '02617987654', 'Mariana Blanco');
 
+-- Insertar familias de productos
+INSERT INTO FamiliaProductos (nombre) VALUES ('Limpieza');
+INSERT INTO FamiliaProductos (nombre) VALUES ('Alimentos');
+INSERT INTO FamiliaProductos (nombre) VALUES ('Electrónica');
+
+-- Insertar productos
+INSERT INTO Productos 
+(nombre, tipo, precio, descripcion, minimo, maximo, tratamiento_residuos, nivel_contaminacion, info_manejo, id_familia)
+VALUES 
+('Detergente Verde', 'ECOLÓGICO', 15.99, 'Detergente biodegradable para ropa', 10, 100, 'Se diluye y se desecha por el drenaje sin riesgo', 2, 'Mantener en lugar fresco y seco', 1),
+('Ambientador Químico', 'NO ECOLÓGICO', 8.20, 'Ambientador en aerosol con compuestos volátiles', 5, 40, 'Desechar el envase en contenedores especiales', 5, 'No perforar el envase', 1);
+
+
+
