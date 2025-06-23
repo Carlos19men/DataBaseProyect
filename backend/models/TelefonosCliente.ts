@@ -2,7 +2,7 @@ import {  connectToDatabase, getDbPool } from "../config/SQLserverConection";
 
 // const pool = getDbPool;
 
-export class phonesCustomer{
+export class phonesCustomerModel{
 
 
     //get all customer with his phone

@@ -1,7 +1,6 @@
-import { copyFileSync } from "fs";
 import { getDbPool } from "../config/SQLserverConection";
 
-export class Empleado {
+export class employeeModel {
 
     static async getAll() {
         const pool = getDbPool();

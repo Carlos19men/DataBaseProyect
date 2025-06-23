@@ -1,6 +1,6 @@
 import { getDbPool } from "../config/SQLserverConection";
 
-export class Services {
+export class ServicesModel {
     
     static async getAll() {
         const pool = getDbPool();

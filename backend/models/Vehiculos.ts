@@ -1,17 +1,17 @@
 import { getDbPool } from "../config/SQLserverConection";
 
 
-export class vehicle{
+export class vehicleModel{
 
     static async getAll(){
         const result = await getDbPool().query('SELECT * FROM ObtenerVehiculos ORDER BY marca; ')
 
         console.log(result['recordset'])
 
-        return result
+        return result['recordset']
     }
 
-    static async getByPlate({ plate }: { plate: string; }){
+    static async getByPlate(plate: string){
         if(plate === undefined || plate === null || plate.length === 0){
             return {error:'Placa is required'}
         }
@@ -20,11 +20,11 @@ export class vehicle{
 
         request.input('Plate',plate)
 
-        const result = request.query('SELECT * FROM ObtenerPorPlaca(@Plate);')
+        const result = await request.query('SELECT * FROM ObtenerPorPlaca(@Plate);')
 
-        console.log(result)
+        console.log(result['recordset'])
 
-        return result
+        return result['recordset'][0]
     }
 
     static async newVehicle({plate,oil_box,oil_motor,maintenance,months_use,mileage,id_model,id_marca,CI_owner}:{plate:string,oil_box:string,oil_motor:string,maintenance:string,months_use:Int16Array,mileage:Float32Array,id_model:Int16Array,id_marca:Int16Array, CI_owner:string}){
@@ -86,7 +86,7 @@ export class vehicle{
         return result['recordset']
     }
 
-    static async deleteVehicle({plate}:{plate:string}){
+    static async delete({plate}:{plate:string}){
 
         if(plate === undefined || plate === null || plate.length === 0){
             return {error:'Placa is required'}
@@ -106,7 +106,7 @@ export class vehicle{
 
     }
 
-    static async editVehicle({plate,oil_box,oil_motor,maintenance,months_use,mileage,id_model,id_marca,CI_owner}:{plate:string | null,oil_box:string | null,oil_motor:string | null,maintenance:string | null,months_use:Int16Array | null,mileage:Float32Array | null,id_model:Int16Array | null,id_marca:Int16Array | null, CI_owner:string | null}){
+    static async edit({plate,oil_box,oil_motor,maintenance,months_use,mileage,id_model,id_marca,CI_owner}:{plate:string | null,oil_box:string | null,oil_motor:string | null,maintenance:string | null,months_use:Int16Array | null,mileage:Float32Array | null,id_model:Int16Array | null,id_marca:Int16Array | null, CI_owner:string | null}){
 
         if(plate !== null && (plate === undefined || plate.length === 0)){
             return {error:'Placa is required'}
