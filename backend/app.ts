@@ -1,7 +1,7 @@
 import express, { json } from "express";
 import { corsMidleware } from "./middelware/cors";
 import { connectToDatabase } from "./config/SQLserverConection";
-import { createEstablishmentRouter } from "./routers/routerEstablecimientos";
+import { createEstablishmentRouter } from "./routers/routerEstablecimiento";
 
 connectToDatabase()
 
