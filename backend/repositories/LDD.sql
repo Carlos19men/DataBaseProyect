@@ -185,11 +185,11 @@ create table Productos(
 
 create table Proveedores(
 	RIF varchar(20) not null,
-	razon_social varchar(50) not null,
+	razon_social varchar(50) not null unique,
 	direccion varchar(100) not null,
 	local_ varchar(15) not null,
-	telefono varchar(15) not null,
-	persona_contacto varchar(80),
+	telefono varchar(15) not null unique,
+	persona_contacto varchar(80) NOT NULL,
 	
 	primary key(RIF)
 );
