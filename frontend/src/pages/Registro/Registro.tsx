@@ -1,20 +1,14 @@
-import { useNavigate } from "react-router-dom"
-import styles from "./Registro.module.css"
+import styles from "./Registro.module.css";
+import TopBar from "../../components/TopBar/TopBar";
 import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
 
-const Registro: React.FC = () => {
-
-    const navigate = useNavigate();
-
+const Registro: React.FC  = () => {
     return (
-        <div className={styles.container}>
-
-          
-        
-            <span><TextBoxMU  etiqueta="Prueba" viewWidth={20}></TextBoxMU><TextBoxMU  etiqueta="HOLA PROBANDO" viewWidth={20}></TextBoxMU></span>
-        
-        
+        <div>
+            <TopBar text="Registro"></TopBar>
+             <span><TextBoxMU  etiqueta="Prueba" viewWidth={20}></TextBoxMU><TextBoxMU  etiqueta="HOLA PROBANDO" viewWidth={20}></TextBoxMU></span>
         </div>
     )
-    }
-    export default Registro;
+}
+
+export default Registro;
