@@ -73,7 +73,7 @@ create table Marcas(
 create table Modelos(
 	cod_marca int not null,
 	nro_modelo int identity(1,1) not null,
-	nombre varchar(100) not null,
+	nombre varchar(100) not null unique,
 	aceite_caja varchar(30) not null,
 	aceite_motor varchar(30) not null,
 	octanaje varchar(2) not null check(octanaje in ('87','91', '95', '98')), 
