@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centrar horizontalmente */
+  align-items: center;    /*  centrar verticalmente */
+}
+
+.titles{
+  width: fit-content;
+}
+
+.buttonPart{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centrar horizontalmente */
+  align-items: center; 
+  margin-top: 100px;
+}

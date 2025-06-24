@@ -1,0 +1,19 @@
+.button{
+  background-color: var(--primary-green);
+  color: var(--black);
+  padding: 24px 26px;
+  border: none; 
+  outline: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buttonText{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 100%;
+  letter-spacing: 0.5px;  
+  text-align: center; 
+}
