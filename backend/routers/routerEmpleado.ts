@@ -12,7 +12,7 @@ export const createEmployeeRouter = () => {
 
     EmployeeRouter.get('/:CI', employeeController.getbyCI)
 
-    EmployeeRouter.get('/:RIF', employeeController.getbyRIF);
+    EmployeeRouter.get('/RIF/:RIF', employeeController.getbyRIF);
 
     EmployeeRouter.patch('/:CI', employeeController.editEmployee);
 
