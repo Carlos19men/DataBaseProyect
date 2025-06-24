@@ -19,21 +19,21 @@ export class EmployeeController {
     }
 
     getAll = async(req: Request, res: Response<Employee[] | {message: string}>): Promise<void> => {
-       try {
-        const employees: Employee[] = await employeeModel.getAll();
+        try {
+            const employees: Employee[] = await employeeModel.getAll();
 
-        if(!employees || employees.length === 0){
-            res.status(404).json({"message": "No se encontraron empleados"});
+            if(!employees || employees.length === 0){
+                res.status(404).json({"message": "No se encontraron empleados"});
+                return;
+            }
+
+            res.status(200).json(employees);
+            return;
+        } catch (error){
+            console.error("Error al obtener clientes", error)
+            res.status(500).json({message: "Error interno del servidor al encontrar empleados"});
             return;
         }
-
-        res.status(200).json(employees);
-        return;
-       } catch (error){
-         console.error("Error al obtener clientes", error)
-         res.status(500).json({message: "Error interno del servidor al encontrar empleados"});
-         return;
-       }
 
     }
 

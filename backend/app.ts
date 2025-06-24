@@ -1,6 +1,7 @@
 import express, { json } from "express";
 import { corsMidleware } from "./middelware/cors";
 import { connectToDatabase } from "./config/SQLserverConection";
+import { createEstablishmentRouter } from "./routers/routerEstablecimiento";
 
 connectToDatabase()
 
@@ -14,11 +15,11 @@ export const createApp = () =>{
     app.disable('x-powered-by')
 
     //aplanando la aplicacion 
-    app.get('/',(req,res) => {
-        req.accepted
-        res.status(200).send('<h1>Hola desde Node</h1>')
-    })
 
+
+    
+    //Establecimientos 
+    app.use('/establishement', createEstablishmentRouter())
 
     const PORT = process.env.PORT ?? 1234
 

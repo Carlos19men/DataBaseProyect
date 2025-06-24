@@ -20,7 +20,7 @@ export class EstablishmentController{
     }
 
     // Get all establishments
-    getAll = async (req: Request, res: Response<Establishment[] | { message: string }>): Promise<void> => {
+    getAll = async (_req: Request, res: Response<Establishment[] | { message: string }>): Promise<void> => {
         try {
             const establishmentsList: Establishment[] = await establishmentsModel.getAll();
             if (!establishmentsList || establishmentsList.length === 0) {
