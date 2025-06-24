@@ -80,3 +80,4 @@ end;
 
 drop procedure deleteEmployee;
 
+Select CI_emp, nombre, apellido from Empleados where RIF_establecimiento = 'J-12345678-9';

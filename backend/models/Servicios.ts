@@ -1,6 +1,6 @@
 import { getDbPool } from "../config/SQLserverConection";
 
-export class Services {
+export class ServicesModel {
     
     static async getAll() {
         const pool = getDbPool();
@@ -9,7 +9,7 @@ export class Services {
         return result['recordset'];
     }
 
-    static async getById({ id }: { id: number; }) {
+    static async getById(id: number) {
         if (id === undefined || id === null || id <= 0) {
             return { error: "Se necesita el ID del servicio" };
         }

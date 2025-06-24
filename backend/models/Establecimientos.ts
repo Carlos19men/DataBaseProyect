@@ -1,6 +1,6 @@
 import { getDbPool } from "../config/SQLserverConection";
 
-export class Establishments{
+export class establishmentsModel{
     static async getAll() {
         const pool = getDbPool();
         const result = await pool.query('SELECT RIF, nombre, ciudad FROM Establecimientos ORDER BY nombre;');
@@ -9,7 +9,7 @@ export class Establishments{
         return result['recordset'];
     }
 
-    static async getByRIF({ RIF }: { RIF: string; }) {
+    static async getByRIF(RIF: string) {
         if (RIF === undefined || RIF === null || RIF.length === 0) {
             return { error: "Se necesita el RIF" };
         }
@@ -19,10 +19,10 @@ export class Establishments{
 
         const result = await request.query('SELECT * FROM Establecimientos WHERE RIF = @RIF;');
         console.log(result['recordset']);
-        return result['recordset'];
+        return result['recordset'][0];
     }
 
-    static async editEstablisment({RIF, CI_PIC, name, city, date_PIC}: {RIF: string | null, CI_PIC: string | null, name: string | null, city: string | null, date_PIC: Date | null}){
+    static async edit({RIF, CI_PIC, name, city, date_PIC}: {RIF: string | null, CI_PIC: string | null, name: string | null, city: string | null, date_PIC: Date | null}){
         if(RIF != null){
             if(RIF === undefined || RIF.length === 0){
                 return {error: "Se necesita el RIF"};
@@ -73,10 +73,10 @@ export class Establishments{
 
         const result = await request.query(query);
         console.log(result['recordset']);
-        return result['recordset'];
+        return result['recordset'][0];
     }
 
-    static async addEstablishment({RIF, CI_PIC, name, city, date_PIC}:{RIF: string, CI_PIC: string, name: string, city: string, date_PIC: Date}){
+    static async add({RIF, CI_PIC, name, city, date_PIC}:{RIF: string, CI_PIC: string, name: string, city: string, date_PIC: Date}){
         if(RIF != null){
             if(RIF === undefined || RIF.length === 0){
                 return {error: "Se necesita el RIF"};
@@ -127,7 +127,7 @@ export class Establishments{
         return result['recordset'];
     }
 
-    static async deleteEstablishment({RIF}: {RIF: string}){
+    static async deleteEstablishment(RIF: string){
         if(RIF === undefined || RIF === null || RIF.length == 0){
             return {error: 'Se necesita el RIF'}
         }

@@ -1,6 +1,6 @@
 import {  getDbPool } from "../config/SQLserverConection";
 
-export class customer {
+export class customerModel {
 
     static async getAll(){
 
@@ -70,7 +70,7 @@ export class customer {
         return result['recordset']
     }
     
-    static async new({CI,name,lastName,email}:{CI:string,name:string,lastName:string,email:string}){
+    static async add({CI,name,lastName,email}:{CI:string | null,name:string | null,lastName:string | null,email:string | null}){
 
         if(CI === undefined || CI === null || CI.length === 0) {
             return { error: "CI is required"}
@@ -96,9 +96,9 @@ export class customer {
 
         const result = await request.query('EXEC agregarCliente @CI,@name,@lastName,@email;')
 
-        console.log(result['recordset'])
+        console.log(result['rowsAffected'])
 
-        return result['recordset']
+        return result['rowsAffected']
     }
 
     static async delete(CI:string){
@@ -112,8 +112,8 @@ export class customer {
 
         const result = await request.query('EXEC eliminarCliente @CI;')
 
-        console.log(result['recordset'])
-        return result['recordset']
+        console.log(result['rowsAffected'])
+        return result['rowsAffected']
     }
 }
 
