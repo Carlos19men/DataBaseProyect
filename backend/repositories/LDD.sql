@@ -73,7 +73,7 @@ create table Marcas(
 create table Modelos(
 	cod_marca int not null,
 	nro_modelo int identity(1,1) not null,
-	nombre varchar(100) not null,
+	nombre varchar(100) not null unique,
 	aceite_caja varchar(30) not null,
 	aceite_motor varchar(30) not null,
 	octanaje varchar(2) not null check(octanaje in ('87','91', '95', '98')), 
@@ -185,11 +185,11 @@ create table Productos(
 
 create table Proveedores(
 	RIF varchar(20) not null,
-	razon_social varchar(50) not null,
+	razon_social varchar(50) not null unique,
 	direccion varchar(100) not null,
 	local_ varchar(15) not null,
-	telefono varchar(15) not null,
-	persona_contacto varchar(80),
+	telefono varchar(15) not null unique,
+	persona_contacto varchar(80) NOT NULL,
 	
 	primary key(RIF)
 );
