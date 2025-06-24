@@ -17,7 +17,7 @@ export const createApp = () =>{
     //aplanando la aplicacion 
 
     // Importando las rutas
-    app.use('/', createEstablishmentRouter)
+    app.use('/establishement', createEstablishmentRouter())
 
     const PORT = process.env.PORT ?? 1234
 

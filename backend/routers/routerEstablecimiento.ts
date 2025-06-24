@@ -22,4 +22,6 @@ export const createEstablishmentRouter = () => {
 
     //update 
     establishmentRouter.patch('/:RIF', establishmentController.edit);
+
+    return establishmentRouter;
 }
