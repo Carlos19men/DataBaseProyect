@@ -11,7 +11,7 @@ const Landing: React.FC = () => {
 
     return(
         <div className={styles.container}>
-           
+           <LandingBG></LandingBG>
             
             <Logo></Logo> 
             <div className={styles.titles}>
@@ -28,7 +28,7 @@ const Landing: React.FC = () => {
                     Registrate Aqui
                 </Link>
             </div>
-            <LandingBG ></LandingBG>
+            
         </div>
 
     )

@@ -1,21 +1,20 @@
 .body {
-  background-color: #f0f0f0; /* color de fondo */
-  height: 100vh; /* altura completa de la ventana */
   display: flex;
   justify-content: center; /* centrar horizontalmente */
   align-items: center;    /* centrar verticalmente */
-  overflow-x: hidden;
-  overflow-y: hidden;
-  background-position-y: top;
+  overflow: hidden;
+
 }
 
 
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* centrar horizontalmente */
-  align-items: center;    /*  centrar verticalmente */
-  
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1; /* Contenido encima */
+
 }
 
 .titles {
@@ -23,10 +22,13 @@
 
 }
 
+
+
 .buttonPart {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
+
+
 }

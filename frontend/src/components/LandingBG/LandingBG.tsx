@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./LandingBG.module.css";;
 
 const LandingBG: React.FC = () => (
-    <div className={styles.container}>
+    <div className={styles.divLandingBG}>
         <div className={styles.rect4}></div>
             <div className={styles.rect5}></div>
             <div className={styles.rect7}></div>
