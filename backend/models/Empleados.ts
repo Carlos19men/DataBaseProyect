@@ -22,7 +22,7 @@ export class employeeModel {
         return result['recordset'][0];
     }
 
-    static async getbyRIF({RIF}: {RIF: string | null}){
+    static async getbyRIF(RIF: string) {
         if(RIF === undefined || RIF === null || RIF.length === 0){
             return {error: "Se requiere el RIF"};
         }
@@ -95,10 +95,10 @@ export class employeeModel {
 
         const result = await request.query(query);
         console.log(result['recordset']);
-        return result;
+        return result['recordset'][0];
     }
 
-    static async deleteEmpleado({CI}: { CI: string; }) {
+    static async deleteEmpleado(CI: string) {
         if (CI === undefined || CI === null || CI.length === 0) {
             return { error: "Se necesita la cédula" };
         }
@@ -111,7 +111,7 @@ export class employeeModel {
             return { error: "No se encontró el empleado con la cédula proporcionada." };
         }
         console.log(result['recordset']);
-        return result;
+        return result['recordset'][0];
     }
 
     static async addEmpleado({CI, name, lastName, cellphone, address, salary, RIF}: {CI: string, name: string, lastName: string, cellphone: string, address: string, salary: number, RIF: string}) {
@@ -159,6 +159,6 @@ export class employeeModel {
         const result = await request.query(query);
         
         console.log(result['recordset']);
-        return result;
+        return result['recordset'][0];
     }
 }
