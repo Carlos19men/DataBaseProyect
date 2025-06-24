@@ -1,0 +1,331 @@
+.divLandingBG {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f0f0f0;
+}
+
+/* Rectángulos izquierda */
+/* arriba a la izquierda grande 1*/
+.rect4 {
+    position: absolute;
+    width: 6.08vw;
+    /* 100px */
+    height: 6.08vw;
+    left: 5.84vw;
+    /* 96px */
+    top: 8.33vh;
+    /* 87px */
+    background: rgba(45, 211, 119, 0.4);
+    overflow: hidden;
+}
+/* arriba a la izquierda grande 2*/
+.rect5 {
+    position: absolute;
+    width: 6.08vw;
+    height: 6.08vw;
+    left: 8.88vw;
+    /* 146px */
+    top: 22.69vh;
+    /* 237px */
+    background: rgba(45, 211, 119, 0.4);
+    overflow: hidden;
+}
+/* arriba a la izquierda med 2*/
+.rect7 {
+    position: absolute;
+    width: 3.1vw;
+    /* 51px */
+    height: 3.1vw;
+    left: 18.78vw;
+    /* 309px */
+    top: 17.91vh;
+    /* 187px */
+    background: rgba(45, 211, 119, 0.4);
+    overflow: hidden;
+}
+/* arriba a la izquierda med 3*/
+.rect8 {
+    position: absolute;
+    width: 3.1vw;
+    /* 51px */
+    height: 3.1vw;
+    left: 21.76vw;
+    /* 358px */
+    top: 25.07vh;
+    /* 262px */
+    background: rgba(45, 211, 119, 0.4);
+    overflow: hidden;
+}
+/* arriba a la izquierda med 1*/
+.rect9 {
+    position: absolute;
+    width: 3.1vw;
+    /* 51px */
+    height: 3.1vw;
+    left: 15.74vw;
+    /* 259px */
+    top: 10.72vh;
+    /* 112px */
+    background: rgba(45, 211, 119, 0.4);
+    overflow: hidden;
+}
+
+
+
+.rect13 {
+    position: absolute;
+    width: 1.52vw;
+    /* 25px */
+    height: 1.52vw;
+    left: 27.12vw;
+    /* 446px */
+    top: 22.69vh;
+    /* 237px */
+    background: rgba(45, 211, 119, 0.4);
+    overflow: hidden;
+}
+
+.rect14 {
+    position: absolute;
+    width: 1.52vw;
+    height: 1.52vw;
+    left: 24.07vw;
+    /* 396px */
+    top: 11.97vh;
+    /* 125px */
+    background: rgba(45, 211, 119, 0.4);
+    overflow: hidden;
+}
+
+.rect15 {
+    position: absolute;
+    width: 1.52vw;
+    height: 1.52vw;
+    left: 25.6vw;
+    /* 421px */
+    top: 16.75vh;
+    /* 175px */
+    background: rgba(45, 211, 119, 0.4);
+    overflow: hidden;
+}
+
+/* Rectángulos derecha (con transform) */
+.rect4Der {
+    position: absolute;
+    width: 6.08vw;
+    height: 6.08vw;
+    left: 81.54vw;
+    /* 1341px */
+    top: 8.33vh;
+    background: rgba(45, 211, 119, 0.4);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    overflow: hidden;
+}
+
+.rect5Der {
+    position: absolute;
+    width: 6.08vw;
+    height: 6.08vw;
+    left: 78.48vw;
+    /* 1291px */
+    top: 22.69vh;
+    background: rgba(45, 211, 119, 0.4);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    overflow: hidden;
+}
+
+.rect7Der {
+    position: absolute;
+    width: 3.1vw;
+    height: 3.1vw;
+    left: 68.57vw;
+    /* 1128px */
+    top: 17.91vh;
+    background: rgba(45, 211, 119, 0.4);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    overflow: hidden;
+}
+
+.rect8Der {
+    position: absolute;
+        width: 3.1vw;
+    /* 51px */
+    height: 3.1vw;
+    left: 65.6vw;
+    /* 1079px */
+    top: 25.07vh;
+    background: rgba(45, 211, 119, 0.4);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    overflow: hidden;
+}
+
+.rect9Der {
+    position: absolute;
+        width: 3.1vw;
+    /* 51px */
+    height: 3.1vw;
+    left: 71.64vw;
+    /* 1178px */
+    top: 10.72vh;
+    background: rgba(45, 211, 119, 0.4);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    overflow: hidden;
+}
+
+.rect13Der {
+    position: absolute;
+    width: 1.52vw;
+    height: 1.52vw;
+    left: 60.25vw;
+    /* 991px */
+    top: 22.69vh;
+    background: rgba(45, 211, 119, 0.4);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    overflow: hidden;
+}
+
+.rect14Der {
+    position: absolute;
+    width: 1.52vw;
+    height: 1.52vw;
+    left: 63.29vw;
+    /* 1041px */
+    top: 11.97vh;
+    background: rgba(45, 211, 119, 0.4);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    overflow: hidden;
+}
+
+.rect15Der {
+    position: absolute;
+    width: 1.52vw;
+    height: 1.52vw;
+    left: 61.77vw;
+    /* 1016px */
+    top: 16.75vh;
+    background: rgba(45, 211, 119, 0.4);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    overflow: hidden;
+}
+
+/* Esquinas izquierda */
+.rect7EsqIzq {
+    position: absolute;
+    width: 12.16vw;
+    /* 200px */
+    height: 12.16vw;
+    left: 0vw;
+    /* -4px */
+    bottom: -6.08vw;
+    /* 932px */
+    background: rgba(45, 211, 119, 0.4);
+    overflow: hidden;
+}
+
+.rect10EsqIzq {
+    position: absolute;
+    width: 12.16vw;
+    height: 12.16vw;
+    left: 0vw;
+    bottom:0;
+    /* 832px */
+    background: rgba(45, 211, 119, 0.4);
+    overflow: hidden;
+}
+
+.rect5EsqIzq {
+    position: absolute;
+    width: 12.16vw;
+    height: 12.16vw;
+    left: -6.08vw;
+    /* -104px */
+    bottom: 6.08vw;
+    /* 732px */
+    background: rgba(45, 211, 119, 0.4);
+    overflow: hidden;
+}
+
+.rect9EsqIzq {
+    position: absolute;
+    width: 12.16vw;
+    height: 12.16vw;
+    left: 6.08vw;
+    /* 96px */
+    bottom:-6.08vw;
+    background: rgba(45, 211, 119, 0.4);
+    overflow: hidden;
+}
+
+.rect6EsqIzq {
+    position: absolute;
+    width: 12.16vw;
+    height: 12.16vw;
+    left: -6.08vw;
+    bottom: -0vw;
+    background: rgba(45, 211, 119, 0.4);
+    overflow: hidden;
+}
+
+/* Esquinas derecha */
+.rect7EsqDer {
+    position: absolute;
+    width: 12.16vw;
+    height: 12.16vw;
+    right: 0vw;
+    /* 1441px */
+    bottom: -6.08vw;
+    /* 928px */
+    background: rgba(45, 211, 119, 0.4);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    overflow: hidden;
+}
+
+.rect10EsqDer {
+    position: absolute;
+    width: 12.16vw;
+    height: 12.16vw;
+    right: 0vw;
+    bottom: 0vw;
+    /* 828px */
+    background: rgba(45, 211, 119, 0.4);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    overflow: hidden;
+}
+
+.rect5EsqDer {
+    position: absolute;
+    width: 12.16vw;
+    height: 12.16vw;
+    right:-6.08vw;
+    /* 1541px */
+    bottom: 6.08vw;
+    /* 728px */
+    background: rgba(45, 211, 119, 0.4);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    overflow: hidden;
+}
+
+.rect9EsqDer {
+    position: absolute;
+    width: 12.16vw;
+    height: 12.16vw;
+    right: 6.08vw;
+    /* 1341px */
+    bottom:-6.08vw;
+    background: rgba(45, 211, 119, 0.4);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    overflow: hidden;
+}
+
+.rect6EsqDer {
+    position: absolute;
+    width: 12.16vw;
+    height: 12.16vw;
+    right: -6.08vw;
+    bottom: 0vw;
+    background: rgba(45, 211, 119, 0.4);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    overflow: hidden;
+}
