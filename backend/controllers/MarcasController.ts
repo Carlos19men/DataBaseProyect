@@ -8,8 +8,13 @@ interface Brand {
 }
 
 export class brandController {
+    model: brandModel;
+
+    constructor(model: brandModel){
+        this.model = model;
+    }
+
     getAll = async(req: Request, res: Response<Brand[] | {message: string}>): Promise<void> => {
-        
         try{
             const brands: Brand[] = await employeeModel.getAll();
 
