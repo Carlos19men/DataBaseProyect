@@ -9,7 +9,7 @@ export class ServicesModel {
         return result['recordset'];
     }
 
-    static async getById({ id }: { id: number; }) {
+    static async getById(id: number) {
         if (id === undefined || id === null || id <= 0) {
             return { error: "Se necesita el ID del servicio" };
         }
