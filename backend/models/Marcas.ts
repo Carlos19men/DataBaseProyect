@@ -65,7 +65,7 @@ export class brandModel {
         request.input('id', id);
 
         const result = await request.query('DELETE FROM Marcas WHERE id = @id;');
-        console.log(result['rowsAffected']);
-        return result['rowsAffected'][0];
+        console.log(result['recordset']);
+        return result['recordset'][0];
     }
 }

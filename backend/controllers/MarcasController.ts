@@ -14,7 +14,7 @@ export class brandController {
         this.model = model;
     }
 
-    getAll = async(req: Request, res: Response<Brand[] | {message: string}>): Promise<void> => {
+    getAll = async(_req: Request, res: Response<Brand[] | {message: string}>): Promise<void> => {
         try{
             const brands: Brand[] = await employeeModel.getAll();
 
@@ -106,4 +106,28 @@ export class brandController {
         }
     }
 
+    deleteBrand = async(req: Request, res: Response<{message: string}>): Promise<void> => {
+        const id: number = parseInt(req.params.id, 10);
+
+        if(id === undefined || id <= 0) {
+            res.status(404).json({message: "Se requiere el id"});
+            return;
+        }
+
+        try {
+            const result = await brandModel.deleteBrand(id);
+
+            if('error' in result) {
+                res.status(400).json({message: "No se encontró una marca con ese código"});
+                return;
+            }
+
+            res.status(200).json({message: "Marca eliminada correctamente"});
+            return;
+        } catch(error) {
+            console.error("Ha ocurrido un error", error);
+            res.status(500).json({message: "Ha ocurrido un error en el servidor"});
+            return;
+        }
+    }
 }
