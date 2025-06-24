@@ -89,13 +89,13 @@ export class Actividades {
             return { error: "Actividad necesaria" }
         }
         if (nomb === undefined || nomb === null || nomb.length === 0) {
-            return { error: "Nombre is required" }
+            return { error: "Nombre necesario" }
         }
         if (desc === undefined || desc === null || desc.length === 0) {
-            return { error: "Descripcion is required" }
+            return { error: "Descripcion necesaria" }
         }
         if (monto === undefined || monto === null) {
-            return { error: "Monto is required" }
+            return { error: "Monto necesario" }
         }
 
         const request = getDbPool().request()
@@ -114,31 +114,40 @@ export class Actividades {
 
     }
 
-    static async updateActividad({ nro_s, nro_a, nomb, desc, monto }: { nro_s?: number, nro_a?: number, nomb?: string, desc?: String, monto?: number }) {
+    static async updateActividad(
+        {   nro_s, 
+            nro_a, 
+            nomb, 
+            desc, 
+            monto 
 
-        if (nro_s !== undefined) {
-            if (nro_s === null) {
-                return { error: "Servicio necesario" }
-            }
+        }: { 
+            nro_s: number,
+            nro_a: number,
+            nomb?: string,
+            desc?: String, 
+            monto?: number 
+        }) {
+
+        if (nro_s === undefined || nro_s === null) {
+            return { error: "Servicio necesario" }
         }
-        if (nro_a !== undefined) {
-            if ( nro_a === null) {
-                return { error: "Actividad necesaria" }
-            }
+        if (nro_a === undefined || nro_a === null) {
+            return { error: "Actividad necesaria" }
         }
         if (nomb !== undefined) {
             if ( nomb === null || nomb.length === 0) {
-                return { error: "Nombre is required" }
+                return { error: "Nombre necesario" }
             }
         }
         if (desc !== undefined) {
             if (desc === null || desc.length === 0) {
-                return { error: "Descripcion is required" }
+                return { error: "Descripcion necesario" }
             }
         }
         if (monto!==undefined){
         if ( monto === null) {
-            return { error: "Monto is required" }
+            return { error: "Monto necesario" }
             }
         }
     
@@ -153,12 +162,14 @@ export class Actividades {
 
         const result = await request.query('EXEC updateActividad @nro_s,@nro_a,@nomb,@desc,@monto;');
 
-        console.log(result['recordset'])
         return result
 
     }
 
-   static async deleteActividad(nro_s: number, nro_corr: number) {
+    static async deleteActividad(
+        nro_s: number,
+        nro_corr: number
+        ) {
 
         if (nro_s === undefined || nro_s === null) {
             return { error: "Servicio necesario" }
@@ -176,7 +187,6 @@ export class Actividades {
 
         const result = await request.query('EXEC deleteActividad @nro_s,@nro_corr;');
 
-        console.log(result['recordset'])
         return result
 
     }
@@ -190,8 +200,10 @@ export class Actividades {
 async function main() {
 
     await connectToDatabase();
-    console.log("aaa0");
+
     console.log(await Actividades.getAll());
+   // console.log(await Actividades.updateActividad({nro_s:13, nro_a:52,nomb: 'Limpieza ultrasónica de inyectores'}));
+   // console.log(await Actividades.getAll());
 }
 
 main().catch((err) => {console.error("error de ejecucion",err)})
