@@ -18,7 +18,7 @@ export class EmployeeController {
         this.model = model;
     }
 
-    getAll = async(req: Request, res: Response<Employee[] | {message: string}>): Promise<void> => {
+    getAll = async(_req: Request, res: Response<Employee[] | {message: string}>): Promise<void> => {
         try {
             const employees: Employee[] = await employeeModel.getAll();
 
