@@ -19,7 +19,7 @@ export class CustomerController {
     }
 
     //getAll
-    getAll = async(req:Request,res:Response<Customer[] | {message:string}>): Promise<void> => {
+    getAll = async(_req:Request,res:Response<Customer[] | {message:string}>): Promise<void> => {
 
         //aquí validamos la entrada 
 
