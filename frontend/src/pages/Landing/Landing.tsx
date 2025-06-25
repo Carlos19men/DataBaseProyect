@@ -22,9 +22,9 @@ const Landing: React.FC = () => {
             
             
             <div className={styles.buttonPart}>
-                <Button texto="Iniciar Sesión" onClick={() => navigate('/login')} ></Button>
+                <Button texto="Iniciar Sesión" onClick={() => navigate('/Login')} ></Button>
                 <p className="miniText">No tienes una cuenta?</p>
-                <Link to="/registro" className="miniText">
+                <Link to="/Registro" className="miniText">
                     Registrate Aqui
                 </Link>
             </div>

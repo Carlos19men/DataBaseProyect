@@ -17,3 +17,9 @@
   letter-spacing: 0.5px;  
   text-align: center; 
 }
+.inactivo{
+  background-color: #EDEDED;
+}
+.button:hover{
+  background-color: #2DD377;
+}

@@ -1,0 +1,17 @@
+.container{
+    flex: auto;
+    flex-direction: column;
+}
+.botones{
+    display: flex;
+    justify-content: center;
+    gap: 16px; /* Espacio entre botones */
+    margin: 5vh 0;
+}
+
+.centrado{
+    margin: 5vh;
+    display: flex;
+    justify-content: center;
+    
+}

@@ -4,13 +4,14 @@ import styles from "./button.module.css";
 interface BotonProps {
   texto: string;
   onClick?: () => void;
+  inactivo?: boolean ;
 }
 
-const Button : React.FC<BotonProps> = ({ texto, onClick }) => {
+const Button : React.FC<BotonProps> = ({ texto, onClick, inactivo=false }) => {
     return(
-        <div>
-            <button className={styles.button} onClick={onClick}><span className={styles.buttonText}>{texto}</span></button>
-        </div>
+        <span>
+            <button className={`${styles.button} ${inactivo ? styles.inactivo : ""}`} onClick={onClick}  ><span className={styles.buttonText}>{texto}</span></button>
+        </span>
     )
 }
 

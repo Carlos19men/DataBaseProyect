@@ -6,7 +6,7 @@ const Registro: React.FC  = () => {
     return (
         <div>
             <TopBar text="Registro"></TopBar>
-             <span><TextBoxMU  etiqueta="Prueba" viewWidth={20}></TextBoxMU><TextBoxMU  etiqueta="HOLA PROBANDO" viewWidth={20}></TextBoxMU></span>
+            <span><TextBoxMU  etiqueta="Prueba" viewWidth={30}></TextBoxMU><TextBoxMU  etiqueta="HOLA PROBANDO" viewWidth={20}></TextBoxMU></span>
         </div>
     )
 }
