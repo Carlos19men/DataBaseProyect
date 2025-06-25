@@ -1,5 +1,22 @@
 .container{
-    width: 100vw;
+    flex: auto;
+    flex-direction: column;
+}
+.botones{
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Espacio entre botones */
+    margin: 5vh 0;
+}
+
+.centrado{
+    margin: 5vh;
+    display: flex;
+    justify-content: center;
+}
+
+.form{
+    margin-bottom: 30px;
 }
 
 .body{

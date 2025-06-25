@@ -1,12 +1,41 @@
 import styles from "./Registro.module.css";
 import TopBar from "../../components/TopBar/TopBar";
 import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button/button";
+import RegistroCliente from "./TipoRegistro/RegistroCliente";
+import RegistroEmpleado from "./TipoRegistro/RegistroEmpleado";
 
 const Registro: React.FC  = () => {
+    const [tipo, setTipo] = useState<"empleado" | "cliente" >("empleado");
+    const navigator = useNavigate();
     return (
-        <div>
+        <div className={styles.container}>
             <TopBar text="Registro"></TopBar>
-            <span><TextBoxMU  etiqueta="Prueba" viewWidth={30}></TextBoxMU><TextBoxMU  etiqueta="HOLA PROBANDO" viewWidth={20}></TextBoxMU></span>
+            <span className={styles.botones}>
+                <Button texto="Empleado" onClick={() => setTipo("empleado")} inactivo={tipo === "cliente"} />
+                <Button texto="Cliente" onClick={() => setTipo("cliente")} inactivo={tipo === "empleado"} />
+            </span>
+            <div className={styles.centrado}>
+                {tipo === "empleado" && <div><RegistroEmpleado></RegistroEmpleado></div>}
+                {tipo === "cliente" && <div><RegistroCliente></RegistroCliente></div>}
+            </div>
+            <div className={styles.centrado} ><Button texto="Ingresar" onClick={()=> {
+                
+                if (tipo === "cliente"){
+                    
+                    //AQUÍ EL LLAMADO A LA BASE DE DATOS 
+                    
+                }else{
+
+                    //AQUÍ EL LLAMADO A LA BASE DE DATOS 
+
+                }
+                
+                navigator("/HomePage");
+            }
+            }></Button></div>
         </div>
     )
 }

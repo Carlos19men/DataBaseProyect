@@ -6,7 +6,8 @@ const LoginEmp: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            <TextBoxMU etiqueta="IdEmpleado" viewWidth={60}></TextBoxMU>
+            <h2 className="subtitle">Ingrese su cedula: </h2>
+            <TextBoxMU etiqueta="" viewWidth={60}></TextBoxMU>
             
         </div>
     );

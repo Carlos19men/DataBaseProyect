@@ -1,0 +1,30 @@
+.toggle {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: #f0f0f0;
+  padding: 12px;
+  border-radius: 8px;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.opcion {
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #555;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.opcionActiva {
+  background-color: var(--primary-blue);
+  color: var(--white);
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
