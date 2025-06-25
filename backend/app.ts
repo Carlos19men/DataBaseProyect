@@ -3,7 +3,7 @@ import { corsMidleware } from "./middelware/cors";
 import { connectToDatabase } from "./config/SQLserverConection";
 import { createEstablishmentRouter } from "./routers/routerEstablecimiento";
 import { createEmployeeRouter } from "./routers/routerEmpleado";
-
+import { createServiceRouter } from "./routers/RouterServicios";
 connectToDatabase()
 
 
@@ -22,6 +22,8 @@ export const createApp = () =>{
     //Establecimientos 
     app.use('/establishement', createEstablishmentRouter())
     app.use('/employee', createEmployeeRouter())
+    app.use('/servicie',createServiceRouter())
+    
     
 
     const PORT = process.env.PORT ?? 1234
