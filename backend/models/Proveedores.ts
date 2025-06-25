@@ -7,7 +7,7 @@ export class SuppliersModel{
     static async getAll(){
 
         const result = await getDbPool().query('SELECT * FROM Proveedores ORDER BY razon_social; ')
-        return result['rowsAffected']
+        return result['recordset'];
     }
 
     //get by RIF 
@@ -23,7 +23,7 @@ export class SuppliersModel{
 
         const result = await request.query('SELECT * FROM obtenerProveedoreRIF(@RIF);')
         
-        return result['recordset']
+        return result['recordset'][0];
     }
 
     static async create({RIF,razonSo,direccion,local_,telefono,persona_contacto}:{RIF:string,razonSo:string,direccion:string,local_:string,telefono:string,persona_contacto:string}){
@@ -66,7 +66,7 @@ export class SuppliersModel{
         //execute the request 
         const result = await request.query('INSERT INTO Proveedores (RIF, razon_social, direccion, local_, telefono, persona_contacto) VALUES (@RIF, @razonSo, @direccion, @local_, @telefono, @persona_contacto);')
 
-        return result['rowsAffected']        
+        return result['recordset'][0];        
     }
 
     static async update({RIF,razonSo,direccion,local_,telefono,persona_contacto}:{RIF:string,razonSo:string,direccion:string,local_:string,telefono:string,persona_contacto:string}){
@@ -114,9 +114,9 @@ export class SuppliersModel{
                     WHERE RIF = @RIF;` 
 
         //execute the request 
-        const result = await request.query(query)
+        const result = await request.query(query);
 
-        return result['rowsAffected']       
+        return result['recordset'][0];       
     }
 
     static async deleted(RIF:string){
@@ -130,7 +130,7 @@ export class SuppliersModel{
 
         const result = await request.query('DELETD Proveedore WHERE RIF = @RIF;')
         
-        return result['recordset']
+        return result['recordset'][0];
     }
 
     static async getByOrderBuy(nroOC:number){
