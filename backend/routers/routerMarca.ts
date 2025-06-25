@@ -2,7 +2,7 @@ import {Router} from 'express';
 import {brandController} from '../controllers/MarcasController';
 import {brandModel} from '../models/Marcas';
 
-export const brandRouter = () => {
+export const createbrandRouter = () => {
     const Brandrouter = Router();
     const Brandcontroller = new brandController(brandModel);
 

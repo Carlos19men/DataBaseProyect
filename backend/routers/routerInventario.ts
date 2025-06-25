@@ -2,7 +2,7 @@ import { Router } from "express";
 import { InventoryController } from "../controllers/InventarioController";
 import { inventoryModel } from "../models/Inventario";
 
-const inventoryRouter = () => {
+export const createInventoryRouter = () => {
     const InventoryRouter = Router();
     const inventoryController = new InventoryController(inventoryModel);
 
@@ -16,5 +16,5 @@ const inventoryRouter = () => {
     
     InventoryRouter.delete("/:RIF/:id_producto", inventoryController.deleteProduct);
     
-    return inventoryRouter;
+    return InventoryRouter;
 }
