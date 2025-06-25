@@ -1,4 +1,4 @@
-CREATE FUNCTION asignadosServicios(
+CREATE FUNCTION empleadosAsignadosSer(
 @RIF varchar(100)
 )
 RETURNS TABLE
@@ -17,7 +17,7 @@ CREATE FUNCTION empleadosNoAsignados(
 RETURNS TABLE
 AS
 RETURN (
-	SELECT * FROM Empleados EM WHERE CI_emp NOT IN (SELECT CedulaEmpleado FROM asignadosServicios(@RIF)) AND RIF_establecimiento = @RIF
+	SELECT * FROM Empleados EM WHERE CI_emp NOT IN (SELECT CedulaEmpleado FROM empleadosAsignadosSer(@RIF)) AND RIF_establecimiento = @RIF
 );
 
 --asignar empleado 
