@@ -72,7 +72,7 @@ export class ModelController {
             return 
         }
     }
-
+    /*
     create = async (req: Request, res: Response< { message: string } | {error:string}>): Promise<void> => {
         const {id_marca,nombre,aceite_caja,aceite_motor,octanaje,tipo_refrigerante,descripcion,peso,nro_puestos} = req.body
 
@@ -80,4 +80,5 @@ export class ModelController {
             const resutl = await ModelsModel.createModel({id_marca,nombre,aceite_caja,aceite_motor,octanaje,tipo_refrigerante,peso,descripcion,nro_puestos})
         }
     }
+    */
 }
