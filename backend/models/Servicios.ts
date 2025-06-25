@@ -19,7 +19,7 @@ export class ServicesModel {
 
         const result = await request.query('SELECT * from Servicios where id_servicio = @id;');
         console.log(result['recordset']);
-        return result['recordset'];
+        return result['recordset'][0];
     }
 
     static async editService ({nro_servicio, CI_superv, nombre_serv}: { nro_servicio: number | null, CI_superv: string | null, nombre_serv: string | null}){

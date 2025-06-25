@@ -21,19 +21,20 @@ export class ModelsModel{
         request.input('id_modelo', id_modelo);
         request.input('id_marca', id_marca);
 
-        const result = await request.query('SELECT * FROM Modelos WHERE id_modelo = @id_modelo AND cod_marca = @id_marca;');
-        return result['recordset'];
+        const result = await request.query('SELECT * FROM ObtenerModelos WHERE id_modelo = @id_modelo AND cod_marca = @id_marca;');
+        return result['recordset'][0];
     }
 
-    static async getByMarca(marca:string) {
-        if (marca === null || marca === undefined || marca.length === 0) {
-            return { message: 'Marca requerida' };
+    static async getByMarca(id_marca:number) {
+        
+        if(id_marca === null || id_marca === undefined){
+            return {message: 'Id de la marca requerido'}
         }
-    
-        const request = getDbPool().request();
-        request.input('marca', marca.trim().toUpperCase());
 
-        const result = await request.query('SELECT * FROM ObtenerModelos WHERE UPPER(Marca) = UPPER(@marca);');
+        const request = getDbPool().request();
+        request.input('id_marca',id_marca);
+
+        const result = await request.query('SELECT * FROM ObtenerModelos WHERE id_marca = @id_marca;');
         return result['recordset'];
     }
 
