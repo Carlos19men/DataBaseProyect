@@ -23,7 +23,9 @@
 }
 
 
-
+.oculto{
+  height: 0;
+}
 .buttonPart {
   display: flex;
   flex-direction: column;
@@ -37,5 +39,16 @@
   .titles{
     padding-top: 5vh;
 
+  }
+}
+
+@media screen and (max-width: 720px) {
+  
+  .titles{
+    padding-top: 5vh;
+
+  }
+  .oculto{
+    height: 5vh;
   }
 }

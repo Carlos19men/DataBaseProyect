@@ -12,7 +12,8 @@ const Landing: React.FC = () => {
     return(
         <div className={styles.container}>
            <LandingBG></LandingBG>
-            
+           
+            <div className={styles.oculto}></div>
             <Logo></Logo> 
             <div className={styles.titles}>
                 <h1 className="title">Multiservicios Universal M&U</h1>

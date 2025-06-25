@@ -36,3 +36,22 @@ body{
   padding: 0;
   box-sizing: border-box;
 }
+
+@media screen and (max-width: 720px) {
+  
+  
+  .title{
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    font-size: 30px;
+    line-height: 150%;
+    letter-spacing: 0.5px;  
+  }
+  .subtitle{
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    font-size: 15px;
+    line-height: 150%;
+    letter-spacing: 0.5px;  
+  }
+}
