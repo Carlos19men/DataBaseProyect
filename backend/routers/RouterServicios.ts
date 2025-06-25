@@ -14,7 +14,7 @@ export const createServiceRouter = () =>{
 
     ServiceRouter.patch('/:id',ServiceController.editService)
 
-    ServiceRouter.delete('/id:',ServiceController.deleteService)
+    ServiceRouter.delete('/:id',ServiceController.deleteService)
 
     //falta agregar servicio
     
