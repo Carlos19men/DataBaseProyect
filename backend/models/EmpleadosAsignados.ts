@@ -22,7 +22,7 @@ export class employeeAsigModel {
         }
 
         if(id_servicio === null || id_servicio === undefined){
-            return {messasge:'se requiere el id del servicio'}
+            return {error :'se requiere el id del servicio'}
         }
 
         const request = getDbPool().request()
@@ -42,11 +42,11 @@ export class employeeAsigModel {
         }
 
         if(id_servicio === null || id_servicio === undefined){
-            return {messasge:'se requiere el id del servicio'}
+            return {error:'se requiere el id del servicio'}
         }
 
         if(Ci_emp === null || Ci_emp === undefined || Ci_emp.length === 0){
-            return{messasge:'Se requiere la cedula del empleado'}
+            return{error:'Se requiere la cedula del empleado'}
         }
 
         const request = getDbPool().request()
@@ -57,7 +57,7 @@ export class employeeAsigModel {
 
         const result = await request.query('EXEC asigEmpleado(@RIF,@id_servicio,@Ci_emp);')
 
-        return result['rowsAffected']
+        return result['recordset'][0];
     }
 
     static async unasigEmployee(id_servicio:number,Ci_emp:string){
@@ -93,7 +93,7 @@ export class employeeAsigModel {
         request.input('Ci_emp', Ci_emp);
 
         const result = await request.query('SELECT * FROM empleadosAsignadosSer(@RIF) WHERE CedulaEmpleado = @Ci_emp;');
-        return result['recordset'];
+        return result['recordset'][0];
     }
 
     static async getEmployeesNotAssigned(RIF: string) {
