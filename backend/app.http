@@ -1,0 +1,32 @@
+### Obtener todos los clientes
+http://localhost:1234/customer/
+
+###Obtener un cliente por su cedula
+http://localhost:1234/customer/25789012
+
+### Obtener todos los productos
+http://localhost:1234/product/
+
+### Obtener un producto por su id
+http://localhost:1234/product/5
+
+### Obtener todos los empleados
+http://localhost:1234/employee/
+
+### Obtener un empleado por su cedula
+http://localhost:1234/employee/12345724
+
+### empleados que trabajen en cierto establecimiento   
+http://localhost:1234/employee/RIF/J-00112233-4
+
+### Obtener todos los servicios
+http://localhost:1234/servicie
+
+### Obtener un servicio por su id
+http://localhost:1234/servicie/1
+
+### Obtener todos los establecimientos
+http://localhost:1234/establishement/
+
+### Obtener un establecimiento por su RIF
+http://localhost:1234/establishement/J-00112233-4

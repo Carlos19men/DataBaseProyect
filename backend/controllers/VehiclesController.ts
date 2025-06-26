@@ -25,7 +25,7 @@ export class VehicleModel{
         this.model = model
     }
 
-    getAll = async(req:Request,res:Response<Vehicle[] | {message:string}>): Promise<void> =>{
+    getAll = async(_req:Request,res:Response<Vehicle[] | {message:string}>): Promise<void> =>{
 
         try{
 
@@ -66,7 +66,7 @@ export class VehicleModel{
         }
     }
 
-    newVehicle = async(req:Request,res:Response<Vehicle | {message:string}>): Promise<void> =>{
+    newVehicle = async(req:Request,res:Response<Vehicle | {message:string} | {error:string}>): Promise<void> =>{
         const {plate,oil_box,oil_motor,maintenance,months_use,mileage,id_model,id_marca,CI_owner} = req.body
 
         //validamos los datos 
@@ -76,14 +76,14 @@ export class VehicleModel{
             const result = await vehicleModel.newVehicle({plate,oil_box,oil_motor,maintenance,months_use,mileage,id_model,id_marca,CI_owner})
 
             if(!result){
-                res.status(405).send({message:'No se pudo crear el nuevo vehiculo'})
+                res.status(405).send({error:'No se pudo crear el nuevo vehiculo'})
                 return 
             }
             res.status(200).send({message:'Vehiculo creado con exito'})
 
         }catch (error){
             console.error('Error al crear un nuevo vehiculo')
-            res.status(500).json({ message: 'Error interno del servidor al ingresar un vehiculo.' });
+            res.status(500).json({ error: 'Error interno del servidor al ingresar un vehiculo.' });
             return;
         }
 

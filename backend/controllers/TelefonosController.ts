@@ -13,7 +13,7 @@ export class PhonesController {
         this.model = model;
     }
 
-    getAll = async (req: Request, res: Response<Phones[] | { message: string }>): Promise<void> => {
+    getAll = async (_req: Request, res: Response<Phones[] | { message: string }>): Promise<void> => {
         try {
             const phones: Phones[] = await phonesCustomerModel.getAll();
 

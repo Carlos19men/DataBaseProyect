@@ -313,8 +313,8 @@ create table Almacena(
 create table ActualizacionesInventarios(
 	RIF_establecimiento varchar(20) not null,
 	id_producto int not null,
-	fecha_ajuste date not null,
-	hora_ajuste time not null,
+	fecha_ajuste date not null DEFAULT CONVERT(DATE,GETDATE()),
+	hora_ajuste time not null  DEFAULT CONVERT(TIME,GETDATE()),
 	cantidad int not null check(cantidad > 0),
 	tipo varchar(25) not null check(UPPER(tipo) in ('FALTANTE','SOBRANTE')),
 	comentario varchar(200),
