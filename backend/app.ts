@@ -1,5 +1,16 @@
 import express, { json } from "express";
 import { corsMidleware } from "./middelware/cors";
+import { connectToDatabase } from "./config/SQLserverConection";
+import { createEstablishmentRouter } from "./routers/routerEstablecimiento";
+import { createEmployeeRouter } from "./routers/routerEmpleado";
+import { createSuppliersrouter } from "./routers/routerProveedores";
+import {createInventoryRouter} from "./routers/routerInventario";
+import { createbrandRouter } from "./routers/routerMarca";
+import { createCustomerRouter } from "./routers/routerClientes";
+import { createProductosRouter } from "./routers/routerProductos";
+
+import { createServiceRouter } from "./routers/RouterServicios";
+connectToDatabase()
 
 
 export const createApp = () =>{
@@ -11,11 +22,16 @@ export const createApp = () =>{
     app.disable('x-powered-by')
 
     //aplanando la aplicacion 
-    app.get('/',(req,res) => {
-        req.accepted
-        res.status(200).send('<h1>Hola desde Node</h1>')
-    })
 
+    //Establecimientos 
+    app.use('/establishement', createEstablishmentRouter());
+    app.use('/employee', createEmployeeRouter());
+    app.use('/suppliers', createSuppliersrouter());
+    app.use('/inventory', createInventoryRouter());
+    app.use('/brand', createbrandRouter());
+    app.use('/servicie',createServiceRouter())
+    app.use('/customer',createCustomerRouter())
+    app.use('/product',createProductosRouter())
 
     const PORT = process.env.PORT ?? 1234
 
