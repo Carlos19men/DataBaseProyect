@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Landing from "./pages/Landing/Landing";
 import Registro from "./pages/Registro/Registro";
 import Login from "./pages/Login/Login";
+import HomePage from "./pages/Home Page/HomePage";
 
 const App = () => (
   <Router>
@@ -9,6 +10,7 @@ const App = () => (
       <Route path="/" element={<Landing/>}></Route>
       <Route path="/Registro" element={<Registro/>}></Route>
       <Route path="/Login" element={<Login/>}></Route>
+      <Route path="/HomePage" element={<HomePage/>}></Route>
     </Routes>
   </Router>
 )

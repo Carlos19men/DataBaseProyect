@@ -1,0 +1,65 @@
+.hamburguesa {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 2000;
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px; 
+  background-color: #ffffff;
+  transform: translateX(-100%);
+  transition: transform 0.4s ease-in-out;
+  z-index: 1001;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.menu.activo {
+  transform: translateX(0);
+}
+
+.h2{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600; /* SemiBold suele ser 600 */
+  font-size: 48px;
+  line-height: 100%;
+  letter-spacing: 0.5px;  
+  text-align: left; 
+  margin-top: 20px;
+  margin-left: 70px
+}
+
+.menu ul {
+  list-style: none;
+  padding: 2em;
+  margin: 0;
+}
+
+.menu li {
+  margin: 1.2em 0;
+  padding-bottom: 10px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 1000;
+}

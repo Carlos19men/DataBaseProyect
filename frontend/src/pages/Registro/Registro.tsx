@@ -1,6 +1,5 @@
 import styles from "./Registro.module.css";
 import TopBar from "../../components/TopBar/TopBar";
-import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/button";

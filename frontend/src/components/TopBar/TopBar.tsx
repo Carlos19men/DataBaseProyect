@@ -1,13 +1,16 @@
 import styles from "./TopBar.module.css";
+import MenuDespegable from "../Menu Desplegable/MenuDesplegable";
 
 interface TopBarProps {
   text: string;
+  menu: boolean;  // si es verdadero tendra menu
 }
 
-const TopBar: React.FC<TopBarProps> = ({text}) => {
+const TopBar: React.FC<TopBarProps> = ({text,menu}) => {
     return(
         <div className={styles.bar}>
-            <h1 className="subtitle">{text}</h1>    
+            {menu && <MenuDespegable></MenuDespegable>}
+            <h1 className="subtitle">{text}</h1> 
         </div>
     )
 }
