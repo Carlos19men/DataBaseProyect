@@ -6,6 +6,8 @@ import { createEmployeeRouter } from "./routers/routerEmpleado";
 import { createSuppliersrouter } from "./routers/routerProveedores";
 import {createInventoryRouter} from "./routers/routerInventario";
 import { createbrandRouter } from "./routers/routerMarca";
+import { createCustomerRouter } from "./routers/routerClientes";
+import { createProductosRouter } from "./routers/routerProductos";
 
 import { createServiceRouter } from "./routers/RouterServicios";
 connectToDatabase()
@@ -21,8 +23,6 @@ export const createApp = () =>{
 
     //aplanando la aplicacion 
 
-
-    
     //Establecimientos 
     app.use('/establishement', createEstablishmentRouter());
     app.use('/employee', createEmployeeRouter());
@@ -30,8 +30,8 @@ export const createApp = () =>{
     app.use('/inventory', createInventoryRouter());
     app.use('/brand', createbrandRouter());
     app.use('/servicie',createServiceRouter())
-    
-    
+    app.use('/customer',createCustomerRouter())
+    app.use('/product',createProductosRouter())
 
     const PORT = process.env.PORT ?? 1234
 
