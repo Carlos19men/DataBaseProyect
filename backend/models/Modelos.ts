@@ -22,7 +22,7 @@ export class ModelsModel{
         request.input('id_marca', id_marca);
 
         const result = await request.query('SELECT * FROM Modelos WHERE id_modelo = @id_modelo AND cod_marca = @id_marca;');
-        return result['recordset'];
+        return result['recordset'][0];
     }
 
     static async getByMarca(marca:string) {
@@ -92,9 +92,9 @@ export class ModelsModel{
                         VALUES 
                             (@id_marca, @nombre_modelo, @aceite_caja, @aceite_motor, @octanaje, @tipo_refrigerante, @peso, @descripcion, @nro_puesto); `
 
-        const result = await request.query(query)
+        const result = await request.query(query);
 
-        return result['rowsAffected']
+        return result['recordset'][0];
     }  
 
     static async editModel({id_marca,id_modelo,nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puesto}:{id_marca:number,id_modelo:number, nombre: string, aceite_caja:string, aceite_motor: string, octanaje: string, tipo_refrigerante:string,peso:number,descripcion:string,nro_puesto:number}){
