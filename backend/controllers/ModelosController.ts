@@ -12,6 +12,8 @@ interface Model {
     peso: number;
     descripcion: string;
     nro_puesto: number;
+
+
 }
 
 export class ModelsController {
@@ -33,6 +35,8 @@ export class ModelsController {
         } catch (error) {
             console.error('Error al obtener los modelos:', error);
             res.status(500).json({ message: 'Error al obtener los modelos'});
+
+
         }
     }
 
@@ -51,6 +55,9 @@ export class ModelsController {
         } catch(error) {
             console.error("Ha ocurrido un error", error);
             res.status(500).json({message: ""});
+
+
+
         }
     }
 
