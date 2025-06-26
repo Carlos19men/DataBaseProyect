@@ -56,10 +56,10 @@ export class ModelsController {
 
     getbyMarca = async(req: Request, res: Response<Model[] | {message: string}>): Promise<void> => {
         //const id_marca = parseInt(req.params.id_marca, 10);
-        const {id_marca} = req.params;
+        const id_marca = req.params.id_marca;
 
         try {
-            const result = await ModelsModel.getByMarca(parseInt(id_marca, 10));
+            const result = await ModelsModel.getByMarca(id_marca);
 
             if('message' in result){
                 res.status(400).json({message: result.message});
