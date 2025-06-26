@@ -34,7 +34,8 @@
   letter-spacing: 0.5px;  
   text-align: left; 
   margin-top: 20px;
-  margin-left: 70px
+  margin-left: 70px;
+  margin-bottom: 80px;
 }
 
 .menu ul {
@@ -62,4 +63,9 @@
   height: 100vh;
   background-color: rgba(0,0,0,0.6);
   z-index: 1000;
+}
+
+.menuVerde{
+  background-color: var(--primary-green);
+  height: 100vh;
 }

@@ -30,14 +30,16 @@ const MenuDespegable: React.FC = () => {
 
             <nav className={`${styles.menu} ${activo ? styles.activo : ''}`}>
                 <h2 className={styles.h2}>Menu</h2>
-                <ul>
-                    <li><a href="/"><img src={home} alt="Inicio" /> Inicio</a></li>
-                    <li><a href="/Busqueda"><img src={search} alt="Buscar" /> Busqueda</a></li>
-                    <li><a href="/Proveedores"><img src={box} alt="Proveedores" /> Proveedores</a></li>
-                    <li><a href="/AboutUs"><img src={more_horizontal} alt="Sobre nosotros" /> Sobre M&U</a></li>
-                    <li><a href="/Usuario"><img src={user} alt="Usuario" /> Usuario</a></li>
-                    <li><a href="/Salir"><img src={arrowLeft_circle} alt="Salir" /> Salir</a></li>
-                </ul>
+                <div className={styles.menuVerde}>
+                    <ul>
+                        <li><a href="/"><img src={home} alt="Inicio" /> Inicio</a></li>
+                        <li><a href="/Busqueda"><img src={search} alt="Buscar" /> Busqueda</a></li>
+                        <li><a href="/Proveedores"><img src={box} alt="Proveedores" /> Proveedores</a></li>
+                        <li><a href="/AboutUs"><img src={more_horizontal} alt="Sobre nosotros" /> Sobre M&U</a></li>
+                        <li><a href="/Usuario"><img src={user} alt="Usuario" /> Usuario</a></li>
+                        <li><a href="/Salir"><img src={arrowLeft_circle} alt="Salir" /> Salir</a></li>
+                    </ul>
+                </div>
             </nav>
         </div>
     )
