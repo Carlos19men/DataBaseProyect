@@ -76,6 +76,9 @@ const [formato, setFormato] = useState<string>("Cargando...");
       
       }, []);
 
+      formato.replace("[",""); // Elimina las comillas de las claves
+      formato.replace("]",""); 
+      
 return formato
 }
 
@@ -178,6 +181,20 @@ const [formato, setFormato] = useState<string>("Cargando...");
 return formato
 }
 
+
+function addEst(RIF: string, CI_PIC: string, name: string, city: string, date_PIC: Date){
+    useEffect(() => {
+
+    fetch('http://localhost:1234/establishement',{method:"POST", body: JSON.stringify({RIF, CI_PIC, name, city, date_PIC})})
+      .then(respuesta => respuesta.json())
+      .catch(err => ("Solicitud falló con: " + err));
+      
+      }, []);
+
+return "Solicitud enviada"
+}
+
+/*
 function getAllEst(){
 const [formato, setFormato] = useState<string>("Cargando...");
 
@@ -192,18 +209,6 @@ const [formato, setFormato] = useState<string>("Cargando...");
 
 return formato
 }
-function addEst(RIF: string, CI_PIC: string, name: string, city: string, date_PIC: Date){
-    useEffect(() => {
-
-    fetch('http://localhost:1234/establishement',{method:"POST", body: JSON.stringify({RIF, CI_PIC, name, city, date_PIC})})
-      .then(respuesta => respuesta.json())
-      .catch(err => ("Solicitud falló con: " + err));
-      
-      }, []);
-
-return "Solicitud enviada"
-}
-/*
 function getAllEst(){
 const [formato, setFormato] = useState<string>("Cargando...");
 

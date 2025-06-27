@@ -10,13 +10,13 @@
 }
 
 .centrado{
-    margin: 5vh;
+    margin: 2vh;
     display: flex;
     justify-content: center;
 }
 
 .form{
-    margin-bottom: 30px;
+    margin-bottom: 2vh;
 }
 
 .body{

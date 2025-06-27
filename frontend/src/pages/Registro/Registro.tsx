@@ -13,8 +13,8 @@ const Registro: React.FC  = () => {
         <div className={styles.container}>
             <TopBar text="Registro" menu={false}></TopBar>
             <span className={styles.botones}>
-                <Button texto="Empleado" onClick={() => setTipo("empleado")} inactivo={tipo === "cliente"} />
-                <Button texto="Cliente" onClick={() => setTipo("cliente")} inactivo={tipo === "empleado"} />
+                <Button viewHeight={5} texto="Empleado" onClick={() => setTipo("empleado")} inactivo={tipo === "cliente"} />
+                <Button viewHeight={5} texto="Cliente" onClick={() => setTipo("cliente")} inactivo={tipo === "empleado"} />
             </span>
             <div className={styles.centrado}>
                 {tipo === "empleado" && <div><RegistroEmpleado></RegistroEmpleado></div>}
