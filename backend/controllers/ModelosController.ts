@@ -59,7 +59,7 @@ export class ModelsController {
         const id_marca = req.params.id_marca;
 
         try {
-            const result = await ModelsModel.getByMarca(id_marca);
+            const result = await ModelsModel.getByMarca(parseInt(id_marca));
 
             if('message' in result){
                 res.status(400).json({message: result.message});
