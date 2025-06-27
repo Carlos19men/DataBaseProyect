@@ -1,5 +1,5 @@
--- procedures proveedores
-SELECT * FROM Proveedores ORDER BY razon_social; 
+
+USE MU_DB;
 
 CREATE FUNCTION obtenerProvedorRIF(
 @RIF varchar(100)

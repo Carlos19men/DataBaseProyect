@@ -1,3 +1,5 @@
+use MU_DB;
+
 --Telefono Clientes 
 --creamos la vista 
 CREATE VIEW GetAllTelefonosCliente AS

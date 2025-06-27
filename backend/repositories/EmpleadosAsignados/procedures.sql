@@ -10,6 +10,7 @@ RETURN (
 	WHERE 
 		Ser.nro_servicio = EA.nro_servicio AND Em.CI_emp = EA.CI_empleado
 );
+GO
 
 CREATE FUNCTION empleadosNoAsignados(
 @RIF varchar(100)
@@ -19,7 +20,7 @@ AS
 RETURN (
 	SELECT * FROM Empleados EM WHERE CI_emp NOT IN (SELECT CedulaEmpleado FROM empleadosAsignadosSer(@RIF)) AND RIF_establecimiento = @RIF
 );
-
+GO
 --asignar empleado 
 CREATE PROCEDURE asigEmpleado
 @RIF_establecimiento VARCHAR(100),
@@ -39,7 +40,4 @@ BEGIN
 
 	print 'empleado asignado con exito'
 END; 
-
-
-
-SELECT * FROM asignadosServicios('J-11223344-5');
+GO
