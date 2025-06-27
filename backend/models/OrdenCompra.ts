@@ -5,8 +5,6 @@ export class buysOrderModel{
 
         const result = await getDbPool().query('SELECT * FROM obtenerOrdenesCompras ORDER BY fecha_compra;')
 
-        
-
         return result['recordset']
     }
 
@@ -20,7 +18,6 @@ export class buysOrderModel{
 
             const result = await request.query('SELECT * FROM ObtenerOrdenCompra(@id);')
    
-            ;
             return result['recordset'][0] || { error: "Buy orden not found" };
         }
     }
@@ -57,8 +54,6 @@ export class buysOrderModel{
         request.input('precio',precio);
 
         const result = await request.query('EXEC nuevaOrdenCompra @fecha_compra,@RIF_Est,@RIF_proveedor,@id_producto,@cant_producto,@precio;')
-
-        
 
         return result['recordset']
     }
@@ -120,8 +115,6 @@ export class buysOrderModel{
 
         const result = await request.query('EXEC editarOrdenCompra @num_compra,@fecha_compra,@RIF_Est,@RIF_proveedor,@id_producto,@cant_producto,@precio;')
 
-        
-
         return result['recordset']
     }
 
@@ -137,8 +130,6 @@ export class buysOrderModel{
         request.input('num_compra',num_compra);
 
         const result = await request.query('EXEC eliminarOrdenCompra @num_compra;')
-
-        
 
         return result['recordset']
     }

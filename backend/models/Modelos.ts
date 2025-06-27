@@ -167,7 +167,7 @@ export class ModelsModel{
 
         const result = await request.query(query)
 
-        return result['rowsAffected']
+        return result['recordset'][0];
     }
 
     static async delete({id_marca,id_modelo}:{id_marca:number,id_modelo:number}){
@@ -189,7 +189,7 @@ export class ModelsModel{
 
         const result = await request.query('DELETE Modelos WHERE cod_marcar = @id_marca AND nro_modelo = @id_modelo;')
 
-        return result['rowsAffected']
+        return result['recordset'][0];
     }
 
 }

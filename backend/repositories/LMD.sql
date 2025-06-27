@@ -647,4 +647,148 @@ VALUES
 ('Ambientador Químico', 'NO ECOLÓGICO', 8.20, 'Ambientador en aerosol con compuestos volátiles', 5, 40, 'Desechar el envase en contenedores especiales', 5, 'No perforar el envase', 1);
 
 
+--Especializar empleados 
+INSERT INTO EspecializacionEmpleados (CI_empleado,nro_servicio) VALUES
+-- Empleados de J-12345678-9 (Servicentro Rápido Guayana) - 20 empleados
+('12345678', 1),  -- Juan Perez - Lavado y Pulitura de Carrocería
+('12345679', 2),  -- Maria Gomez - Lavado y Pulitura de Motor y Chasis
+('12345680', 3),  -- Carlos Rodriguez - Cambio de Aceite
+('12345681', 4),  -- Ana Lopez - Limpieza de Tapicería
+('12345682', 16), -- Pedro Martinez - Mantenimiento Básico Preventivo Integral
+('12345683', 19), -- Laura Diaz - Paquete de Limpieza y Protección Exterior Superior
+('12345684', 1),  -- Miguel Hernandez - Lavado y Pulitura de Carrocería (segunda especialización)
+('12345685', 2),  -- Sofia Torres - Lavado y Pulitura de Motor y Chasis
+('12345686', 3),  -- Javier Ruiz - Cambio de Aceite
+('12345687', 4),  -- Valentina Flores - Limpieza de Tapicería
+('12345778', 16), -- Roberto Moreno - Mantenimiento Básico Preventivo Integral
+('12345779', 19), -- Camila Bravo - Paquete de Limpieza y Protección Exterior Superior
+('12345780', 1),  -- Oscar Nuñez - Lavado y Pulitura de Carrocería
+('12345781', 2),  -- Victoria Vargas - Lavado y Pulitura de Motor y Chasis
+('12345782', 3),  -- Emilio Jimenez - Cambio de Aceite
+('12345783', 4),  -- Florencia Mendez - Limpieza de Tapicería
+('12345784', 16), -- Gabriel Castro - Mantenimiento Básico Preventivo Integral
+('12345785', 19), -- Andrea Cruz - Paquete de Limpieza y Protección Exterior Superior
+('12345786', 1),  -- Ivan Paz - Lavado y Pulitura de Carrocería
+('12345787', 2),  -- Lucia Gil - Lavado y Pulitura de Motor y Chasis
+
+-- Empleados de J-98765432-1 (Lubricantes El Freno) - 20 empleados
+('12345688', 3),  -- Andres Morales - Cambio de Aceite
+('12345689', 9),  -- Daniela Rojas - Revisión y Ajuste de Frenos
+('12345690', 10), -- Fernando Blanco - Cambio de Pastillas y Discos de Freno
+('12345691', 14), -- Isabella Serrano - Diagnóstico de Tren Delantero
+('12345692', 18), -- Luis Gil - Servicio Integral de Frenos
+('12345693', 16), -- Gabriela Pinto - Mantenimiento Básico Preventivo Integral
+('12345694', 3),  -- Manuel Salazar - Cambio de Aceite (segunda especialización)
+('12345695', 9),  -- Natalia Vega - Revisión y Ajuste de Frenos
+('12345696', 10), -- Ricardo Castillo - Cambio de Pastillas y Discos de Freno
+('12345697', 14), -- Elena Mendez - Diagnóstico de Tren Delantero
+('12345788', 18), -- Jose Romero - Servicio Integral de Frenos
+('12345789', 16), -- Sofía Delgado - Mantenimiento Básico Preventivo Integral
+('12345790', 3),  -- David Fuentes - Cambio de Aceite
+('12345791', 9),  -- Mariana Leon - Revisión y Ajuste de Frenos
+('12345792', 10), -- Daniel Rivera - Cambio de Pastillas y Discos de Freno
+('12345793', 14), -- Paola Reyes - Diagnóstico de Tren Delantero
+('12345794', 18), -- Felipe Morales - Servicio Integral de Frenos
+('12345795', 16), -- Valeria Blanco - Mantenimiento Básico Preventivo Integral
+('12345796', 3),  -- Hector Pinto - Cambio de Aceite
+('12345797', 9),  -- Veronica Salazar - Revisión y Ajuste de Frenos
+
+-- Empleados de J-11223344-5 (AutoLavado Brillante) - 10 empleados
+('12345698', 1),  -- Diego Guerrero - Lavado y Pulitura de Carrocería
+('12345699', 4),  -- Sara Castro - Limpieza de Tapicería
+('12345700', 5),  -- Pablo Vargas - Pulitura de Cristales y Sellado
+('12345701', 6),  -- Paula Ortega - Descontaminación de Pintura
+('12345702', 7),  -- Alejandro Reyes - Limpieza y Acondicionamiento de Cuero
+('12345703', 8),  -- Valeria Jimenez - Tratamiento Hidrofóbico para Carrocería
+('12345704', 15), -- Sergio Moreno - Detallado Interior Premium
+('12345705', 17), -- Mariana Delgado - Restauración y Protección de Pintura
+('12345706', 19), -- Jorge Guillen - Paquete de Limpieza y Protección Exterior Superior
+('12345707', 1),  -- Sofia Herrera - Lavado y Pulitura de Carrocería (segunda especialización)
+
+-- Empleados de J-55667788-9 (Taller Mecánico La Ruta) - 10 empleados
+('12345708', 3),  -- Gabriel Castro - Cambio de Aceite
+('12345709', 9),  -- Andrea Mendoza - Revisión y Ajuste de Frenos
+('12345710', 10), -- Ivan Vargas - Cambio de Pastillas y Discos de Freno
+('12345711', 11), -- Camila Silva - Reemplazo de Amortiguadores y Espirales
+('12345712', 12), -- Oscar Ramos - Revisión y Recarga de Aire Acondicionado
+('12345713', 13), -- Victoria Aguilar - Servicio de Inyectores
+('12345714', 14), -- Emilio Ruiz - Diagnóstico de Tren Delantero
+('12345715', 16), -- Florencia Diaz - Mantenimiento Básico Preventivo Integral
+('12345716', 18), -- Roberto Leon - Servicio Integral de Frenos
+('12345717', 3),  -- Lucia Bravo - Cambio de Aceite (segunda especialización)
+
+-- Empleados de J-00112233-4 (Centro Automotriz Innova) - 10 empleados
+('12345718', 3),  -- Jose Quintero - Cambio de Aceite
+('12345719', 9),  -- Sofía Perez - Revisión y Ajuste de Frenos
+('12345720', 12), -- David Suarez - Revisión y Recarga de Aire Acondicionado
+('12345721', 13), -- Mariana Velez - Servicio de Inyectores
+('12345722', 14), -- Daniel Marquez - Diagnóstico de Tren Delantero
+('12345723', 16), -- Paola Gonzalez - Mantenimiento Básico Preventivo Integral
+('12345724', 3),  -- Felipe Acosta - Cambio de Aceite (segunda especialización)
+('12345725', 9),  -- Valeria Ramirez - Revisión y Ajuste de Frenos
+('12345726', 12), -- Hector Contreras - Revisión y Recarga de Aire Acondicionado
+('12345727', 13), -- Veronica Nuñez - Servicio de Inyectores
+
+-- Empleados de J-23456789-0 (El Rey de los Filtros) - 10 empleados
+('12345728', 3),  -- Marcos Cordero - Cambio de Aceite
+('12345729', 16), -- Silvia Luna - Mantenimiento Básico Preventivo Integral
+('12345730', 12), -- Julio Soto - Revisión y Recarga de Aire Acondicionado
+('12345731', 3),  -- Daniela Flores - Cambio de Aceite (segunda especialización)
+('12345732', 16), -- Ruben Figueroa - Mantenimiento Básico Preventivo Integral
+('12345733', 12), -- Adriana Campos - Revisión y Recarga de Aire Acondicionado
+('12345734', 3),  -- Eduardo Molina - Cambio de Aceite
+('12345735', 16), -- Carolina Ortega - Mantenimiento Básico Preventivo Integral
+('12345736', 12), -- Victor Lara - Revisión y Recarga de Aire Acondicionado
+('12345737', 3),  -- Alejandra Mendez - Cambio de Aceite (segunda especialización)
+
+-- Empleados de J-87654321-0 (Mantenimiento Express) - 10 empleados
+('12345738', 1),  -- Fernando Soto - Lavado y Pulitura de Carrocería
+('12345739', 3),  -- Maria Paz - Cambio de Aceite
+('12345740', 9),  -- Carlos Rojas - Revisión y Ajuste de Frenos
+('12345741', 16), -- Ana Torres - Mantenimiento Básico Preventivo Integral
+('12345742', 1),  -- Pedro Blanco - Lavado y Pulitura de Carrocería (segunda especialización)
+('12345743', 3),  -- Laura Gil - Cambio de Aceite
+('12345744', 9),  -- Miguel Pinto - Revisión y Ajuste de Frenos
+('12345745', 16), -- Sofia Salazar - Mantenimiento Básico Preventivo Integral
+('12345746', 1),  -- Javier Vega - Lavado y Pulitura de Carrocería
+('12345747', 3),  -- Valentina Castillo - Cambio de Aceite (segunda especialización)
+
+-- Empleados de J-33445566-7 (Soluciones Automotrices C.A.) - 10 empleados
+('12345748', 3),  -- Juan Cordova - Cambio de Aceite
+('12345749', 9),  -- Maria Nuñez - Revisión y Ajuste de Frenos
+('12345750', 11), -- Carlos Guillen - Reemplazo de Amortiguadores y Espirales
+('12345751', 12), -- Ana Herrera - Revisión y Recarga de Aire Acondicionado
+('12345752', 14), -- Pedro Morales - Diagnóstico de Tren Delantero
+('12345753', 16), -- Laura Rojas - Mantenimiento Básico Preventivo Integral
+('12345754', 3),  -- Miguel Serrano - Cambio de Aceite (segunda especialización)
+('12345755', 9),  -- Sofia Vega - Revisión y Ajuste de Frenos
+('12345756', 11), -- Javier Blanco - Reemplazo de Amortiguadores y Espirales
+('12345757', 12), -- Valentina Pinto - Revisión y Recarga de Aire Acondicionado
+
+-- Empleados de J-77889900-1 (La Estación del Auto) - 10 empleados
+('12345758', 1),  -- Andres Acosta - Lavado y Pulitura de Carrocería
+('12345759', 2),  -- Daniela Quintero - Lavado y Pulitura de Motor y Chasis
+('12345760', 3),  -- Fernando Suarez - Cambio de Aceite
+('12345761', 4),  -- Isabella Marquez - Limpieza de Tapicería
+('12345762', 16), -- Luis Gonzalez - Mantenimiento Básico Preventivo Integral
+('12345763', 19), -- Gabriela Ramirez - Paquete de Limpieza y Protección Exterior Superior
+('12345764', 1),  -- Manuel Contreras - Lavado y Pulitura de Carrocería (segunda especialización)
+('12345765', 2),  -- Natalia Nuñez - Lavado y Pulitura de Motor y Chasis
+('12345766', 3),  -- Ricardo Velez - Cambio de Aceite
+('12345767', 4),  -- Elena Acosta - Limpieza de Tapicería
+
+-- Empleados de J-44556677-8 (Servicio Total Vehicular) - 10 empleados
+('12345768', 1),  -- Diego Silva - Lavado y Pulitura de Carrocería
+('12345769', 2),  -- Sara Ramos - Lavado y Pulitura de Motor y Chasis
+('12345770', 3),  -- Pablo Aguilar - Cambio de Aceite
+('12345771', 4),  -- Paula Bravo - Limpieza de Tapicería
+('12345772', 5),  -- Alejandro Leon - Pulitura de Cristales y Sellado
+('12345773', 6),  -- Valeria Guillen - Descontaminación de Pintura
+('12345774', 7),  -- Sergio Perez - Limpieza y Acondicionamiento de Cuero
+('12345775', 8),  -- Mariana Diaz - Tratamiento Hidrofóbico para Carrocería
+('12345776', 9),  -- Jorge Hernandez - Revisión y Ajuste de Frenos
+('12345777', 10); -- Sofia Torres - Cambio de Pastillas y Discos de Freno
+
+
+--asignar supervisores 
 

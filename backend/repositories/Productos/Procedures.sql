@@ -4,8 +4,8 @@ GO
 CREATE VIEW ObtenerProductos AS
 SELECT id_producto,A.nombre nombreProducto, tipo, precio,descripcion, minimo cantidadMinima, maximo cantidadMaxima,tratamiento_residuos, nivel_contaminacion, B.nombre Familia
 FROM Productos A, FamiliaProductos B WHERE A.id_familia = B.id_familia ; 
+go
 
-GO
 
 CREATE FUNCTION	ObtenerProducto(
 @ID int

@@ -5,16 +5,12 @@ export class paymentMethods{
 
         const result = await getDbPool().query('SELECT * FROM obtenerMetodosPago;')
 
-        
-
         return result['recordset']
     }
 
     static async getAllOrderByFactura(){
 
         const result = await getDbPool().query('SELECT * FROM obtenerMetodosPago ORDER BY FacturaCorrespondiente;')
-
-        
 
         return result['recordset']
     }
@@ -29,7 +25,6 @@ export class paymentMethods{
 
             const result = await request.query('SELECT * FROM ObtenerMetodoPagoPorCliente(@id_cliente);')
    
-            ;
             return result['recordset'][0] || { error: "Buy orden not found" };
         }
     }
@@ -52,8 +47,6 @@ export class paymentMethods{
         request.input('telefono',telefono);
 
         const result = await request.query('EXEC nuevaMetodoPago @tipo_moneda,@monto_ef,@fechaPago_Tar,@tipo_tarjeta,@banco,@nro_tarjeta,@monto_tar,@referenciaPM,@fecha_PM,@monto_PM,@telefono;')
-
-        
 
         return result['recordset']
     }
@@ -78,8 +71,6 @@ export class paymentMethods{
 
         const result = await request.query('EXEC editarMetodoPago @id_pago,@tipo_moneda,@monto_ef,@fechaPago_Tar,@tipo_tarjeta,@banco,@nro_tarjeta,@monto_tar,@referenciaPM,@fecha_PM,@monto_PM,@telefono;')
 
-        
-
         return result['recordset']
     }
 
@@ -95,8 +86,6 @@ export class paymentMethods{
         request.input('id_pago',id_pago);
 
         const result = await request.query('EXEC eliminarMetodoPago @id_pago;')
-
-        
 
         return result['recordset']
     }

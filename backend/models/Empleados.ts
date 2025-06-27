@@ -5,7 +5,6 @@ export class employeeModel {
     static async getAll() {
         const pool = getDbPool();
         const result = await pool.query('SELECT * FROM ObtenerEmpleados ORDER BY apellido;');
-        ;
         return result['recordset'];
     }
 
@@ -18,7 +17,6 @@ export class employeeModel {
         request.input('CI', CI);
 
         const result = await request.query('SELECT CI_emp, nombre, apellido, RIF_establecimiento from Empleados where CI_emp = @CI;');
-        ;
         return result['recordset'][0];
     }
 
@@ -33,7 +31,6 @@ export class employeeModel {
         const query = `Select CI_emp, nombre, apellido from Empleados where RIF_establecimiento = @RIF;`
 
         const result = await request.query(query);
-        ;
         return result['recordset'];
     }
 
@@ -94,7 +91,6 @@ export class employeeModel {
         WHERE CI_emp = @CI; `;
 
         const result = await request.query(query);
-        ;
         return result['recordset'][0];
     }
 
@@ -110,7 +106,6 @@ export class employeeModel {
         if (result.rowsAffected[0] === 0) {
             return { error: "No se encontró el empleado con la cédula proporcionada." };
         }
-        ;
         return result['recordset'][0];
     }
 
@@ -158,7 +153,6 @@ export class employeeModel {
 
         const result = await request.query(query);
         
-        ;
         return result['recordset'][0];
     }
 }

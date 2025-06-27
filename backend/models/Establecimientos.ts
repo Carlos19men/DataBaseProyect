@@ -3,9 +3,8 @@ import { getDbPool } from "../config/SQLserverConection";
 export class establishmentsModel{
     static async getAll() {
         const pool = getDbPool();
-        const result = await pool.query('SELECT RIF, nombre, ciudad FROM Establecimientos ORDER BY nombre;');
+        const result = await pool.query('SELECT * FROM Establecimientos ORDER BY nombre;');
         
-        ;
         return result['recordset'];
     }
 
@@ -18,7 +17,6 @@ export class establishmentsModel{
         request.input('RIF', RIF);
 
         const result = await request.query('SELECT * FROM Establecimientos WHERE RIF = @RIF;');
-        ;
         return result['recordset'][0];
     }
 
@@ -72,7 +70,6 @@ export class establishmentsModel{
         `
 
         const result = await request.query(query);
-        ;
         return result['recordset'][0];
     }
 
@@ -122,7 +119,6 @@ export class establishmentsModel{
         `
 
         const result = await request.query(query);
-        ;
 
         return result['recordset'];
     }
@@ -139,7 +135,6 @@ export class establishmentsModel{
         const query = ` Delete from Establecimientos where RIF = @RIF;`;
 
         const result = await request.query(query);
-        console.log(result['rowsAffected']);
 
         return result['rowsAffected'];
     }
