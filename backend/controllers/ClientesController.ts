@@ -99,7 +99,7 @@ export class CustomerController {
     
     //add cusomer 
     add = async (req:Request, res:Response<Customer | {message:string}>): Promise<void> => {
-        const { CI, name, lastName, email } = req.body as Customer; // Obtiene los datos del cliente del cuerpo de la solicitud
+        const { CI, name, lastName, email } = req.body; // Obtiene los datos del cliente del cuerpo de la solicitud
 
         if (!CI || CI.length === 0) {
             res.status(400).json({ message: 'CI es requerido.' });

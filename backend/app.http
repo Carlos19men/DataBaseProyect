@@ -1,8 +1,19 @@
-### Obtener todos los clientes
+### Obtener todos los clientes  |Listo 
 http://localhost:1234/customer/
 
-###Obtener un cliente por su cedula
+###Obtener un cliente por su cedula | listo 
 http://localhost:1234/customer/25789012
+
+###Post un nuevo cliente 
+POST http://localhost:1234/customer
+Content-Type: application/json
+
+{
+    "CI": "25",
+    "lastName":"Guzman",
+    "name":"Juan",
+    "email":"juan@gmail.com"
+}
 
 ### Obtener todos los productos
 http://localhost:1234/product/
