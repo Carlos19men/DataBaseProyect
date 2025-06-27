@@ -7,13 +7,57 @@ import styles from "./PseudoAPI.module.css"
 const PseudoAPI: React.FC = () => {
   
     const establecimientos=getAllEst();
+    const empleados=getAllEmp();
+    const proveedores=getAllProv();
+    const inventarios=getAllInv();
+    const marcas=getAllMarcas();
+    const servicios=getAllserv();
+    const clientes=getAllCli();
+    const productos =getAllProd();
   
   return (
     <div className="pseudoapi">
       <h1>Pseudo API</h1>
+      <h2>Establecimientos</h2>
       <div className={styles.pseudoapi}>
         <pre>{establecimientos}</pre>
       </div>
+
+      <h2>Empleados</h2>
+      <div className={styles.pseudoapi}>
+        <pre>{empleados}</pre>
+      </div>
+
+      <h2>Proveedores</h2>
+      <div className={styles.pseudoapi}>
+        <pre>{proveedores}</pre>
+      </div>
+
+      <h2>Inventarios</h2>
+      <div className={styles.pseudoapi}>
+        <pre>{inventarios}</pre>
+      </div>
+
+      <h2>Marcas</h2>
+      <div className={styles.pseudoapi}>
+        <pre>{marcas}</pre>
+      </div>
+
+      <h2>Servicios</h2>
+      <div className={styles.pseudoapi}>
+        <pre>{servicios}</pre>
+      </div>
+
+      <h2>Clientes</h2>
+      <div className={styles.pseudoapi}>
+        <pre>{clientes}</pre>
+      </div>
+
+      <h2>Productos</h2>
+      <div className={styles.pseudoapi}>
+        <pre>{productos}</pre>
+      </div>
+
     </div>
   );
 };
@@ -133,35 +177,33 @@ const [formato, setFormato] = useState<string>("Cargando...");
 
 return formato
 }
+
+function getAllEst(){
+const [formato, setFormato] = useState<string>("Cargando...");
+
+    useEffect(() => {
+
+    fetch('http://localhost:1234/establishement')
+      .then(respuesta => respuesta.json())
+      .then(lista => setFormato(JSON.stringify(lista, null, 2)))
+      .catch(err => setFormato("Solicitud falló con: " + err));
+      
+      }, []);
+
+return formato
+}
+function addEst(RIF: string, CI_PIC: string, name: string, city: string, date_PIC: Date){
+    useEffect(() => {
+
+    fetch('http://localhost:1234/establishement',{method:"POST", body: JSON.stringify({RIF, CI_PIC, name, city, date_PIC})})
+      .then(respuesta => respuesta.json())
+      .catch(err => ("Solicitud falló con: " + err));
+      
+      }, []);
+
+return "Solicitud enviada"
+}
 /*
-function getAllEst(){
-const [formato, setFormato] = useState<string>("Cargando...");
-
-    useEffect(() => {
-
-    fetch('http://localhost:1234/establishement')
-      .then(respuesta => respuesta.json())
-      .then(lista => setFormato(JSON.stringify(lista, null, 2)))
-      .catch(err => setFormato("Solicitud falló con: " + err));
-      
-      }, []);
-
-return formato
-}
-function getAllEst(){
-const [formato, setFormato] = useState<string>("Cargando...");
-
-    useEffect(() => {
-
-    fetch('http://localhost:1234/establishement')
-      .then(respuesta => respuesta.json())
-      .then(lista => setFormato(JSON.stringify(lista, null, 2)))
-      .catch(err => setFormato("Solicitud falló con: " + err));
-      
-      }, []);
-
-return formato
-}
 function getAllEst(){
 const [formato, setFormato] = useState<string>("Cargando...");
 
