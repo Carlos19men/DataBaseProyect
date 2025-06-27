@@ -31,7 +31,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+ 
 }
 
 
@@ -39,6 +39,10 @@
   
   .titles{
     padding-top: 5vh;
+  }
+  .buttonPart {
+  
+  margin-top: 50px;
 
   }
 }

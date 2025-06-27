@@ -1,0 +1,10 @@
+.container{
+    
+}
+
+.pseudoapi {
+    background-color: #13121b;
+    color: rgb(0, 182, 0);
+    height: 30vh;
+    overflow: scroll;
+}
