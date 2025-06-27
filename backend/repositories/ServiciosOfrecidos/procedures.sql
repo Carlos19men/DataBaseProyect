@@ -1,4 +1,4 @@
-
+USE MU_DB
 --ver todos los servicios ofrecidos 
 CREATE VIEW ServiciosOfre AS
 SELECT SO.nro_servicio nro_servicio, S.nombre_ser nombre_ser,E.RIF RIF, E.nombre 
@@ -7,7 +7,6 @@ WHERE
 	SO.nro_servicio = S.nro_servicio AND
 	SO.RIF_establecimiento = E.RIF;
 
-DROP VIEW ServiciosOfre;
 
 CREATE FUNCTION ServicioEstablecimiento(
 @rif VARCHAR(100),
@@ -20,20 +19,12 @@ RETURN(
 );
 
 
-DROP function ServicioEstablecimiento;
-
 --todos los servicios que son ofrecidos por lo menos por un establecimiento 
 CREATE VIEW serviciosDisponibles AS
 SELECT S.nro_servicio,S.nombre_ser  
 FROM Servicios S RIGHT JOIN ServiciosOfre SO ON S.nro_servicio = SO.nro_servicio 
 GROUP BY S.nro_servicio,S.nombre_ser;
 
-
-
-
-drop view SerOfrecidosMin;
-
-SELECT * FROM serviciosDisponibles;
 
 CREATE FUNCTION serviciosNoDisponiblesRIF(
 @rif varchar(100)

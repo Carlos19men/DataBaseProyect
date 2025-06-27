@@ -1,5 +1,4 @@
 USE MU_DB;
-SELECT * FROM EspecializacionEmpleados; 
 
 CREATE VIEW Especializados AS
 SELECT 
@@ -9,12 +8,6 @@ FROM
 WHERE 
 	Em.CI_emp = EE.CI_empleado AND
 	SER.nro_servicio = EE.nro_servicio;
-
-DROP VIEW Especializaciones; 
-
-SELECT * FROM Especializados ORDER BY apellidoEmpleado;
-
-
 
 --Especializados de un establecimiento y un servicio especifico 
 CREATE FUNCTION especialistasEstablecimiento(
@@ -26,10 +19,7 @@ RETURN(
 	SELECT CI_emp,apellidoEmpleado,nombreEmpleado,nro_servicio,servicio FROM Especializados WHERE RIF = @rif
 );
 
-
-
 --bontener todos los empleados y el servicio en el que se especializan 
-SELECT * FROM EspecializacionEmpleados;
 
 --nuevo especializacion 
 CREATE PROCEDURE addEspecializacion
@@ -52,5 +42,3 @@ BEGIN
 	--asignamos el servicio al empleado 
 	INSERT INTO EspecializacionEmpleados (nro_servicio,CI_empleado) values (@nro_servicio, @ci_empleado);
 END;
-
-exec  addEspecializacion '','', 1;

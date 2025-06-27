@@ -23,7 +23,7 @@ create table Empleados(
 	direccion varchar(150) not null,
 	sueldo int,
 	RIF_establecimiento varchar(20),
-	nro_servicio_supervisor int,
+	nro_servicio_supervisar int,
 	
 	primary key(CI_emp)
 );
@@ -46,8 +46,8 @@ alter table Empleados
     ON UPDATE CASCADE; 
 
 alter table Empleados
-	add constraint nro_servicio_supervisor
-	foreign key (nro_servicio_supervisor)
+	add constraint nro_servicio_supervisar
+	foreign key (nro_servicio_supervisar)
 	references Servicios(nro_servicio)
 	ON DELETE SET NULL
 	ON UPDATE CASCADE;
@@ -55,12 +55,6 @@ alter table Empleados
 alter table Establecimientos 
     add constraint CI_encargado 
     foreign key (CI_encargado) 
-    references Empleados(CI_emp);
-
-
-alter table Servicios 
-    add constraint CI_superv 
-    foreign key(CI_superv) 
     references Empleados(CI_emp);
 
 create table Clientes(
