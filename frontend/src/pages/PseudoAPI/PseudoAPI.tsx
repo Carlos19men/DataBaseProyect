@@ -14,11 +14,17 @@ const PseudoAPI: React.FC = () => {
     const servicios=getAllserv();
     const clientes=getAllCli();
     const productos =getAllProd();
+    const establecimientosPost = addEst('1','1','d','d',new Date())
   
   return (
     <div className="pseudoapi">
       <h1>Pseudo API</h1>
       <h2>Establecimientos</h2>
+
+      <div className={styles.pseudoapi}>
+        <pre>{establecimientosPost}</pre>
+      </div>
+
       <div className={styles.pseudoapi}>
         <pre>{establecimientos}</pre>
       </div>
@@ -177,7 +183,7 @@ const [formato, setFormato] = useState<string>("Cargando...");
 
 return formato
 }
-
+/*
 function getAllEst(){
 const [formato, setFormato] = useState<string>("Cargando...");
 
@@ -191,7 +197,7 @@ const [formato, setFormato] = useState<string>("Cargando...");
       }, []);
 
 return formato
-}
+}*/
 function addEst(RIF: string, CI_PIC: string, name: string, city: string, date_PIC: Date){
     useEffect(() => {
 
