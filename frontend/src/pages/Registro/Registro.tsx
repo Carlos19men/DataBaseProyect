@@ -1,6 +1,5 @@
 import styles from "./Registro.module.css";
 import TopBar from "../../components/TopBar/TopBar";
-import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/button";
@@ -12,7 +11,7 @@ const Registro: React.FC  = () => {
     const navigator = useNavigate();
     return (
         <div className={styles.container}>
-            <TopBar text="Registro"></TopBar>
+            <TopBar text="Registro" menu={false}></TopBar>
             <span className={styles.botones}>
                 <Button texto="Empleado" onClick={() => setTipo("empleado")} inactivo={tipo === "cliente"} />
                 <Button texto="Cliente" onClick={() => setTipo("cliente")} inactivo={tipo === "empleado"} />
