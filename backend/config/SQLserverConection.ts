@@ -15,6 +15,7 @@ const config = {
         trustedConnection: true,
         integratedSecurity: true,
         trustServerCertificate: true,
+        encrypt: false, // <--- Desactiva SSL
     },
 };
 

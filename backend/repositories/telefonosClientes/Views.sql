@@ -1,4 +1,8 @@
+USE MU_DB
+GO
+
 --Telefono Clientes 
+
 --creamos la vista 
 CREATE VIEW GetAllTelefonosCliente AS
     SELECT A.CI_cliente as CI,apellido_cli as apellido,nombre_cli as nombre, numero as telefono FROM Clientes A,telefonosCliente B

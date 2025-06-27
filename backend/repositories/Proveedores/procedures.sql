@@ -1,5 +1,7 @@
--- procedures proveedores
-SELECT * FROM Proveedores ORDER BY razon_social; 
+/*-- procedures proveedores
+SELECT * FROM Proveedores ORDER BY razon_social; */
+
+GO
 
 CREATE FUNCTION obtenerProvedorRIF(
 @RIF varchar(100)

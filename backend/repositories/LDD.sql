@@ -1,5 +1,5 @@
 -- Esquema de la base de datos.
-create database MU_DB;
+--create database MU_DB;
 
 USE MU_DB; 
 
@@ -343,9 +343,9 @@ create table telefonosCliente(
 
 
 --Drops tables 
-DROP TABLE telefonosCliente;    
-DROP TABLE Almacena; 
-DROP TABLE ActividadesOS;
+--DROP TABLE telefonosCliente;    
+--DROP TABLE Almacena; 
+/*DROP TABLE ActividadesOS;
 DROP TABLE PagosFactura;
 DROP TABLE ActividadesPlan;
 DROP TABLE Compras;
@@ -375,5 +375,5 @@ DROP TABLE Clientes;
 DROP TABLE Modelos;
 DROP TABLE Marcas;
 
-DROP DATABASE MU_DB; 
+DROP DATABASE MU_DB; */
 
