@@ -3,7 +3,7 @@ import { getDbPool } from "../config/SQLserverConection";
 export class establishmentsModel{
     static async getAll() {
         const pool = getDbPool();
-        const result = await pool.query('SELECT RIF, nombre, ciudad FROM Establecimientos ORDER BY nombre;');
+        const result = await pool.query('SELECT * FROM Establecimientos ORDER BY nombre;');
         
         console.log(result['recordset']);
         return result['recordset'];
