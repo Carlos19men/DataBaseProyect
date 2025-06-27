@@ -11,7 +11,7 @@ const Registro: React.FC  = () => {
     const navigator = useNavigate();
     return (
         <div className={styles.container}>
-            <TopBar text="Registro"></TopBar>
+            <TopBar text="Registro" menu={false}></TopBar>
             <span className={styles.botones}>
                 <Button texto="Empleado" onClick={() => setTipo("empleado")} inactivo={tipo === "cliente"} />
                 <Button texto="Cliente" onClick={() => setTipo("cliente")} inactivo={tipo === "empleado"} />
