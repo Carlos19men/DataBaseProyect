@@ -5,7 +5,7 @@ export class establishmentsModel{
         const pool = getDbPool();
         const result = await pool.query('SELECT RIF, nombre, ciudad FROM Establecimientos ORDER BY nombre;');
         
-        console.log(result['recordset']);
+        ;
         return result['recordset'];
     }
 
@@ -18,7 +18,7 @@ export class establishmentsModel{
         request.input('RIF', RIF);
 
         const result = await request.query('SELECT * FROM Establecimientos WHERE RIF = @RIF;');
-        console.log(result['recordset']);
+        ;
         return result['recordset'][0];
     }
 
@@ -72,7 +72,7 @@ export class establishmentsModel{
         `
 
         const result = await request.query(query);
-        console.log(result['recordset']);
+        ;
         return result['recordset'][0];
     }
 
@@ -122,7 +122,7 @@ export class establishmentsModel{
         `
 
         const result = await request.query(query);
-        console.log(result['recordset']);
+        ;
 
         return result['recordset'];
     }

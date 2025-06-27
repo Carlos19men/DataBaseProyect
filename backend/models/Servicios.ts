@@ -5,7 +5,7 @@ export class ServicesModel {
     static async getAll() {
         const pool = getDbPool();
         const result = await pool.query('SELECT * FROM Servicios ORDER BY nombre_ser;');
-        console.log(result['recordset']);
+        ;
         return result['recordset'];
     }
 
@@ -18,7 +18,7 @@ export class ServicesModel {
         request.input('id', id);
 
         const result = await request.query('SELECT * from Servicios where nro_servicio = @id;');
-        console.log(result['recordset']);
+        ;
         return result['recordset'][0];
     }
 
@@ -53,7 +53,7 @@ export class ServicesModel {
         where nro_servicio = @nro_servicio;`;
 
         const result = await request.query(query);
-        console.log(result['recordset']);
+        ;
         return result['recordset'];
     }
 
@@ -69,7 +69,7 @@ export class ServicesModel {
 
         const query = `Delete from Servicios where nro_servicio = @nro_servicio;`;
         const result = await request.query(query);
-        console.log(result['recordset']);
+        ;
         return result['recordset'];
     }
 

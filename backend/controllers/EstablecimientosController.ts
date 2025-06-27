@@ -84,7 +84,10 @@ export class EstablishmentController{
             return;
         }
 
+            
+            
         try {
+
             const result = await establishmentsModel.add({ RIF, CI_PIC, name, city, date_PIC });
             res.status(201).json({ message: 'Establecimiento agregado con éxito.', ...result });
             return;

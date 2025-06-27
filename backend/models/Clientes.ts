@@ -6,7 +6,7 @@ export class customerModel {
 
         const result = await getDbPool().query('select * from ObtenerClientes ORDER BY apellido;')
 
-        console.log(result['recordset'])
+        
 
         return result['recordset']
     }
@@ -24,7 +24,7 @@ export class customerModel {
 
         const result = await request.query('SELECT * FROM ObtenerCliente(@CI);');
 
-        console.log(result['recordset'])
+        
         return result['recordset'][0] || { error: "Customer not found" }; // Return the first record or an error if not found
     }
 
@@ -65,7 +65,7 @@ export class customerModel {
 
         const result = await request.query('EXEC editarCliente @CI,@name,@lastName,@email;')
 
-        console.log(result['recordset'])
+        
 
         return result['recordset']
     }

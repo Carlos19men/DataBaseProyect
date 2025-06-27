@@ -26,7 +26,7 @@ export class PlanesMantenimiento{
 
         const result = await request.query('SELECT * FROM getByMarca(@cod_marca);');
 
-        console.log(result['recordset'])
+        
         return result
     }
     
@@ -48,7 +48,7 @@ export class PlanesMantenimiento{
 
         const result = await request.query('SELECT * FROM getByModelo(@cod_marca,@nro_modelo);');
 
-        console.log(result['recordset'])
+        
         return result
 
     }
@@ -79,7 +79,7 @@ export class PlanesMantenimiento{
         request.input('kilometraje',kilometraje);
         const result = await request.query('SELECT * FROM getPlan(@cod_marca,@nro_modelo);');
 
-        console.log(result['recordset'])
+        
         return result
     }
     
@@ -121,7 +121,7 @@ export class PlanesMantenimiento{
 
         const result = await request.query('EXEC createPlan @cod_marca,@nro_modelo,@kilometraje,@nombre,@descripcion;');
 
-        console.log(result['recordset'])
+        
         return result
 
     }

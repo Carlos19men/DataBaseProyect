@@ -14,7 +14,9 @@ const PseudoAPI: React.FC = () => {
     const servicios=getAllserv();
     const clientes=getAllCli();
     const productos =getAllProd();
-  
+    const prueba=addEst('1','1','1','1',new Date());
+
+
   return (
     <div className="pseudoapi">
       <h1>Pseudo API</h1>
@@ -22,7 +24,7 @@ const PseudoAPI: React.FC = () => {
       <div className={styles.pseudoapi}>
         <pre>{establecimientos}</pre>
       </div>
-
+      <pre>{prueba}</pre>
       <h2>Empleados</h2>
       <div className={styles.pseudoapi}>
         <pre>{empleados}</pre>
@@ -191,7 +193,7 @@ function addEst(RIF: string, CI_PIC: string, name: string, city: string, date_PI
       
       }, []);
 
-return "Solicitud enviada"
+return JSON.stringify({RIF, CI_PIC, name, city, date_PIC})
 }
 
 /*

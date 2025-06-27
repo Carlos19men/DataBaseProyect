@@ -16,7 +16,7 @@ export class ProductModel{
         request.input('id', id);
 
         const result = await request.query('SELECT * FROM ObtenerProducto(@id);');
-        console.log(result['recordset']);
+        ;
         return result['recordset'];
     }
 
