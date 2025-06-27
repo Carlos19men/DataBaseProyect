@@ -89,9 +89,7 @@ BEGIN
 
         RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
     END CATCH
-END
-
-GO
+END;
 
 CREATE PROCEDURE eliminarMetodoPago(@id_pago int)
 AS
@@ -142,8 +140,8 @@ BEGIN
 
         RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
     END CATCH
-END
-GO
+END;
+
 -- procedimiento para modificar un metodo de pago
 CREATE PROCEDURE editarMetodoPago (
 	@id_pago int,
@@ -259,8 +257,7 @@ BEGIN
 		RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
 
 	END CATCH;
-END
-GO
+END;
 
 
 /*

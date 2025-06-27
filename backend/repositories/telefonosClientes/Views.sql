@@ -1,5 +1,4 @@
-USE MU_DB
-GO
+use MU_DB;
 
 --Telefono Clientes 
 

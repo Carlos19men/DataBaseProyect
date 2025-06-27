@@ -255,22 +255,8 @@ BEGIN
 
 	END CATCH;
 END
-GO
-/*
-SELECT * FROM OrdenesCompra;
-SELECT * FROM Compras;
-SELECT * FROM ProveedoresAsociados;
 
-EXECUTE nuevaOrdenCompra
-	@fecha_compra = '2025-06-22',
-	@RIF_est =  'J-11223344-5',
-	@RIF_proveedor = 'J-50011223-5',
-	@id_producto = 4,
-	@cant_producto = 5,
-	@precio = 10;
 
-	
-	*/
 	 	
 
 

@@ -31,7 +31,6 @@ export class Actividades {
 
         const result = await request.query('SELECT * FROM getByEstablecimiento(@RIF);');
 
-        console.log(result['recordset'])
         return result
 
     }
@@ -51,7 +50,6 @@ export class Actividades {
 
         const result = await request.query('SELECT * FROM getByServicio(@nro_s);');
 
-        console.log(result['recordset'])
         return result
 
     }
@@ -75,7 +73,6 @@ export class Actividades {
 
         const result = await request.query('SELECT * FROM getByServicio(@nro_s,@nro_corr);');
 
-        console.log(result['recordset'])
         return result
 
     }
@@ -109,7 +106,6 @@ export class Actividades {
 
         const result = await request.query('EXEC createActividad @nro_s,@nro_a,@nomb,@desc,@monto;');
 
-        console.log(result['recordset'])
         return result
 
     }

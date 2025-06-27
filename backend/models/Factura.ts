@@ -4,7 +4,6 @@ export class invoice{
     static async getAll(){
         const pool = await getDbPool();
         const result = await pool.query("SELECT * FROM Facturas ORDER BY fecha_emision DESC;");
-        console.log(result['recordset']);
         return result['recordset'];
     }
 
@@ -22,7 +21,6 @@ export class invoice{
         const query = `Select * from Facturas where nro_factura = @nro_factura`;
 
         const result = await request.query(query);
-        console.log(result['recordset']);
         return result['recordset'];
     }
 
@@ -40,7 +38,6 @@ export class invoice{
         const query = `Delete from Facturas where nro_factura = @nro_factura`;
 
         const result = await request.query(query);
-        console.log(result['recordset']);
         return result['recordset'];
    }
 }   

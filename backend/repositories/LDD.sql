@@ -23,17 +23,19 @@ create table Empleados(
 	direccion varchar(150) not null,
 	sueldo int,
 	RIF_establecimiento varchar(20),
+	nro_servicio_supervisar int,
 	
 	primary key(CI_emp)
 );
 
+
 create table Servicios(
 	nro_servicio int identity(1,1) not null,
-	CI_superv varchar(15),
 	nombre_ser varchar(50) not null,
 	
 	primary key(nro_servicio)
 );
+
 
 --agregamos las llaves foraneas
 alter table Empleados 
@@ -43,15 +45,16 @@ alter table Empleados
     ON DELETE SET NULL
     ON UPDATE CASCADE; 
 
+alter table Empleados
+	add constraint nro_servicio_supervisar
+	foreign key (nro_servicio_supervisar)
+	references Servicios(nro_servicio)
+	ON DELETE SET NULL
+	ON UPDATE CASCADE;
+
 alter table Establecimientos 
     add constraint CI_encargado 
     foreign key (CI_encargado) 
-    references Empleados(CI_emp);
-
-
-alter table Servicios 
-    add constraint CI_superv 
-    foreign key(CI_superv) 
     references Empleados(CI_emp);
 
 create table Clientes(
