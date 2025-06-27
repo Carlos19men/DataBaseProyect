@@ -187,7 +187,7 @@ return formato
 function addEst(RIF: string, CI_PIC: string, name: string, city: string, date_PIC: Date){
     useEffect(() => {
 
-    fetch('http://localhost:1234/establishement',{method:"POST", body: JSON.stringify({RIF, CI_PIC, name, city, date_PIC})})
+    fetch('http://localhost:1234/establishement',{method:"POST" ,headers: {'Content-Type': 'application/json'},body: JSON.stringify({RIF, CI_PIC, name, city, date_PIC})})
       .then(respuesta => respuesta.json())
       .catch(err => ("Solicitud falló con: " + err));
       
