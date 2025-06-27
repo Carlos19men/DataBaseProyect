@@ -87,7 +87,9 @@ export class EstablishmentController{
             
             
         try {
-            const result = await establishmentsModel.add({ RIF, CI_PIC, name, city, date_PIC:new Date(date_PIC) });
+
+            const result = await establishmentsModel.add({ RIF, CI_PIC, name, city, date_PIC });
+            const result = await establishmentsModel.add({ RIF, CI_PIC, name, city, date_PIC: new Date(date_PIC) });
             res.status(201).json({ message: 'Establecimiento agregado con éxito.', ...result });
             return;
         } catch (error) {
