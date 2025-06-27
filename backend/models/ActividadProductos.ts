@@ -15,8 +15,7 @@ export class ActividadProductosModel {
         const request = getDbPool().request();
         request.input('id', id);
 
-        const result = await request.query('');
-        console.log(result['recordset']);
+        const result = await request.query('SELECT * FROM ActividadProductos WHERE nro_s = @nro_s AND nro_a = @nro_a;');
         return result['recordset'];
     }
 

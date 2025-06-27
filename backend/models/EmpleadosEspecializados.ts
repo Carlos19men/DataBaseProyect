@@ -5,7 +5,6 @@ export class EmpleadosEspecializadosModel {
     static async getAll() {
         const pool = getDbPool();
         const result = await pool.query('SELECT * FROM Especializados ORDER BY apellidoEmpleado, nombreEmpleado;');
-        console.log(result['recordset']);
         return result['recordset'];
     }
 
@@ -18,7 +17,6 @@ export class EmpleadosEspecializadosModel {
         request.input('CI', CI);
 
         const result = await request.query('SELECT * FROM Especializados WHERE CI_emp = @CI;');
-        console.log(result['recordset']);
         return result['recordset'][0];
     }
 
@@ -31,7 +29,6 @@ export class EmpleadosEspecializadosModel {
         request.input('RIF', RIF);
 
         const result = await request.query('SELECT * FROM especialistasEstablecimiento(@RIF) ORDER BY apellidoEmpleado, nombreEmpleado;');
-        console.log(result['recordset']);
         return result['recordset'];
     }
 
@@ -44,7 +41,6 @@ export class EmpleadosEspecializadosModel {
         request.input('nro_servicio', nro_servicio);
 
         const result = await request.query('SELECT * FROM Especializados WHERE nro_servicio = @nro_servicio;');
-        console.log(result['recordset']);
         return result['recordset'];
     }
 
@@ -75,7 +71,6 @@ export class EmpleadosEspecializadosModel {
         const query = `EXEC  addEspecializacion @CI_emp, @RIF_establecimiento, @nro_servicio;`;
 
         const result = await request.query(query);
-        console.log(result['recordset']);
         return result['recordset'][0];
     }
 
@@ -103,7 +98,6 @@ export class EmpleadosEspecializadosModel {
             return { error: "No se encontró la especialización especificada." };
         }
         
-        console.log(result['recordset']);
         return result['recordset'][0];
     }
 }

@@ -5,7 +5,6 @@ export class ServiciosOfrecidosModel {
     static async getAll() {
         const pool = getDbPool();
         const result = await pool.query(`SELECT * FROM ServiciosDisponibles ORDER BY nombre_ser;`);
-        console.log(result['recordset']);
         return result['recordset'];
     }
 
@@ -24,7 +23,6 @@ export class ServiciosOfrecidosModel {
 
         const result = await request.query(`SELECT nro_servicio,nombre_ser servicio FROM ServiciosOfre WHERE RIF = @RIF AND nro_servicio = @nro_servicio;`);
         
-        console.log(result['recordset']);
         return result['recordset'][0];
     }
 
@@ -38,7 +36,6 @@ export class ServiciosOfrecidosModel {
 
         const result = await request.query(`SELECT nro_servicio,nombre_ser servicio FROM ServiciosOfre WHERE RIF = @RIF;`);
         
-        console.log(result['recordset']);
         return result['recordset'];
     }
 
@@ -52,7 +49,6 @@ export class ServiciosOfrecidosModel {
 
         const result = await request.query(`SELECT nro_servicio,nombre_ser servicio,RIF FROM ServiciosOfre WHERE nro_servicio = @nro_servicio;`);
         
-        console.log(result['recordset']);
         return result['recordset'];
     }
 
@@ -75,7 +71,6 @@ export class ServiciosOfrecidosModel {
         const query = `INSERT INTO ServiciosOfrecidos (RIF_establecimiento, nro_servicio) VALUES (@RIF_establecimiento, @nro_servicio);`;
 
         const result = await request.query(query);
-        console.log(result['recordset']);
         return result['recordset'][0];
     }
 
@@ -105,7 +100,6 @@ export class ServiciosOfrecidosModel {
             return { error: "No se encontró el servicio ofrecido especificado." };
         }
         
-        console.log(result['recordset']);
         return result['recordset'][0];
     }
 
@@ -126,7 +120,6 @@ export class ServiciosOfrecidosModel {
 
         const result = await request.query(`SELECT * FROM serviciosNoDisponiblesRIF(@RIF);`);
         
-        console.log(result['recordset']);
         return result['recordset'];
     }
 

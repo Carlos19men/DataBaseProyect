@@ -29,8 +29,31 @@ http://localhost:1234/servicie/1
 http://localhost:1234/establishement/
 
 ### Obtener un establecimiento por su RIF
-http://localhost:1234/establishement/J-00112233-4
+http://localhost:1234/establishement/J-02233-4
 
+### Agregar un nuevo establecimiento
+POST http://localhost:1234/establishement/
+Content-Type: application/json
+
+{
+    "RIF": "J-02233-4",
+    "CI_PIC": null,
+    "name": "Establecimiento 1",
+    "city": "Ciudad 1",
+    "date_PIC": "2021-01-01"
+}
+
+### Editar un establecimiento
+PATCH http://localhost:1234/establishement/
+Content-Type: application/json
+
+{
+    "RIF": "J-00112233-4",
+    "CI_PIC": "1234567890",
+    "name": "Establecimiento 1",
+    "city": "Ciudad 1",
+    "date_PIC": "2021-01-01"
+}
 ### Obtener todos los servicios ofrecidos
 http://localhost:1234/offered-services/
 

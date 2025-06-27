@@ -12,7 +12,6 @@ export class employeeAsigModel {
         request.input('RIF', RIF);
 
         const result = await request.query('SELECT * FROM empleadosAsignadosSer(@RIF);');
-        console.log(result['recordset']);
         return result['recordset'];
     }
 

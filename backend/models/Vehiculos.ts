@@ -6,8 +6,6 @@ export class vehicleModel{
     static async getAll(){
         const result = await getDbPool().query('SELECT * FROM ObtenerVehiculos ORDER BY marca; ')
 
-        console.log(result['recordset'])
-
         return result['recordset']
     }
 
@@ -21,8 +19,6 @@ export class vehicleModel{
         request.input('Plate',plate)
 
         const result = await request.query('SELECT * FROM ObtenerPorPlaca(@Plate);')
-
-        console.log(result['recordset'])
 
         return result['recordset'][0]
     }
@@ -81,8 +77,6 @@ export class vehicleModel{
 
         const result = await request.query('EXEC InsertarVehiculo @Plate, @OilBox, @OilMotor, @Maintenance, @MonthsUse, @Mileage, @IdModel, @IdMarca, @CiOwner;')
 
-        console.log(result['recordset'])
-
         return result['recordset']
     }
 
@@ -99,8 +93,6 @@ export class vehicleModel{
 
         //execute
         const result = await request.query('EXEC eliminarVehiculo @plate;')
-
-        console.log(result['recordset'])
 
         return result['recordset']
 
@@ -159,8 +151,6 @@ export class vehicleModel{
         request.input('CiOwner',CI_owner)
 
         const result = await request.query('EXEC InsertarVehiculo @Plate, @OilBox, @OilMotor, @Maintenance, @MonthsUse, @Mileage, @IdModel, @IdMarca, @CiOwner;')
-
-        console.log(result['recordset'])
 
         return result['recordset']
     }

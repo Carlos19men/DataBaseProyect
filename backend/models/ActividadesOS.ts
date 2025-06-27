@@ -16,7 +16,6 @@ export class ActividadesOSModel {
         request.input('id', id);
 
         const result = await request.query('');
-        console.log(result['recordset']);
         return result['recordset'];
     }
 
