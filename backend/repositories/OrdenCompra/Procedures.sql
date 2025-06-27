@@ -4,7 +4,7 @@ GO
 CREATE FUNCTION ObtenerOrdenCompra(
 	@numOC int  --parametro
 )
-RETURNS TABLE
+RETURNS TABLE 
 AS
 RETURN(
 	SELECT nro_OC as NumeroOrdenCompra, fecha_compra, RIF_est as RIF_Establecimiento

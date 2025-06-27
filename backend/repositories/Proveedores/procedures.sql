@@ -1,5 +1,7 @@
 
-USE MU_DB;
+USE MU_DB
+
+GO
 
 CREATE FUNCTION obtenerProvedorRIF(
 @RIF varchar(100)
