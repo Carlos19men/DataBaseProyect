@@ -1,6 +1,8 @@
 /*-- procedures proveedores
 SELECT * FROM Proveedores ORDER BY razon_social; */
 
+USE MU_DB
+
 GO
 
 CREATE FUNCTION obtenerProvedorRIF(
