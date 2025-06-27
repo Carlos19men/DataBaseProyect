@@ -8,7 +8,7 @@ http://localhost:1234/customer/25789012
 http://localhost:1234/product/
 
 ### Obtener un producto por su id
-http://localhost:1234/product/5
+http://localhost:1234/product/37
 
 ### Obtener todos los empleados
 http://localhost:1234/employee/
@@ -30,3 +30,39 @@ http://localhost:1234/establishement/
 
 ### Obtener un establecimiento por su RIF
 http://localhost:1234/establishement/J-00112233-4
+
+### Obtener todos los servicios ofrecidos
+http://localhost:1234/offered-services/
+
+### Obtener servicios ofrecidos por RIF de establecimiento
+http://localhost:1234/offered-services/rif/J-00112233-4
+
+### Obtener servicios ofrecidos por número de servicio
+http://localhost:1234/offered-services/servicio/1
+
+### Obtener un servicio específico por RIF y número de servicio
+http://localhost:1234/offered-services/rif/J-00112233-4/servicio/1
+
+### Obtener servicios no ofrecidos
+http://localhost:1234/offered-services/no-ofrecidos
+
+### Obtener servicios no ofrecidos por RIF de establecimiento
+http://localhost:1234/offered-services/no-ofrecidos/rif/J-00112233-4
+
+### Agregar un nuevo servicio ofrecido
+POST http://localhost:1234/offered-services/
+Content-Type: application/json
+
+{
+    "RIF_establecimiento": "J-00112233-4",
+    "nro_servicio": 1
+}
+
+### Eliminar un servicio ofrecido
+DELETE http://localhost:1234/offered-services/
+Content-Type: application/json
+
+{
+    "RIF_establecimiento": "J-00112233-4",
+    "nro_servicio": 1
+}
