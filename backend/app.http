@@ -2,7 +2,7 @@
 http://localhost:1234/customer/
 
 ###Obtener un cliente por su cedula | listo 
-http://localhost:1234/customer/25789012
+http://localhost:1234/customer/25
 
 ###Post un nuevo cliente 
 POST http://localhost:1234/customer
@@ -15,8 +15,23 @@ Content-Type: application/json
     "email":"juan@gmail.com"
 }
 
+###PUT actualizar un cliente
+PATCH  http://localhost:1234/customer/25
+Content-Type: application/json
+
+{
+    "CI": "25",
+    "lastName":"Guzman",
+    "name":"Carlos"
+}
+
 ### Obtener todos los productos
-http://localhost:1234/product/
+PATCH  http://localhost:1234/product/
+Content-Type: application/json
+{
+
+
+}
 
 ### Obtener un producto por su id
 http://localhost:1234/product/37
@@ -37,7 +52,19 @@ http://localhost:1234/servicie
 http://localhost:1234/servicie/1
 
 ### Obtener todos los establecimientos
-http://localhost:1234/establishement/
+http://localhost:1234/establishement/4578-K
+
+###postear establecimiento 
+POST  http://localhost:1234/establishement/
+Content-Type: application/json
+
+{
+    "RIF":"4578-K",
+    "CI_PIC":null,
+    "name":"Establecimiento 2",
+    "city":"Calle 1 # 2-3",
+    "date_PIC":"2025-06-25"
+}
 
 ### Obtener un establecimiento por su RIF
 http://localhost:1234/establishement/J-02233-4

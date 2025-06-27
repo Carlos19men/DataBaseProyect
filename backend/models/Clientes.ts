@@ -89,7 +89,7 @@ export class customerModel {
         request.input('lastName', lastName);
         request.input('email', email);
 
-        const result = await request.query('EXEC agregarCliente @CI,@name,@lastName,@email;')
+        const result = await request.query('EXEC nuevoCliente @CI,@name,@lastName,@email;')
 
         return result['rowsAffected']
     }
