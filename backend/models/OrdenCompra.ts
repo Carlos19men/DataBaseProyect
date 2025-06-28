@@ -3,7 +3,7 @@ import {  getDbPool } from "../config/SQLserverConection";
 export class buysOrderModel{
     static async getAll(){
 
-        const result = await getDbPool().query('SELECT * FROM obtenerOrdenesCompras ORDER BY fecha_compra;')
+        const result = await getDbPool().query('SELECT * FROM OrdenesCompra ORDER BY fecha_compra;')
 
         return result['recordset']
     }
@@ -14,9 +14,9 @@ export class buysOrderModel{
         } else {
             const request = getDbPool().request();
 
-            request.input('@numOC',numOC);
+            request.input('numOC',numOC);
 
-            const result = await request.query('SELECT * FROM ObtenerOrdenCompra(@id);')
+            const result = await request.query('SELECT * FROM OrdenesCompra WHERE nro_OC = @numOC;')
    
             return result['recordset'][0] || { error: "Buy orden not found" };
         }

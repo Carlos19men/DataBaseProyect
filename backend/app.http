@@ -236,9 +236,9 @@ DELETE http://localhost:1234/model/1/51
 
 ### Router de Ordenes de Compra
 
-### Obtener todas las ordenes de compra | listo 
+### Obtener todas las ordenes de compra  | listo
 GET http://localhost:1234/buys-order/
 
-### Obtener una orden de compra por su id | listo 
+### Obtener una orden de compra por su id | listo
 GET http://localhost:1234/buys-order/1
 
