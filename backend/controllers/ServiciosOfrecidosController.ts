@@ -14,9 +14,9 @@ export class ServiciosOfrecidosController {
     }
 
     // Obtener todos los servicios ofrecidos
-    getAll = async (_req: Request, res: Response): Promise<void> => {
+    getAll = async (_req: Request, res: Response<ServicioOfrecido[] | {message:string}>): Promise<void> => {
         try {
-            const servicios = await ServiciosOfrecidosModel.getAll();
+            const servicios : ServicioOfrecido[] = await ServiciosOfrecidosModel.getAll();
             
             console.log(servicios);
             if (!servicios) {
