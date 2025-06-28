@@ -90,10 +90,7 @@ DELETE http://localhost:1234/servicie/1006
 http://localhost:1234/establishement
 
 ### Obtener todos los establecimientos por RIF
-http://localhost:1234/establishement/
-
-### Obtener un establecimiento por su RIF
-http://localhost:1234/establishement/J-02233-4
+http://localhost:1234/establishement/J-11223344-5
 
 ### Agregar un nuevo establecimiento
 POST http://localhost:1234/establishement/
