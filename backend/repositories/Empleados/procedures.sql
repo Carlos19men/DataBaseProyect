@@ -1,7 +1,10 @@
+use MU_DB
+GO
+
 Create view ObtenerEmpleados as
 select CI_emp, RIF_establecimiento, nombre, apellido
 from Empleados;
-go
+GO
 
 /*
 create FUNCTION getEmployee(
@@ -59,10 +62,13 @@ BEGIN
     END
 
     -- Insert new employee
-    INSERT INTO Empleados (CI_emp, RIF, nombre, apellido, telefono, direccion, sueldo)
+    INSERT INTO Empleados (CI_emp, RIF_establecimiento, nombre, apellido, telefono, direccion, sueldo)
     VALUES (@CI, @RIF, @name, @lastname, @cellphone, @address, @salary);
 END;
-drop procedure AddEmployee;
+
+GO
+
+/*drop procedure AddEmployee;*/
 
 create proc deleteEmployee
     @CI varchar(50)
@@ -78,6 +84,8 @@ as BEGIN
     end
 end;
 
+GO
+/*
 drop procedure deleteEmployee;
 
-Select CI_emp, nombre, apellido from Empleados where RIF_establecimiento = 'J-12345678-9';
+Select CI_emp, nombre, apellido from Empleados where RIF_establecimiento = 'J-12345678-9';*/

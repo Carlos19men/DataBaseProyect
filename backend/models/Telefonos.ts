@@ -11,8 +11,6 @@ export class phonesCustomerModel{
 
         const result = await pool.query('SELECT * FROM GetAllTelefonosCliente ORDER BY apellido;')
 
-        console.log(result['recordset'])
-
         return result['recordset']
     }
 
@@ -29,7 +27,6 @@ export class phonesCustomerModel{
 
         const result = await request.query('SELECT * FROM GetTelefonosClientes(@CI);')
 
-        console.log(result['recordset'])
         return result['recordset'][0]
     }
 
@@ -56,8 +53,6 @@ export class phonesCustomerModel{
 
         const result = request.query('EXEC registrarTelefonos @CI,@num1,@num2;')
 
-        console.log(result)
-
         return result
     }
 
@@ -83,8 +78,6 @@ export class phonesCustomerModel{
         request.input('newNum',newNum)
 
         const result = request.query('EXEC registrarTelefonos @CI,@num,@newNum;')
-
-        console.log(result)
 
         return result
     }

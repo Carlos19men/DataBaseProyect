@@ -1,3 +1,6 @@
+USE MU_DB
+GO
+
 CREATE FUNCTION ObtenerPorPlaca(
 	@placa VARCHAR(50)
 )
@@ -7,13 +10,17 @@ RETURN(
 	SELECT * FROM ObtenerVehiculos WHERE placa = @placa
 );
 
-
---Crear un nuevo vehiculo 
-IF OBJECT_ID('dbo.nuevoVehiculo','P') IS NOT NULL
-	DROP PROCEDURE dbo.editarTelefono; 
 GO
 
-CREATE PROCEDURE nuevoVehiculo
+
+--Crear un nuevo vehiculo 
+IF (OBJECT_ID('dbo.nuevoVehiculo','P') IS NOT NULL)
+
+	DROP PROCEDURE dbo.editarTelefono; 
+	
+GO
+
+CREATE PROCEDURE nuevoVehiculo(
 	@plate VARCHAR(100),
 	@oil_box VARCHAR(100),
 	@oil_motor VARCHAR(100),
@@ -23,6 +30,7 @@ CREATE PROCEDURE nuevoVehiculo
 	@id_marca INT,
 	@id_model INT,
 	@CI_owner VARCHAR(100)
+	)
 AS
 BEGIN 
 	-- Configuramos la parte inicial
@@ -54,10 +62,10 @@ BEGIN
 		
 		--VALIDAMOS QUE LA PLACA NO EXISTA 
 		IF EXISTS (SELECT 1 FROM ObtenerPorPlaca(@plate))
-			THROW 50001,'Esta placa ya se encuentra registrada'1; 
+			THROW 50001,'Esta placa ya se encuentra registrada',1; 
 
 		--VALIDAMOS QUE EL CLIENTE EXISTA 
-		IF NOT EXISTS (SELECT 1 FROM ObtenerCliente(@id_owner))
+		IF NOT EXISTS (SELECT 1 FROM ObtenerCliente(@CI_owner))
 			THROW 50002, 'Cliente no registrado',1; 
 		
 		--VALIDAMOS QUE EL MES Y EL KILOMETRAJE SEAN VALIDOS 
@@ -119,8 +127,9 @@ BEGIN
 END;
 GO
 
-CREATE PROCEDURE eliminarVehiculo 
+CREATE PROCEDURE eliminarVehiculo (
 	@placa VARCHAR(100)
+	)
 AS
 BEGIN 
 	-- Configuramos la parte inicial
@@ -202,7 +211,7 @@ END;
 GO
 
 
-CREATE PROCEDURE actualizarVehiculo
+CREATE PROCEDURE actualizarVehiculo(
 	@plate VARCHAR(100),
 	@oil_box VARCHAR(100),
 	@oil_motor VARCHAR(100),
@@ -212,6 +221,7 @@ CREATE PROCEDURE actualizarVehiculo
 	@id_marca INT,
 	@id_model INT,
 	@CI_owner VARCHAR(100)
+	)
 AS
 BEGIN 
 	-- Configuramos la parte inicial

@@ -5,12 +5,22 @@ interface BotonProps {
   texto: string;
   onClick?: () => void;
   inactivo?: boolean ;
+  viewHeight?: number;
+   fuente?: number; 
 }
 
-const Button : React.FC<BotonProps> = ({ texto, onClick, inactivo=false }) => {
+const Button : React.FC<BotonProps> = ({ texto, onClick, inactivo=false,viewHeight ,fuente }) => {
+    
+    if (!fuente) {
+        if(!viewHeight){
+        fuente = 4; 
+        }else{
+            fuente = viewHeight - 2;
+        }   
+    }
     return(
         <span>
-            <button className={`${styles.button} ${inactivo ? styles.inactivo : ""}`} onClick={onClick}  ><span className={styles.buttonText}>{texto}</span></button>
+            <button className={`${styles.button} ${inactivo ? styles.inactivo : ""}`} onClick={onClick}  style={{height:`${viewHeight}vh`, padding:0}}><span className={styles.buttonText} style={{ fontSize:`${fuente}vh`,padding:"5vh"}}>{texto}  </span></button>
         </span>
     )
 }

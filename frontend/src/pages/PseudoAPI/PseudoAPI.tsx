@@ -14,6 +14,9 @@ const PseudoAPI: React.FC = () => {
     const servicios=getAllserv();
     const clientes=getAllCli();
     const productos =getAllProd();
+    const prueba=addEst('1','1','1','1',new Date());
+
+
     const establecimientosPost = addEst('1','1','d','d',new Date())
   
   return (
@@ -28,7 +31,7 @@ const PseudoAPI: React.FC = () => {
       <div className={styles.pseudoapi}>
         <pre>{establecimientos}</pre>
       </div>
-
+      <pre>{prueba}</pre>
       <h2>Empleados</h2>
       <div className={styles.pseudoapi}>
         <pre>{empleados}</pre>
@@ -82,6 +85,9 @@ const [formato, setFormato] = useState<string>("Cargando...");
       
       }, []);
 
+      formato.replace("[",""); // Elimina las comillas de las claves
+      formato.replace("]",""); 
+      
 return formato
 }
 
@@ -183,6 +189,21 @@ const [formato, setFormato] = useState<string>("Cargando...");
 
 return formato
 }
+
+
+function addEst(RIF: string, CI_PIC: string, name: string, city: string, date_PIC: Date){
+    useEffect(() => {
+
+    fetch('http://localhost:1234/establishement',{method:"POST" ,headers: {'Content-Type': 'application/json'},body: JSON.stringify({RIF, CI_PIC, name, city, date_PIC})})
+      .then(respuesta => respuesta.json())
+      .catch(err => ("Solicitud falló con: " + err));
+      
+      }, []);
+
+return JSON.stringify({RIF, CI_PIC, name, city, date_PIC})
+}
+
+/*
 /*
 function getAllEst(){
 const [formato, setFormato] = useState<string>("Cargando...");
@@ -197,6 +218,7 @@ const [formato, setFormato] = useState<string>("Cargando...");
       }, []);
 
 return formato
+}
 }*/
 function addEst(RIF: string, CI_PIC: string, name: string, city: string, date_PIC: Date){
     useEffect(() => {

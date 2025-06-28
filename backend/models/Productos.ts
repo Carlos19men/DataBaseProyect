@@ -16,7 +16,6 @@ export class ProductModel{
         request.input('id', id);
 
         const result = await request.query('SELECT * FROM ObtenerProducto(@id);');
-        console.log(result['recordset']);
         return result['recordset'];
     }
 
@@ -124,7 +123,6 @@ export class ProductModel{
         request.input('id_familia', id_familia);
         const result = await request.query('EXEC editarProducto @id_producto @nombre @tipo @precio @descripcion @minimo @maximo @tratamiento @nivelCon @inf_manejo @id_familia')
 
-        console.log(result['rowsAffected'])
         return result['rowsAffected']
     }
 

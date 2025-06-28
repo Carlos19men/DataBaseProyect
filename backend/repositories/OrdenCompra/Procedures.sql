@@ -1,17 +1,17 @@
 USE MU_DB; 
-
+GO
 -- funcion para obtener una orden de compra por pu id
 CREATE FUNCTION ObtenerOrdenCompra(
 	@numOC int  --parametro
 )
-RETURNS TABLE
+RETURNS TABLE 
 AS
 RETURN(
 	SELECT nro_OC as NumeroOrdenCompra, fecha_compra, RIF_est as RIF_Establecimiento
 	FROM OrdenesCompra
 	WHERE nro_OC = @numOC
 );
-
+GO
 -- Crear nueva orden de compra
 CREATE PROCEDURE nuevaOrdenCompra(
     @fecha_compra DATE,
@@ -92,7 +92,7 @@ BEGIN
         RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
     END CATCH
 END
-
+GO
 -- procedimiento para eliminar una orden de compra
 CREATE PROCEDURE eliminarOrdenCompra(@numOC INT)
 AS
@@ -144,7 +144,7 @@ BEGIN
         RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
     END CATCH
 END
-
+GO
 -- procedimiento para modificar orden de compra
 CREATE PROCEDURE editarOrdenCompra (
 	--declaracion de las variables
@@ -256,20 +256,7 @@ BEGIN
 	END CATCH;
 END
 
-SELECT * FROM OrdenesCompra;
-SELECT * FROM Compras;
-SELECT * FROM ProveedoresAsociados;
 
-EXECUTE nuevaOrdenCompra
-	@fecha_compra = '2025-06-22',
-	@RIF_est =  'J-11223344-5',
-	@RIF_proveedor = 'J-50011223-5',
-	@id_producto = 4,
-	@cant_producto = 5,
-	@precio = 10;
-
-	
-	
 	 	
 
 

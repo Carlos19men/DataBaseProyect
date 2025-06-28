@@ -50,6 +50,7 @@ export class Actividades {
 
         const result = await request.query('SELECT * FROM getByServicio(@nro_s);');
 
+
         return result
 
     }
@@ -73,6 +74,7 @@ export class Actividades {
 
         const result = await request.query('SELECT * FROM getByServicio(@nro_s,@nro_corr);');
 
+        
         return result
 
     }
@@ -105,6 +107,8 @@ export class Actividades {
         request.input('monto', monto);
 
         const result = await request.query('EXEC createActividad @nro_s,@nro_a,@nomb,@desc,@monto;');
+
+        
         return result
 
     }

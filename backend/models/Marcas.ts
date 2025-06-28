@@ -4,7 +4,6 @@ export class brandModel {
     static async getAll(){
         const pool = getDbPool();
         const result = await pool.query('SELECT * FROM Marcas ORDER BY nombre;');
-        console.log(result['recordset']);
         return result['recordset'];
     }
 
@@ -17,7 +16,6 @@ export class brandModel {
         request.input('id', id);
 
         const result = await request.query('SELECT * FROM Marcas WHERE id = @id;');
-        console.log(result['recordset']);
         return result['recordset'][0];
     }
 
@@ -39,7 +37,6 @@ export class brandModel {
         request.input('name', name);
 
         const result = await request.query('UPDATE Marcas SET nombre = isNULL(@name, nombre_marca) WHERE id = @id;');
-        console.log(result['recordset']);
         return result['recordset'][0];
     }
 
@@ -52,7 +49,6 @@ export class brandModel {
         request.input('name', name);
 
         const result = await request.query('INSERT INTO Marcas (nombre) VALUES (@name);');
-        console.log(result['recordset']);
         return result['recordset'][0];
     }
 
@@ -65,7 +61,6 @@ export class brandModel {
         request.input('id', id);
 
         const result = await request.query('DELETE FROM Marcas WHERE id = @id;');
-        console.log(result['recordset']);
         return result['recordset'][0];
     }
 }

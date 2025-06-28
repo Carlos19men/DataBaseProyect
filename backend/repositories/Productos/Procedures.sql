@@ -1,9 +1,10 @@
-
+USE MU_DB
+GO
 
 CREATE VIEW ObtenerProductos AS
 SELECT id_producto,A.nombre nombreProducto, tipo, precio,descripcion, minimo cantidadMinima, maximo cantidadMaxima,tratamiento_residuos, nivel_contaminacion, B.nombre Familia
 FROM Productos A, FamiliaProductos B WHERE A.id_familia = B.id_familia ; 
-
+go
 
 
 CREATE FUNCTION	ObtenerProducto(
@@ -15,7 +16,7 @@ RETURN(
 	SELECT * FROM ObtenerProductos WHERE id_producto = @ID
 );
  
-
+ GO
 CREATE PROCEDURE editarProducto
 @ID int,
 @nombre varchar(100),
@@ -65,7 +66,7 @@ BEGIN
 	PRINT 'producto eliminado con exito'
 
 END; 
-
+GO
 --nuevo producto 
 CREATE PROCEDURE nuevoProducto
 @nombre varchar(100),
@@ -85,3 +86,4 @@ BEGIN
 		(@nombre,@tipo,@precio, @descripcion, @minimo, @maximo, @nivel_contaminacion,@inf_manejo, @id_familia);
 
 END; 
+GO

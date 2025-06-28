@@ -8,10 +8,13 @@ import {createInventoryRouter} from "./routers/routerInventario";
 import { createbrandRouter } from "./routers/routerMarca";
 import { createCustomerRouter } from "./routers/routerClientes";
 import { createProductosRouter } from "./routers/routerProductos";
-
+import { createModelsRouter } from "./routers/routerModelos";
+import { createAsignedEmployeeRouter } from "./routers/routerEmpleadosAsignados";
 import { createServiceRouter } from "./routers/RouterServicios";
-connectToDatabase()
+import { createEmpleadosEspecializadosRouter } from "./routers/routerEmpleadosEspecializados";
+import { createOfferedServicesRouter } from "./routers/routerServiciosOfrecidos";
 
+connectToDatabase()
 
 export const createApp = () =>{
 
@@ -32,6 +35,10 @@ export const createApp = () =>{
     app.use('/servicie',createServiceRouter())
     app.use('/customer',createCustomerRouter())
     app.use('/product',createProductosRouter())
+    app.use('/model', createModelsRouter());
+    app.use('/assignedEmployee', createAsignedEmployeeRouter());
+    app.use('/specializedEmployee', createEmpleadosEspecializadosRouter());
+    app.use('/offered-services', createOfferedServicesRouter());
 
     const PORT = process.env.PORT ?? 1234
 

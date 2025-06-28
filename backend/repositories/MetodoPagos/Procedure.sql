@@ -1,5 +1,5 @@
-use MU_DB;
-
+USE MU_DB;
+GO
 -- funcion para obtener un metodo de pago por pu id
 CREATE FUNCTION ObtenerMetodoPago(
 	@id_pago varchar(15)  --parametro
@@ -11,6 +11,7 @@ RETURN(
 	FROM MetodosPago
 	WHERE id_pago = @id_pago
 );
+GO
 
 -- funcion para obtener pagos por clientes
 CREATE FUNCTION ObtenerMetodoPagoPorCliente(
@@ -28,6 +29,12 @@ RETURN(
     JOIN MetodosPago M ON PF.id_pago = M.id_pago
     WHERE C.CI_cliente = @id_cliente
 );
+GO
+
+Drop Function ObtenerMetodoPago
+Drop Function ObtenerMetodoPagoPorCliente
+
+GO
 
 CREATE PROCEDURE nuevaMetodoPago(
 	@tipo_moneda varchar(40),
@@ -82,7 +89,7 @@ BEGIN
 
         RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
     END CATCH
-END
+END;
 
 CREATE PROCEDURE eliminarMetodoPago(@id_pago int)
 AS
@@ -133,7 +140,7 @@ BEGIN
 
         RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
     END CATCH
-END
+END;
 
 -- procedimiento para modificar un metodo de pago
 CREATE PROCEDURE editarMetodoPago (
@@ -250,9 +257,10 @@ BEGIN
 		RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
 
 	END CATCH;
-END
+END;
 
 
+/*
 SELECT * FROM MetodosPago;
 
 DROP PROCEDURE eliminarMetodoPago;
@@ -271,4 +279,4 @@ EXEC nuevaMetodoPago
     @telefono = '04121234567';
 
 EXEC eliminarMetodoPago
-	@id_pago = 1;
+	@id_pago = 1;*/
