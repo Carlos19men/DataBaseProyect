@@ -21,13 +21,12 @@ create table Empleados(
 	apellido varchar(50) not null,
 	telefono varchar(15) not null,
 	direccion varchar(150) not null,
-	sueldo int,
+	sueldo int CHECK(sueldo > 0),
 	RIF_establecimiento varchar(20),
 	nro_servicio_supervisar int,
 	
 	primary key(CI_emp)
 );
-
 
 create table Servicios(
 	nro_servicio int identity(1,1) not null,

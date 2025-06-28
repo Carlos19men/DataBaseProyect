@@ -59,7 +59,7 @@ export class EmployeeController {
             return;
         } catch(error) {
             console.error("Error al obtener el empleado con esa CI", error);
-            res.status(500).json({message: "Error interno del servidor al conseguir un empleado"});
+            res.status(500).json({message: "Error interno: "+ error});
             return;
         }
     }
@@ -87,7 +87,7 @@ export class EmployeeController {
             return;
         } catch (error) {
             console.error("Error al obtener empleados con ese RIF", error)
-            res.status(500).json({message: "Ha ocurrido un error interno del servidor al obtener empleados con ese RIF"});
+            res.status(500).json({message: "Internal error: "+error});
             return;
         }
     }
@@ -102,16 +102,22 @@ export class EmployeeController {
                 return;
             }
         }
-
+        
+        
         try {
-            const result = await employeeModel.editEmployee({CI, name, lastName, telefono: cellphone, direccion: address, sueldo: salary});
+            const result = await employeeModel.editEmployee({CI, name, lastName, cellphone, address, salary});
 
             if ('error' in result) {
-                res.status(400).json({message: result.error});
+                res.status(400).json({message: 'No se pudo borrar el empleado'});
                 return;
             }
 
-            res.status(200).json(result);
+            if (!result) {
+                res.status(404).json({message: 'Empleado no encontrado'});
+                return;
+            }
+
+            res.status(200).json({message:'empleado modificado con éxito'});
             return;
         } catch (error) {
             console.error("Error al editar el empleado", error);
@@ -130,43 +136,57 @@ export class EmployeeController {
 
         try{
             const result = await employeeModel.deleteEmpleado(CI);
+            
+            console.log(result)
 
-            if('error' in result){
-                res.status(400).json({message: result.error});
+            if(result.rowsAffected === 0){
+                res.status(404).json({message: 'El empleado no fué encontrado, por lo tanto no pudó ser borrado'});
                 return;
             }
 
-            res.status(200).json(result);
+            res.status(200).json({message:'Empleado eliminado con existo'});
             return;
         } catch(error) {
             console.error("Ha ocurrido un error", error);
-            res.status(500).json({message: "Ha ocurrido un error en el servidor al buscar un empleado con esa cedula"});
+            res.status(500).json({message: "internal error: " + error});
             return;
         }  
     }
 
     addEmployee = async(req: Request, res: Response<Employee | {message:string}>): Promise<void> => {
-        const {CI} = req.params;
-        const {name, lastName, cellphone, address, salary, RIF} = req.body;
+
+        const {CI,name, lastName, cellphone, address, salary, RIF} = req.body;
 
         if(CI === null || CI.length === 0 || CI === undefined){
             res.status(404).json({message: "Se requiere la cédula del empleado"});
             return;
         }
+        if(RIF === null || RIF.length === 0 || RIF === undefined){
+            res.status(404).json({message: "Se requiere el RIF"});
+            return;
+        }
+        if(salary === null || salary === undefined || salary === ''){
+            res.status(404).json({message: "Se requiere el salario"});
+        }
 
         try {
-            const result = await employeeModel.addEmpleado({CI, name, lastName, cellphone, address, salary, RIF});
-
+            const result = await employeeModel.addEmpleado({CI, name, lastName, cellphone, address, salary: parseFloat(salary), RIF});
+            
             if('error' in result){
-                res.status(400).json({message: result.error});
+                res.status(400).json({message: result['error']});
                 return;
             }
-
-            res.status(200).json(result);
+   
+            res.status(200).json({message: 'Empleado agregado con exito'});
             return;
         } catch (error) {
+
+            if(error instanceof Error && error.message.includes('Cannot insert duplicate key')){
+                res.status(409).json({message:'Conflicto: Empleado ya registrado'});
+                return;
+            }
             console.error("Ha ocurrido un error", error);
-            res.status(500).json({message: "Ha ocurrido un error en el servidor"})
+            res.status(500).json({message: "Error interno: "+ error})
             return;
         }
     }

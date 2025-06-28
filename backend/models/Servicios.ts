@@ -1,72 +1,66 @@
 import { getDbPool } from "../config/SQLserverConection";
+import * as sql from 'mssql';
 
 export class ServicesModel {
     
     static async getAll() {
+        //creamos la request y asignamos los paramentros 
         const pool = getDbPool();
+
+        //enviamos la query y capturamos las columnas afectadas 
         const result = await pool.query('SELECT * FROM Servicios ORDER BY nombre_ser;');
         return result['recordset'];
     }
 
     static async getById(id: number) {
-        if (id === undefined || id === null || id <= 0) {
-            return { error: "Se necesita el ID del servicio" };
-        }
-
+        //creamos la request y asignamos los paramentros 
         const request = getDbPool().request();
         request.input('id', id);
 
+        //enviamos la query y capturamos las columnas afectadas 
         const result = await request.query('SELECT * from Servicios where nro_servicio = @id;');
         return result['recordset'][0];
     }
 
-    static async editService ({nro_servicio, CI_superv, nombre_serv}: { nro_servicio: number | null, CI_superv: string | null, nombre_serv: string | null}){
-        if(nro_servicio !== null) {
-            if (nro_servicio === undefined || nro_servicio <= 0) {
-                return { error: "El número de servicio es inválido" };
-            }
-        }
-
-        if(CI_superv !== null){
-            if(CI_superv === undefined || CI_superv === null || CI_superv.length === 0){
-                return {error: "La cédula del supervisor es inválida"};
-            }
-        }
-
-        if (nombre_serv !== null) {
-            if (nombre_serv === undefined || nombre_serv.length === 0) {
-                return { error: "El nombre del servicio es inválido" };
-            }
-        }
-
+    static async editService ({nro_servicio, nombre_serv}: { nro_servicio: number,nombre_serv: string}){
+       
+        //creamos la request y asignamos los paramentros 
         const request = getDbPool().request();
-        request.input('nro_servicio', nro_servicio);
-        request.input('CI_superv', CI_superv);
+        request.input('nro_servicio', sql.Int,nro_servicio);
         request.input('nombre_serv', nombre_serv);
 
+        //cuerpo de query 
         const query = `Update Servicios set
-        nro_servicio = @nro_servicio,
-        CI_superv = @CI_superv,
         nombre_ser = @nombre_serv
         where nro_servicio = @nro_servicio;`;
 
+        //enviamos la query y capturamos las columnas afectadas 
         const result = await request.query(query);
-        return result['recordset'];
+        return {rowsAffected: result['rowsAffected'][0]};
     }
 
     static async deleteService({nro_servicio}: {nro_servicio: number}){
-        if(nro_servicio !== null){
-            if(nro_servicio === undefined || nro_servicio <= 0){
-                return {error: "El número de servicio es inválido"};
-            }
-        }
-
+        //creamos la request y asignamos los paramentros 
         const request = getDbPool().request();
-        request.input('nro_servicio', nro_servicio);
+        request.input('nro_servicio',sql.Int, nro_servicio);
 
+        //enviamos la query y capturamos las columnas afectadas 
         const query = `Delete from Servicios where nro_servicio = @nro_servicio;`;
         const result = await request.query(query);
-        return result['recordset'];
+        return { rowsAffected: result['rowsAffected'][0] };
+    } 
+
+    static async createService({nombre_serv}: {nombre_serv: string}) {
+        //creamos la request y asignamos los paramentros 
+        const request = getDbPool().request();
+        request.input('nombre_serv', nombre_serv);
+
+        //cuerpo de la query
+        const query = `INSERT INTO Servicios (nombre_ser) VALUES (@nombre_serv);`;
+        
+        //enviamos la query y capturamos las columnas afectadas 
+        const result = await request.query(query);
+        return { rowsAffected: result['rowsAffected'][0] };
     }
 
 }

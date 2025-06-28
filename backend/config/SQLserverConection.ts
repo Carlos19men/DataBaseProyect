@@ -19,7 +19,6 @@ const config = {
     },
 };
 
-console.log(config)
 
 // Variable para almacenar el pool de conexiones resuelto, tipada
 let pool: ConnectionPool | null = null; // <--- CAMBIO AQUÍ: Ahora almacena la ConnectionPool directamente

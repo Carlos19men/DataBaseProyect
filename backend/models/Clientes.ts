@@ -62,7 +62,7 @@ export class customerModel {
 
         const result = await request.query('EXEC editarCliente @CI,@name,@lastName,@email;')
 
-        return result['recordset']
+        return result['rowsAffected']
     }
     
     static async add({CI,name,lastName,email}:{CI:string | null,name:string | null,lastName:string | null,email:string | null}){
@@ -89,7 +89,7 @@ export class customerModel {
         request.input('lastName', lastName);
         request.input('email', email);
 
-        const result = await request.query('EXEC nuevoCliente @CI,@name,@lastName,@email;')
+        const result = await request.query('INSERT INTO Clientes (CI_cliente, nombre_cli, apellido_cli, email) VALUES (@CI,@name, @lastName, @email); ')
 
         return result['rowsAffected']
     }
@@ -103,7 +103,7 @@ export class customerModel {
 
         request.input('CI', CI);
 
-        const result = await request.query('EXEC eliminarCliente @CI;')
+        const result = await request.query('DELETE FROM Clientes WHERE CI_cliente = @CI;')
 
         return result['rowsAffected']
     }

@@ -2,14 +2,14 @@
 http://localhost:1234/customer/
 
 ###Obtener un cliente por su cedula | listo 
-http://localhost:1234/customer/25
+http://localhost:1234/customer/27
 
-###Post un nuevo cliente 
+###Post un nuevo cliente | Listo
 POST http://localhost:1234/customer
 Content-Type: application/json
 
 {
-    "CI": "25",
+    "CI": "27",
     "lastName":"Guzman",
     "name":"Juan",
     "email":"juan@gmail.com"
@@ -25,49 +25,82 @@ Content-Type: application/json
     "name":"Carlos"
 }
 
-### Obtener todos los productos
-PATCH  http://localhost:1234/product/
+###Eliminar un cliente |Listo
+DELETE http://localhost:1234/customer/27
+
+###Editar un cliente  |Listo
+PATCH http://localhost:1234/customer/25789012
 Content-Type: application/json
+
 {
-
-
+    "CI": "27",
+    "lastName":"Guzmannnnnnn"
 }
 
-### Obtener un producto por su id
-http://localhost:1234/product/37
-
-### Obtener todos los empleados
+### Obtener todos los empleados | listo
 http://localhost:1234/employee/
 
-### Obtener un empleado por su cedula
-http://localhost:1234/employee/12345724
+### Obtener un empleado por su cedula | listo 
+http://localhost:1234/employee/27
 
-### empleados que trabajen en cierto establecimiento   
+### empleados que trabajen en cierto establecimiento  | listo 
 http://localhost:1234/employee/RIF/J-00112233-4
 
-### Obtener todos los servicios
-http://localhost:1234/servicie
-
-### Obtener un servicio por su id
-http://localhost:1234/servicie/1
-
-### Obtener todos los establecimientos
-http://localhost:1234/establishement/4578-K
-
-###postear establecimiento 
-POST  http://localhost:1234/establishement/
+### agregar un nuevo empleado |listo
+POST http://localhost:1234/employee/ 
 Content-Type: application/json
 
 {
-    "RIF":"4578-K",
-    "CI_PIC":null,
-    "name":"Establecimiento 2",
-    "city":"Calle 1 # 2-3",
-    "date_PIC":"2025-06-25"
+    "CI": "27",
+    "lastName":"Guzmannnnnnn",
+    "name":"hola",
+    "cellphone":"12345",
+    "address":"casa1, calle2",
+    "salary":900.00,
+    "RIF":"J-00112233-4"
 }
 
-### Obtener un establecimiento por su RIF
-http://localhost:1234/establishement/J-02233-4
+###borrar un empledo | listo 
+DELETE http://localhost:1234/employee/27
+
+###editar un empleado | listo 
+PATCH http://localhost:1234/employee/27
+Content-Type: application/json
+
+{
+    "address":"tumeremo"
+}
+
+### Obtener todos los servicios | listo 
+http://localhost:1234/servicie
+
+### Obtener un servicio por su id | Listo 
+http://localhost:1234/servicie/1006
+
+### Crear nuevo servicio | listo 
+POST http://localhost:1234/servicie
+Content-Type: application/json
+
+{
+    "nombre_serv":"servicio 1"
+}
+
+### Editar un servicio | listo 
+PATCH http://localhost:1234/servicie/1006
+Content-Type: application/json
+
+{
+    "nombre_ser":"Lavado de aviones"
+}
+
+### Borrar un servicio (especificar id) | listo 
+DELETE http://localhost:1234/servicie/1006
+
+### establecimientos 
+http://localhost:1234/establishement
+
+### Obtener todos los establecimientos por RIF
+http://localhost:1234/establishement/J-11223344-5
 
 ### Agregar un nuevo establecimiento
 POST http://localhost:1234/establishement/

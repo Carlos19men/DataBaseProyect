@@ -69,8 +69,8 @@ export class CustomerController {
     }
 
     edit = async(req:Request,res:Response<Customer | {message:string}>): Promise<void> => {
-        const { CI, name, lastName, email } = req.body as Customer; // Obtiene los datos del cliente del cuerpo de la solicitud
-        
+        const { CI, name, lastName, email } = req.body; // Obtiene los datos del cliente del cuerpo de la solicitud
+        console.log(req.body)
         if (!CI || CI.length === 0) {
             res.status(400).json({ message: 'CI es requerido.' });
             return;
@@ -83,7 +83,9 @@ export class CustomerController {
                                                 name: name ?? null,
                                                 lastName: lastName ?? null,
                                                 email: email ?? null})
-            console.log(response)
+
+            
+            
             if(!response){
                 res.status(404).json({ message: 'Cliente no encontrado.' });
                 return;
@@ -100,19 +102,29 @@ export class CustomerController {
     //add cusomer 
     add = async (req:Request, res:Response<Customer | {message:string}>): Promise<void> => {
         const { CI, name, lastName, email } = req.body; // Obtiene los datos del cliente del cuerpo de la solicitud
-
+       
         if (!CI || CI.length === 0) {
             res.status(400).json({ message: 'CI es requerido.' });
             return;
         }
 
         try {
-            const result = await customerModel.add({ CI, name, lastName, email });
-            res.status(201).json({message: 'Cliente agregado con exito ',...result}); // Envía el cliente agregado con status 201
+            const result = await customerModel.add({ CI, name, lastName, email })
+            if(result){
+                res.status(201).json({message: 'Cliente agregado con exito '}); // Envía el cliente agregado con status 201
+                return;
+            }
+            res.status(202).json({message: 'Cliente no se pudo agreagar agregado'}); // Envía el cliente agregado con status 201
             return;
-        } catch (error) {
+        } catch (error:unknown) {
+            
+            if(error instanceof Error && error.message.includes('Cannot insert duplicate key')){
+                res.status(409).json({message:'Conflicto: Cliente ya registrado'});
+                return;
+            }
+
             console.error('Error al agregar cliente:', error);
-            res.status(500).json({ message: 'Error interno del servidor al agregar cliente.' });
+            res.status(500).json({ message: 'Internal server error:'+ error });
             return;
         }
     }
@@ -127,6 +139,7 @@ export class CustomerController {
 
         try {
             const result = await customerModel.delete(CI);
+            console.log(result) 
             if (!result) {
                 res.status(404).json({ message: 'Cliente no encontrado.' });
                 return;

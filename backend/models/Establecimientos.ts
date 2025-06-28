@@ -3,7 +3,7 @@ import { getDbPool } from "../config/SQLserverConection";
 export class establishmentsModel{
     static async getAll() {
         const pool = getDbPool();
-        const result = await pool.query('SELECT * FROM Establecimientos ORDER BY nombre;');
+        const result = await pool.query('SELECT * FROM obtenerEstablecimientos ORDER BY nombre;');
         
         return result['recordset'];
     }
@@ -16,7 +16,7 @@ export class establishmentsModel{
         const request = getDbPool().request();
         request.input('RIF', RIF);
 
-        const result = await request.query('SELECT * FROM Establecimientos WHERE RIF = @RIF;');
+        const result = await request.query('SELECT * FROM obtenerEstablecimientos WHERE RIF = @RIF;');
         return result['recordset'][0];
     }
 
@@ -123,10 +123,20 @@ export class establishmentsModel{
         return result['recordset'];
     }
 
+    static async asigPersonInCharge({RIF,CI_encargado}:{RIF:string,CI_encargado:string}){
+        const request = getDbPool().request();
+
+        request.input("RIF",RIF)
+        request.input("CI_encargado",CI_encargado)
+
+        const result = await request.query(`UPDATE Establecimientos 
+                                            SET CI_encargado = @CI_encargado 
+                                            WHERE RIF_establecimiento = @RIF;`)
+
+        return {rowsAffected: result['rowsAffected']}
+    }
+
     static async deleteEstablishment(RIF: string){
-        if(RIF === undefined || RIF === null || RIF.length == 0){
-            return {error: 'Se necesita el RIF'}
-        }
 
         const request = getDbPool().request();
 
@@ -137,5 +147,48 @@ export class establishmentsModel{
         const result = await request.query(query);
 
         return result['rowsAffected'];
+    }
+
+    static async removePersonInCharge(RIF: string) {
+        if (RIF === undefined || RIF === null || RIF.length === 0) {
+            return { error: "Se necesita el RIF del establecimiento" };
+        }
+
+        const request = getDbPool().request();
+        request.input('RIF', RIF);
+
+        const query = `
+            UPDATE Establecimientos 
+            SET 
+            CI_encargado = NULL 
+            fecha_encargado = NULL
+            WHERE RIF = @RIF;
+        `;
+
+        const result = await request.query(query);
+        return { rowsAffected: result['rowsAffected'] };
+    }
+
+    static async assignNewPersonInCharge({RIF, CI_encargado}: {RIF: string, CI_encargado: string}) {
+        if (RIF === undefined || RIF === null || RIF.length === 0) {
+            return { error: "Se necesita el RIF del establecimiento" };
+        }
+
+        if (CI_encargado === undefined || CI_encargado === null || CI_encargado.length === 0) {
+            return { error: "Se necesita la cédula del nuevo encargado" };
+        }
+
+        const request = getDbPool().request();
+        request.input('RIF', RIF);
+        request.input('CI_encargado', CI_encargado);
+
+        const query = `
+            UPDATE Establecimientos 
+            SET CI_encargado = @CI_encargado 
+            WHERE RIF = @RIF;
+        `;
+
+        const result = await request.query(query);
+        return { rowsAffected: result['rowsAffected'] };
     }
 }
