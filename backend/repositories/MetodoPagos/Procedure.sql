@@ -31,10 +31,6 @@ RETURN(
 );
 GO
 
-Drop Function ObtenerMetodoPago
-Drop Function ObtenerMetodoPagoPorCliente
-
-GO
 
 CREATE PROCEDURE nuevaMetodoPago(
 	@tipo_moneda varchar(40),
@@ -90,7 +86,7 @@ BEGIN
         RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
     END CATCH
 END;
-
+go
 CREATE PROCEDURE eliminarMetodoPago(@id_pago int)
 AS
 BEGIN
@@ -117,7 +113,7 @@ BEGIN
         ELSE
         BEGIN
             -- Lanzar error solo si la orden no existe
-            THROW 50001, 'El metodo de pago no se encuentra registrado.', 1;
+            ;THROW 50001, 'El metodo de pago no se encuentra registrado.', 1;
         END
 
         -- Confirmar cambios si corresponde
@@ -141,7 +137,7 @@ BEGIN
         RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
     END CATCH
 END;
-
+go
 -- procedimiento para modificar un metodo de pago
 CREATE PROCEDURE editarMetodoPago (
 	@id_pago int,
@@ -185,7 +181,7 @@ BEGIN
 		--Verificar si el pago existe
 		IF NOT EXISTS (SELECT * FROM ObtenerMetodoPago(@id_pago))
 		BEGIN 
-			THROW 50001,'Este pago no se encuentra registrado',1; 
+			;THROW 50001,'Este pago no se encuentra registrado',1; 
 		END;
 		
 		-- verificar y modificar campos 
@@ -258,7 +254,7 @@ BEGIN
 
 	END CATCH;
 END;
-
+go
 
 /*
 SELECT * FROM MetodosPago;

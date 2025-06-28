@@ -14,7 +14,7 @@ const PseudoAPI: React.FC = () => {
     const servicios=getAllserv();
     const clientes=getAllCli();
     const productos =getAllProd();
-    const prueba=addEst('1','1','1','1',new Date());
+    //const prueba=addEst('5',null,'1','1',new Date());
 
 
     const establecimientosPost = addEst('1','1','d','d',new Date())
@@ -31,7 +31,7 @@ const PseudoAPI: React.FC = () => {
       <div className={styles.pseudoapi}>
         <pre>{establecimientos}</pre>
       </div>
-      <pre>{prueba}</pre>
+     { /*<pre>{prueba}</pre>*/}
       <h2>Empleados</h2>
       <div className={styles.pseudoapi}>
         <pre>{empleados}</pre>
@@ -85,9 +85,7 @@ const [formato, setFormato] = useState<string>("Cargando...");
       
       }, []);
 
-      formato.replace("[",""); // Elimina las comillas de las claves
-      formato.replace("]",""); 
-      
+      console
 return formato
 }
 

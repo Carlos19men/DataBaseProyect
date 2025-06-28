@@ -27,7 +27,7 @@ export class ProductosController {
         try {
             const products = await ProductModel.getAll();
             
-            console.log(products)
+            
             if (!products) {
                 res.status(404).json({ message: 'No se encontraron productos.' });
                 return;
