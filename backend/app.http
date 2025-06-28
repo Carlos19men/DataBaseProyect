@@ -2,33 +2,64 @@
 http://localhost:1234/customer/
 
 ###Obtener un cliente por su cedula | listo 
-http://localhost:1234/customer/25789012
+http://localhost:1234/customer/27
 
-###Post un nuevo cliente 
+###Post un nuevo cliente | Listo
 POST http://localhost:1234/customer
 Content-Type: application/json
 
 {
-    "CI": "25",
+    "CI": "27",
     "lastName":"Guzman",
     "name":"Juan",
     "email":"juan@gmail.com"
 }
 
-### Obtener todos los productos
-http://localhost:1234/product/
+###Eliminar un cliente |Listo
+DELETE http://localhost:1234/customer/27
 
-### Obtener un producto por su id
-http://localhost:1234/product/37
+###Editar un cliente  |Listo
+PATCH http://localhost:1234/customer/25789012
+Content-Type: application/json
 
-### Obtener todos los empleados
+{
+    "CI": "27",
+    "lastName":"Guzmannnnnnn"
+}
+
+### Obtener todos los empleados | listo
 http://localhost:1234/employee/
 
-### Obtener un empleado por su cedula
-http://localhost:1234/employee/12345724
+### Obtener un empleado por su cedula | listo 
+http://localhost:1234/employee/27
 
-### empleados que trabajen en cierto establecimiento   
+### empleados que trabajen en cierto establecimiento  | listo 
 http://localhost:1234/employee/RIF/J-00112233-4
+
+### agregar un nuevo empleado |listo
+POST http://localhost:1234/employee/ 
+Content-Type: application/json
+
+{
+    "CI": "27",
+    "lastName":"Guzmannnnnnn",
+    "name":"hola",
+    "cellphone":"12345",
+    "address":"casa1, calle2",
+    "salary":900.00,
+    "RIF":"J-00112233-4"
+}
+
+###borrar un empledo
+DELETE http://localhost:1234/employee/27
+
+###editar un empleado
+PATCH http://localhost:1234/employee/27
+Content-Type: application/json
+
+{
+    "cellphone":"12345"
+}
 
 ### Obtener todos los servicios
 http://localhost:1234/servicie
