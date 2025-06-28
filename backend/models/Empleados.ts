@@ -50,7 +50,7 @@ export class employeeModel {
         request.input('lastName', lastName);
         request.input('cellphone', cellphone);
         request.input('address', address);
-        request.input('salary', sql.Decimal(10,2), salary);
+        request.input('salary',sql.Int, salary);  
 
         const query = `UPDATE Empleados SET 
         nombre = ISNULL(@name, nombre), 
