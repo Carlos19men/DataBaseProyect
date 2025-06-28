@@ -43,6 +43,7 @@ export const createApp = () =>{
     app.use('/offered-services', createOfferedServicesRouter());
     app.use('/family-products', createFamilyProductsRouter());
     app.use('/invoice-payments', createInvoicePaymentsRouter());
+    //app.use('/buys-order', createBuysOrderRouter());
 
     
     const PORT = process.env.PORT ?? 1234
