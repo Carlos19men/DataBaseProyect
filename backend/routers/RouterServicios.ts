@@ -10,11 +10,11 @@ export const createServiceRouter = () =>{
     //rutas
     ServiceRouter.get('/',ServiceController.getAll)
 
-    ServiceRouter.get('/:id',ServiceController.getById)
+    ServiceRouter.get('/:nro_servicio',ServiceController.getById)
 
-    ServiceRouter.patch('/:id',ServiceController.editService)
+    ServiceRouter.patch('/:nro_servicio',ServiceController.editService)
 
-    ServiceRouter.delete('/:id',ServiceController.deleteService)
+    ServiceRouter.delete('/:nro_servicio',ServiceController.deleteService)
 
     ServiceRouter.post('/',ServiceController.createService)
 

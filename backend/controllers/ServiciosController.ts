@@ -28,13 +28,13 @@ export class ServicesController {
 
     getById = async(req: Request, res: Response<Service | { error: string }>): Promise<void> => {
         
-        const { id } = req.params;
-        if (!id) {
+        const { nro_servicio } = req.params;
+        if (!nro_servicio) {
             res.status(400).json({ error: "Se necesita el ID del servicio" });
             return;
         }
         try {
-            const service = await ServicesModel.getById(Number(id));
+            const service = await ServicesModel.getById(Number(nro_servicio));
 
             if (!service) {
                 res.status(404).json({ error: "Servicio no encontrado" });
@@ -51,32 +51,35 @@ export class ServicesController {
     }
 
     editService = async(req: Request, res: Response<{ message: string } | {error:string}>): Promise<void> => {
-        const { nro_servicio} = req.params;
+        const { nro_servicio } = req.params;
         const {  nombre_ser } = req.body;
-        
+
         if (!nro_servicio) {
-            res.status(400).json({ error: "Se necesita el número de servicio y el nombre del servicio" });
+            res.status(400).json({ error: "Se necesita el numero de servicio del servicio" });
             return;
+        }
+
+        if(nombre_ser === null || nombre_ser === undefined || nombre_ser.length === 0){
+            res.status(400).json({error:'Se require un nombre válido, no puedo saber vacio ni nulo'})
         }
 
         try {
             const updatedService = await ServicesModel.editService({ nro_servicio: parseInt(nro_servicio), nombre_serv: nombre_ser });
-
-            if ('error' in updatedService) {
-                res.status(400).json({ message: updatedService.error || 'Error al editar el servicio' });
+            if (updatedService['rowsAffected'] === 0) {
+                res.status(400).json({ message: 'Servicio no registrado' });
                 return;
             }
             res.status(200).json({message: "Servicio editado correctamente"});
             return;
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: "Error al editar el servicio" });
+            res.status(500).json({ error: "Internal Error: "+error });
             return;
         }
     }
 
     deleteService = async(req: Request, res: Response<{ message: string } | { error: string }>): Promise<void> => {
-        const { nro_servicio } = req.body;
+        const { nro_servicio } = req.params;
 
         if (!nro_servicio) {
             res.status(400).json({ error: "Se necesita el número de servicio" });
@@ -84,17 +87,17 @@ export class ServicesController {
         }
 
         try {
-            const result = await ServicesModel.deleteService({ nro_servicio });
+            const result = await ServicesModel.deleteService({nro_servicio: parseInt(nro_servicio) });
 
-            if ('error' in result) {
-                res.status(400).json({ error: result.error });
+            if (result['rowsAffected'] === 0) {
+                res.status(400).json({ error: 'Servicio no registrado' });
                 return;
             }
             res.status(200).json({ message: "Servicio eliminado correctamente" });
             return;
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: "Error al eliminar el servicio" });
+            res.status(500).json({ error: "Error al eliminar el servicio:"+error });
             return;
         }
     }
@@ -110,20 +113,17 @@ export class ServicesController {
         try {
             const result = await ServicesModel.createService({nombre_serv});
             
-            if ('error' in result) {
-                res.status(400).json({message: 'Error al crear el servicio'});
+            if (result['rowsAffected'] === 0) {
+                res.status(400).json({message: 'No se pudo crear el servicio'});
                 return;
             }
 
             res.status(201).json({message: 'Servicio creado exitosamente'});
             return;
         } catch (error) {
-            if (error instanceof Error && error.message.includes('Cannot insert duplicate key')) {
-                res.status(409).json({ message: "Ya existe un servicio con ese nombre" });
-                return;
-            }
+            
             console.error("Error al crear el servicio", error);
-            res.status(500).json({message: "Error interno del servidor al crear el servicio"});
+            res.status(500).json({message: "Internal Error: "+error});
             return;
         }
     }
