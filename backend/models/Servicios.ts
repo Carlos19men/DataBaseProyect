@@ -20,16 +20,10 @@ export class ServicesModel {
         return result['recordset'][0];
     }
 
-    static async editService ({nro_servicio, CI_superv, nombre_serv}: { nro_servicio: number | null, CI_superv: string | null, nombre_serv: string | null}){
+    static async editService ({nro_servicio, nombre_serv}: { nro_servicio: number | null,nombre_serv: string | null}){
         if(nro_servicio !== null) {
             if (nro_servicio === undefined || nro_servicio <= 0) {
                 return { error: "El número de servicio es inválido" };
-            }
-        }
-
-        if(CI_superv !== null){
-            if(CI_superv === undefined || CI_superv === null || CI_superv.length === 0){
-                return {error: "La cédula del supervisor es inválida"};
             }
         }
 
@@ -41,17 +35,15 @@ export class ServicesModel {
 
         const request = getDbPool().request();
         request.input('nro_servicio', nro_servicio);
-        request.input('CI_superv', CI_superv);
         request.input('nombre_serv', nombre_serv);
 
         const query = `Update Servicios set
         nro_servicio = @nro_servicio,
-        CI_superv = @CI_superv,
         nombre_ser = @nombre_serv
         where nro_servicio = @nro_servicio;`;
 
         const result = await request.query(query);
-        return result['recordset'];
+        return {rowsAffected: result['rowsAffected'][0]};
     }
 
     static async deleteService({nro_servicio}: {nro_servicio: number}){
@@ -67,6 +59,20 @@ export class ServicesModel {
         const query = `Delete from Servicios where nro_servicio = @nro_servicio;`;
         const result = await request.query(query);
         return result['recordset'];
+    } 
+
+    static async createService({nombre_serv}: {nombre_serv: string}) {
+        if (nombre_serv === undefined || nombre_serv === null || nombre_serv.length === 0) {
+            return { error: "Se necesita el nombre del servicio" };
+        }
+
+        const request = getDbPool().request();
+        request.input('nombre_serv', nombre_serv);
+
+        const query = `INSERT INTO Servicios (nombre_ser) VALUES (@nombre_serv);`;
+        
+        const result = await request.query(query);
+        return { rowsAffected: result['rowsAffected'][0] };
     }
 
 }

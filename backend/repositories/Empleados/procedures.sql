@@ -3,7 +3,7 @@ IF OBJECT_ID('ObtenerEmpleados', 'V') IS NOT NULL
 GO
 
 Create view ObtenerEmpleados as
-select CI_emp CI, RIF_establecimiento RIF, nombre, apellido,sueldo,direccion
+select CI_emp CI, RIF_establecimiento, nombre, apellido,sueldo,direccion
 from Empleados;
 go
 

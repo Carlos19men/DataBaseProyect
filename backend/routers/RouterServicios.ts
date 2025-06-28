@@ -16,6 +16,8 @@ export const createServiceRouter = () =>{
 
     ServiceRouter.delete('/:id',ServiceController.deleteService)
 
+    ServiceRouter.post('/',ServiceController.createService)
+
     //falta agregar servicio
     
     return ServiceRouter

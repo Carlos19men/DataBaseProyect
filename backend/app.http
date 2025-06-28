@@ -50,22 +50,38 @@ Content-Type: application/json
     "RIF":"J-00112233-4"
 }
 
-###borrar un empledo
+###borrar un empledo | listo 
 DELETE http://localhost:1234/employee/27
 
-###editar un empleado
+###editar un empleado | listo 
 PATCH http://localhost:1234/employee/27
 Content-Type: application/json
 
 {
-    "cellphone":"12345"
+    "address":"tumeremo"
 }
 
-### Obtener todos los servicios
+### Obtener todos los servicios | listo 
 http://localhost:1234/servicie
 
-### Obtener un servicio por su id
-http://localhost:1234/servicie/1
+### Obtener un servicio por su id | Listo 
+http://localhost:1234/servicie/1003
+
+### Crear nuevo servicio 
+POST http://localhost:1234/servicie
+Content-Type: application/json
+
+{
+    "nombre_serv":"servicio 1"
+}
+
+### Editar un servicio
+PATCH http://localhost:1234/servicie/10
+Content-Type: application/json
+
+{
+    "nombre_ser":"servicio 3"
+}
 
 ### Obtener todos los establecimientos
 http://localhost:1234/establishement/
