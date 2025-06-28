@@ -10,10 +10,6 @@ export class employeeModel {
     }
 
     static async getByCI(CI: string) {
-        if (CI === undefined || CI === null || CI.length === 0) {
-            return { error: "Se necesita la cédula" };
-        }
-
         const request = getDbPool().request();
         request.input('CI', CI);
 
@@ -22,9 +18,6 @@ export class employeeModel {
     }
 
     static async getbyRIF(RIF: string) {
-        if(RIF === undefined || RIF === null || RIF.length === 0){
-            return {error: "Se requiere el RIF"};
-        }
 
         const request = getDbPool().request();
         request.input('RIF', RIF);
@@ -36,13 +29,7 @@ export class employeeModel {
     }
 
 
-    static async editEmployee({ CI, name, lastName ,cellphone, address, salary }: { CI: string | null, name: string | null, lastName: string | null, cellphone: string | null, address: string | null, salary: number | null }) {
-
-        if (CI !== null) {
-            if (CI === undefined || CI.length === 0) {
-                return { error: "Se necesita la cédula" };
-            }
-        }    
+    static async editEmployee({ CI, name, lastName ,cellphone, address, salary }: { CI: string | null, name: string | null, lastName: string | null, cellphone: string | null, address: string | null, salary: number | null }) {  
 
         const request = getDbPool().request();
         request.input('CI', CI);
@@ -119,5 +106,24 @@ export class employeeModel {
         const result = await request.query(query);
         
         return result['rowsAffected'];
+    }
+
+    static async asigPersonInCharge({RIF, CI_encargado, fecha}: {RIF: string, CI_encargado: string | null, fecha: Date | null}) {
+        const request = getDbPool().request();
+
+        request.input("RIF", RIF);
+        request.input("CI_encargado", CI_encargado);
+        request.input("fecha_encargado", fecha);
+
+        const result = await request.query(`UPDATE Establecimientos 
+                                            SET CI_encargado = @CI_encargado,
+                                            fecha_encargado = @fecha_encargado
+                                            WHERE RIF_establecimiento = @RIF;`);
+
+        return {rowsAffected: result['rowsAffected'][0]};
+    }
+
+    static async removePersonInCharge(RIF: string) {
+        return this.asigPersonInCharge({RIF, CI_encargado: null, fecha: null});
     }
 }

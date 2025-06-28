@@ -51,8 +51,7 @@ export class ServicesController {
     }
 
     editService = async(req: Request, res: Response<{ message: string } | {error:string}>): Promise<void> => {
-        const { nro_servicio } = req.params;
-        const {  nombre_ser } = req.body;
+        const { nro_servicio, nombre_ser } = req.body;
 
         if (!nro_servicio) {
             res.status(400).json({ error: "Se necesita el numero de servicio del servicio" });
@@ -121,6 +120,11 @@ export class ServicesController {
             res.status(201).json({message: 'Servicio creado exitosamente'});
             return;
         } catch (error) {
+
+            if(error instanceof Error && error.message.includes('Cannot insert duplicate key')){
+                res.status(409).json({message:'Conflicto: Servicio ya registrado'});
+                return;
+            }
             
             console.error("Error al crear el servicio", error);
             res.status(500).json({message: "Internal Error: "+error});

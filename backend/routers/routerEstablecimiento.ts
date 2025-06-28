@@ -23,5 +23,11 @@ export const createEstablishmentRouter = () => {
     //update 
     establishmentRouter.patch('/:RIF', establishmentController.edit);
 
+    // Assign person in charge
+    establishmentRouter.patch('/assign-person-in-charge', establishmentController.assignPersonInCharge);
+
+    // Remove person in charge
+    establishmentRouter.patch('/remove-person-in-charge/:RIF', establishmentController.removePersonInCharge);
+
     return establishmentRouter;
 }

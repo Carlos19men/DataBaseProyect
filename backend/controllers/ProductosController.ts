@@ -118,9 +118,8 @@ export class ProductosController {
 
     // Editar producto existente
     edit = async (req: Request, res: Response): Promise<void> => {
-        const { id } = req.params;
+        const { id, nombre, tipo, precio, descripcion, minimo, maximo, tratamiento, nivelCon, inf_manejo, id_familia } = req.body;
         const productId = parseInt(id);
-        const { nombre, tipo, precio, descripcion, minimo, maximo, tratamiento, nivelCon, inf_manejo, id_familia } = req.body as Product;
 
         if (!id || isNaN(productId) || productId <= 0) {
             res.status(400).json({ message: 'ID de producto válido es requerido.' });

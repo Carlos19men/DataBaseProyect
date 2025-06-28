@@ -5,7 +5,7 @@ export class establishmentsModel{
         const pool = getDbPool();
         const result = await pool.query('SELECT * FROM obtenerEstablecimientos ORDER BY nombre;');
         
-        return result['recordset'];
+        return result['recordset'];  
     }
 
     static async getByRIF(RIF: string) {
@@ -20,52 +20,20 @@ export class establishmentsModel{
         return result['recordset'][0];
     }
 
-    static async edit({RIF, CI_PIC, name, city, date_PIC}: {RIF: string | null, CI_PIC: string | null, name: string | null, city: string | null, date_PIC: Date | null}){
-        if(RIF != null){
-            if(RIF === undefined || RIF.length === 0){
-                return {error: "Se necesita el RIF"};
-            }
-        }
-        
-        if(CI_PIC != null){
-            if(CI_PIC === undefined || CI_PIC.length === 0){
-                return {error: "Se necesita la cédula del propietario"};
-            }
-        }
-        
-        if(name != null){
-            if(name === undefined || name.length === 0){
-                return {error: "Se necesita el nombre del establecimiento"};
-            }
-        }
-
-        if(city != null){
-            if(city === undefined || city.length === 0){
-                return {error: "Se necesita la ciudad del establecimiento"};
-            }
-        }
-
-        if(date_PIC != null){
-            if(date_PIC === undefined || !(date_PIC instanceof Date)){
-                return {error: "Se necesita la fecha de inscripción del establecimiento"};
-            }
-        }
+    static async edit({RIF, name, city}: {RIF: string, name: string | null, city: string | null}){
 
         const request = getDbPool().request();
 
         request.input('RIF', RIF);
-        request.input('CI_PIC', CI_PIC);
         request.input('name', name);
         request.input('city', city);
-        request.input('date_PIC', date_PIC);
 
         const query = 
         `
             Update Establecimientos
-            set CI_PIC = isNULL(@CI_PIC, CI_PIC),
+            set 
                 name = isNULL(@name, nombre),
-                city = isNULL(@city, ciudad),
-                date_PIC = isNULL(@date_PIC, fecha_encargado)
+                city = isNULL(@city, ciudad)
             where RIF = @RIF;
         `
 
@@ -73,37 +41,8 @@ export class establishmentsModel{
         return result['recordset'][0];
     }
 
-    static async add({RIF, CI_PIC, name, city, date_PIC}:{RIF: string, CI_PIC: string, name: string, city: string, date_PIC: Date}){
-        if(RIF != null){
-            if(RIF === undefined || RIF.length === 0){
-                return {error: "Se necesita el RIF"};
-            }
-        }
+    static async add({RIF, CI_PIC, name, city, date_PIC}:{RIF: string, CI_PIC: string | null, name: string, city: string, date_PIC: Date | null}){
         
-        if(CI_PIC != null){
-            if(CI_PIC === undefined || CI_PIC.length === 0){
-                return {error: "Se necesita la cédula del propietario"};
-            }
-        }
-        
-        if(name != null){
-            if(name === undefined || name.length === 0){
-                return {error: "Se necesita el nombre del establecimiento"};
-            }
-        }
-
-        if(city != null){
-            if(city === undefined || city.length === 0){
-                return {error: "Se necesita la ciudad del establecimiento"};
-            }
-        }
-
-        if(date_PIC != null){
-            if(date_PIC === undefined || !(date_PIC instanceof Date)){
-                return {error: "Se necesita la fecha de inscripción del establecimiento"};
-            }
-        }
-
         const request = getDbPool().request();
         
         request.input('RIF', RIF);
@@ -120,20 +59,26 @@ export class establishmentsModel{
 
         const result = await request.query(query);
 
-        return result['recordset'];
+        return {rowsAffected: result['rowsAffected'][0]};
     }
 
-    static async asigPersonInCharge({RIF,CI_encargado}:{RIF:string,CI_encargado:string}){
+    static async asigPersonInCharge({RIF,CI_encargado,fecha}:{RIF:string,CI_encargado:string | null,fecha:Date | null}){
         const request = getDbPool().request();
 
         request.input("RIF",RIF)
         request.input("CI_encargado",CI_encargado)
+        request.input("fecha_encargado",fecha)
 
         const result = await request.query(`UPDATE Establecimientos 
-                                            SET CI_encargado = @CI_encargado 
+                                            SET CI_encargado = @CI_encargado,
+                                            fecha_encargado = @fecha
                                             WHERE RIF_establecimiento = @RIF;`)
 
-        return {rowsAffected: result['rowsAffected']}
+        return {rowsAffected: result['rowsAffected'][0]}
+    }
+
+    static async removePersonInCharge(RIF: string) {
+        return this.asigPersonInCharge({RIF,CI_encargado:null,fecha: null});
     }
 
     static async deleteEstablishment(RIF: string){
@@ -146,49 +91,8 @@ export class establishmentsModel{
 
         const result = await request.query(query);
 
-        return result['rowsAffected'];
+        return {rowsAffected: result['rowsAffected'][0]};
     }
 
-    static async removePersonInCharge(RIF: string) {
-        if (RIF === undefined || RIF === null || RIF.length === 0) {
-            return { error: "Se necesita el RIF del establecimiento" };
-        }
-
-        const request = getDbPool().request();
-        request.input('RIF', RIF);
-
-        const query = `
-            UPDATE Establecimientos 
-            SET 
-            CI_encargado = NULL 
-            fecha_encargado = NULL
-            WHERE RIF = @RIF;
-        `;
-
-        const result = await request.query(query);
-        return { rowsAffected: result['rowsAffected'] };
-    }
-
-    static async assignNewPersonInCharge({RIF, CI_encargado}: {RIF: string, CI_encargado: string}) {
-        if (RIF === undefined || RIF === null || RIF.length === 0) {
-            return { error: "Se necesita el RIF del establecimiento" };
-        }
-
-        if (CI_encargado === undefined || CI_encargado === null || CI_encargado.length === 0) {
-            return { error: "Se necesita la cédula del nuevo encargado" };
-        }
-
-        const request = getDbPool().request();
-        request.input('RIF', RIF);
-        request.input('CI_encargado', CI_encargado);
-
-        const query = `
-            UPDATE Establecimientos 
-            SET CI_encargado = @CI_encargado 
-            WHERE RIF = @RIF;
-        `;
-
-        const result = await request.query(query);
-        return { rowsAffected: result['rowsAffected'] };
-    }
+    
 }

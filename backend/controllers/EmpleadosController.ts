@@ -78,7 +78,7 @@ export class EmployeeController {
             const result = await employeeModel.getbyRIF(RIF);
 
             if ('error' in result) {
-                res.status(400).json({message: result.error});
+                res.status(400).json({message: 'error al obtener empleados'+result['error']});
                 return;
             }
 
@@ -93,8 +93,7 @@ export class EmployeeController {
     }
 
     editEmployee = async(req: Request, res: Response<Employee | {message: string}>): Promise<void> => {
-        const {CI} = req.params;
-        const {name, lastName, cellphone, address, salary} = req.body;
+        const {CI, name, lastName, cellphone, address, salary} = req.body;
 
         if (CI != null) {
             if (!CI || CI.length === 0) {
@@ -107,13 +106,8 @@ export class EmployeeController {
         try {
             const result = await employeeModel.editEmployee({CI, name, lastName, cellphone, address, salary});
 
-            if ('error' in result) {
-                res.status(400).json({message: 'No se pudo borrar el empleado'});
-                return;
-            }
-
-            if (!result) {
-                res.status(404).json({message: 'Empleado no encontrado'});
+            if (result['rowsAffected'] === 0) {
+                res.status(400).json({message: 'No se editó ningún empleado'});
                 return;
             }
 
@@ -139,8 +133,8 @@ export class EmployeeController {
             
             console.log(result)
 
-            if(result.rowsAffected === 0){
-                res.status(404).json({message: 'El empleado no fué encontrado, por lo tanto no pudó ser borrado'});
+            if(result['rowsAffected'] === 0){
+                res.status(404).json({message: 'El empleado no encontrado'});
                 return;
             }
 

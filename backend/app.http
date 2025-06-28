@@ -82,7 +82,7 @@ POST http://localhost:1234/servicie
 Content-Type: application/json
 
 {
-    "nombre_serv":"servicio 1"
+    "nombre_serv":"Cambio de Aceite"
 }
 
 ### Editar un servicio | listo 
@@ -94,37 +94,46 @@ Content-Type: application/json
 }
 
 ### Borrar un servicio (especificar id) | listo 
-DELETE http://localhost:1234/servicie/1006
+DELETE http://localhost:1234/servicie/1007
 
-### establecimientos 
+### establecimientos | Listo
 http://localhost:1234/establishement
 
-### Obtener todos los establecimientos por RIF
-http://localhost:1234/establishement/J-11223344-5
+### Obtener todos los establecimientos por RIF | Listo 
+http://localhost:1234/establishement/J-02233-10
 
-### Agregar un nuevo establecimiento
+### Agregar un nuevo establecimiento | Listo 
 POST http://localhost:1234/establishement/
 Content-Type: application/json
 
 {
-    "RIF": "J-02233-4",
-    "CI_PIC": null,
+    "RIF": "J-02233-10",
     "name": "Establecimiento 1",
-    "city": "Ciudad 1",
-    "date_PIC": "2021-01-01"
+    "city": "Ciudad 1"
 }
 
-### Editar un establecimiento
-PATCH http://localhost:1234/establishement/
+### Editar un establecimiento (solo se puede editar: nombre y ciudad) | Listo 
+PATCH http://localhost:1234/establishement/J-00112233-7
 Content-Type: application/json
 
 {
-    "RIF": "J-00112233-4",
-    "CI_PIC": "1234567890",
     "name": "Establecimiento 1",
-    "city": "Ciudad 1",
-    "date_PIC": "2021-01-01"
+    "city": "Ciudad 1"
 }
+
+### Asignar nuevo encargado
+PATCH http://localhost:1234/establishement/assign-person-in-charge
+Content-Type: application/json
+
+{
+    "RIF": "J-02233-10",
+    "CI_PIC": "1234",
+    "date_PIC": "Ciudad 1"
+}
+
+### Borrar establecimiento 
+DELETE  http://localhost:1234/establishement/J-02233-10
+
 ### Obtener todos los servicios ofrecidos
 http://localhost:1234/offered-services/
 

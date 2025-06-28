@@ -57,15 +57,15 @@ export class brandController {
     }
 
     editBrand = async(req: Request, res: Response<{message:string} | {error:string}>): Promise<void> => {
-        const id: number = parseInt(req.params.id, 10);
-        const name = req.body.name;
+        const {id, name} = req.body;
+        const brandId = parseInt(id);
 
-        if(id === undefined || id <= 0) {
+        if(brandId === undefined || brandId <= 0) {
             res.status(404).json({message: "Se requiere el id"});
             return;
         }
         try{
-            const result = await brandModel.editBrand({id, name});
+            const result = await brandModel.editBrand({id: brandId, name});
 
             if('error' in result){
                 res.status(400).json({message: "No se encontró una marca con ese código"});

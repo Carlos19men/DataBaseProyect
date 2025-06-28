@@ -102,9 +102,9 @@ export class ModelsController {
     }
 
     editModel = async(req: Request, res: Response<{message: string} | {error: string}>): Promise<void> => {
-        const id_marca: number = parseInt(req.params.id_marca, 10);
-        const id_modelo: number = parseInt(req.params.id_modelo, 10);
         const {
+            id_marca,
+            id_modelo,
             nombre = null,
             aceite_caja = null,
             aceite_motor = null,
@@ -115,13 +115,15 @@ export class ModelsController {
             nro_puesto_str = null
         } = req.body;
 
+        const marcaId = parseInt(id_marca);
+        const modeloId = parseInt(id_modelo);
         const peso: number | null = (peso_str != null && peso_str !== '') ? Number(peso_str) : null;
         const nro_puesto: number | null = (nro_puesto_str != null && nro_puesto_str !== '') ? Number(nro_puesto_str) : null;
 
         try{
             const result = await ModelsModel.editModel({
-                id_marca,
-                id_modelo,
+                id_marca: marcaId,
+                id_modelo: modeloId,
                 nombre,
                 aceite_caja,
                 aceite_motor,
