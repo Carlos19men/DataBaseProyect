@@ -54,15 +54,15 @@ export class ModelsController {
         }
     }
 
-    getbyMarca = async(req: Request, res: Response<Model[] | {message: string}>): Promise<void> => {
+    getbyMarca = async(req: Request, res: Response<Model[] | {error: string}>): Promise<void> => {
         //const id_marca = parseInt(req.params.id_marca, 10);
         const id_marca = req.params.id_marca;
 
         try {
             const result = await ModelsModel.getByMarca(parseInt(id_marca));
 
-            if('message' in result){
-                res.status(400).json({message: result.message});
+            if('error' in result){
+                res.status(400).json({error: result.error});
                 return;
             }
 
@@ -70,11 +70,11 @@ export class ModelsController {
             res.status(200).json(brand_data);
         } catch(error) {
             console.error("Ha ocurrido un error", error);
-            res.status(500).json({message: "Ha ocurrido un error en el servidor"});
+            res.status(500).json({error: "Ha ocurrido un error en el servidor"});
         }
     }
 
-    createModel = async(req: Request, res: Response<Model | {message: string}>): Promise<void> => {
+    createModel = async(req: Request, res: Response<{message: string} | {error: string}>): Promise<void> => {
         const id_marca = parseInt(req.params.id_marca, 10);
         const {nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso_str, descripcion, nro_puesto_str} = req.body; 
         
@@ -82,17 +82,22 @@ export class ModelsController {
         const nro_puesto = parseInt(nro_puesto_str,10);
 
         try{
-            const result: Model = await ModelsModel.createModel({id_marca, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puesto}); 
+            const result = await ModelsModel.createModel({id_marca, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puesto}); 
 
-            if(!result){
-                res.status(400).json({message: "No se pudo crear el modelo"});
+            if('error' in result && result.error !== undefined){
+                res.status(400).json({error: result.error});
                 return;
             }
 
-            res.status(201).json(result);
+            if(result.rowsAffected === 0){
+                res.status(400).json({error: "No se pudo crear el modelo"});
+                return;
+            }
+
+            res.status(201).json({message: "Modelo creado correctamente"});
         } catch(error){
             console.error("Ha ocurrido un error", error);
-            res.status(500).json({message: ""});
+            res.status(500).json({error: "Ha ocurrido un error en el servidor"});
         }
     }
 

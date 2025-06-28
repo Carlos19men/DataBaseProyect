@@ -9,7 +9,7 @@ export const createModelsRouter = (): Router => {
     ModelsRouter.get('/', modelsController.getAll);
     ModelsRouter.get('/:id_marca/:id_modelo', modelsController.getbyID);
     ModelsRouter.get('/:id_marca', modelsController.getbyMarca);
-    ModelsRouter.post('/', modelsController.createModel);
+    ModelsRouter.post('/:id_marca', modelsController.createModel);
    // ModelsRouter.put('/:id_marca/:id_modelo', modelsController.);
     //ModelsRouter.delete('/:id_marca/:id_modelo', modelsController.);
 
