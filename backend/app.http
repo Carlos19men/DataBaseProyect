@@ -15,6 +15,16 @@ Content-Type: application/json
     "email":"juan@gmail.com"
 }
 
+###PUT actualizar un cliente
+PATCH  http://localhost:1234/customer/25
+Content-Type: application/json
+
+{
+    "CI": "25",
+    "lastName":"Guzman",
+    "name":"Carlos"
+}
+
 ###Eliminar un cliente |Listo
 DELETE http://localhost:1234/customer/27
 
@@ -150,3 +160,68 @@ Content-Type: application/json
     "RIF_establecimiento": "J-00112233-4",
     "nro_servicio": 1
 }
+
+### Router de Marcas.
+
+### Obtener todas las marcas | listo 
+GET http://localhost:1234/brand/
+
+### Obtener una marca por su id | listo 
+GET http://localhost:1234/brand/1
+
+### Agregar una nueva marca | listo 
+POST http://localhost:1234/brand/ 
+Content-Type: application/json
+
+{
+    "name": "Marca 3"
+}
+
+### Editar una marca | listo 
+PATCH http://localhost:1234/brand/1
+Content-Type: application/json
+
+{
+    "name": "Toyota"
+}
+
+### Eliminar una marca | listo 
+DELETE http://localhost:1234/brand/12
+
+### Router de Modelos (Por testear todos los metodos).
+
+### Obtener todos los modelos | listo 
+GET http://localhost:1234/model/
+
+### Obtener un modelo por su marca | listo 
+GET http://localhost:1234/model/1
+
+### Obtener un modelo por su id | listo 
+GET http://localhost:1234/model/1/51
+
+### Agregar un nuevo modelo | listo 
+POST http://localhost:1234/model/1
+Content-Type: application/json
+
+{
+    "nombre": "Modelo 1",
+    "aceite_caja": "Aceite 1",
+    "aceite_motor": "Aceite 2",
+    "octanaje": "91",
+    "tipo_refrigerante": "Refrigerante 1",
+    "peso": 1000,
+    "descripcion": "Descripción 1",
+    "nro_puesto": 1
+}
+
+### Editar un modelo | listo 
+PATCH http://localhost:1234/model/1/51
+Content-Type: application/json
+
+{
+    "nombre": "NewModelo2"
+}
+
+### Eliminar un modelo | listo 
+DELETE http://localhost:1234/model/1/51
+

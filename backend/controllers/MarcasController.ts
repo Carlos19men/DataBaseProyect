@@ -1,4 +1,3 @@
-import { employeeModel } from "../models/Empleados";
 import { brandModel } from "../models/Marcas";
 import { Request, Response } from "express";
 
@@ -16,7 +15,7 @@ export class brandController {
 
     getAll = async(_req: Request, res: Response<Brand[] | {message: string}>): Promise<void> => {
         try{
-            const brands: Brand[] = await employeeModel.getAll();
+            const brands: Brand[] = await brandModel.getAll();
 
             if(!brands) {
                 res.status(404).json({message: "No se ha podido obtener ninguna marca"});
@@ -57,16 +56,16 @@ export class brandController {
         }
     }
 
-    editBrand = async(req: Request, res: Response<Brand | {message:string}>): Promise<void> => {
+    editBrand = async(req: Request, res: Response<{message:string} | {error:string}>): Promise<void> => {
         const id: number = parseInt(req.params.id, 10);
-        const name = req.body;
+        const name = req.body.name;
 
         if(id === undefined || id <= 0) {
             res.status(404).json({message: "Se requiere el id"});
             return;
         }
         try{
-            const result: Brand = await brandModel.editBrand({id, name});
+            const result = await brandModel.editBrand({id, name});
 
             if('error' in result){
                 res.status(400).json({message: "No se encontró una marca con ese código"});
@@ -82,22 +81,28 @@ export class brandController {
         }
     }
 
-    addBrand = async(req: Request, res: Response<Brand | {message: string}>): Promise<void> => {
-        const name = req.body;
+    addBrand = async(req: Request, res: Response<{message: string}>): Promise<void> => {
+        const name = req.body.name;
         
-        if(name === null || name.length === 0){
+        if(name === null || name.length === 0 || name === undefined){
             res.status(404).json({message: "Se requiere el nombre"});
+            return;
         }
 
         try{
-            const result: Brand = await brandModel.addBrand({name});
+            const result = await brandModel.addBrand(name);
 
-            /*if('error' in result){
+            if('error' in result){
                 res.status(400).json({message: "No se ha podido crear el usuario"});
                 return;
-            }*/
+            }  
 
-            res.status(200).json(result);
+            if(result.rowsAffected === 0){
+                res.status(400).json({message: "No se ha podido crear el usuario"});
+                return;
+            }
+
+            res.status(201).json({message: "Marca creada correctamente"});
             return;
         } catch (error) {
             console.error("Ha ocurrido un error", error);
@@ -106,11 +111,11 @@ export class brandController {
         }
     }
 
-    deleteBrand = async(req: Request, res: Response<{message: string}>): Promise<void> => {
+    deleteBrand = async(req: Request, res: Response<{message: string} | {error: string}>): Promise<void> => {
         const id: number = parseInt(req.params.id, 10);
 
         if(id === undefined || id <= 0) {
-            res.status(404).json({message: "Se requiere el id"});
+            res.status(404).json({error: "Se requiere el id"});
             return;
         }
 
@@ -118,7 +123,12 @@ export class brandController {
             const result = await brandModel.deleteBrand(id);
 
             if('error' in result) {
-                res.status(400).json({message: "No se encontró una marca con ese código"});
+                res.status(400).json({error: "No se encontró una marca con ese código"});
+                return;
+            }
+
+            if(result.rowsAffected === 0){
+                res.status(400).json({error: "No se ha podido eliminar la marca"});
                 return;
             }
 
@@ -126,7 +136,7 @@ export class brandController {
             return;
         } catch(error) {
             console.error("Ha ocurrido un error", error);
-            res.status(500).json({message: "Ha ocurrido un error en el servidor"});
+            res.status(500).json({error: "Ha ocurrido un error en el servidor"});
             return;
         }
     }
