@@ -101,5 +101,75 @@ export class ModelsController {
         }
     }
 
-    
+    editModel = async(req: Request, res: Response<{message: string} | {error: string}>): Promise<void> => {
+        const id_marca: number = parseInt(req.params.id_marca, 10);
+        const id_modelo: number = parseInt(req.params.id_modelo, 10);
+        const {
+            nombre = null,
+            aceite_caja = null,
+            aceite_motor = null,
+            octanaje = null,
+            tipo_refrigerante = null,
+            descripcion = null,
+            peso_str = null,
+            nro_puesto_str = null
+        } = req.body;
+
+        const peso: number | null = (peso_str != null && peso_str !== '') ? Number(peso_str) : null;
+        const nro_puesto: number | null = (nro_puesto_str != null && nro_puesto_str !== '') ? Number(nro_puesto_str) : null;
+
+        try{
+            const result = await ModelsModel.editModel({
+                id_marca,
+                id_modelo,
+                nombre,
+                aceite_caja,
+                aceite_motor,
+                octanaje,
+                tipo_refrigerante,
+                peso: isNaN(peso as number) ? null : peso,
+                descripcion,
+                nro_puesto: isNaN(nro_puesto as number) ? null : nro_puesto
+            });
+
+            if('error' in result && result.error !== undefined){
+                res.status(400).json({error: result.error});
+                return;
+            }
+
+            if(result.rowsAffected === 0){
+                res.status(400).json({error: "No se pudo editar el modelo"});
+                return;
+            }
+
+            res.status(200).json({message: "Modelo editado correctamente"});
+        } catch(error){
+            console.error("Ha ocurrido un error", error);
+            res.status(500).json({error: "Ha ocurrido un error en el servidor"});
+        }
+    }
+
+    deleteModel = async(req: Request, res: Response<{message: string} | {error: string}>): Promise<void> => {
+        const id_marca = parseInt(req.params.id_marca, 10);
+        const id_modelo = parseInt(req.params.id_modelo, 10);
+
+        try{
+            const result = await ModelsModel.delete({id_marca, id_modelo});
+
+            if('error' in result && result.error !== undefined){
+                res.status(400).json({error: result.error});
+                return;
+            }
+
+            if(result.rowsAffected === 0){
+                res.status(400).json({error: "No se pudo eliminar el modelo"});
+                return;
+            }
+
+            res.status(200).json({message: "Modelo eliminado correctamente"});
+        } catch(error){
+            console.error("Ha ocurrido un error", error);
+            res.status(500).json({error: "Ha ocurrido un error en el servidor"});
+        }
+    }
 }

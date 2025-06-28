@@ -1,4 +1,5 @@
 import {getDbPool} from '../config/SQLserverConection'
+import * as sql from 'mssql';
 
 export class ModelsModel{
 
@@ -21,7 +22,7 @@ export class ModelsModel{
         request.input('id_modelo', id_modelo);
         request.input('id_marca', id_marca);
 
-        const result = await request.query('SELECT * FROM Modelos WHERE id_modelo = @id_modelo AND cod_marca = @id_marca;');
+        const result = await request.query('SELECT * FROM Modelos WHERE nro_modelo = @id_modelo AND cod_marca = @id_marca;');
         return result['recordset'][0];
     }
 
@@ -34,7 +35,7 @@ export class ModelsModel{
         const request = getDbPool().request();
         request.input('id_marca',id_marca);
 
-        const result = await request.query('SELECT cod_marca, nro_modelo, nombre FROM Modelos WHERE id_marca = @id_marca;');
+        const result = await request.query('SELECT cod_marca, nro_modelo, nombre FROM Modelos WHERE cod_marca = @id_marca;');
         return result['recordset'];
     }
 
@@ -80,7 +81,7 @@ export class ModelsModel{
         const request = getDbPool().request()
 
         request.input('ID_marca',id_marca)
-        request.input('nombre',nombre)
+        request.input('nombre', sql.NVarChar(100), nombre)
         request.input('aceite_caja',aceite_caja)
         request.input('aceite_motor',aceite_motor)
         request.input('octanaje',octanaje)
@@ -98,76 +99,61 @@ export class ModelsModel{
         return {rowsAffected: result['rowsAffected'][0]};
     }  
 
-    static async editModel({id_marca,id_modelo,nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puesto}:{id_marca:number,id_modelo:number, nombre: string, aceite_caja:string, aceite_motor: string, octanaje: string, tipo_refrigerante:string,peso:number,descripcion:string,nro_puesto:number}){
-
-        if(id_marca === null || id_marca === undefined){
-            return {message:'id marca requerido'}
+    static async editModel({
+        id_marca,
+        id_modelo,
+        nombre = null,
+        aceite_caja = null,
+        aceite_motor = null,
+        octanaje = null,
+        tipo_refrigerante = null,
+        peso = null,
+        descripcion = null,
+        nro_puesto = null
+    }: {
+        id_marca: number,
+        id_modelo: number,
+        nombre?: string | null,
+        aceite_caja?: string | null,
+        aceite_motor?: string | null,
+        octanaje?: string | null,
+        tipo_refrigerante?: string | null,
+        peso?: number | null,
+        descripcion?: string | null,
+        nro_puesto?: number | null
+    }) {
+        if (id_marca == null || id_modelo == null) {
+            return { error: 'ID de marca y modelo requeridos' };
         }
+        const request = getDbPool().request();
+        request.input('ID_marca', id_marca);
+        request.input('ID_modelo', id_modelo);
+        request.input('nombre', sql.NVarChar(100), nombre);
+        request.input('aceite_caja', sql.NVarChar(100), aceite_caja);
+        request.input('aceite_motor', sql.NVarChar(100), aceite_motor);
+        request.input('octanaje', sql.NVarChar(50), octanaje);
+        request.input('tipo_refrigerante', sql.NVarChar(100), tipo_refrigerante);
+        request.input('peso', sql.Int, peso);
+        request.input('descripcion', sql.NVarChar(255), descripcion);
+        request.input('nro_puestos', sql.Int, nro_puesto);
 
-        if(id_marca === null || id_modelo === undefined){
-            return {message:'id del modelo es requerido'}
-        }
-
-        if(nombre === undefined || nombre.length === 0){
-            return {message: 'nombre del modelo es requeriodo'}
-        }
-
-        if(nombre === undefined || aceite_caja.length === 0){
-            return {menssage:'aceite de caja requerido'}
-        }
-
-        if(aceite_motor === undefined || aceite_motor.length === 0){
-            return {message: 'aceite de motor requerido'}
-        }
-
-        if(octanaje === undefined){
-            return {message: 'octanaje requerido'}
-        }
-
-        if(tipo_refrigerante === undefined || tipo_refrigerante.length === 0){
-            return {message: 'tipo refrigerante requerido'}
-        }
-
-        if( peso === undefined){
-            return {message: 'peso requeredio'}
-        }
-
-        if(descripcion === undefined || descripcion.length === 0){
-            return {message: 'descripcion requerida'}
-        }
-
-        if(nro_puesto === undefined){
-            return {message: 'numero de puestos es requerido'}
-        }
-
-        //creamos la request
-        const request = getDbPool().request()
-
-        request.input('ID_marca',id_marca)
-        request.input('ID_modelo',id_modelo)
-        request.input('nombre',nombre)
-        request.input('aceite_caja',aceite_caja)
-        request.input('aceite_motor',aceite_motor)
-        request.input('octanaje',octanaje)
-        request.input('tipo_refrigerante',tipo_refrigerante)
-        request.input('descripcion',descripcion)
-        request.input('nro_puesto',nro_puesto)
+        console.log({
+            id_marca, id_modelo, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puesto
+        });
 
         const query = `UPDATE Modelos SET
-                            nombre = ISNULL(@nombre,nombre),
-                            aceite_caja = ISNULL(@aceite_caja,aceite_caja),
-                            aceite_motor = ISNULL(@aceite_motor,aceite_motor),
-                            octanaje = ISNULL(@octanaje,octanaje),
-                            peso = ISNULL(@peso,peso),
-                            descripcion = ISNULL(@descripcion,descripcion),
-                            nro_puestos = ISNULL(@nro_puestos,nro_puestos),
-                            tipo_refrigerante = ISNULL(@tipo_refrigerante,tipo_refrigerante)
-                        WHERE
-                        cod_marca = @ID_marca and nro_modelo = @ID_modelo`
+            nombre = ISNULL(@nombre, nombre),
+            aceite_caja = ISNULL(@aceite_caja, aceite_caja),
+            aceite_motor = ISNULL(@aceite_motor, aceite_motor),
+            octanaje = ISNULL(@octanaje, octanaje),
+            tipo_refrigerante = ISNULL(@tipo_refrigerante, tipo_refrigerante),
+            peso = ISNULL(@peso, peso),
+            descripcion = ISNULL(@descripcion, descripcion),
+            nro_puestos = ISNULL(@nro_puestos, nro_puestos)
+            WHERE cod_marca = @ID_marca AND nro_modelo = @ID_modelo`;
 
-        const result = await request.query(query)
-
-        return result['recordset'][0];
+        const result = await request.query(query);
+        return { rowsAffected: result['rowsAffected'][0] };
     }
 
     static async delete({id_marca,id_modelo}:{id_marca:number,id_modelo:number}){
@@ -185,9 +171,9 @@ export class ModelsModel{
 
         request.input('id_marca',id_marca)
 
-        request.input('id_modelos',id_modelo)
+        request.input('id_modelo',id_modelo)
 
-        const result = await request.query('DELETE Modelos WHERE cod_marcar = @id_marca AND nro_modelo = @id_modelo;')
+        const result = await request.query('DELETE Modelos WHERE cod_marca = @id_marca AND nro_modelo = @id_modelo;')
 
         return {rowsAffected: result['rowsAffected'][0]};
     }
