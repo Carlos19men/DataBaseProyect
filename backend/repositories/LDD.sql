@@ -14,6 +14,7 @@ create table Establecimientos(
 	primary key(RIF)
 );
 
+
 --creamos los empleados 
 create table Empleados(
 	CI_emp varchar(15) not null,
@@ -30,7 +31,7 @@ create table Empleados(
 
 create table Servicios(
 	nro_servicio int identity(1,1) not null,
-	nombre_ser varchar(50) not null,
+	nombre_ser varchar(50) not null unique,
 	
 	primary key(nro_servicio)
 );
