@@ -3,7 +3,7 @@ import { establishmentsModel } from '../models/Establecimientos'
 
 interface Establishment {
     ID: number;
-    RIF: string;
+    RIF: string; 
     CI_PIC: string | null;
     name: string | null;
     city: string | null;

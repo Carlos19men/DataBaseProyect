@@ -65,9 +65,9 @@ Content-Type: application/json
 http://localhost:1234/servicie
 
 ### Obtener un servicio por su id | Listo 
-http://localhost:1234/servicie/1003
+http://localhost:1234/servicie/1006
 
-### Crear nuevo servicio 
+### Crear nuevo servicio | listo 
 POST http://localhost:1234/servicie
 Content-Type: application/json
 
@@ -75,15 +75,21 @@ Content-Type: application/json
     "nombre_serv":"servicio 1"
 }
 
-### Editar un servicio
-PATCH http://localhost:1234/servicie/10
+### Editar un servicio | listo 
+PATCH http://localhost:1234/servicie/1006
 Content-Type: application/json
 
 {
-    "nombre_ser":"servicio 3"
+    "nombre_ser":"Lavado de aviones"
 }
 
-### Obtener todos los establecimientos
+### Borrar un servicio (especificar id) | listo 
+DELETE http://localhost:1234/servicie/1006
+
+### establecimientos 
+http://localhost:1234/establishement
+
+### Obtener todos los establecimientos por RIF
 http://localhost:1234/establishement/
 
 ### Obtener un establecimiento por su RIF
