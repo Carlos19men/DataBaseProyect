@@ -18,7 +18,7 @@ export const createEmployeeRouter = () => {
 
     EmployeeRouter.delete('/:CI', employeeController.deleteEmployee);
 
-    EmployeeRouter.post('/:CI', employeeController.addEmployee);
+    EmployeeRouter.post('/', employeeController.addEmployee);
     
 
     return EmployeeRouter;
