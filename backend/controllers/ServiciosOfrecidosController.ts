@@ -18,7 +18,7 @@ export class ServiciosOfrecidosController {
         try {
             const servicios : ServicioOfrecido[] = await ServiciosOfrecidosModel.getAll();
             
-            console.log(servicios);
+          
             if (!servicios) {
                 res.status(404).json({ message: 'No se encontraron servicios ofrecidos.' });
                 return;

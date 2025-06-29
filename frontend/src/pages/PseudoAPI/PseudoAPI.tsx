@@ -7,7 +7,7 @@ const PseudoAPI: React.FC = () => {
     //GETS DE LOS ENDPOINTS SIN VARIABLES 
 
 
-  const establecimientos = JSON.stringify(usegetAllAPI("establishement"),null,2);
+const establecimientos = JSON.stringify(usegetAllAPI("establishement"),null,2);
 const empleados = JSON.stringify(usegetAllAPI("employee"),null,2);
 const proveedores = JSON.stringify(usegetAllAPI("suppliers"),null,2);
 const inventarios = JSON.stringify(usegetAllAPI("inventory"),null,2);
@@ -206,10 +206,11 @@ export function usegetAllAPI(url: string) {
   return data;
 }
 
-function usegetById(url:string, ID:string | number){
+
+export function usegetById(url:string, ID:string | number){
 
 const [formato, setFormato] = useState<string>("Cargando");
-console.log(formato);
+
     useEffect(() => {
 
     fetch(`http://localhost:1234/${url}/${ID}`,{
@@ -224,7 +225,7 @@ console.log(formato);
 return formato;
 }
 
-function useaddEst(RIF: string, CI_PIC: string, name: string, city: string, date_PIC: Date){
+export function useaddEst(RIF: string, CI_PIC: string, name: string, city: string, date_PIC: Date){
     useEffect(() => {
 
     fetch('http://localhost:1234/establishement',{method:"POST" ,headers: {'Content-Type': 'application/json'},body: JSON.stringify({RIF, CI_PIC, name, city, date_PIC})})
@@ -237,7 +238,7 @@ return JSON.stringify({RIF, CI_PIC, name, city, date_PIC})
 }
 
 
-function usedeleteEst(RIF: string){
+export function usedeleteEst(RIF: string){
     useEffect(() => {
 
     fetch('http://localhost:1234/establishement',{method:"DELETE" ,headers: {'Content-Type': 'application/json'},body: JSON.stringify({RIF})})
@@ -249,7 +250,7 @@ function usedeleteEst(RIF: string){
 return JSON.stringify({RIF})
 }
 
-function useupdateEst(RIF: string, CI_PIC?: string, name?: string, city?: string, date_PIC?: Date){
+export function useupdateEst(RIF: string, CI_PIC?: string, name?: string, city?: string, date_PIC?: Date){
     useEffect(() => {
 
     fetch('http://localhost:1234/establishement',{method:"PATCH" ,headers: {'Content-Type': 'application/json'},body: JSON.stringify({RIF, CI_PIC, name, city, date_PIC})})

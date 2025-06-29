@@ -21,7 +21,7 @@ export class SuppliersModel{
 
         request.input('RIF',RIF)
 
-        const result = await request.query('SELECT * FROM obtenerProveedoreRIF(@RIF);')
+        const result = await request.query('SELECT * FROM obtenerProvedorRIF(@RIF);')
         
         return result['recordset'][0];
     }

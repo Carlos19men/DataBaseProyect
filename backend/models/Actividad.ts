@@ -196,13 +196,3 @@ export class Actividades {
 }
 
 
-async function main() {
-
-    await connectToDatabase();
-
-    console.log(await Actividades.getAll());
-   // console.log(await Actividades.updateActividad({nro_s:13, nro_a:52,nomb: 'Limpieza ultrasónica de inyectores'}));
-   // console.log(await Actividades.getAll());
-}
-
-main().catch((err) => {console.error("error de ejecucion",err)})

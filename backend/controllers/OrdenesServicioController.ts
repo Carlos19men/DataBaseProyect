@@ -8,7 +8,7 @@ export class OrdenesServicioController {
         try {
             const result = await getDbPool().query('');
             
-            console.log(result['recordset']);
+
             if (!result['recordset']) {
                 res.status(404).json({ message: 'No se encontraron órdenes de servicio.' });
                 return;

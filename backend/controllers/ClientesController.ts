@@ -83,7 +83,7 @@ export class CustomerController {
                                                 name: name ?? null,
                                                 lastName: lastName ?? null,
                                                 email: email ?? null})
-            console.log(response)
+           
             if(!response){
                 res.status(404).json({ message: 'Cliente no encontrado.' });
                 return;
