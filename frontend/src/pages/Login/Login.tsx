@@ -4,8 +4,8 @@ import TopBar from "../../components/TopBar/TopBar";
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
 import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
-import { customerModel } from "../../../../backend/models/Clientes";
-import { employeeModel } from "../../../../backend/models/Empleados";
+/*import { customerModel } from "../../../../backend/models/Clientes";
+import { employeeModel } from "../../../../backend/models/Empleados";*/
 
 const Login: React.FC = () => {
     const [tipo, setTipo] = useState<"empleado" | "cliente" >("empleado");
@@ -42,7 +42,7 @@ const Login: React.FC = () => {
                 }
             </div>
             <div className={styles.centrado} ><Button texto="Ingresar" onClick={async ()=> {
-                
+                {/*
                 if (tipo === "cliente"){
                     let ced = await customerModel.getByCI(cedulaCliente);
                     
@@ -60,7 +60,8 @@ const Login: React.FC = () => {
                     } else {
                         navigator("/Registro");
                     }
-                }
+                }*/}
+                    navigator("/HomePage");
             }
             }></Button></div>
         </div>
