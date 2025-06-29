@@ -30,38 +30,60 @@ export class InvoicePaymentsController {
         }
     }
 
-    addPayment = async(req: Request, res: Response<InvoicePayments | {error: string}>): Promise<void> => {
+    getOnePayment = async(req: Request, res: Response<InvoicePayments | {error: string}>): Promise<void> => {
+        const id_invoice = parseInt(req.params.id_invoice,10);
+        const id_payment = parseInt(req.params.id_payment,10);
+
+        try{
+            const result = await InvoicePaymentsModel.getOnePayment(id_invoice, id_payment);
+
+            if(!result){
+                res.status(404).json({error: "No se encontró el pago en la factura"});
+                return;
+            }
+
+            res.status(200).json(result);
+        } catch (error) {
+            console.error("Ha ocurrido un error al obtener el pago de la factura", error);
+            res.status(500).json({error: "Error al obtener el pago de la factura"});
+        }
+
+    }
+
+    addPayment = async(req: Request, res: Response<{message: string} | {error: string}>): Promise<void> => {
         const id_invoice = parseInt(req.params.id_invoice, 10);
         const id_payment = parseInt(req.params.id_payment, 10);
 
         try{
             const result = await InvoicePaymentsModel.addPayment(id_invoice, id_payment);
 
-            if(!result){
+            if(result.rowsAffected === 0){
                 res.status(404).json({error: "No se pudo agregar el pago a la factura"});
                 return;
             }
             
-            res.status(200).json(result);
+            res.status(200).json({message: "Pago agregado a la factura correctamente"});
         } catch(error){
+            console.error("Ha ocurrido un error al agregar el pago a la factura", error);
             res.status(500).json({error: "Error al agregar el pago a la factura"});
         }
     }
 
-    deletePayment = async(req: Request, res: Response<InvoicePayments | {error: string}>): Promise<void> => {
+    deletePayment = async(req: Request, res: Response<{message: string} | {error: string}>): Promise<void> => {
         const id_invoice = parseInt(req.params.id_invoice, 10);
         const id_payment = parseInt(req.params.id_payment, 10);
 
         try{
             const result = await InvoicePaymentsModel.deletePayment(id_invoice, id_payment);
 
-            if(!result){
+            if(result.rowsAffected === 0 || result.rowsAffected === undefined){
                 res.status(404).json({error: "No se pudo eliminar el pago de la factura"});
                 return;
             }
             
-            res.status(200).json(result);
+            res.status(200).json({message: "Pago eliminado de la factura correctamente"});
         } catch(error){
+            console.error("Ha ocurrido un error al eliminar el pago de la factura", error);
             res.status(500).json({error: "Error al eliminar el pago de la factura"});
         }
     }

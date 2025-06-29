@@ -242,3 +242,17 @@ GET http://localhost:1234/buys-order/
 ### Obtener una orden de compra por su id | listo
 GET http://localhost:1234/buys-order/1
 
+### Router de Pagos de Facturas.
+
+### Obtener todos los pagos de una factura.
+GET http://localhost:1234/invoice-payments/1
+
+### Obtener un pago concreto de una factura.
+GET http://localhost:1234/invoice-payments/1/1
+
+### Agregar un nuevo pago a una factura.
+POST http://localhost:1234/invoice-payments/1/1
+Content-Type: application/json
+
+### Eliminar un pago de una factura.
+DELETE http://localhost:1234/invoice-payments/1/1
