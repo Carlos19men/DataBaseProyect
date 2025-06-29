@@ -178,7 +178,7 @@ export function getAllAPI(url: string) {
   return data;
 }
 
-function getById(url:string, ID){
+function getById(url:string, ID: number){
 const [formato, setFormato] = useState<string>("Cargando...");
 
     useEffect(() => {
