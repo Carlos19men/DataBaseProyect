@@ -4,8 +4,8 @@ interface TextBoxMUProps {
   etiqueta: string;
   viewWidth: number;
   viewHeight?: number; // Optional, not used in this component
-  value: string; 
-  onChange: any;
+  value?: string; 
+  onChange?: any;
 }
 
 const TextBoxMU: React.FC<TextBoxMUProps> = ({ 
