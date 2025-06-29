@@ -792,3 +792,122 @@ INSERT INTO EspecializacionEmpleados (CI_empleado,nro_servicio) VALUES
 
 --asignar supervisores 
 
+
+
+
+-- ORDENESCOMPRA (usa solo los RIF dados, nro_OC es autoincremental)
+INSERT INTO OrdenesCompra (fecha_compra, RIF_est, monto_total) VALUES
+('2024-06-01', 'J-12345678-9', 500),
+('2024-06-02', 'J-98765432-1', 600),
+('2024-06-03', 'J-11223344-5', 700),
+('2024-06-04', 'J-55667788-9', 800),
+('2024-06-05', 'J-00112233-4', 900);
+
+-- ALMACENA (usa RIF de Establecimientos y id_producto existentes)
+INSERT INTO Almacena (RIF_establecimiento, id_producto, cantidad) VALUES
+('J-12345678-9', 1, 20),
+('J-98765432-1', 2, 15),
+('J-11223344-5', 1, 10),
+('J-55667788-9', 2, 25),
+('J-00112233-4', 1, 30);
+
+-- ACTUALIZACIONESINVENTARIOS (usa RIF de Establecimientos y id_producto existentes)
+INSERT INTO ActualizacionesInventarios (RIF_establecimiento, id_producto, fecha_ajuste, hora_ajuste, cantidad, tipo, comentario) VALUES
+('J-12345678-9', 1, '2024-06-01', '08:00', 5, 'FALTANTE', 'Ajuste por pérdida'),
+('J-98765432-1', 2, '2024-06-02', '09:00', 3, 'SOBRANTE', 'Inventario físico'),
+('J-11223344-5', 1, '2024-06-03', '10:00', 2, 'FALTANTE', 'Producto vencido'),
+('J-55667788-9', 2, '2024-06-04', '11:00', 4, 'SOBRANTE', 'Devolución de cliente'),
+('J-00112233-4', 1, '2024-06-05', '12:00', 1, 'FALTANTE', 'Robo');
+
+-- PROVEEDORESASOCIADOS (usa RIF_proveedor y nro_orden de OrdenesCompra)
+INSERT INTO ProveedoresAsociados (RIF_proveedor, nro_orden) VALUES
+('J-50011223-5', 3),
+('J-50033445-7', 4),
+('J-50055667-9', 5),
+('J-50077889-1', 6),
+('J-50099001-3', 7);
+
+
+-- ORDENESSERVICIO (usa códigos de vehículos existentes)
+INSERT INTO OrdenesServicio (fecha_entrada, hora_entrada, hora_estimada_salida, hora_real_salida, fecha_salida, justificacion, persona_autorizada, codigo_vehiculo) VALUES
+('2024-06-01', '08:00', '12:00', '12:30', '2024-06-01', 'Mantenimiento preventivo', 'Juan Pérez', 1),
+('2024-06-02', '09:00', '13:00', '13:15', '2024-06-02', 'Cambio de aceite', 'Ana Gómez', 2),
+('2024-06-03', '10:00', '14:00', '14:05', '2024-06-03', 'Revisión general', 'Luis Torres', 3),
+('2024-06-04', '11:00', '15:00', '15:20', '2024-06-04', 'Reparación de frenos', 'María Ruiz', 4),
+('2024-06-05', '12:00', '16:00', '16:10', '2024-06-05', 'Diagnóstico eléctrico', 'Pedro Díaz', 5);
+
+-- FACTURAS (usa cod_OS de OrdenesServicio)
+INSERT INTO Facturas (cod_OS, descuento, iva, monto_total, fecha_emision) VALUES
+(1, 10.00, 16, 150.00, '2024-06-01'),
+(2, 5.00, 16, 200.00, '2024-06-02'),
+(3, 0.00, 16, 180.00, '2024-06-03'),
+(4, 15.00, 16, 220.00, '2024-06-04'),
+(5, 8.00, 16, 170.00, '2024-06-05');
+
+-- METODOSPAGO
+INSERT INTO MetodosPago (tipo_moneda, monto_ef, fechaPago_Tar, tipo_tarjeta, banco, nro_tarjeta, monto_tar, referenciaPM, fecha_PM, monto_PM, telefono) VALUES
+('DOLARES', 100.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '04141234567'),
+('BOLIVARES', 500.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '04141234568'),
+('DOLARES', NULL, '2024-06-01', 'VISA', 'Banesco', '1234567890123456', 120.00, NULL, NULL, NULL, '04141234569'),
+('BOLIVARES', NULL, '2024-06-02', 'MASTERCARD', 'Mercantil', '6543210987654321', 80.00, NULL, NULL, NULL, '04141234570'),
+('DOLARES', NULL, NULL, NULL, NULL, NULL, NULL, 'REF123', '2024-06-03', 200.00, '04141234571');
+
+-- PLANESMANTENIMIENTO (usa cod_marca y nro_modelo de Modelos)
+INSERT INTO PlanesMantenimiento (cod_marca, nro_modelo, kilometraje, nombre, descripcion) VALUES
+(1, 1, 10000, 'Plan Básico', 'Cambio de aceite y revisión general'),
+(1, 2, 20000, 'Plan Intermedio', 'Incluye frenos y filtros'),
+(2, 6, 15000, 'Plan Diesel', 'Chequeo de inyectores'),
+(2, 7, 30000, 'Plan Full', 'Todo incluido'),
+(3, 11, 5000, 'Plan Inicial', 'Primer servicio');
+
+-- EMPLEADOSASIGNADOS (usa CI_emp de Empleados y nro_servicio de Servicios)
+INSERT INTO EmpleadosAsignados (CI_empleado, nro_servicio) VALUES
+('12345678', 1),
+('12345688', 3),
+('12345698', 4),
+('12345708', 9),
+('12345718', 12);
+
+-- ACTIVIDADPRODUCTOS (usa id_producto de Productos, nro_servicio y nro_correlativo de Actividades)
+INSERT INTO ActividadProductos (id_producto, nro_servicio, nro_correlativo, cant_utilizada) VALUES
+(1, 1, 1, 2),
+(2, 2, 5, 1),
+(1, 3, 8, 3),
+(2, 4, 11, 2),
+(1, 5, 16, 1);
+
+
+
+-- COMPRAS (usa nro_compra de OrdenesCompra y id_producto de Productos)
+INSERT INTO Compras (nro_compra, id_producto, cantidad_producto, precio_und) VALUES
+(6, 1, 10, 15.99),
+(7, 2, 5, 8.20),
+(3, 1, 8, 15.99),
+(4, 2, 12, 8.20),
+(5, 1, 15, 15.99);
+
+
+
+-- ACTIVIDADESPLAN (usa cod_marca, nro_modelo de Modelos, nro_servicio y nro_correlativo de Actividades)
+INSERT INTO ActividadesPlan (cod_marca, nro_modelo, kilometraje, nro_servicio, nro_correlativo) VALUES
+(1, 1, 10000, 1, 1),
+(1, 2, 20000, 2, 5),
+(2, 6, 15000, 3, 8),
+(2, 7, 30000, 4, 11),
+(3, 11, 5000, 5, 16);
+
+-- PAGOSFACTURA (usa nro_factura de Facturas y id_pago de MetodosPago)
+INSERT INTO PagosFactura (nro_factura, id_pago) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5);
+
+-- ACTIVIDADESOS (usa cod_OS de OrdenesServicio, nro_servicio y nro_correlativo de Actividades, id_producto de Productos)
+INSERT INTO ActividadesOS (cod_OS, nro_servicio, nro_correlativo, id_producto, precio_producto, precio_actividad, cantidad) VALUES
+(6, 1, 1, 1, 15.99, 1.50, 2),
+(7, 2, 5, 2, 8.20, 2.50, 1),
+(3, 3, 8, 1, 15.99, 5.00, 3),
+(4, 4, 11, 2, 8.20, 1.00, 2),
+(5, 5, 16, 1, 15.99, 3.00, 1);

@@ -345,10 +345,10 @@ create table telefonosCliente(
 );
 
 
---Drops tables 
---DROP TABLE telefonosCliente;    
---DROP TABLE Almacena; 
-/*DROP TABLE ActividadesOS;
+/*Drops tables 
+DROP TABLE telefonosCliente;    
+DROP TABLE Almacena; 
+DROP TABLE ActividadesOS;
 DROP TABLE PagosFactura;
 DROP TABLE ActividadesPlan;
 DROP TABLE Compras;
@@ -377,6 +377,7 @@ DROP TABLE MetodosPago;
 DROP TABLE Clientes;
 DROP TABLE Modelos;
 DROP TABLE Marcas;
+
 
 DROP DATABASE MU_DB; */
 
