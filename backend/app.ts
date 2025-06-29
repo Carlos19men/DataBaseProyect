@@ -45,7 +45,6 @@ export const createApp = () =>{
     app.use('/family-products', createFamilyProductsRouter());
     app.use('/invoice-payments', createInvoicePaymentsRouter());
     app.use('/buys-order', createbuysOrderRouter());
-
     
     const PORT = process.env.PORT ?? 1234
 

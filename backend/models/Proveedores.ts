@@ -1,4 +1,5 @@
 import { getDbPool } from "../config/SQLserverConection";
+import * as sql from 'mssql';
 
 export class SuppliersModel{
 
@@ -21,7 +22,7 @@ export class SuppliersModel{
 
         request.input('RIF',RIF)
 
-        const result = await request.query('SELECT * FROM obtenerProveedoreRIF(@RIF);')
+        const result = await request.query('SELECT * FROM Proveedores WHERE RIF = @RIF;')
         
         return result['recordset'][0];
     }
@@ -29,27 +30,27 @@ export class SuppliersModel{
     static async create({RIF,razonSo,direccion,local_,telefono,persona_contacto}:{RIF:string,razonSo:string,direccion:string,local_:string,telefono:string,persona_contacto:string}){
         
         if(RIF === null || RIF === undefined || RIF.length === 0){
-            return {message: 'RIF requerido'}
+            return {error: 'RIF requerido'}
         }
 
         if(razonSo === null || razonSo === undefined || razonSo.length === 0){
-            return {message: 'Razon social es requerida'}
+            return {error: 'Razon social es requerida'}
         }
 
         if(direccion === null || direccion === undefined || direccion.length === 0){
-            return {message: 'La dirección es requerida'}
+            return {error: 'La dirección es requerida'}
         }
 
         if(local_ === null || local_ === undefined || local_.length === 0){
-            return {message: 'El local es requerido'}
+            return {error: 'El local es requerido'}
         }
 
         if(telefono === null || telefono === undefined || telefono.length === 0){
-            return {message: 'El telefono es requerido '}
+            return {error: 'El telefono es requerido '}
         }
 
         if(persona_contacto === null || persona_contacto === undefined || persona_contacto.length === 0){
-            return {message: 'persona de contacto requerida'}
+            return {error: 'persona de contacto requerida'}
         }
 
         //create the request 
@@ -66,44 +67,45 @@ export class SuppliersModel{
         //execute the request 
         const result = await request.query('INSERT INTO Proveedores (RIF, razon_social, direccion, local_, telefono, persona_contacto) VALUES (@RIF, @razonSo, @direccion, @local_, @telefono, @persona_contacto);')
 
-        return result['recordset'][0];        
+        return {rowsAffected: result['rowsAffected'][0]};        
     }
 
-    static async update({RIF,razonSo,direccion,local_,telefono,persona_contacto}:{RIF:string,razonSo:string,direccion:string,local_:string,telefono:string,persona_contacto:string}){
+    static async update({RIF,razonSo = null,direccion = null,local_ = null,telefono = null,persona_contacto = null}
+        :{RIF ?:string | null,razonSo ?:string | null,direccion ?:string | null,local_ ?:string | null,telefono ?:string | null,persona_contacto ?:string | null}){
         
         if(RIF === null || RIF === undefined || RIF.length === 0){
             return {message: 'RIF requerido'}
         }
 
-        if(razonSo === null || razonSo === undefined || razonSo.length === 0){
-            return {message: 'Razon social es requerida'}
+        /*if(razonSo === undefined || razonSo.length === 0){
+            return {error: 'Ingrese una razón social válida'}
         }
 
-        if(direccion === null || direccion === undefined || direccion.length === 0){
-            return {message: 'La dirección es requerida'}
+        if(direccion === undefined || direccion.length === 0){
+            return {error: 'Ingrese una dirección válida'}
         }
 
-        if(local_ === null || local_ === undefined || local_.length === 0){
-            return {message: 'El local es requerido'}
+        if(local_ === undefined || local_.length === 0){
+            return {error: 'Ingrese un local válido'}
         }
 
-        if(telefono === null || telefono === undefined || telefono.length === 0){
-            return {message: 'El telefono es requerido '}
+        if(telefono === undefined || telefono.length === 0){
+            return {error: 'Ingrese un teléfono válido'}
         }
 
-        if(persona_contacto === null || persona_contacto === undefined || persona_contacto.length === 0){
-            return {message: 'persona de contacto requerida'}
-        }
+        if(persona_contacto === undefined || persona_contacto.length === 0){
+            return {error: 'Ingrese una persona de contacto válida'}
+        }*/
 
         
         const request = getDbPool().request()
 
-        request.input('RIF',RIF)
-        request.input('razonSo',razonSo)
-        request.input('direccion',direccion)
-        request.input('local_',local_)
-        request.input('telefono',telefono)
-        request.input('persona_contacto',persona_contacto)
+        request.input('RIF',sql.VarChar(20),RIF)
+        request.input('razonSo',sql.VarChar(50),razonSo)
+        request.input('direccion',sql.VarChar(100),direccion)
+        request.input('local_',sql.VarChar(15),local_)
+        request.input('telefono',sql.VarChar(15),telefono)
+        request.input('persona_contacto',sql.VarChar(80),persona_contacto)
 
         const query = `UPDATE Proveedores SET
                         razon_social = ISNULL(@razonSo,razon_social), 
@@ -116,21 +118,21 @@ export class SuppliersModel{
         //execute the request 
         const result = await request.query(query);
 
-        return result['recordset'][0];       
+        return {rowsAffected: result['rowsAffected'][0]};       
     }
 
     static async deleted(RIF:string){
         if(RIF === null || RIF === undefined || RIF.length === 0){
-            return {message: 'RIF requerido'}
+            return {error: 'RIF requerido'}
         }
 
         const request = getDbPool().request()
 
         request.input('RIF',RIF)
 
-        const result = await request.query('DELETD Proveedore WHERE RIF = @RIF;')
+        const result = await request.query('DELETE FROM Proveedores WHERE RIF = @RIF;')
         
-        return result['recordset'][0];
+        return {rowsAffected: result['rowsAffected'][0]};
     }
 
     static async getByOrderBuy(nroOC:number){

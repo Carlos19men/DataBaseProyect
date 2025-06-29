@@ -244,15 +244,45 @@ GET http://localhost:1234/buys-order/1
 
 ### Router de Pagos de Facturas.
 
-### Obtener todos los pagos de una factura.
+### Obtener todos los pagos de una factura. | Posiblemente listo.
 GET http://localhost:1234/invoice-payments/1
 
-### Obtener un pago concreto de una factura.
+### Obtener un pago concreto de una factura. | Posiblemente listo.
 GET http://localhost:1234/invoice-payments/1/1
 
-### Agregar un nuevo pago a una factura.
+### Agregar un nuevo pago a una factura. | Posiblemente listo.
 POST http://localhost:1234/invoice-payments/1/1
+
+### Eliminar un pago de una factura. | Posiblemente listo.
+DELETE http://localhost:1234/invoice-payments/1/1
+
+### Router de Proveedores.
+
+### Obtener todos los proveedores | listo 
+GET http://localhost:1234/suppliers/
+
+### Obtener un proveedor por su RIF | listo 
+GET http://localhost:1234/suppliers/1234567890
+
+### Agregar un nuevo proveedor | listo 
+POST http://localhost:1234/suppliers/1234567890
 Content-Type: application/json
 
-### Eliminar un pago de una factura.
-DELETE http://localhost:1234/invoice-payments/1/1
+{
+    "razonSo": "Proveedor 1",
+    "direccion": "Dirección 1",
+    "local_": "Local 1",
+    "telefono": "1234567890",
+    "persona_contacto": "Persona 1"
+}
+
+### Editar un proveedor | listo 
+PATCH http://localhost:1234/suppliers/1234567890
+Content-Type: application/json
+
+{
+    "razonSo": "Proveedor 2"
+}
+
+### Eliminar un proveedor | listo 
+DELETE http://localhost:1234/suppliers/1234567890
