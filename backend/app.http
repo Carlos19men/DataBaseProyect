@@ -134,40 +134,40 @@ Content-Type: application/json
 ### Borrar establecimiento 
 DELETE  http://localhost:1234/establishement/J-02233-10
 
-### Obtener todos los servicios ofrecidos
+### Obtener todos los servicios ofrecidos | listo
 http://localhost:1234/offered-services/
 
-### Obtener servicios ofrecidos por RIF de establecimiento
+### Obtener servicios ofrecidos por RIF de establecimiento | listo
 http://localhost:1234/offered-services/rif/J-00112233-4
 
-### Obtener servicios ofrecidos por número de servicio
+### Obtener servicios ofrecidos por número de servicio | listo
 http://localhost:1234/offered-services/servicio/1
 
-### Obtener un servicio específico por RIF y número de servicio
+### Obtener un servicio específico por RIF y número de servicio | listo
 http://localhost:1234/offered-services/rif/J-00112233-4/servicio/1
 
-### Obtener servicios no ofrecidos
+### Obtener servicios no ofrecidos | listo
 http://localhost:1234/offered-services/no-ofrecidos
 
-### Obtener servicios no ofrecidos por RIF de establecimiento
+### Obtener servicios no ofrecidos por RIF de establecimiento | listo
 http://localhost:1234/offered-services/no-ofrecidos/rif/J-00112233-4
 
-### Agregar un nuevo servicio ofrecido
+### Agregar un nuevo servicio ofrecido | listo  
 POST http://localhost:1234/offered-services/
 Content-Type: application/json
 
 {
     "RIF_establecimiento": "J-00112233-4",
-    "nro_servicio": 1
+    "nro_servicio": 2
 }
 
-### Eliminar un servicio ofrecido
+### Eliminar un servicio ofrecido | listo
 DELETE http://localhost:1234/offered-services/
 Content-Type: application/json
 
 {
     "RIF_establecimiento": "J-00112233-4",
-    "nro_servicio": 1
+    "nro_servicio": 2
 }
 
 ### Router de Marcas.
