@@ -57,7 +57,7 @@ export class SuppliersController {
         const {razonSo, direccion, local_, telefono, persona_contacto } = req.body;
 
         try {
-            const result = await SuppliersModel.create({ RIF, razonSo, direccion, local_, telefono, persona_contacto });
+            const result = await SuppliersModel.create(RIF, razonSo, direccion, local_, telefono, persona_contacto);
 
             if(result.rowsAffected === 0){
                 res.status(400).json({error: "No se pudo encontrar un proveedor con ese RIF"});
@@ -76,7 +76,7 @@ export class SuppliersController {
 
         console.log({razonSo, direccion, local_, telefono, persona_contacto});
         try{
-            const result = await SuppliersModel.update({RIF, razonSo, direccion, local_, telefono, persona_contacto});
+            const result = await SuppliersModel.update(RIF, razonSo, direccion, local_, telefono, persona_contacto);
 
             if(result.rowsAffected === 0){
                 res.status(400).json({error: "No se pudo realizar la actualización del proveedor"});

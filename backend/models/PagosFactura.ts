@@ -3,9 +3,6 @@ import { getDbPool } from "../config/SQLserverConection";
 export class InvoicePaymentsModel {
     
     static async getByInvoice(id_invoice: number){
-        if (id_invoice === undefined || id_invoice === null || id_invoice <= 0) {
-            return { error: "Se necesita el ID de la factura" };
-        }
 
         const request = getDbPool().request();
         request.input('id_invoice', id_invoice);
@@ -15,13 +12,6 @@ export class InvoicePaymentsModel {
     }
 
     static async getOnePayment(id_invoice: number, id_payment: number){
-        if (id_invoice === undefined || id_invoice === null || id_invoice <= 0) {
-            return { error: "Se necesita el ID de la factura" };
-        }
-        
-        if (id_payment === undefined || id_payment === null || id_payment <= 0) {
-            return { error: "Se necesita el ID del pago" };
-        }
 
         const request = getDbPool().request();
         request.input('id_invoice', id_invoice);
@@ -32,13 +22,6 @@ export class InvoicePaymentsModel {
     }
 
     static async addPayment(id_invoice: number, id_payment: number){
-        if (id_invoice === undefined || id_invoice === null || id_invoice <= 0) {
-            return { error: "Se necesita el ID de la factura" };
-        }
-
-        if (id_payment === undefined || id_payment === null || id_payment <= 0) {
-            return { error: "Se necesita el ID del pago" };
-        }
 
         const request = getDbPool().request();
         request.input('id_invoice', id_invoice);
@@ -48,7 +31,7 @@ export class InvoicePaymentsModel {
         return {rowsAffected: result['rowsAffected'][0]};
     }
 
-    /*static async updatePayment(id_invoice: number, id_payment: number){
+    static async updatePayment(id_invoice: number, id_payment: number){
         const request = getDbPool().request();
         request.input('id_invoice', id_invoice);
         request.input('id_payment', id_payment);
@@ -56,9 +39,9 @@ export class InvoicePaymentsModel {
         const query = `Update PagosFactura set nro_factura = isNULL(@id_invoice, nro_factura), 
         id_pago = isNULL(@id_payment, id_pago) where `;
 
-        const result = await request.query('');
-        return result['recordset'];
-    }*/
+        const result = await request.query(query);
+        return {rowsAffected: result['rowsAffected'][0]};
+    }
     
     static async deletePayment(id_invoice: number, id_payment: number){
         const request = getDbPool().request();

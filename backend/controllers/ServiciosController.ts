@@ -63,11 +63,13 @@ export class ServicesController {
         }
 
         try {
-            const updatedService = await ServicesModel.editService({ nro_servicio: parseInt(nro_servicio), nombre_serv: nombre_ser });
+            const updatedService = await ServicesModel.editService(parseInt(nro_servicio), nombre_ser);
+            
             if (updatedService['rowsAffected'] === 0) {
                 res.status(400).json({ message: 'Servicio no registrado' });
                 return;
             }
+            
             res.status(200).json({message: "Servicio editado correctamente"});
             return;
         } catch (error) {
@@ -86,7 +88,7 @@ export class ServicesController {
         }
 
         try {
-            const result = await ServicesModel.deleteService({nro_servicio: parseInt(nro_servicio) });
+            const result = await ServicesModel.deleteService(parseInt(nro_servicio) );
 
             if (result['rowsAffected'] === 0) {
                 res.status(400).json({ error: 'Servicio no registrado' });
@@ -110,7 +112,7 @@ export class ServicesController {
         }
 
         try {
-            const result = await ServicesModel.createService({nombre_serv});
+            const result = await ServicesModel.createService(nombre_serv);
             
             if (result['rowsAffected'] === 0) {
                 res.status(400).json({message: 'No se pudo crear el servicio'});

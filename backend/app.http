@@ -15,7 +15,7 @@ Content-Type: application/json
     "email":"juan@gmail.com"
 }
 
-###PUT actualizar un cliente
+###PATCH actualizar un cliente | listo 
 PATCH  http://localhost:1234/customer/25
 Content-Type: application/json
 
@@ -25,10 +25,10 @@ Content-Type: application/json
     "name":"Carlos"
 }
 
-###Eliminar un cliente |Listo
+###Eliminar un cliente | listo 
 DELETE http://localhost:1234/customer/27
 
-###Editar un cliente  |Listo
+###Editar un cliente  | listo 
 PATCH http://localhost:1234/customer/25789012
 Content-Type: application/json
 

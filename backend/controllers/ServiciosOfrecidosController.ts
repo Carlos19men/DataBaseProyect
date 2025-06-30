@@ -87,7 +87,7 @@ export class ServiciosOfrecidosController {
             }
 
             if (servicios && typeof servicios === 'object' && 'error' in servicios) {
-                res.status(400).json({error: servicios.error });
+                res.status(400).json({error: servicios.error as string});
                 return;
             }
 
@@ -119,7 +119,7 @@ export class ServiciosOfrecidosController {
             }
 
             if (servicios && typeof servicios === 'object' && 'error' in servicios) {
-                res.status(400).json({ error: servicios.error });
+                res.status(400).json({error: servicios.error as string});
                 return;
             }
 
@@ -150,7 +150,7 @@ export class ServiciosOfrecidosController {
         }
 
         try {
-            const result = await ServiciosOfrecidosModel.addService({RIF_establecimiento,nro_servicio});
+            const result = await ServiciosOfrecidosModel.addService(RIF_establecimiento,nro_servicio);
 
             if(!result || result.rowsAffected === 0) {
                 res.status(400).json({ error: 'Servicio ofrecido no agregado.' });
@@ -187,7 +187,7 @@ export class ServiciosOfrecidosController {
         }
 
         try {
-            const result = await ServiciosOfrecidosModel.deleteService({RIF_establecimiento,nro_servicio});
+            const result = await ServiciosOfrecidosModel.deleteService(RIF_establecimiento,nro_servicio);
 
             if(!result || result.rowsAffected === 0) {
                 res.status(400).json({ error: 'Servicio ofrecido no eliminado.' });

@@ -22,7 +22,7 @@ export class brandModel {
         request.input('name', name);
 
         const result = await request.query('UPDATE Marcas SET nombre_marca = ISNULL(@name, nombre_marca) WHERE cod_marca = @id;');
-        return {rowsAffeted: result['rowsAffected'][0]};
+        return {rowsAffected: result['rowsAffected'][0]};
     }
 
     static async addBrand(name: string) {

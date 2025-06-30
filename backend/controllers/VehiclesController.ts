@@ -72,7 +72,7 @@ export class VehicleController{
 
         try{
 
-            const result = await vehicleModel.newVehicle({plate,oil_box,oil_motor,maintenance,months_use,mileage,id_model,id_marca,CI_owner})
+            const result = await vehicleModel.newVehicle(plate,oil_box,oil_motor,maintenance,months_use,mileage,id_model,id_marca,CI_owner)
 
             if(!result){
                 res.status(405).send({error:'No se pudo crear el nuevo vehiculo'})
@@ -115,7 +115,7 @@ export class VehicleController{
 
         try{
 
-            const result = await vehicleModel.edit({plate,oil_box,oil_motor,maintenance,months_use,mileage,id_model,id_marca,CI_owner})
+            const result = await vehicleModel.edit(plate,oil_box,oil_motor,maintenance,months_use,mileage,id_model,id_marca,CI_owner)
 
             if(!result){
                 res.status(405).send({message:'No se pudo modificar vehiculo'})

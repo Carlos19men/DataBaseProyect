@@ -20,10 +20,6 @@ export class ActividadesOSModel {
     }
 
     static async deleteByID(id: number) {
-        if (id === null || id === undefined || id <= 0) {
-            return { error: "Se necesita el ID de la actividad de orden de servicio" };
-        }
-
         const request = getDbPool().request();
         request.input('id', id);
 
