@@ -8,10 +8,6 @@ export class ComprasModel {
     }
 
     static async getByID(id: number) {
-        if (id === undefined || id === null || id <= 0) {
-            return { error: "Se necesita el ID de la compra" };
-        }
-
         const request = getDbPool().request();
         request.input('id', id);
 
@@ -20,10 +16,6 @@ export class ComprasModel {
     }
 
     static async deleteByID(id: number) {
-        if (id === null || id === undefined || id <= 0) {
-            return { error: "Se necesita el ID de la compra" };
-        }
-
         const request = getDbPool().request();
         request.input('id', id);
 

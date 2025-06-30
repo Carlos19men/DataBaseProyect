@@ -85,8 +85,7 @@ export class ServiciosOfrecidosModel {
         const result = await request.query(`SELECT nro_servicio,nombre_ser servicio FROM ServiciosDisponibles WHERE nro_servicio NOT IN (SELECT nro_servicio FROM ServiciosOfrecidos);`);
         return result['recordset'];
     }
-
-
+    
     static async getServicesNotOfferedRIF(RIF: string) {
 
         const request = getDbPool().request();
@@ -94,12 +93,10 @@ export class ServiciosOfrecidosModel {
 
         const query = `SELECT nro_servicio,nombre_ser servicio FROM ServiciosDisponibles 
                        WHERE nro_servicio NOT IN (SELECT nro_servicio FROM ServiciosOfrecidos 
-                                                  WHERE RIF_establecimiento = @RIF)
-                        order by nro_servicio;`;
+                       WHERE RIF_establecimiento = @RIF)
+                       order by nro_servicio;`;
         const result = await request.query(query);
         
         return result['recordset'];
     }
-
-
 }
