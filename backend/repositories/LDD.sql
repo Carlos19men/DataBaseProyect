@@ -308,7 +308,7 @@ create table ActividadesOS(
 );  
 
 
-create table Almacena(
+create table Inventario(
 	RIF_establecimiento varchar(20) not null,
 	id_producto int not null,
 	cantidad int not null check(cantidad >= 0),
@@ -352,7 +352,7 @@ create table telefonosCliente(
 
 --Drops tables 
 DROP TABLE telefonosCliente;    
-DROP TABLE Almacena; 
+DROP TABLE Inventario; 
 DROP TABLE ActividadesOS;
 DROP TABLE PagosFactura;
 DROP TABLE ActividadesPlan;

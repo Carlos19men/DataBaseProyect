@@ -16,25 +16,13 @@ Content-Type: application/json
 }
 
 ###PATCH actualizar un cliente | listo 
-PATCH  http://localhost:1234/customer/25
-Content-Type: application/json
-
-{
-    "CI": "25",
-    "lastName":"Guzman",
-    "name":"Carlos"
-}
-
-###Eliminar un cliente | listo 
-DELETE http://localhost:1234/customer/27
-
-###Editar un cliente  | listo 
-PATCH http://localhost:1234/customer/25789012
+PATCH  http://localhost:1234/customer
 Content-Type: application/json
 
 {
     "CI": "27",
-    "lastName":"Guzmannnnnnn"
+    "lastName":"Guzman",
+    "name":"Carlos"
 }
 
 ### Obtener todos los empleados | listo

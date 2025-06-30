@@ -3,7 +3,7 @@ import { getDbPool } from "../config/SQLserverConection";
 export class inventoryModel {
     static async getAll() {
         const pool = await getDbPool();
-        const result = await pool.query("SELECT * FROM Almacena");
+        const result = await pool.query("SELECT * FROM Almacena;");
         return result['recordset'];
     }
 

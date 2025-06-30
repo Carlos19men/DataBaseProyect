@@ -13,7 +13,7 @@ export class employeeModel {
         const request = getDbPool().request();
         request.input('CI', CI);
 
-        const result = await request.query('SELECT * from ObtenerEmpleados where CI_emp = @CI;');
+        const result = await request.query('SELECT * from ObtenerEmpleados where CI = @CI;');
         return result['recordset'][0];
     }
 
@@ -22,7 +22,7 @@ export class employeeModel {
         const request = getDbPool().request();
         request.input('RIF', RIF);
         
-        const query = `Select CI_emp,nombre, apellido,sueldo,direccion from ObtenerEmpleados where RIF_establecimiento = @RIF;`
+        const query = `Select CI,nombre, apellido,sueldo,direccion from ObtenerEmpleados where RIF_establecimiento = @RIF;`
 
         const result = await request.query(query);
         return result['recordset'];
@@ -50,6 +50,7 @@ export class employeeModel {
         WHERE CI_emp = @CI; `;
 
         const result = await request.query(query);
+        console.log(result['recordset'][0])
         return { rowsAffected: result['rowsAffected'][0] }; // Devuelve objeto consistente
     }
 
