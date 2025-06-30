@@ -29,15 +29,17 @@ export class employeeModel {
     }
 
 
-    static async editEmployee( CI: string, name: string | null, lastName: string | null, cellphone: string | null, address: string | null, salary: number | null ) {  
+    static async editEmployee(CI: string, name: string | null, lastName: string | null, cellphone: string | null, address: string | null, salary: number | null ) {  
 
         const request = getDbPool().request();
-        request.input('CI',sql.NVarChar(15), CI);
-        request.input('name',sql.NVarChar(15), name);
-        request.input('lastName',sql.NVarChar(15),lastName);
-        request.input('cellphone',sql.NVarChar(15), cellphone);
-        request.input('address',sql.NVarChar(15),address);
+        request.input('CI', CI);
+        request.input('name', sql.NVarChar(50), name);
+        request.input('lastName', sql.NVarChar(50), lastName);
+        request.input('cellphone', sql.NVarChar(15), cellphone);
+        request.input('address', sql.NVarChar(150), address);
         request.input('salary',sql.Int, salary);  
+
+        console.log({CI, name, lastName, cellphone, address, salary})
 
         
         const query = `UPDATE Empleados SET 

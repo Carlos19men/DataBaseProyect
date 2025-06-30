@@ -3,11 +3,11 @@ import {employeeModel} from '../models/Empleados';
 
 export interface Employee {
     CI: string;
-    name: string | null;
-    lastName: string | null;
-    cellphone: string | null;
-    address: string | null;
-    salary: number | null;
+    name?: string | null;
+    lastName?: string | null;
+    cellphone?: string | null;
+    address?: string | null;
+    salary?: number | null;
     RIF_establishment: string | null;
 }
 
@@ -93,7 +93,7 @@ export class EmployeeController {
     }
 
     editEmployee = async(req: Request, res: Response<{error: string} | {message: string}>): Promise<void> => {
-        const {CI = null, name = null, lastName = null, cellphone = null, address = null, salary = null} = req.body;
+        const {CI, name = null, lastName = null, cellphone = null, address = null, salary = null} = req.body;
 
         if (CI != null) {
             if (!CI || CI.length === 0) {
@@ -102,7 +102,7 @@ export class EmployeeController {
             }
         }
         
-        
+        //console.log({CI, name, lastName, cellphone, address, salary})
         try {
             const result = await employeeModel.editEmployee(CI, name, lastName, cellphone, address, salary);
 
@@ -115,7 +115,7 @@ export class EmployeeController {
             return;
         } catch (error) {
             console.error("Error al editar el empleado", error);
-            res.status(500).json({message: "Error interno del servidor al editar el empleado: "+error});
+            res.status(500).json({error: "Error interno del servidor al editar el empleado"});
             return;
         }
     }
