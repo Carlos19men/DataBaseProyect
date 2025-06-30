@@ -28,8 +28,8 @@ export class establishmentsModel{
         `
             Update Establecimientos
             set 
-                name = isNULL(@name, nombre),
-                city = isNULL(@city, ciudad)
+                nombre = isNULL(@name, nombre),
+                ciudad = isNULL(@city, ciudad)
             where RIF = @RIF;
         `
 

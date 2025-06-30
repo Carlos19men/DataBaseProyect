@@ -8,7 +8,7 @@ export class ServicesModel {
         const pool = getDbPool();
 
         //enviamos la query y capturamos las columnas afectadas 
-        const result = await pool.query('SELECT * FROM Servicios ORDER BY nombre_ser;');
+        const result = await pool.query('SELECT * FROM Servicios ORDER BY nro_servicio;');
         return result['recordset'];
     }
 
@@ -27,7 +27,7 @@ export class ServicesModel {
         //creamos la request y asignamos los paramentros 
         const request = getDbPool().request();
         request.input('nro_servicio', sql.Int,nro_servicio);
-        request.input('nombre_serv', nombre_serv);
+        request.input('nombre_serv', sql.VarChar(50),nombre_serv);
 
         //cuerpo de query 
         const query = `Update Servicios set

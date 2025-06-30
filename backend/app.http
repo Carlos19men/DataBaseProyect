@@ -64,10 +64,11 @@ Content-Type: application/json
 DELETE http://localhost:1234/employee/27
 
 ###editar un empleado | listo 
-PATCH http://localhost:1234/employee/27
+PATCH http://localhost:1234/employee/
 Content-Type: application/json
 
 {
+    "CI": "27",
     "address":"tumeremo"
 }
 
@@ -75,7 +76,7 @@ Content-Type: application/json
 http://localhost:1234/servicie
 
 ### Obtener un servicio por su id | Listo 
-http://localhost:1234/servicie/1006
+http://localhost:1234/servicie/20
 
 ### Crear nuevo servicio | listo 
 POST http://localhost:1234/servicie
@@ -86,7 +87,7 @@ Content-Type: application/json
 }
 
 ### Editar un servicio | listo 
-PATCH http://localhost:1234/servicie/1006
+PATCH http://localhost:1234/servicie/20
 Content-Type: application/json
 
 {
@@ -94,7 +95,7 @@ Content-Type: application/json
 }
 
 ### Borrar un servicio (especificar id) | listo 
-DELETE http://localhost:1234/servicie/1007
+DELETE http://localhost:1234/servicie/21
 
 ### establecimientos | Listo
 http://localhost:1234/establishement
@@ -113,10 +114,11 @@ Content-Type: application/json
 }
 
 ### Editar un establecimiento (solo se puede editar: nombre y ciudad) | Listo 
-PATCH http://localhost:1234/establishement/J-00112233-7
+PATCH http://localhost:1234/establishement/
 Content-Type: application/json
 
 {
+    "RIF": "J-02233-10",
     "name": "Establecimiento 1",
     "city": "Ciudad 1"
 }
