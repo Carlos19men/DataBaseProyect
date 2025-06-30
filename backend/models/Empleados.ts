@@ -13,7 +13,7 @@ export class employeeModel {
         const request = getDbPool().request();
         request.input('CI', CI);
 
-        const result = await request.query('SELECT * from ObtenerEmpleados where CI_emp = @CI;');
+        const result = await request.query('SELECT * from ObtenerEmpleados where CI = @CI;');
         return result['recordset'][0];
     }
 
@@ -22,21 +22,21 @@ export class employeeModel {
         const request = getDbPool().request();
         request.input('RIF', RIF);
         
-        const query = `Select CI_emp,nombre, apellido,sueldo,direccion from ObtenerEmpleados where RIF_establecimiento = @RIF;`
+        const query = `Select CI,nombre, apellido,sueldo,direccion from ObtenerEmpleados where RIF_establecimiento = @RIF;`
 
         const result = await request.query(query);
         return result['recordset'];
     }
 
 
-    static async editEmployee( CI: string | null, name: string | null, lastName: string | null, cellphone: string | null, address: string | null, salary: number | null ) {  
+    static async editEmployee( CI: string, name: string | null, lastName: string | null, cellphone: string | null, address: string | null, salary: number | null ) {  
 
         const request = getDbPool().request();
-        request.input('CI', CI);
-        request.input('name', name);
-        request.input('lastName', lastName);
-        request.input('cellphone', cellphone);
-        request.input('address', address);
+        request.input('CI',sql.NVarChar(15), CI);
+        request.input('name',sql.NVarChar(15), name);
+        request.input('lastName',sql.NVarChar(15),lastName);
+        request.input('cellphone',sql.NVarChar(15), cellphone);
+        request.input('address',sql.NVarChar(15),address);
         request.input('salary',sql.Int, salary);  
 
         const query = `UPDATE Empleados SET 
@@ -48,6 +48,7 @@ export class employeeModel {
         WHERE CI_emp = @CI; `;
 
         const result = await request.query(query);
+        console.log(result['recordset'][0])
         return { rowsAffected: result['rowsAffected'][0] }; // Devuelve objeto consistente
     }
 

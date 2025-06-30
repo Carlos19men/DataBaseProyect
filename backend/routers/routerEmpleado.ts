@@ -14,7 +14,7 @@ export const createEmployeeRouter = () => {
 
     EmployeeRouter.get('/RIF/:RIF', employeeController.getbyRIF);
 
-    EmployeeRouter.patch('/:CI', employeeController.editEmployee);
+    EmployeeRouter.patch('/', employeeController.editEmployee);
 
     EmployeeRouter.delete('/:CI', employeeController.deleteEmployee);
 

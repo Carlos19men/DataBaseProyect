@@ -70,7 +70,7 @@ export class CustomerController {
 
     edit = async(req:Request,res:Response<Customer | {message:string}>): Promise<void> => {
         const { CI, name, lastName, email } = req.body; // Obtiene los datos del cliente del cuerpo de la solicitud
-        console.log(req.body)
+     
         if (!CI || CI.length === 0) {
             res.status(400).json({ message: 'CI es requerido.' });
             return;
@@ -86,8 +86,8 @@ export class CustomerController {
 
             
             
-            if(!response){
-                res.status(404).json({ message: 'Cliente no encontrado.' });
+            if(response['rowsAffected'] === 0){
+                res.status(404).json({ message: 'No se editó ningun cliente. No se encuentra registrado' });
                 return;
             }
             res.status(200).json({message:'Cliente editado con exito'}); // Envía el cliente encontrado con status 200
@@ -110,11 +110,11 @@ export class CustomerController {
 
         try {
             const result = await customerModel.add(CI, name, lastName, email);
-            if(result){
-                res.status(201).json({message: 'Cliente agregado con exito '}); // Envía el cliente agregado con status 201
+            if(result['rowsAffected'] === 0){
+                res.status(201).json({message: 'No se agregó ningún cliente'}); // Envía el cliente agregado con status 201
                 return;
             }
-            res.status(202).json({message: 'Cliente no se pudo agreagar agregado'}); // Envía el cliente agregado con status 201
+            res.status(202).json({message: 'Cliente agregado con exito'}); // Envía el cliente agregado con status 201
             return;
         } catch (error:unknown) {
             
@@ -139,9 +139,9 @@ export class CustomerController {
 
         try {
             const result = await customerModel.delete(CI);
-            console.log(result) 
-            if (!result) {
-                res.status(404).json({ message: 'Cliente no encontrado.' });
+             
+            if (result['rowsAffected'] === 0) {
+                res.status(404).json({ message: 'Cliente no encontrado. No se encuentra registrado' });
                 return;
             }
             res.status(200).json({ message: 'Cliente eliminado con éxito.' });

@@ -115,7 +115,7 @@ export class EmployeeController {
             return;
         } catch (error) {
             console.error("Error al editar el empleado", error);
-            res.status(500).json({message: "Error interno del servidor al editar el empleado"});
+            res.status(500).json({message: "Error interno del servidor al editar el empleado: "+error});
             return;
         }
     }

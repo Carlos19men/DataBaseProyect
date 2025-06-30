@@ -21,7 +21,7 @@ export const createEstablishmentRouter = () => {
     establishmentRouter.delete('/:RIF', establishmentController.delete);
 
     //update 
-    establishmentRouter.patch('/:RIF', establishmentController.edit);
+    establishmentRouter.patch('/', establishmentController.edit);
 
     // Assign person in charge
     establishmentRouter.patch('/assign-person-in-charge', establishmentController.assignPersonInCharge);
