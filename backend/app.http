@@ -134,40 +134,40 @@ Content-Type: application/json
 ### Borrar establecimiento 
 DELETE  http://localhost:1234/establishement/J-02233-10
 
-### Obtener todos los servicios ofrecidos
+### Obtener todos los servicios ofrecidos | listo
 http://localhost:1234/offered-services/
 
-### Obtener servicios ofrecidos por RIF de establecimiento
+### Obtener servicios ofrecidos por RIF de establecimiento | listo
 http://localhost:1234/offered-services/rif/J-00112233-4
 
-### Obtener servicios ofrecidos por número de servicio
+### Obtener servicios ofrecidos por número de servicio | listo
 http://localhost:1234/offered-services/servicio/1
 
-### Obtener un servicio específico por RIF y número de servicio
+### Obtener un servicio específico por RIF y número de servicio | listo
 http://localhost:1234/offered-services/rif/J-00112233-4/servicio/1
 
-### Obtener servicios no ofrecidos
+### Obtener servicios no ofrecidos | listo
 http://localhost:1234/offered-services/no-ofrecidos
 
-### Obtener servicios no ofrecidos por RIF de establecimiento
+### Obtener servicios no ofrecidos por RIF de establecimiento | listo
 http://localhost:1234/offered-services/no-ofrecidos/rif/J-00112233-4
 
-### Agregar un nuevo servicio ofrecido
+### Agregar un nuevo servicio ofrecido | listo  
 POST http://localhost:1234/offered-services/
 Content-Type: application/json
 
 {
     "RIF_establecimiento": "J-00112233-4",
-    "nro_servicio": 1
+    "nro_servicio": 2
 }
 
-### Eliminar un servicio ofrecido
+### Eliminar un servicio ofrecido | listo
 DELETE http://localhost:1234/offered-services/
 Content-Type: application/json
 
 {
     "RIF_establecimiento": "J-00112233-4",
-    "nro_servicio": 1
+    "nro_servicio": 2
 }
 
 ### Router de Marcas.
@@ -242,3 +242,57 @@ GET http://localhost:1234/buys-order/
 ### Obtener una orden de compra por su id | listo
 GET http://localhost:1234/buys-order/1
 
+### Router de Pagos de Facturas.
+
+### Obtener todos los pagos de una factura. | Posiblemente listo.
+GET http://localhost:1234/invoice-payments/1
+
+### Obtener un pago concreto de una factura. | Posiblemente listo.
+GET http://localhost:1234/invoice-payments/1/1
+
+### Agregar un nuevo pago a una factura. | Posiblemente listo.
+POST http://localhost:1234/invoice-payments/1/1
+
+### Eliminar un pago de una factura. | Posiblemente listo.
+DELETE http://localhost:1234/invoice-payments/1/1
+
+### Router de Proveedores.
+
+### Obtener todos los proveedores | listo 
+GET http://localhost:1234/suppliers/
+
+### Obtener un proveedor por su RIF | listo 
+GET http://localhost:1234/suppliers/1234567890
+
+### Agregar un nuevo proveedor | listo 
+POST http://localhost:1234/suppliers/1234567890
+Content-Type: application/json
+
+{
+    "razonSo": "Proveedor 1",
+    "direccion": "Dirección 1",
+    "local_": "Local 1",
+    "telefono": "1234567890",
+    "persona_contacto": "Persona 1"
+}
+
+### Editar un proveedor | listo 
+PATCH http://localhost:1234/suppliers/1234567890
+Content-Type: application/json
+
+{
+    "razonSo": "Proveedor 2"
+}
+
+### Eliminar un proveedor | listo 
+DELETE http://localhost:1234/suppliers/1234567890
+
+### Router de Vehiculos.
+
+### Obtener todos los vehiculos | listo
+GET http://localhost:1234/vehicles/
+
+### Obtener un vehiculo por su placa | listo
+GET http://localhost:1234/vehicles/1
+
+### Agregar un nuevo vehiculo | listo

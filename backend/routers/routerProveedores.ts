@@ -11,7 +11,7 @@ export const createSuppliersrouter = () => {
     suppliersRouter.get('/', suppliersController.getAll);
     suppliersRouter.get('/:RIF', suppliersController.getByRif);
     suppliersRouter.post('/:RIF', suppliersController.addSupplier);
-    suppliersRouter.put('/:RIF', suppliersController.updateSupplier);
+    suppliersRouter.patch('/:RIF', suppliersController.updateSupplier);
     suppliersRouter.delete('/:RIF', suppliersController.deleteSupplier);
     
     return suppliersRouter;

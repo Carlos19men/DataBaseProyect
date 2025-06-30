@@ -1,4 +1,5 @@
 import { getDbPool } from "../config/SQLserverConection";
+import * as sql from 'mssql';
 
 export class SuppliersModel{
     //get all Suppliers
@@ -14,7 +15,7 @@ export class SuppliersModel{
 
         request.input('RIF',RIF)
 
-        const result = await request.query('SELECT * FROM obtenerProveedoreRIF(@RIF);')
+        const result = await request.query('SELECT * FROM Proveedores WHERE RIF = @RIF;')
         
         return result['recordset'][0];
     }
@@ -41,12 +42,12 @@ export class SuppliersModel{
         
         const request = getDbPool().request()
 
-        request.input('RIF',RIF)
-        request.input('razonSo',razonSo)
-        request.input('direccion',direccion)
-        request.input('local_',local_)
-        request.input('telefono',telefono)
-        request.input('persona_contacto',persona_contacto)
+        request.input('RIF',sql.VarChar(20),RIF)
+        request.input('razonSo',sql.VarChar(50),razonSo)
+        request.input('direccion',sql.VarChar(100),direccion)
+        request.input('local_',sql.VarChar(15),local_)
+        request.input('telefono',sql.VarChar(15),telefono)
+        request.input('persona_contacto',sql.VarChar(80),persona_contacto)
 
         const query = `UPDATE Proveedores SET
                         razon_social = ISNULL(@razonSo,razon_social), 
@@ -67,7 +68,7 @@ export class SuppliersModel{
 
         request.input('RIF',RIF)
 
-        const result = await request.query('DELETD Proveedore WHERE RIF = @RIF;')
+        const result = await request.query('DELETE FROM Proveedores WHERE RIF = @RIF;')
         
         return {rowsAffected: result['rowsAffected'][0]}
     }

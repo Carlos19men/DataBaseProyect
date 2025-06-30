@@ -4,8 +4,7 @@ import { getDbPool } from "../config/SQLserverConection";
 export class vehicleModel{
 
     static async getAll(){
-        const result = await getDbPool().query('SELECT * FROM ObtenerVehiculos ORDER BY marca; ')
-
+        const result = await getDbPool().query('SELECT * FROM Vehiculos ORDER BY codigo;')
         return result['recordset']
     }
 

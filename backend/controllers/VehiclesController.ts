@@ -18,15 +18,14 @@ interface Vehicle{
     maintenance: string | null;
 }
 
-export class VehicleModel{
-
+export class VehicleController{
     model:vehicleModel
-    constructor(model:VehicleModel){
+    
+    constructor(model:vehicleModel){
         this.model = model
     }
 
     getAll = async(_req:Request,res:Response<Vehicle[] | {message:string}>): Promise<void> =>{
-
         try{
 
             const vehicles: Vehicle[] = await vehicleModel.getAll()
@@ -47,7 +46,7 @@ export class VehicleModel{
 
     getByPlate = async(req:Request,res:Response<Vehicle | {message:string}>): Promise<void> =>{
 
-        const {plate} = req.body
+        const {plate} = req.body;
 
         try{
             const vehicle: Vehicle = await vehicleModel.getByPlate(plate)
