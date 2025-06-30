@@ -15,7 +15,7 @@ export class OrdenCompraController {
         this.model = model;
     }
 
-    getAll = async (_req: Request, res: Response<BuysOrder[] | { message: string }>): Promise<void> => {
+    getAll = async (req: Request, res: Response<BuysOrder[] | { message: string }>): Promise<void> => {
         try {
             const ordenes: BuysOrder[] = await buysOrderModel.getAll();
 
@@ -34,15 +34,15 @@ export class OrdenCompraController {
     }
 
     getById = async (req: Request, res: Response<BuysOrder | { message: string }>): Promise<void> => {
-        const id_orden  = parseInt(req.params.id, 10);
+        const { id_orden } = req.params;
 
-        if (isNaN(id_orden) || id_orden <= 0) {
+        if (!id_orden) {
             res.status(400).json({ "message": "Se requiere un ID válido de la orden de compra" });
             return;
         }
 
         try {
-            const orden_data: BuysOrder = await buysOrderModel.getByID(id_orden);
+            const orden_data: BuysOrder = await buysOrderModel.getByID(parseInt(id_orden, 10));
 
             if (!orden_data) {
                 res.status(404).json({ message: "No se encontró una orden de compra con ese ID" });

@@ -29,7 +29,7 @@ export class employeeModel {
     }
 
 
-    static async editEmployee({ CI, name, lastName ,cellphone, address, salary }: { CI: string | null, name: string | null, lastName: string | null, cellphone: string | null, address: string | null, salary: number | null }) {  
+    static async editEmployee( CI: string | null, name: string | null, lastName: string | null, cellphone: string | null, address: string | null, salary: number | null ) {  
 
         const request = getDbPool().request();
         request.input('CI', CI);
@@ -52,10 +52,6 @@ export class employeeModel {
     }
 
     static async deleteEmpleado(CI: string) {
-        if (CI === undefined || CI === null || CI.length === 0) {
-            return { error: "Se necesita la cédula" };
-        }
-
         const request = getDbPool().request();
         request.input('CI', CI);
         const result = await request.query('delete from Empleados where CI_emp = @CI;');
@@ -63,35 +59,7 @@ export class employeeModel {
         return {rowsAffected: result['rowsAffected'][0]};
     }
 
-    static async addEmpleado({CI, name, lastName, cellphone, address, salary, RIF}: {CI: string, name: string, lastName: string, cellphone: string, address: string, salary: number, RIF: string}) {
-        if (CI === undefined || CI.length === 0) {
-            return { error: "Se necesita la cédula" };
-        }
-
-        if (name === undefined || name.length === 0) {
-            return { error: "Se necesita el nombre" };
-        }
-
-        if (lastName === undefined || lastName.length === 0) {
-            return { error: "Se necesita el apellido" };
-        }
-
-        if (cellphone === undefined || cellphone.length === 0) {
-            return { error: "Se necesita el teléfono" };
-        }
-
-        if (address === undefined || address.length === 0) {
-            return { error: "Se necesita la dirección" };
-        }
-
-        if (salary === undefined || salary === null) {
-            return { error: "Se necesita que el sueldo sea un número" };
-        }
-
-        if (RIF === undefined || RIF.length === 0) {
-            return { error: "Se necesita el RIF" };
-        }
-
+    static async addEmpleado(CI: string, name: string, lastName: string, cellphone: string, address: string, salary: number, RIF: string) {
         const request = getDbPool().request();
         request.input('CI', CI);
         request.input('name', name);
@@ -108,7 +76,7 @@ export class employeeModel {
         return result['rowsAffected'];
     }
 
-    static async asigPersonInCharge({RIF, CI_encargado, fecha}: {RIF: string, CI_encargado: string | null, fecha: Date | null}) {
+    static async asigPersonInCharge(RIF: string, CI_encargado: string | null, fecha: Date | null) {
         const request = getDbPool().request();
 
         request.input("RIF", RIF);
@@ -124,6 +92,6 @@ export class employeeModel {
     }
 
     static async removePersonInCharge(RIF: string) {
-        return this.asigPersonInCharge({RIF, CI_encargado: null, fecha: null});
+        return this.asigPersonInCharge(RIF, null, null);
     }
 }

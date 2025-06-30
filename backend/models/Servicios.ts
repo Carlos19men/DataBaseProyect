@@ -22,7 +22,7 @@ export class ServicesModel {
         return result['recordset'][0];
     }
 
-    static async editService ({nro_servicio, nombre_serv}: { nro_servicio: number,nombre_serv: string}){
+    static async editService ( nro_servicio: number,nombre_serv: string){
        
         //creamos la request y asignamos los paramentros 
         const request = getDbPool().request();
@@ -39,7 +39,7 @@ export class ServicesModel {
         return {rowsAffected: result['rowsAffected'][0]};
     }
 
-    static async deleteService({nro_servicio}: {nro_servicio: number}){
+    static async deleteService(nro_servicio: number){
         //creamos la request y asignamos los paramentros 
         const request = getDbPool().request();
         request.input('nro_servicio',sql.Int, nro_servicio);
@@ -50,7 +50,7 @@ export class ServicesModel {
         return { rowsAffected: result['rowsAffected'][0] };
     } 
 
-    static async createService({nombre_serv}: {nombre_serv: string}) {
+    static async createService(nombre_serv: string) {
         //creamos la request y asignamos los paramentros 
         const request = getDbPool().request();
         request.input('nombre_serv', nombre_serv);

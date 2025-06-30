@@ -12,24 +12,20 @@ export class paymentMethods{
 
         const result = await getDbPool().query('SELECT * FROM obtenerMetodosPago ORDER BY FacturaCorrespondiente;')
 
-        return result['recordset']
+        return result['recordset'][0]
     }
 
     static async getByClient(id_cliente:number){
-        if ((id_cliente === null) || (id_cliente === undefined)) {
-            return('error: Client is required');
-        } else {
-            const request = getDbPool().request();
+        const request = getDbPool().request();
 
-            request.input('@id_cliente',id_cliente);
+        request.input('@id_cliente',id_cliente);
 
-            const result = await request.query('SELECT * FROM ObtenerMetodoPagoPorCliente(@id_cliente);')
-   
-            return result['recordset'][0] || { error: "Buy orden not found" };
-        }
+        const result = await request.query('SELECT * FROM ObtenerMetodoPagoPorCliente(@id_cliente);')
+
+        return result['recordset'][0] || { error: "Buy orden not found" };
     }
 
-    static async create({tipo_moneda,monto_ef,fechaPago_Tar,tipo_tarjeta,banco,nro_tarjeta,monto_tar,referenciaPM,fecha_PM,monto_PM,telefono}:{tipo_moneda:string,monto_ef:number,fechaPago_Tar:string,tipo_tarjeta:string,banco:string,nro_tarjeta:string,monto_tar:number,referenciaPM:string,fecha_PM:string,monto_PM:number,telefono:string}){
+    static async create(tipo_moneda:string,monto_ef:number,fechaPago_Tar:string,tipo_tarjeta:string,banco:string,nro_tarjeta:string,monto_tar:number,referenciaPM:string,fecha_PM:string,monto_PM:number,telefono:string){
         //request
         const request = getDbPool().request();
 
@@ -48,7 +44,7 @@ export class paymentMethods{
 
         const result = await request.query('EXEC nuevaMetodoPago @tipo_moneda,@monto_ef,@fechaPago_Tar,@tipo_tarjeta,@banco,@nro_tarjeta,@monto_tar,@referenciaPM,@fecha_PM,@monto_PM,@telefono;')
 
-        return result['recordset']
+        return {rowsAffected: result['recordset'][0]}
     }
 
     static async edit({id_pago,tipo_moneda,monto_ef,fechaPago_Tar,tipo_tarjeta,banco,nro_tarjeta,monto_tar,referenciaPM,fecha_PM,monto_PM,telefono}:{id_pago: number,tipo_moneda:string,monto_ef:number,fechaPago_Tar:string,tipo_tarjeta:string,banco:string,nro_tarjeta:string,monto_tar:number,referenciaPM:string,fecha_PM:string,monto_PM:number,telefono:string}){
@@ -71,22 +67,18 @@ export class paymentMethods{
 
         const result = await request.query('EXEC editarMetodoPago @id_pago,@tipo_moneda,@monto_ef,@fechaPago_Tar,@tipo_tarjeta,@banco,@nro_tarjeta,@monto_tar,@referenciaPM,@fecha_PM,@monto_PM,@telefono;')
 
-        return result['recordset']
+        return {rowsAffected: result['recordset'][0]}
     }
 
     static async delete(id_pago:number){
-        if ((id_pago === null) || (id_pago === undefined)) {
-            return {error: 'Numero de pago is required'}
-        }
-
         //request
         const request = getDbPool().request();
 
         //inputs
         request.input('id_pago',id_pago);
 
-        const result = await request.query('EXEC eliminarMetodoPago @id_pago;')
+        const result = await request.query('DELETE MetodosPago WHERE id_pago = @id_pago;')
 
-        return result['recordset']
+        return {rowsAffected: result['recordset'][0]}
     }
 }

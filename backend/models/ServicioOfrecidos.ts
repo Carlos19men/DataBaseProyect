@@ -9,13 +9,6 @@ export class ServiciosOfrecidosModel {
     }
 
     static async getByRIFAndService(RIF: string, nro_servicio: number) {
-        if (RIF === undefined || RIF === null || RIF.length === 0) {
-            return { error: "Se necesita el RIF del establecimiento" };
-        }
-
-        if (nro_servicio === undefined || nro_servicio === null || nro_servicio <= 0) {
-            return { error: "Se necesita un número de servicio válido" };
-        }
 
         const request = getDbPool().request();
         request.input('RIF', RIF);
@@ -27,10 +20,6 @@ export class ServiciosOfrecidosModel {
     }
 
     static async getByRIF(RIF: string) {
-        if (RIF === undefined || RIF === null || RIF.length === 0) {
-            return { error: "Se necesita el RIF del establecimiento" };
-        }
-
         const request = getDbPool().request();
         request.input('RIF', RIF);
 
@@ -40,9 +29,6 @@ export class ServiciosOfrecidosModel {
     }
 
     static async getByService(nro_servicio: number) {
-        if (nro_servicio === undefined || nro_servicio === null || nro_servicio <= 0) {
-            return { error: "Se necesita un número de servicio válido" };
-        }
 
         const request = getDbPool().request();
         request.input('nro_servicio', nro_servicio);
@@ -52,18 +38,9 @@ export class ServiciosOfrecidosModel {
         return result['recordset'];
     }
 
-    static async addService({ RIF_establecimiento, nro_servicio }: { 
-        RIF_establecimiento: string, 
+    static async addService(RIF_establecimiento: string, 
         nro_servicio: number 
-    }) {
-        if (RIF_establecimiento === undefined || RIF_establecimiento.length === 0) {
-            return { error: "Se necesita el RIF del establecimiento" };
-        }
-
-        if (nro_servicio === undefined || nro_servicio <= 0) {
-            return { error: "Se necesita un número de servicio válido" };
-        }
-
+    ) {
         const request = getDbPool().request();
         request.input('RIF_establecimiento', RIF_establecimiento);
         request.input('nro_servicio', nro_servicio);
@@ -71,21 +48,13 @@ export class ServiciosOfrecidosModel {
         const query = `INSERT INTO ServiciosOfrecidos (RIF_establecimiento, nro_servicio) VALUES (@RIF_establecimiento, @nro_servicio);`;
 
         const result = await request.query(query);
-        return result['recordset'][0];
+        return {rowsAffected:  result['recordset'][0]}
     }
 
-    static async deleteService({ RIF_establecimiento, nro_servicio }: { 
+    static async deleteService(
         RIF_establecimiento: string, 
         nro_servicio: number 
-    }) {
-        if (RIF_establecimiento === undefined || RIF_establecimiento === null || RIF_establecimiento.length === 0) {
-            return { error: "Se necesita el RIF del establecimiento" };
-        }
-
-        if (nro_servicio === undefined || nro_servicio === null || nro_servicio <= 0) {
-            return { error: "Se necesita un número de servicio válido" };
-        }
-
+    ) {
         const request = getDbPool().request();
         request.input('RIF_establecimiento', RIF_establecimiento);
         request.input('nro_servicio', nro_servicio);
@@ -93,14 +62,8 @@ export class ServiciosOfrecidosModel {
         const query = `
             DELETE FROM ServiciosOfrecidos WHERE RIF_establecimiento = @RIF_establecimiento AND nro_servicio = @nro_servicio;
         `;
-
         const result = await request.query(query);
-        
-        if (result.rowsAffected[0] === 0) {
-            return { error: "No se encontró el servicio ofrecido especificado." };
-        }
-        
-        return result['recordset'][0];
+        return {rowsAffected:  result['recordset'][0]}
     }
 
     static async getServicesNotOffered() {
@@ -111,9 +74,6 @@ export class ServiciosOfrecidosModel {
 
 
     static async getServicesNotOfferedRIF(RIF: string) {
-        if (RIF === undefined || RIF === null || RIF.length === 0) {
-            return { error: "Se necesita el RIF del establecimiento" };
-        }
 
         const request = getDbPool().request();
         request.input('RIF', RIF);

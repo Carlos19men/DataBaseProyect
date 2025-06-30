@@ -9,10 +9,6 @@ export class establishmentsModel{
     }
 
     static async getByRIF(RIF: string) {
-        if (RIF === undefined || RIF === null || RIF.length === 0) {
-            return { error: "Se necesita el RIF" };
-        }
-
         const request = getDbPool().request();
         request.input('RIF', RIF);
 
@@ -20,7 +16,7 @@ export class establishmentsModel{
         return result['recordset'][0];
     }
 
-    static async edit({RIF, name, city}: {RIF: string, name: string | null, city: string | null}){
+    static async edit(RIF: string, name: string | null, city: string | null){
 
         const request = getDbPool().request();
 
@@ -38,10 +34,10 @@ export class establishmentsModel{
         `
 
         const result = await request.query(query);
-        return result['recordset'][0];
+        return {rowsAffected: result['recordset'][0]};
     }
 
-    static async add({RIF, CI_PIC, name, city, date_PIC}:{RIF: string, CI_PIC: string | null, name: string, city: string, date_PIC: Date | null}){
+    static async add(RIF: string, CI_PIC: string | null, name: string, city: string, date_PIC: Date | null){
         
         const request = getDbPool().request();
         
@@ -62,7 +58,7 @@ export class establishmentsModel{
         return {rowsAffected: result['rowsAffected'][0]};
     }
 
-    static async asigPersonInCharge({RIF,CI_encargado,fecha}:{RIF:string,CI_encargado:string | null,fecha:Date | null}){
+    static async asigPersonInCharge(RIF:string,CI_encargado:string | null,fecha:Date | null){
         const request = getDbPool().request();
 
         request.input("RIF",RIF)
@@ -78,7 +74,7 @@ export class establishmentsModel{
     }
 
     static async removePersonInCharge(RIF: string) {
-        return this.asigPersonInCharge({RIF,CI_encargado:null,fecha: null});
+        return this.asigPersonInCharge(RIF,null,null);
     }
 
     static async deleteEstablishment(RIF: string){

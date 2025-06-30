@@ -8,10 +8,6 @@ export class brandModel {
     }
 
     static async getById(id: number) {
-        if (id === undefined || id === null) {
-            return { error: "ID is required" };
-        }
-
         const request = getDbPool().request();
         request.input('id', id);
 
@@ -19,21 +15,14 @@ export class brandModel {
         return result['recordset'][0];
     }
 
-    static async editBrand({ id, name }: { id: number | null, name: string | null }) {
-        if (id === null || id === undefined || id <= 0) {
-            return { error: "ID is required" };
-        }
-
-        if (name === null || name === undefined || name.length === 0) {
-            return { error: "Name is required" };
-        }
+    static async editBrand( id: number | null, name: string | null ) {
 
         const request = getDbPool().request();
         request.input('id', id);
         request.input('name', name);
 
-        await request.query('UPDATE Marcas SET nombre_marca = ISNULL(@name, nombre_marca) WHERE cod_marca = @id;');
-        return {message: "Marca actualizada correctamente"};
+        const result = await request.query('UPDATE Marcas SET nombre_marca = ISNULL(@name, nombre_marca) WHERE cod_marca = @id;');
+        return {rowsAffeted: result['rowsAffected'][0]};
     }
 
     static async addBrand(name: string) {

@@ -11,16 +11,10 @@ export class FamilyProductsModel {
 
     static async getbyFamily(id_familia: number){
         const request = await getDbPool().request();
-        
-        if(id_familia === null || id_familia <= 0){
-            return({error: "Se requiere el id de la familia"});
-            return;
-        }
-        
         request.input("id_familia", id_familia);
         const result = await request.query("Select * from FamiliaProductos where id_familia = @id_familia");
 
-        return result['recordset'];
+        return result['recordset'][0];
     }
 
     static async addFamily(nombre: string){
@@ -34,7 +28,7 @@ export class FamilyProductsModel {
     }
 
     static async updateFamily(id_familia: number, nombre: string){
-        const request = await getDbPool().request();
+        const request = getDbPool().request();
         
         request.input("id_familia", id_familia);
         request.input("name", nombre);
@@ -42,17 +36,17 @@ export class FamilyProductsModel {
         const query = `Update FamiliaProductos set nombre = isNULL(@name, nombre) where id_familia = @id_familia`;
         const result = await request.query(query);
 
-        return result['recordset'][0];
+        return {rowsAffected: result['rowsAffected'][0]}
     }
 
     static async deleteFamily(id_familia: number){
-        const request = await getDbPool().request();
+        const request = getDbPool().request();
         
         request.input("id_familia", id_familia);
         
         const result = await request.query("Delete from FamiliaProductos where id_familia = @id_familia");
         
-        return result['recordset'][0];
+        return {rowsAffected: result['rowsAffected'][0]}
     }
 
 }

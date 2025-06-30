@@ -116,9 +116,11 @@ create table OrdenesServicio(
 	justificacion varchar(255),
 	persona_autorizada varchar(50),
 	codigo_vehiculo int not null,
+	RIF_establecimiento VARCHAR(20) not null,
 	
 	primary key(cod_OS),
-	foreign key(codigo_vehiculo) references Vehiculos(codigo) ON DELETE CASCADE
+	foreign key(codigo_vehiculo) references Vehiculos(codigo) ON DELETE CASCADE,
+	foreign key(RIF_establecimiento) REFERENCES Establecimientos(RIF) ON DELETE CASCADE
 );
 
 create table Facturas(
@@ -293,15 +295,18 @@ create table ActividadesOS(
 	nro_servicio int not null,
 	nro_correlativo int not null,
 	id_producto int not null,
+	ci_empleado VARCHAR(15) not null,
 	precio_producto decimal(10,2) not null check(precio_producto > 0),
 	precio_actividad decimal(10,2) not null check(precio_actividad > 0),
 	cantidad int not null check(cantidad > 0),
 	
-	primary key(cod_OS, nro_servicio, nro_correlativo, id_producto),
+	primary key(cod_OS, nro_servicio, nro_correlativo, id_producto,ci_empleado),
 	foreign key(cod_OS) references OrdenesServicio(cod_OS) ON DELETE CASCADE,
 	foreign key(nro_servicio,nro_correlativo) references Actividades(nro_servicio, nro_correlativo) ON DELETE CASCADE,
-	foreign key(id_producto) references Productos(id_producto)
+	foreign key(id_producto) references Productos(id_producto),
+	FOREIGN KEY(ci_empleado) REFERENCES Empleados(CI_emp)
 );  
+
 
 create table Almacena(
 	RIF_establecimiento varchar(20) not null,
@@ -366,7 +371,7 @@ DROP TABLE OrdenesServicio;
 DROP TABLE Vehiculos;
 ALTER TABLE Empleados drop constraint RIF_establecimiento ; 
 ALTER TABLE Establecimientos drop constraint CI_encargado; 
-ALTER TABLE Servicios drop constraint CI_superv;
+ALTER TABLE Empleados drop constraint nro_servicio_supervisar;
 DROP TABLE Servicios; 
 DROP TABLE Empleados; 
 DROP TABLE ActualizacionesInventarios; 

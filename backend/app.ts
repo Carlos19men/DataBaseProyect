@@ -4,7 +4,7 @@ import { connectToDatabase } from "./config/SQLserverConection";
 import { createEstablishmentRouter } from "./routers/routerEstablecimiento";
 import { createEmployeeRouter } from "./routers/routerEmpleado";
 import { createSuppliersrouter } from "./routers/routerProveedores";
-import {createInventoryRouter} from "./routers/routerInventario";
+import { createInventoryRouter} from "./routers/routerInventario";
 import { createbrandRouter } from "./routers/routerMarca";
 import { createCustomerRouter } from "./routers/routerClientes";
 import { createProductosRouter } from "./routers/routerProductos";
