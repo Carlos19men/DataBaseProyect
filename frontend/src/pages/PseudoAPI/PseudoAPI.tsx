@@ -8,7 +8,9 @@ const PseudoAPI: React.FC = () => {
 
 
 const establecimientos = JSON.stringify(usegetAllAPI("establishement"),null,2);
+
 const empleados = JSON.stringify(usegetAllAPI("employee"),null,2);
+
 const proveedores = JSON.stringify(usegetAllAPI("suppliers"),null,2);
 const inventarios = JSON.stringify(usegetAllAPI("inventory"),null,2);
 const marcas = JSON.stringify(usegetAllAPI("brand"),null,2);
@@ -25,6 +27,7 @@ const ofrecidos = JSON.stringify(usegetAllAPI("offered-services"),null,2);
     const  estPorId= JSON.stringify(parse2, null, 2);
 
     const empleadosPorId=JSON.stringify(usegetById("employee","12345724"), null, 2);
+   
     const proveedoresPorId=JSON.stringify(usegetById("suppliers","J-50077889-1"), null, 2);
     const inventariosPorId=JSON.stringify(usegetById("inventory",1), null, 2);
     const marcasPorId=JSON.stringify(usegetById("brand",1), null, 2);
