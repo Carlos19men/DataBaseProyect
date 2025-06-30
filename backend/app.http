@@ -57,7 +57,8 @@ Content-Type: application/json
 
 {
     "CI": "27",
-    "salary":700
+    "salary":700,
+    "address":"los mangos"
 }
 
 ### Obtener todos los servicios | listo 

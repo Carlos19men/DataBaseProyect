@@ -39,6 +39,7 @@ export class employeeModel {
         request.input('address',sql.NVarChar(15),address);
         request.input('salary',sql.Int, salary);  
 
+        
         const query = `UPDATE Empleados SET 
         nombre = ISNULL(@name, nombre), 
         apellido = ISNULL(@lastName, apellido), 
@@ -48,7 +49,7 @@ export class employeeModel {
         WHERE CI_emp = @CI; `;
 
         const result = await request.query(query);
-        console.log(result['recordset'][0])
+
         return { rowsAffected: result['rowsAffected'][0] }; // Devuelve objeto consistente
     }
 
