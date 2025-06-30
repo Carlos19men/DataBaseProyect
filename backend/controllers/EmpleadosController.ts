@@ -92,22 +92,22 @@ export class EmployeeController {
         }
     }
 
-    editEmployee = async(req: Request, res: Response<Employee | {message: string}>): Promise<void> => {
-        const {CI, name, lastName, cellphone, address, salary} = req.body;
+    editEmployee = async(req: Request, res: Response<{error: string} | {message: string}>): Promise<void> => {
+        const {CI = null, name = null, lastName = null, cellphone = null, address = null, salary = null} = req.body;
 
         if (CI != null) {
             if (!CI || CI.length === 0) {
-                res.status(400).json({message: "Se requiere la cédula del empleado"});
+                res.status(400).json({error: "Se requiere la cédula del empleado"});
                 return;
             }
         }
         
         
         try {
-            const result = await employeeModel.editEmployee({CI, name, lastName, cellphone, address, salary});
+            const result = await employeeModel.editEmployee(CI, name, lastName, cellphone, address, salary);
 
             if (result['rowsAffected'] === 0) {
-                res.status(400).json({message: 'No se editó ningún empleado'});
+                res.status(400).json({error: 'No se editó ningún empleado'});
                 return;
             }
 
@@ -147,8 +147,7 @@ export class EmployeeController {
         }  
     }
 
-    addEmployee = async(req: Request, res: Response<Employee | {message:string}>): Promise<void> => {
-
+    addEmployee = async(req: Request, res: Response<{error: string} | {message:string}>): Promise<void> => {
         const {CI,name, lastName, cellphone, address, salary, RIF} = req.body;
 
         if(CI === null || CI.length === 0 || CI === undefined){
@@ -164,10 +163,10 @@ export class EmployeeController {
         }
 
         try {
-            const result = await employeeModel.addEmpleado({CI, name, lastName, cellphone, address, salary: parseFloat(salary), RIF});
+            const result = await employeeModel.addEmpleado(CI, name, lastName, cellphone, address, parseInt(salary), RIF);
             
             if('error' in result){
-                res.status(400).json({message: result['error']});
+                res.status(400).json({error: result['error'] as string});
                 return;
             }
    

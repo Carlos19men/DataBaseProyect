@@ -65,14 +65,14 @@ export class brandController {
             return;
         }
         try{
-            const result = await brandModel.editBrand({id: brandId, name});
+            const result = await brandModel.editBrand(brandId, name);
 
-            if('error' in result){
+            if('error' in result || result.rowsAffected === 0){
                 res.status(400).json({message: "No se encontró una marca con ese código"});
                 return;
             }
 
-            res.status(200).json(result);
+            res.status(200).json({message: "Marca editada con éxito"});
             return;
         } catch(error) {
             console.error("Ha ocurrido un error", error);

@@ -65,36 +65,36 @@ export class FamilyProductsController {
         }
     }
 
-    updateFamily = async(req: Request, res: Response<FamilyProducts | {error: string}>): Promise<void> => {
+    updateFamily = async(req: Request, res: Response<{message: string} | {error: string}>): Promise<void> => {
         const {id_family, name} = req.body;
 
         try{
             const result = await FamilyProductsModel.updateFamily(id_family, name);
 
-            if(!result){
+            if(result.rowsAffected === 0){
                 res.status(404).json({error: "No se pudo actualizar la familia de productos"});
                 return;
             }
             
-            res.status(200).json(result);
+            res.status(200).json({message: "Familia de productos actualizada con éxito"});
         } catch(error){
             res.status(500).json({error: "Error al actualizar la familia de productos"});
             return;
         }
     }
 
-    deleteFamily = async(req: Request, res: Response<FamilyProducts | {error: string}>): Promise<void> => {
+    deleteFamily = async(req: Request, res: Response<{message: string} | {error: string}>): Promise<void> => {
         const id_family = parseInt(req.params.id_family,10);
 
         try{
             const result = await FamilyProductsModel.deleteFamily(id_family);
 
-            if(!result){
+            if(result.rowsAffected === 0){
                 res.status(404).json({error: "No se pudo eliminar la familia de productos"});
                 return;
             }
 
-            res.status(200).json(result);
+            res.status(200).json({message: "Familia de productos eliminada con éxito"});
         } catch(error){
             res.status(500).json({error: "Error al eliminar la familia de productos"});
             return;

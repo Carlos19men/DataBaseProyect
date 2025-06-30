@@ -62,7 +62,7 @@ export class ModelsController {
             const result = await ModelsModel.getByMarca(parseInt(id_marca));
 
             if('error' in result){
-                res.status(400).json({error: result.error});
+                res.status(400).json({error: result.error as string});
                 return;
             }
 
@@ -82,10 +82,10 @@ export class ModelsController {
         const nro_puesto = parseInt(nro_puesto_str,10);
 
         try{
-            const result = await ModelsModel.createModel({id_marca, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puesto}); 
+            const result = await ModelsModel.createModel(id_marca, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puesto); 
 
             if('error' in result && result.error !== undefined){
-                res.status(400).json({error: result.error});
+                res.status(400).json({error: result.error as string});
                 return;
             }
 
@@ -117,25 +117,28 @@ export class ModelsController {
 
         const marcaId = parseInt(id_marca);
         const modeloId = parseInt(id_modelo);
-        const peso: number | null = (peso_str != null && peso_str !== '') ? Number(peso_str) : null;
-        const nro_puesto: number | null = (nro_puesto_str != null && nro_puesto_str !== '') ? Number(nro_puesto_str) : null;
+        let peso: number | null = (peso_str != null && peso_str !== '') ? Number(peso_str) : null;
+        let nro_puesto: number | null = (nro_puesto_str != null && nro_puesto_str !== '') ? Number(nro_puesto_str) : null;
+
+        peso = isNaN(peso as number) ? null : peso;
+        nro_puesto = isNaN(nro_puesto as number) ? null : nro_puesto;
 
         try{
-            const result = await ModelsModel.editModel({
-                id_marca: marcaId,
-                id_modelo: modeloId,
+            const result = await ModelsModel.editModel(
+                marcaId,
+                modeloId,
                 nombre,
                 aceite_caja,
                 aceite_motor,
                 octanaje,
                 tipo_refrigerante,
-                peso: isNaN(peso as number) ? null : peso,
+                peso,
                 descripcion,
-                nro_puesto: isNaN(nro_puesto as number) ? null : nro_puesto
-            });
+                nro_puesto
+            );
 
             if('error' in result && result.error !== undefined){
-                res.status(400).json({error: result.error});
+                res.status(400).json({error: result.error as string});
                 return;
             }
 
@@ -156,10 +159,10 @@ export class ModelsController {
         const id_modelo = parseInt(req.params.id_modelo, 10);
 
         try{
-            const result = await ModelsModel.delete({id_marca, id_modelo});
+            const result = await ModelsModel.delete(id_marca, id_modelo);
 
             if('error' in result && result.error !== undefined){
-                res.status(400).json({error: result.error});
+                res.status(400).json({error: result.error as string});
                 return;
             }
 

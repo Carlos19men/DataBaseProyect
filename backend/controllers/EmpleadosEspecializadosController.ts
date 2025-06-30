@@ -110,14 +110,14 @@ export class EmpleadosEspecializadosController {
         }
         
         try {
-            const result = await EmpleadosEspecializadosModel.addSpecialization({
+            const result = await EmpleadosEspecializadosModel.addSpecialization(
                 CI_emp,
                 RIF_establecimiento,
                 nro_servicio
-            });
+            );
             
-            if (result && 'error' in result) {
-                res.status(400).json(result);
+            if (result.rowsAffected === 0) {
+                res.status(400).json({error: "No se pudo agregar la especialización"});
                 return;
             }
             
@@ -142,13 +142,13 @@ export class EmpleadosEspecializadosController {
         }
         
         try {
-            const result = await EmpleadosEspecializadosModel.deleteSpecialization({
+            const result = await EmpleadosEspecializadosModel.deleteSpecialization(
                 CI_emp,
                 nro_servicio
-            });
+            );
             
-            if (result && 'error' in result) {
-                res.status(400).json(result);
+            if (result.rowsAffected === 0) {
+                res.status(400).json({error: "No se pudo eliminar la especialización"});
                 return;
             }
             

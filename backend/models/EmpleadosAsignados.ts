@@ -54,7 +54,7 @@ export class employeeAsigModel {
         request.input('Ci_emp', Ci_emp);
 
         const result = await request.query('SELECT * FROM empleadosAsignadosSer(@RIF) WHERE CedulaEmpleado = @Ci_emp;');
-        return {rowsAffected:  result['recordset'][0]}
+        return result['recordset'][0];
     }
 
     static async getEmployeesNotAssigned(RIF: string) {
