@@ -59,16 +59,16 @@ export class EstablishmentController{
     }
 
     // Edit establishment
-    edit = async (req: Request, res: Response<{ message: string } | Establishment>): Promise<void> => {
+    edit = async (req: Request, res: Response<{ message: string } | {error: string}>): Promise<void> => {
         const { RIF, name, city } = req.body;
 
         try {
-            const result = await establishmentsModel.edit({ RIF, name, city});
+            const result = await establishmentsModel.edit(RIF, name, city);
             if (!result) {
-                res.status(400).json({ message: 'Error al editar el establecimiento. Verifica los datos proporcionados.'  });
+                res.status(400).json({error: 'Error al editar el establecimiento. Verifica los datos proporcionados.'  });
                 return;
             }
-            res.status(200).json(result);
+            res.status(200).json({message: 'Establecimiento editado con éxito'});
         } catch (error) {
             console.error('Error al editar establecimiento:')
             console.error(error);
@@ -106,7 +106,7 @@ export class EstablishmentController{
         }
 
         try {
-            const result = await establishmentsModel.add({ RIF, CI_PIC, name, city, date_PIC: date_E});
+            const result = await establishmentsModel.add(RIF, CI_PIC, name, city, date_PIC);
             
             if(result['rowsAffected'] === 0){
                 res.status(400).json({message:'No se agregó el establecimiento'})
@@ -161,7 +161,7 @@ export class EstablishmentController{
         }
 
         try {
-            const result = await establishmentsModel.asigPersonInCharge({RIF, CI_encargado, fecha});
+            const result = await establishmentsModel.asigPersonInCharge(RIF, CI_encargado, fecha);
             
             if(result['rowsAffected'] === 0) {
                 res.status(400).json({message: 'No se asignó ningún encargado'});

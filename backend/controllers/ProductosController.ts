@@ -89,18 +89,18 @@ export class ProductosController {
         }
 
         try {
-            const result = await ProductModel.create({
+            const result = await ProductModel.create(
                 nombre,
                 tipo,
                 precio,
-                descripcion: descripcion || null,
-                minimo: minimo || null,
-                maximo: maximo || null,
-                tratamiento: tratamiento || null,
-                nivelCon: nivelCon || null,
-                inf_manejo: inf_manejo || null,
-                id_familia: id_familia || null
-            });
+                descripcion || null,
+                minimo || null,
+                maximo || null,
+                tratamiento || null,
+                nivelCon || null,
+                inf_manejo || null,
+                id_familia || null
+            );
 
             if (result && typeof result === 'object' && 'error' in result) {
                 res.status(400).json({ message: result.error });
@@ -142,26 +142,26 @@ export class ProductosController {
         }
 
         try {
-            const result = await ProductModel.edit({
-                id_producto: productId,
+            const result = await ProductModel.edit(
+                productId,
                 nombre,
                 tipo,
                 precio,
-                descripcion: descripcion || null,
-                minimo: minimo || null,
-                maximo: maximo || null,
-                tratamiento: tratamiento || null,
-                nivelCon: nivelCon || null,
-                inf_manejo: inf_manejo || null,
-                id_familia: id_familia || null
-            });
+                descripcion || null,
+                minimo || null,
+                maximo || null,
+                tratamiento || null,
+                nivelCon || null,
+                inf_manejo || null,
+                id_familia || null
+            );
 
             if (result && typeof result === 'object' && 'error' in result) {
                 res.status(400).json({ message: result.error });
                 return;
             }
 
-            if (!result || result[0] === 0) {
+            if (!result || result.rowsAffected === 0) {
                 res.status(404).json({ message: 'Producto no encontrado.' });
                 return;
             }

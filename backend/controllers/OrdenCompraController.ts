@@ -15,7 +15,7 @@ export class OrdenCompraController {
         this.model = model;
     }
 
-    getAll = async (req: Request, res: Response<BuysOrder[] | { message: string }>): Promise<void> => {
+    getAll = async (_req: Request, res: Response<BuysOrder[] | { message: string }>): Promise<void> => {
         try {
             const ordenes: BuysOrder[] = await buysOrderModel.getAll();
 

@@ -44,10 +44,10 @@ export class EmpleadosEspecializadosModel {
         request.input('RIF_establecimiento', RIF_establecimiento);
         request.input('nro_servicio', nro_servicio);
 
-        const query = `EXEC  addEspecializacion @CI_emp, @RIF_establecimiento, @nro_servicio;`;
+        const query = `EXEC addEspecializacion @CI_emp, @RIF_establecimiento, @nro_servicio;`;
 
         const result = await request.query(query);
-        return {rowsAffected:  result['recordset'][0]}
+        return {rowsAffected:  result['rowsAffected'][0]}
     }
 
     static async deleteSpecialization( CI_emp: string, nro_servicio: number ) {

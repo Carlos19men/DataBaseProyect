@@ -78,11 +78,11 @@ export class CustomerController {
         
         try{
 
-            const response = await customerModel.edit({
-                                                CI: CI ?? null,
-                                                name: name ?? null,
-                                                lastName: lastName ?? null,
-                                                email: email ?? null})
+            const response = await customerModel.edit(
+                                                 CI ?? null,
+                                                 name ?? null,
+                                                 lastName ?? null,
+                                                 email ?? null);
 
             
             
@@ -109,7 +109,7 @@ export class CustomerController {
         }
 
         try {
-            const result = await customerModel.add({ CI, name, lastName, email })
+            const result = await customerModel.add(CI, name, lastName, email);
             if(result){
                 res.status(201).json({message: 'Cliente agregado con exito '}); // Envía el cliente agregado con status 201
                 return;
