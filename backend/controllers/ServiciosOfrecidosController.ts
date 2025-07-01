@@ -166,7 +166,7 @@ export class ServiciosOfrecidosController {
             return;
         } catch (error) {
             console.error('Error al agregar servicio ofrecido:', error);
-            res.status(500).json({ error: 'Error interno del servidor al agregar servicio ofrecido.' });
+            res.status(500).json({ error: 'El servicio ya existe.' });
             return;
         }
     }

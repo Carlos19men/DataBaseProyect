@@ -62,7 +62,7 @@ export class ServiciosOfrecidosModel {
         const query = `INSERT INTO ServiciosOfrecidos (RIF_establecimiento, nro_servicio) VALUES (@RIF_establecimiento, @nro_servicio);`;
 
         const result = await request.query(query);
-        return {rowsAffected:  result['recordset'][0]}
+        return {rowsAffected:  result['rowsAffected'][0]}
     }
 
     static async deleteService(
@@ -77,7 +77,7 @@ export class ServiciosOfrecidosModel {
             DELETE FROM ServiciosOfrecidos WHERE RIF_establecimiento = @RIF_establecimiento AND nro_servicio = @nro_servicio;
         `;
         const result = await request.query(query);
-        return {rowsAffected:  result['recordset'][0]}
+        return {rowsAffected:  result['rowsAffected'][0]}
     }
 
     static async getServicesNotOffered() {

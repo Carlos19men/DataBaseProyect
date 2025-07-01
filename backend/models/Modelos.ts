@@ -31,6 +31,8 @@ export class ModelsModel{
         //creamos la query 
         const request = getDbPool().request()
 
+        //console.log({id_marca, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puesto});
+
         request.input('ID_marca',id_marca)
         request.input('nombre', sql.NVarChar(100), nombre)
         request.input('aceite_caja',aceite_caja)
@@ -44,7 +46,7 @@ export class ModelsModel{
         //query
         const query = `INSERT INTO Modelos (cod_marca, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puestos)
                         VALUES 
-                        (@id_marca, @nombre, @aceite_caja, @aceite_motor, @octanaje, @tipo_refrigerante, @peso, @descripcion, @nro_puesto); `
+                        (@ID_marca, @nombre, @aceite_caja, @aceite_motor, @octanaje, @tipo_refrigerante, @peso, @descripcion, @nro_puesto); `
 
         const result = await request.query(query);
 

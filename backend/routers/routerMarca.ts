@@ -9,7 +9,7 @@ export const createbrandRouter = () => {
     Brandrouter.get('/', Brandcontroller.getAll);
     Brandrouter.get('/:id', Brandcontroller.getbyID);
     Brandrouter.post('/', Brandcontroller.addBrand);
-    Brandrouter.patch('/:id', Brandcontroller.editBrand);
+    Brandrouter.patch('/', Brandcontroller.editBrand);
     Brandrouter.delete('/:id', Brandcontroller.deleteBrand);
 
     return Brandrouter;
