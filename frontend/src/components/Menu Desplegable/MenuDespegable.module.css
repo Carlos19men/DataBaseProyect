@@ -4,9 +4,26 @@
   border: none;
   cursor: pointer;
   position: fixed;
-  top: 20px;
+
   left: 20px;
   z-index: 2000;
+}
+
+.hamburguesa.activo {
+  color: var(--primary-green);
+  
+}
+
+.hamburguesa:focus {
+  outline: none;
+    text-emphasis: none;
+  text-decoration: none;
+}
+.hamburguesa:hover  {
+  color: #333;
+  text-emphasis: none;
+  text-decoration: none;
+  background-color: transparent;
 }
 
 .menu {
@@ -32,10 +49,11 @@
   font-size: 48px;
   line-height: 100%;
   letter-spacing: 0.5px;  
-  text-align: left; 
-  margin-top: 20px;
-  margin-left: 70px;
-  margin-bottom: 80px;
+  text-align: right; 
+
+padding-right: 1em;
+  height: 12vh;
+  margin: 0;
 }
 
 .menu ul {

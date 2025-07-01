@@ -29,7 +29,7 @@ const MenuDespegable: React.FC = () => {
             {activo && <div className={styles.overlay} onClick={cerrarMenu}></div>}
 
             <nav className={`${styles.menu} ${activo ? styles.activo : ''}`}>
-                <h2 className={styles.h2}>Menu</h2>
+                <div className={styles.h2}><h2 className={styles.h2}>Menu</h2></div>
                 <div className={styles.menuVerde}>
                     <ul>
                         <li><a href="/"><img src={home} alt="Inicio" /> Inicio</a></li>

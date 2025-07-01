@@ -8,3 +8,6 @@
     background-color: var(--primary-green);
 }
 
+.serviceBox{
+    grid-column: auto;
+}

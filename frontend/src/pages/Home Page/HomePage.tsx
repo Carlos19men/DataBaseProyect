@@ -5,18 +5,25 @@ import styles from "./HomePage.module.css";
 
 
 const HomePage: React.FC = () => {
-    const [prueba, setPrueba] = useState('');
-    
-    const handelChangePrueba = (e:any) => {
-        setPrueba(e.target.value);
-    }
 
     return(
         <div>
             <TopBar text="Inicio" menu={true}></TopBar>
             <h1 className="subtitle">En M&U ofrecemos los siguientes servicios</h1>
-            <TextBoxMU etiqueta="prueba" viewWidth={60} value={prueba} onChange={handelChangePrueba}></TextBoxMU>
-            <TopBar text={prueba} menu={true}></TopBar>
+            <div style={{height:"50vh", display:"grid", gridTemplateColumns:"repeat(3, 1fr)", background:"lightgray"}}>
+                <div className={styles.serviceBox}>
+                    <h2>Servicio 1</h2>
+                    <p>Descripción del servicio 1.</p>
+                </div>
+                <div className={styles.serviceBox}>
+                    <h2>Servicio 2</h2>
+                    <p>Descripción del servicio 2.</p>
+                </div>
+                <div className={styles.serviceBox}>
+                    <h2>Servicio 3</h2>
+                    <p>Descripción del servicio 3.</p>
+                </div>
+            </div>
         </div>
     )
 }
