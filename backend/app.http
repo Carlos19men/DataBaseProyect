@@ -406,3 +406,26 @@ GET http://localhost:1234/buys/1
 
 ### Eliminar una compra por su id. | listo
 DELETE http://localhost:1234/buys/1
+
+### Router de EmpleadosAsignados.
+
+### Obtener todos los empleados asignados de un establecimiento.
+GET http://localhost:1234/assignedEmployee/J-00112233-4
+
+### Obtener todos los empleados no asignados de un establecimiento.
+GET http://localhost:1234/assignedEmployee/J-00112233-4/no-assigned
+
+### Asignar un empleado a un establecimiento.
+POST http://localhost:1234/assignedEmployee
+Content-Type: application/json
+
+{
+    "RIF": "J-00112233-4",
+    "id_servicio": 1,
+    "Ci_emp": "27901234"
+}
+
+### Desasignar un empleado de un establecimiento.
+DELETE http://localhost:1234/assignedEmployee/J-00112233-4/1/27901234
+
+### Router de 

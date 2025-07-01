@@ -6,12 +6,10 @@ export const createAsignedEmployeeRouter = () => {
     const AssignedEmployeeRouter = Router();
     const controller = new EmployeeAsigController(employeeAsigModel);
 
-    
-
     AssignedEmployeeRouter.get('/:RIF', controller.getByEstablecimiento);
     AssignedEmployeeRouter.get('/:RIF/:id_servicio', controller.getByService);
-    AssignedEmployeeRouter.post('/:RIF/:id_servicio/:Ci_emp', controller.asignEmployee);
-    AssignedEmployeeRouter.delete('/:id_servicio/:Ci_emp', controller.unassignEmployee);
+    AssignedEmployeeRouter.post('/', controller.asignEmployee);
+    AssignedEmployeeRouter.delete('/', controller.unassignEmployee);
 
     return AssignedEmployeeRouter;
 }

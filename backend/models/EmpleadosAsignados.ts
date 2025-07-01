@@ -34,7 +34,7 @@ export class employeeAsigModel {
 
         const result = await request.query('EXEC asigEmpleado(@RIF,@id_servicio,@Ci_emp);')
 
-        return result['recordset'][0];
+        return {rowsAffected: result['rowsAffected'][0]};
     }
 
     static async unasigEmployee(id_servicio:number,Ci_emp:string){
