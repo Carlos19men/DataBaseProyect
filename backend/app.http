@@ -432,6 +432,48 @@ Content-Type: application/json
 }
 
 ### Desasignar un empleado de un establecimiento.
-DELETE http://localhost:1234/assignedEmployee/J-00112233-4/1/27901234
+DELETE http://localhost:1234/assignedEmployee
+Content-Type: application/json
 
-### Router de 
+{
+    "id_servicio": 1,
+    "Ci_emp": "27901234"
+}
+
+### Router de Proveedores Asociados
+
+### Obtener todos los proveedores asociados
+GET http://localhost:1234/associated-suppliers
+
+### Obtener proveedores asociados por RIF
+GET http://localhost:1234/associated-suppliers/J-00112233-4
+
+### Insertar un nuevo proveedor asociado
+POST http://localhost:1234/associated-suppliers
+Content-Type: application/json
+
+{
+    "RIF_proveedor": "J-00112233-4",
+    "nro_orden": 1
+}
+
+### Actualizar un proveedor asociado
+PATCH http://localhost:1234/associated-suppliers
+Content-Type: application/json
+
+{
+    "RIF_proveedor": "J-00112233-4",
+    "nro_orden": 1,
+    "new_RIF_proveedor": "J-00112233-5",
+    "new_nro_orden": 2
+}
+
+### Eliminar un proveedor asociado
+DELETE http://localhost:1234/associated-suppliers
+Content-Type: application/json
+
+{
+    "RIF_proveedor": "J-00112233-4",
+    "nro_orden": 1
+} 
+

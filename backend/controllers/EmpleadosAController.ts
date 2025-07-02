@@ -80,21 +80,25 @@ export class EmployeeAsigController {
     }
 
     unassignEmployee = async(req: Request, res: Response<{error: string} | {message: string}>): Promise<void> => {
-        const id_servicio = parseInt(req.params.id_servicio, 10);
-        const Ci_emp = req.params.Ci_emp;
+        const { id_servicio, Ci_emp } = req.body;
 
-        try{
+        if (!id_servicio || !Ci_emp) {
+            res.status(400).json({ error: "Faltan datos" });
+            return;
+        }
+
+        try {
             const result = await employeeAsigModel.unasigEmployee(id_servicio, Ci_emp);
 
-            if(!result || 'error' in result){
-                res.status(404).json({error: "No se pudo desasignar el empleado"});
+            if (!result || result.rowsAffected === 0) {
+                res.status(404).json({ error: "No se pudo desasignar el empleado" });
                 return;
             }
 
-            res.status(200).json({message: "Empleado desasignado exitosamente"});
-        } catch(error){
+            res.status(200).json({ message: "Empleado desasignado exitosamente" });
+        } catch (error) {
             console.error("Ha ocurrido un error", error);
-            res.status(500).json({error: "Error al desasignar el empleado"});
+            res.status(500).json({ error: "Error al desasignar el empleado" });
         }
     }
 

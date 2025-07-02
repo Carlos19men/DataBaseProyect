@@ -1,16 +1,15 @@
-	CREATE FUNCTION empleadosAsignadosSer(
+CREATE FUNCTION empleadosAsignadosSer(
 	@RIF varchar(100)
-	)
-	RETURNS TABLE
-	AS
-	RETURN (
-		SELECT Ser.nro_servicio ID_servicio, Ser.nombre_ser,CI_emp CedulaEmpleado,Em.nombre,Em.apellido 
-		FROM 
-			Servicios Ser,Empleados Em, EmpleadosAsignados EA, Establecimientos Est
-		WHERE 
-			Ser.nro_servicio = EA.nro_servicio AND Em.CI_emp = EA.CI_empleado and Em.RIF_establecimiento = @RIF
-	);
-GO
+)
+RETURNS TABLE
+AS
+RETURN (
+	SELECT Ser.nro_servicio ID_servicio, Ser.nombre_ser,CI_emp CedulaEmpleado,Em.nombre,Em.apellido 
+	FROM 
+		Servicios Ser,Empleados Em, EmpleadosAsignados EA, Establecimientos Est
+	WHERE 
+		Ser.nro_servicio = EA.nro_servicio AND Em.CI_emp = EA.CI_empleado and Em.RIF_establecimiento = @RIF
+);
 
 CREATE FUNCTION empleadosNoAsignados(
 @RIF varchar(100)
@@ -20,7 +19,7 @@ AS
 RETURN (
 	SELECT * FROM Empleados EM WHERE CI_emp NOT IN (SELECT CedulaEmpleado FROM empleadosAsignadosSer(@RIF)) AND RIF_establecimiento = @RIF
 );
-GO
+
 --asignar empleado 
 CREATE PROCEDURE asigEmpleado
 @RIF_establecimiento VARCHAR(100),
@@ -37,7 +36,7 @@ BEGIN
 		THROW 50002,'El establecimiento no ofrece ese servicio',1;
 	
 	INSERT INTO EmpleadosAsignados (nro_servicio, CI_empleado) VALUES (@id_servicio,@CI_empleado); 
+END;
 
-	print 'empleado asignado con exito'
-END; 
-GO
+drop procedure asigEmpleado; 
+
