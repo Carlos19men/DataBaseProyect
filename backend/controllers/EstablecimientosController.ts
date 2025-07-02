@@ -147,21 +147,30 @@ export class EstablishmentController{
         }
     }
 
-    assignPersonInCharge = async(req: Request, res: Response<{message: string}>): Promise<void> => {
-        const {RIF, CI_encargado, fecha} = req.body;
+    assignPersonInCharge = async(req: Request, res: Response<{message: string} | {error:string}>): Promise<void> => {
+        const {RIF, CI_PIC, date_PIC} = req.body;
+
 
         if(!RIF || RIF.length === 0) {
             res.status(400).json({message: "Se requiere el RIF del establecimiento"});
             return;
         }
 
-        if(!CI_encargado || CI_encargado.length === 0) {
-            res.status(400).json({message: "Se requiere la cédula del encargado"});
-            return;
-        }
-
         try {
-            const result = await establishmentsModel.asigPersonInCharge(RIF, CI_encargado, fecha);
+            var date_E = new Date(date_PIC)
+
+            if(isNaN(date_E.getTime())){
+                throw new Error('Formato de fecha  no valido: usar YYYY-MM-DD')
+            }
+            if(CI_PIC && !date_E){
+                date_E = new Date()
+            }
+
+            if(!CI_PIC && date_PIC){
+                res.status(400).json({error: 'Se necesita la cedula del encargado y la fecha de encargo'})
+                return ;
+            }
+            const result = await establishmentsModel.asigPersonInCharge(RIF, CI_PIC, date_E);
             
             if(result['rowsAffected'] === 0) {
                 res.status(400).json({message: 'No se asignó ningún encargado'});
@@ -171,8 +180,7 @@ export class EstablishmentController{
             res.status(200).json({message: 'Encargado asignado con éxito'});
             return;
         } catch (error) {
-            console.error("Error al asignar encargado", error);
-            res.status(500).json({message: "Error interno del servidor al asignar encargado"});
+            res.status(500).json({error: "Error interno del servidor: "+error});
             return;
         }
     }
@@ -197,7 +205,7 @@ export class EstablishmentController{
             return;
         } catch (error) {
             console.error("Error al eliminar encargado", error);
-            res.status(500).json({message: "Error interno del servidor al eliminar encargado"});
+            res.status(500).json({message: "Error interno del servidor al eliminar encargado "+error});
             return;
         }
     }

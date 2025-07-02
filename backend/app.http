@@ -2,7 +2,7 @@
 http://localhost:1234/customer/
 
 ###Obtener un cliente por su cedula | listo 
-http://localhost:1234/customer/27
+http://localhost:1234/customer/
 
 ###Post un nuevo cliente | Listo
 POST http://localhost:1234/customer
@@ -29,10 +29,10 @@ Content-Type: application/json
 http://localhost:1234/employee/
 
 ### Obtener un empleado por su cedula | listo 
-http://localhost:1234/employee/27
+http://localhost:1234/employee/12345718
 
 ### empleados que trabajen en cierto establecimiento  | listo 
-http://localhost:1234/employee/RIF/J-00112233-4
+http://localhost:1234/employee/RIF/J-11223344-5
 
 ### agregar un nuevo empleado |listo
 POST http://localhost:1234/employee/ 
@@ -90,7 +90,7 @@ DELETE http://localhost:1234/servicie/21
 http://localhost:1234/establishement
 
 ### Obtener todos los establecimientos por RIF | Listo 
-http://localhost:1234/establishement/J-02233-10
+http://localhost:1234/establishement/J-11223344-5
 
 ### Agregar un nuevo establecimiento | Listo 
 POST http://localhost:1234/establishement/
@@ -109,7 +109,7 @@ Content-Type: application/json
 {
     "RIF": "J-02233-10",
     "name": "Establecimiento 1",
-    "city": "Ciudad 1"
+    "city": "Ciudad 7878"
 }
 
 ### Asignar nuevo encargado
@@ -117,13 +117,19 @@ PATCH http://localhost:1234/establishement/assign-person-in-charge
 Content-Type: application/json
 
 {
-    "RIF": "J-02233-10",
-    "CI_PIC": "1234",
-    "date_PIC": "Ciudad 1"
+    "RIF": "J-11223344-5",
+    "CI_PIC": "12345699",
+    "date_PIC": "2025-09-06"
 }
 
+PATCH http://remove-person-in-charge
+
 ### Borrar establecimiento 
-DELETE  http://localhost:1234/establishement/J-02233-10
+PATCH   http://localhost:1234/establishement/remove-person-in-charge/J-11223344-5
+Content-Type: application/json
+
+{
+}
 
 ### Obtener todos los servicios ofrecidos | listo
 http://localhost:1234/offered-services/

@@ -1,4 +1,6 @@
 import { getDbPool } from "../config/SQLserverConection";
+import * as sql from 'mssql';
+
 
 export class establishmentsModel{
     static async getAll() {
@@ -34,7 +36,7 @@ export class establishmentsModel{
         `
 
         const result = await request.query(query);
-        return {rowsAffected: result['recordset'][0]};
+        return {rowsAffected: result['rowsAffected'][0]};
     }
 
     static async add(RIF: string, CI_PIC: string | null, name: string, city: string, date_PIC: Date | null){
@@ -61,20 +63,24 @@ export class establishmentsModel{
     static async asigPersonInCharge(RIF:string,CI_encargado:string | null,fecha:Date | null){
         const request = getDbPool().request();
 
+        console.log
         request.input("RIF",RIF)
         request.input("CI_encargado",CI_encargado)
-        request.input("fecha_encargado",fecha)
+        request.input("fecha_encargado",sql.Date,fecha)
 
-        const result = await request.query(`UPDATE Establecimientos 
-                                            SET CI_encargado = @CI_encargado,
-                                            fecha_encargado = @fecha
-                                            WHERE RIF_establecimiento = @RIF;`)
+        const result = await request.query(`EXEC AddEncargado @RIF,@CI_encargado,@fecha_encargado;`)
 
         return {rowsAffected: result['rowsAffected'][0]}
     }
 
-    static async removePersonInCharge(RIF: string) {
-        return this.asigPersonInCharge(RIF,null,null);
+    static async removePersonInCharge(RIF:string) {
+        const request = getDbPool().request();
+
+        request.input("RIF",RIF)
+
+        const result = await request.query(`UPDATE Establecimientos SET CI_encargado = null,fecha_encargado = null WHERE RIF = @RIF;`)
+
+        return {rowsAffected: result['rowsAffected'][0]}
     }
 
     static async deleteEstablishment(RIF: string){
