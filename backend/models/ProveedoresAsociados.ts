@@ -28,7 +28,7 @@ export class associatedEmployeesModel{
         request.input('nro_orden', nro_orden);
         request.input('new_RIF_proveedor', new_RIF_proveedor);
         request.input('new_nro_orden', new_nro_orden);
-        const result = await request.query('UPDATE ProveedoresAsociados SET RIF_proveedor = @new_RIF_proveedor, nro_orden = @new_nro_orden WHERE RIF_proveedor = @RIF_proveedor AND nro_orden = @nro_orden;');
+        const result = await request.query('UPDATE ProveedoresAsociados SET RIF_proveedor = ISNULL(@new_RIF_proveedor, RIF_proveedor), nro_orden = ISNULL(@new_nro_orden, nro_orden) WHERE RIF_proveedor = @RIF_proveedor AND nro_orden = @nro_orden;');
         return { rowsAffected: result['rowsAffected'][0] };
     }
 

@@ -39,7 +39,7 @@ export class Actividades {
         request.input('nro_s', nro_s);
 
 
-        const result = await request.query('SELECT * FROM getByServicio(@nro_s);');
+        const result = await request.query('SELECT * FROM Actividades where nro_servicio = @nro_s;');
 
         return result['recordset']
 
@@ -55,24 +55,23 @@ export class Actividades {
         request.input('nro_corr', nro_corr);
 
 
-        const result = await request.query('SELECT * FROM getByServicio(@nro_s,@nro_corr);');
+        const result = await request.query('SELECT * FROM Actividades where nro_servicio = @nro_s and nro_correlativo = @nro_corr;');
 
         return result['recordset'][0]
 
     }
 
-    static async createActividad(nro_s: number, nro_a: number, nomb: string, desc: String, monto: number ) {
+    static async createActividad(nro_s: number, nomb: string, desc: String, monto: number ) {
 
         const request = getDbPool().request()
 
 
         request.input('nro_s', nro_s);
-        request.input('nro_corr', nro_a);
         request.input('nomb', nomb);
         request.input('desc', desc);
         request.input('monto', monto);
 
-        const result = await request.query('EXEC createActividad @nro_s,@nro_a,@nomb,@desc,@monto;');
+        const result = await request.query('EXEC createActividad @nro_s,@nomb,@desc,@monto;');
 
         return {rowsAffected: result['rowsAffected'][0]}
 
@@ -80,7 +79,7 @@ export class Actividades {
 
     static async updateActividad(
             nro_s: number,
-            nro_a: number,
+            nro_correlativo: number,
             nomb?: string,
             desc?: String, 
             monto?: number 
@@ -88,7 +87,7 @@ export class Actividades {
         const request = getDbPool().request();
         
         request.input('nro_s', nro_s); 
-        request.input('nro_a', nro_a); 
+        request.input('nro_a', nro_correlativo); 
         request.input('nomb', nomb);
         request.input('desc', desc);
         request.input('monto', monto);
@@ -100,14 +99,12 @@ export class Actividades {
 
     static async deleteActividad(
         nro_s: number,
-        nro_corr: number
+        nro_correlativo: number
         ) {
         const request = getDbPool().request()
 
-
         request.input('nro_s', nro_s);
-        request.input('nro_corr', nro_corr);
-
+        request.input('nro_corr', nro_correlativo);
 
         const result = await request.query('EXEC deleteActividad @nro_s,@nro_corr;');
 

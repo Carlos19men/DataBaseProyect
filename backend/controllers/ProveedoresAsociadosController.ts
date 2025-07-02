@@ -59,10 +59,13 @@ export class ProveedoresAsociadosController {
 
     update = async (req: Request, res: Response<{ message: string} | {error: string} >): Promise<void> => {
         const { RIF_proveedor, nro_orden, new_RIF_proveedor, new_nro_orden } = req.body;
-        if (!RIF_proveedor || !nro_orden || !new_RIF_proveedor || !new_nro_orden) {
-            res.status(400).json({ error: "Faltan datos obligatorios: RIF_proveedor, nro_orden, new_RIF_proveedor y new_nro_orden." });
+        
+        // Solo requerir los campos de identificación para actualizaciones parciales
+        if (!RIF_proveedor || !nro_orden) {
+            res.status(400).json({ error: "Faltan datos obligatorios: RIF_proveedor y nro_orden (campos de identificación)." });
             return;
         }
+        
         try {
             const result = await associatedEmployeesModel.update(RIF_proveedor, nro_orden, new_RIF_proveedor, new_nro_orden);
             if (result.rowsAffected === 0) {
