@@ -1,0 +1,24 @@
+.serviceBox {
+height: 90%;
+width: 90%;
+background-color: white;
+border: 2px solid rgb(211, 211, 211);
+margin: 2.5%;
+padding-left: 20px;
+
+border-radius: 10px;
+
+}
+
+.tarjetaCont{
+height:50vh;
+display:grid;
+grid-template-columns:repeat(3, 1fr);
+background:var(--btn_dormido);
+}
+
+.a, a:link, a:visited { 
+    text-decoration: none;
+    color: black;
+
+}

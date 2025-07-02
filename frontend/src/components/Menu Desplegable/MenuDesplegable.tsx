@@ -29,9 +29,13 @@ const MenuDespegable: React.FC = () => {
             {activo && <div className={styles.overlay} onClick={cerrarMenu}></div>}
 
             <nav className={`${styles.menu} ${activo ? styles.activo : ''}`}>
-                <div className={styles.h2}><h2 className={styles.h2}>Menu</h2></div>
-                <div className={styles.menuVerde}>
+                    
+                <div className={styles.menuVerde}> 
+                    <ul className={styles.h2} style={{padding: "0"}}>
+                        <div style={{transform:"translateY(2vh)" }}>Menu</div>
+                    </ul>  
                     <ul>
+
                         <li><a href="/"><img src={home} alt="Inicio" /> Inicio</a></li>
                         <li><a href="/Busqueda"><img src={search} alt="Buscar" /> Busqueda</a></li>
                         <li><a href="/Proveedores"><img src={box} alt="Proveedores" /> Proveedores</a></li>

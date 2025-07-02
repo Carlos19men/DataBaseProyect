@@ -9,8 +9,9 @@ const HomePage: React.FC = () => {
     return(
         <div>
             <TopBar text="Inicio" menu={true}></TopBar>
-            <h1 className="subtitle">En M&U ofrecemos los siguientes servicios</h1>
-            <div style={{height:"50vh", display:"grid", gridTemplateColumns:"repeat(3, 1fr)", background:"lightgray"}}>
+            <a href="/HomePage">
+                <h1 className="subtitle">Servicios más solicitados de nuestros clientes</h1>
+                <div className={styles.tarjetaCont}>
                 <div className={styles.serviceBox}>
                     <h2>Servicio 1</h2>
                     <p>Descripción del servicio 1.</p>
@@ -23,7 +24,43 @@ const HomePage: React.FC = () => {
                     <h2>Servicio 3</h2>
                     <p>Descripción del servicio 3.</p>
                 </div>
-            </div>
+                </div>
+            </a>
+            <a href="/HomePage">
+                <h1 className="subtitle">Empleados más activos</h1>
+                <div className={styles.tarjetaCont}>
+                <div className={styles.serviceBox}>
+                    <h2>Empleado 1</h2>
+                    <p>Descripción del empleado 1.</p>
+                </div>
+                <div className={styles.serviceBox}>
+                    <h2>Empleado 2</h2>
+                    <p>Descripción del empleado 2.</p>
+                </div>
+                <div className={styles.serviceBox}>
+                    <h2>Empleado 3</h2>
+                    <p>Descripción del empleado 3.</p>
+                </div>
+                </div>
+            </a>
+            <a href="/HomePage">
+                <h1 className="subtitle">Nuestros proveedores</h1>
+                <div className={styles.tarjetaCont}>
+                    <div className={styles.serviceBox}>
+                        <h2>Proveedor 1</h2>
+                        <p>Descripción del proveedor 1.</p>
+                    </div>
+                    <div className={styles.serviceBox}>
+                        <h2>Proveedor 2</h2>
+                        <p>Descripción del proveedor 2.</p>
+                    </div>
+                    <div className={styles.serviceBox}>
+                        <h2>Proveedor 3</h2>
+                        <p>Descripción del proveedor 3.</p>
+                    </div>
+                </div>
+            </a>
+            <TopBar text="" menu={false}></TopBar>
         </div>
     )
 }

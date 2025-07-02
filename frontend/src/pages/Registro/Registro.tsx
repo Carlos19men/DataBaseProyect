@@ -36,40 +36,40 @@ const Registro: React.FC  = () => {
                 {tipo === "empleado" && 
                     <div>
                         <div className={styles.form}>
-                            <TextBoxMU etiqueta="Nombres: " viewWidth={27} viewHeight={5} value={nombreEmpleado} onChange={(e:any) => setNombreEmpleado(e.target.value)}></TextBoxMU>
-                            <TextBoxMU etiqueta="Apellidos: " viewWidth={27} viewHeight={5} value={apellidoEmpleado} onChange={(e:any) => setApellidoEmpleado(e.target.value)}></TextBoxMU>
+                            <TextBoxMU  ejemplo="Juan"  etiqueta="Nombres: " viewWidth={27} viewHeight={5} value={nombreEmpleado} onChange={(e:any) => setNombreEmpleado(e.target.value)}></TextBoxMU>
+                            <TextBoxMU  ejemplo="Pérez"  etiqueta="Apellidos: " viewWidth={27} viewHeight={5} value={apellidoEmpleado} onChange={(e:any) => setApellidoEmpleado(e.target.value)}></TextBoxMU>
                         </div>
                         <div className={styles.form}>
-                            <TextBoxMU etiqueta="Cedula de Identidad: " viewWidth={8.5}viewHeight={5}></TextBoxMU>
-                            <TextBoxMU etiqueta="" viewWidth={45}viewHeight={5} value={cedulaEmpleado} onChange={(e:any) => setCedulaEmpleado(e.target.value)}></TextBoxMU>
+                            <TextBoxMU  ejemplo="V"  etiqueta="Cedula de Identidad: " viewWidth={8.5}viewHeight={5}></TextBoxMU>
+                            <TextBoxMU  ejemplo="12345724"  etiqueta="" viewWidth={45}viewHeight={5} value={cedulaEmpleado} onChange={(e:any) => setCedulaEmpleado(e.target.value)}></TextBoxMU>
                         </div>
                         <div className={styles.form}>
-                            <TextBoxMU etiqueta="Correo Electronico: " viewWidth={60}viewHeight={5} value={correoEmpleado} onChange={(e:any) => setCorreoEmpleado(e.target.value)}></TextBoxMU>
+                            <TextBoxMU  ejemplo="example@example.com"  etiqueta="Correo Electronico: " viewWidth={60}viewHeight={5} value={correoEmpleado} onChange={(e:any) => setCorreoEmpleado(e.target.value)}></TextBoxMU>
                         </div>
                         <div className={styles.form}>
-                            <TextBoxMU etiqueta="Sueldo: " viewWidth={20}viewHeight={5} value={sueldoEmpleado} onChange={(e:any) => setSueldoEmpleado(e.target.value)}></TextBoxMU>
-                            <TextBoxMU etiqueta="Numero de telefono: " viewWidth={26}viewHeight={5} value={telefonoEmpleado} onChange={(e:any) => setTelefonoEmpleado(e.target.value)}></TextBoxMU>
+                            <TextBoxMU  ejemplo="100.00"  etiqueta="Sueldo: " viewWidth={20}viewHeight={5} value={sueldoEmpleado} onChange={(e:any) => setSueldoEmpleado(e.target.value)}></TextBoxMU>
+                            <TextBoxMU  ejemplo="02145555555"  etiqueta="Numero de telefono: " viewWidth={26}viewHeight={5} value={telefonoEmpleado} onChange={(e:any) => setTelefonoEmpleado(e.target.value)}></TextBoxMU>
                         </div>
                         <div className={styles.form}>
-                            <TextBoxMU etiqueta="Direccion: " viewWidth={68}viewHeight={5} value={direccionEmpleado} onChange={(e:any) => setDireccionEmpleado(e.target.value)}></TextBoxMU>
+                            <TextBoxMU  ejemplo="Calle 1"  etiqueta="Direccion: " viewWidth={68}viewHeight={5} value={direccionEmpleado} onChange={(e:any) => setDireccionEmpleado(e.target.value)}></TextBoxMU>
                         </div>
                         <div className={styles.form}>
-                            <TextBoxMU etiqueta="RIF del Establecimiento: " viewWidth={55}viewHeight={5} value={rifEmpleado} onChange={(e:any) => setRifEmpleado(e.target.value)}></TextBoxMU>
+                            <TextBoxMU  ejemplo="J-00112233-4"  etiqueta="RIF del Establecimiento: " viewWidth={55}viewHeight={5} value={rifEmpleado} onChange={(e:any) => setRifEmpleado(e.target.value)}></TextBoxMU>
                         </div>
                     </div>
                 }
                 {tipo === "cliente" && 
                     <div>
                         <div className={styles.form}>
-                            <TextBoxMU etiqueta="Nombres: " viewWidth={27} viewHeight={5} value={nombreCliente} onChange={(e:any) => setNombreCliente(e.target.value)}></TextBoxMU>
-                            <TextBoxMU etiqueta="Apellidos: " viewWidth={27} viewHeight={5} value={apellidoCliente} onChange={(e:any) => setApellidoCliente(e.target.value)}></TextBoxMU>
+                            <TextBoxMU  ejemplo="Jesus"  etiqueta="Nombres: " viewWidth={27} viewHeight={5} value={nombreCliente} onChange={(e:any) => setNombreCliente(e.target.value)}></TextBoxMU>
+                            <TextBoxMU  ejemplo="Pérez"  etiqueta="Apellidos: " viewWidth={27} viewHeight={5} value={apellidoCliente} onChange={(e:any) => setApellidoCliente(e.target.value)}></TextBoxMU>
                         </div>
                         <div className={styles.form}>
-                            <TextBoxMU etiqueta="Cedula de Identidad: " viewWidth={8.5}></TextBoxMU>
-                            <TextBoxMU etiqueta="" viewWidth={45} value={cedulaCliente} onChange={(e:any) => setCedulaCliente(e.target.value)}></TextBoxMU>
+                            <TextBoxMU  ejemplo="v"  etiqueta="Cedula de Identidad: " viewWidth={8.5}></TextBoxMU>
+                            <TextBoxMU  ejemplo="12345678"  etiqueta="" viewWidth={45} value={cedulaCliente} onChange={(e:any) => setCedulaCliente(e.target.value)}></TextBoxMU>
                         </div>
                         <div className={styles.form}>
-                            <TextBoxMU etiqueta="Correo Electronico: " viewWidth={60} value={correoCliente} onChange={(e:any) => setCorreoCliente(e.target.value)}></TextBoxMU>
+                            <TextBoxMU  ejemplo="x@example.com"  etiqueta="Correo Electronico: " viewWidth={60} value={correoCliente} onChange={(e:any) => setCorreoCliente(e.target.value)}></TextBoxMU>
                         </div>
                     </div>
                 }

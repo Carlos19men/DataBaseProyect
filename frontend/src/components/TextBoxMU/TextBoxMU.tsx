@@ -3,19 +3,20 @@ import styles from './TextBoxMU.module.css'
 interface TextBoxMUProps {
   etiqueta: string;
   viewWidth: number;
-  viewHeight?: number; // Optional, not used in this component
+  viewHeight?: number; 
   value?: string; 
   onChange?: any;
+  ejemplo:string;
 }
 
 const TextBoxMU: React.FC<TextBoxMUProps> = ({ 
-  etiqueta, viewWidth,viewHeight,value,onChange
+  etiqueta, viewWidth,viewHeight,value,onChange,ejemplo
   }) => {
 
   return (
     <span className={styles.container}>
-      <span className={styles.texto} style={{height:`${viewHeight}vh`}}>{etiqueta}</span>
-        <input type="text" className={styles.barra} style={{width:`${viewWidth}vw`,height:`${viewHeight}vh`}}
+      <span className={styles.texto}   style={{height:`${viewHeight}vh`}} >{etiqueta}</span>
+        <input type="text" className={styles.barra}  placeholder={ejemplo}  style={{width:`${viewWidth}vw`,height:`${viewHeight}vh`}}
         value={value} onChange={onChange}></input>
     </span>
   );

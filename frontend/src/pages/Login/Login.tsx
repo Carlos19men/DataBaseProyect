@@ -46,7 +46,7 @@ const Login: React.FC = () => {
             <TopBar menu={false} text="Inicio de sesión" />
             <div className={styles.centrado}>
                     <div>
-                        <TextBoxMU etiqueta="Ingrese su cedula: " viewWidth={60} value={cedulaEmpleado} onChange={e => setCedulaE(e.target.value)} ></TextBoxMU>
+                        <TextBoxMU etiqueta="Ingrese su cedula: " ejemplo="12345724" viewWidth={60} value={cedulaEmpleado} onChange={e => setCedulaE(e.target.value)} ></TextBoxMU>
                     </div>   
             </div>
             <div className={styles.error}>{textoErr}</div>
@@ -58,22 +58,3 @@ const Login: React.FC = () => {
 };
 
 export default Login;
-
-export  function getById(url:string, ID:string ){
-
-const [formato, setFormato] = useState<any>("Cargando");
-
-    useEffect(() => {
-
-    fetch(`http://localhost:1234/${url}/${ID}`,{
-        method:"GET",
-        headers:{'Content-Type':'application/json'}})
-        .then(respuesta => respuesta.json())
-        .then(lista => {setFormato(lista)})
-        .catch(err => setFormato("Solicitud falló con: " + err));
-        
-        }, [url, ID]);
-
-
-return formato;
-}

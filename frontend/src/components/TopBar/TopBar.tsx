@@ -9,8 +9,8 @@ interface TopBarProps {
 const TopBar: React.FC<TopBarProps> = ({text,menu}) => {
     return(
         <div className={styles.bar}>
-            {menu && <MenuDespegable></MenuDespegable>}
-            <h1 className="subtitle">{text}</h1> 
+            {menu && <MenuDespegable ></MenuDespegable>}
+            <h1 className={styles.subtitle}>{text}</h1> 
         </div>
     )
 }
