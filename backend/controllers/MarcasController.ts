@@ -64,6 +64,7 @@ export class brandController {
             res.status(404).json({message: "Se requiere el id"});
             return;
         }
+        
         try{
             const result = await brandModel.editBrand(brandId, name);
 

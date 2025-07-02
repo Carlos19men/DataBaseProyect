@@ -7,10 +7,10 @@ export const createVehiclesRouter = () => {
     const vehicleController = new VehicleController(vehicleModel);
 
     VehiclesRouter.get('/', vehicleController.getAll);
-    VehiclesRouter.get('/:code', vehicleController.getByPlate);
+    VehiclesRouter.get('/:plate', vehicleController.getByPlate);
     VehiclesRouter.post('/', vehicleController.newVehicle);
-    VehiclesRouter.patch('/:code', vehicleController.edit);
-    VehiclesRouter.delete('/:code', vehicleController.delete);
+    VehiclesRouter.patch('/', vehicleController.edit);
+    VehiclesRouter.delete('/', vehicleController.delete);
 
     return VehiclesRouter;
 }

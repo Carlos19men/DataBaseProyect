@@ -78,6 +78,7 @@ export class ModelsController {
         const id_marca = parseInt(req.params.id_marca, 10);
         const {nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso_str, descripcion, nro_puesto_str} = req.body; 
         
+        //console.log({id_marca, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puesto});
         const peso = parseInt(peso_str, 10);
         const nro_puesto = parseInt(nro_puesto_str,10);
 

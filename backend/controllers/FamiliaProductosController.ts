@@ -30,7 +30,7 @@ export class FamilyProductsController {
     }
 
     getbyFamily = async(req: Request, res: Response<FamilyProducts[] | {error: string}>): Promise<void> => {
-        const id_familia = parseInt(req.params.id_familia,10);
+        const id_familia = parseInt(req.params.id_family,10);
 
         try{
             const result = await FamilyProductsModel.getbyFamily(id_familia);
@@ -47,20 +47,21 @@ export class FamilyProductsController {
         }
     }   
     
-    addFamily = async(req: Request, res: Response<FamilyProducts | {error: string}>): Promise<void> => {
+    addFamily = async(req: Request, res: Response<{message: string} | {error: string}>): Promise<void> => {
         const {name} = req.body;
 
         try{
             const result = await FamilyProductsModel.addFamily(name);
 
-            if(!result){
+            if(result.rowsAffected === 0){
                 res.status(404).json({error: "No se pudo agregar la familia de productos"});
                 return;
             }
 
-            res.status(200).json(result);
+            res.status(200).json({message: "Familia de productos agregada con éxito"});
         } catch(error){
-            res.status(500).json({error: "Error al agregar la familia de productos"});
+            console.error("Error al agregar la familia de productos", error);
+            res.status(500).json({error: "Error interno del servidor al agregar la familia de productos"});
             return;
         }
     }
@@ -84,7 +85,7 @@ export class FamilyProductsController {
     }
 
     deleteFamily = async(req: Request, res: Response<{message: string} | {error: string}>): Promise<void> => {
-        const id_family = parseInt(req.params.id_family,10);
+        const id_family = parseInt(req.body.id_family,10);
 
         try{
             const result = await FamilyProductsModel.deleteFamily(id_family);

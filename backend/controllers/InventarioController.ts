@@ -14,21 +14,21 @@ export class InventoryController {
         this.model = model;
     }
 
-    getAll = async (_req: Request, res: Response<Inventory[] | {message: string}>): Promise<void> => {
+    getAll = async (_req: Request, res: Response<Inventory[] | {error: string}>): Promise<void> => {
         try {
             const inventory = await inventoryModel.getAll();
             res.status(200).json(inventory);
         } catch (error) {
-            console.error("Error fetching inventory:", error);
-            res.status(500).json({ message: "Error al buscar un inventario"});
+            console.error("Error buscando el inventario", error);
+            res.status(500).json({ error: "Error al buscar el inventario"});
         }
     }
 
-    getByRIF = async (req: Request, res: Response<Inventory[] | {message: string}>): Promise<void> => {
+    getByRIF = async (req: Request, res: Response<Inventory[] | {error: string}>): Promise<void> => {
         const { RIF } = req.params;
         
         if (!RIF) {
-            res.status(400).json({ message: "RIF es requerido" });
+            res.status(400).json({ error: "RIF es requerido" });
             return;
         }
 
@@ -36,84 +36,95 @@ export class InventoryController {
             const inventory = await inventoryModel.getByRIF(RIF);
             
             if (!inventory || inventory.length === 0) {
-                res.status(404).json({ message: "No se encontró el inventario para el RIF proporcionado" });
+                res.status(404).json({ error: "No se encontró el inventario para el RIF proporcionado" });
                 return;
             }
 
             res.status(200).json(inventory);
         } catch (error) {
-            console.error("Error fetching inventory by RIF:", error);
-            res.status(500).json({ message: "Error al buscar un inventario por RIF" });
+            console.error("Error buscando el inventario por RIF", error);
+            res.status(500).json({ error: "Error al buscar el inventario por RIF" });
         }
     }
 
-    addProduct = async (req: Request, res: Response<Inventory | {message: string}>): Promise<void> => {
-        const {RIF} = req.params;
-        const {id_producto, cantidad} = req.body;
+    addProduct = async (req: Request, res: Response<{error: string} | {message: string}>): Promise<void> => {
+        const {RIF,id_producto, cantidad} = req.body;
 
         if (!RIF || !id_producto || !cantidad) {
-            res.status(400).json({ message: "RIF, id_producto y cantidad son requeridos" });
+            res.status(400).json({ error: "RIF, id_producto y cantidad son requeridos" });
             return;
         }
 
         try {
-            const newProduct = await inventoryModel.addProduct({ RIF, id_producto, cantidad });
-            res.status(201).json(newProduct);
+            const newProduct = await inventoryModel.addProduct( RIF, id_producto, cantidad );
+
+            if(newProduct.rowsAffected === 0){
+                res.status(400).json({ error: "No se pudo agregar el producto al inventario" });
+                return;
+            }
+
+            res.status(201).json({message: "Producto agregado al inventario con éxito"});
         } catch (error) {
-            console.error("Error adding product to inventory:", error);
-            res.status(500).json({ message: "Error al agregar un producto al inventario" });
+            console.error("Error agregando un nuevo producto al inventario", error);
+            res.status(500).json({ error: "Error al agregar un producto al inventario" });
         }
     }
 
-    updateInventory = async (req: Request, res: Response<Inventory | {message: string}>): Promise<void> => {
-        const {RIF, id_producto_str} = req.params;
-        const {cantidad} = req.body;
+    updateInventory = async (req: Request, res: Response<{error: string} | {message: string}>): Promise<void> => {
+        
+        const {RIF, id_producto_str, cantidad} = req.body;
 
         const id_producto = parseInt(id_producto_str, 10);
 
         if (!RIF) {
-            res.status(400).json({ message: "El RIF es requerido" });
+            res.status(400).json({ error: "El RIF es requerido" });
             return;
         }
 
         if(!id_producto) {
-            res.status(400).json({ message: "El id_producto es requerido" });
+            res.status(400).json({ error: "El id_producto es requerido" });
             return;
         }
 
         if (!cantidad) {
-            res.status(400).json({ message: "La cantidad es requerida" });
+            res.status(400).json({ error: "La cantidad es requerida" });
             return;
         }
 
         try {
-            const updatedInventory = await inventoryModel.updateInventory({ RIF, id_producto, cantidad });
-            res.status(200).json(updatedInventory);
+            const updatedInventory = await inventoryModel.updateInventory(RIF, id_producto, cantidad);
+
+            if(updatedInventory.rowsAffected === 0){
+                res.status(400).json({ error: "No se pudo actualizar el inventario" });
+                return;
+            }
+
+            res.status(200).json({message: "Inventario actualizado con éxito"});
         } catch (error) {
-            res.status(500).json({ message: "Error al actualizar el inventario" });
+            res.status(500).json({ error: "Error al actualizar el inventario" });
         }
     }
 
-    deleteProduct = async (req: Request, res: Response<{message: string}>): Promise<void> => {
-        const {RIF, id_producto_str} = req.params;
+    deleteProduct = async (req: Request, res: Response<{error: string} | {message: string}>): Promise<void> => {
+        const {RIF, id_producto_str} = req.body;
         const id_producto = parseInt(id_producto_str, 10);
 
         if (!RIF) {
-            res.status(400).json({ message: "El RIF es requerido" });
+            res.status(400).json({ error: "El RIF es requerido" });
             return;
         }
 
         if (!id_producto) {
-            res.status(400).json({ message: "El id_producto es requerido" });
+            res.status(400).json({ error: "El id_producto es requerido" });
             return;
         }
 
         try {
-            await inventoryModel.deleteProduct({ RIF, id_producto });
+            await inventoryModel.deleteProduct(RIF, id_producto);
             res.status(200).json({ message: "Producto eliminado del inventario exitosamente" });
         } catch (error) {
             console.error("Error deleting product from inventory:", error);
-            res.status(500).json({ message: "Error al eliminar el producto del inventario" });
+            res.status(500).json({ error: "Error al eliminar el producto del inventario" });
         }
     }
 }

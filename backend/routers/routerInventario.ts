@@ -10,11 +10,11 @@ export const createInventoryRouter = () => {
     
     InventoryRouter.get("/:RIF", inventoryController.getByRIF);
     
-    InventoryRouter.post("/:RIF", inventoryController.addProduct);
+    InventoryRouter.post("/", inventoryController.addProduct);
     
-    InventoryRouter.put("/:RIF/:id_producto", inventoryController.updateInventory);
+    InventoryRouter.patch("/", inventoryController.updateInventory);
     
-    InventoryRouter.delete("/:RIF/:id_producto", inventoryController.deleteProduct);
+    InventoryRouter.delete("/", inventoryController.deleteProduct);
     
     return InventoryRouter;
 }

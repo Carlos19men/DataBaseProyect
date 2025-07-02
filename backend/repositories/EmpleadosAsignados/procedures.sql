@@ -1,15 +1,15 @@
-CREATE FUNCTION empleadosAsignadosSer(
-@RIF varchar(100)
-)
-RETURNS TABLE
-AS
-RETURN (
-	SELECT Ser.nro_servicio ID_servicio, Ser.nombre_ser,CI_emp CedulaEmpleado,Em.nombre,Em.apellido 
-	FROM 
-		Servicios Ser,Empleados Em, EmpleadosAsignados EA, Establecimientos Est
-	WHERE 
-		Ser.nro_servicio = EA.nro_servicio AND Em.CI_emp = EA.CI_empleado
-);
+	CREATE FUNCTION empleadosAsignadosSer(
+	@RIF varchar(100)
+	)
+	RETURNS TABLE
+	AS
+	RETURN (
+		SELECT Ser.nro_servicio ID_servicio, Ser.nombre_ser,CI_emp CedulaEmpleado,Em.nombre,Em.apellido 
+		FROM 
+			Servicios Ser,Empleados Em, EmpleadosAsignados EA, Establecimientos Est
+		WHERE 
+			Ser.nro_servicio = EA.nro_servicio AND Em.CI_emp = EA.CI_empleado and Em.RIF_establecimiento = @RIF
+	);
 GO
 
 CREATE FUNCTION empleadosNoAsignados(

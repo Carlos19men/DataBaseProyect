@@ -65,7 +65,7 @@ Content-Type: application/json
 http://localhost:1234/servicie
 
 ### Obtener un servicio por su id | Listo 
-http://localhost:1234/servicie/20
+http://localhost:1234/servicie/21
 
 ### Crear nuevo servicio | listo 
 POST http://localhost:1234/servicie
@@ -76,7 +76,7 @@ Content-Type: application/json
 }
 
 ### Editar un servicio | listo 
-PATCH http://localhost:1234/servicie/20
+PATCH http://localhost:1234/servicie/21
 Content-Type: application/json
 
 {
@@ -141,7 +141,7 @@ http://localhost:1234/offered-services/rif/J-00112233-4
 http://localhost:1234/offered-services/servicio/1
 
 ### Obtener un servicio específico por RIF y número de servicio | listo
-http://localhost:1234/offered-services/rif/J-00112233-4/servicio/1
+http://localhost:1234/offered-services/rif/J-00112233-4/servicio/2
 
 ### Obtener servicios no ofrecidos | listo
 http://localhost:1234/offered-services/no-ofrecidos
@@ -173,7 +173,7 @@ Content-Type: application/json
 GET http://localhost:1234/brand/
 
 ### Obtener una marca por su id | listo 
-GET http://localhost:1234/brand/1
+GET http://localhost:1234/brand/18
 
 ### Agregar una nueva marca | listo 
 POST http://localhost:1234/brand/ 
@@ -184,15 +184,16 @@ Content-Type: application/json
 }
 
 ### Editar una marca | listo 
-PATCH http://localhost:1234/brand/1
+PATCH http://localhost:1234/brand/
 Content-Type: application/json
 
 {
-    "name": "Toyota"
+    "id": 18,
+    "name": "Marca5"
 }
 
 ### Eliminar una marca | listo 
-DELETE http://localhost:1234/brand/12
+DELETE http://localhost:1234/brand/18
 
 ### Router de Modelos (Por testear todos los metodos).
 
@@ -203,33 +204,38 @@ GET http://localhost:1234/model/
 GET http://localhost:1234/model/1
 
 ### Obtener un modelo por su id | listo 
-GET http://localhost:1234/model/1/51
+GET http://localhost:1234/model/1/61
 
 ### Agregar un nuevo modelo | listo 
 POST http://localhost:1234/model/1
 Content-Type: application/json
 
 {
-    "nombre": "Modelo 1",
+    "nombre": "Modelo 5",
     "aceite_caja": "Aceite 1",
     "aceite_motor": "Aceite 2",
     "octanaje": "91",
     "tipo_refrigerante": "Refrigerante 1",
-    "peso": 1000,
+    "peso_str": 1000,
     "descripcion": "Descripción 1",
-    "nro_puesto": 1
+    "nro_puesto_str": 1
 }
 
 ### Editar un modelo | listo 
-PATCH http://localhost:1234/model/1/51
+PATCH http://localhost:1234/model
 Content-Type: application/json
 
 {
-    "nombre": "NewModelo2"
+    "id_marca": 1,
+    "id_modelo": "61",
+    "nombre": "NewModelo2",
+    "peso_str": "7000",
+    "nro_puesto_str": 4,
+    "aceite_motor": "Aceite 3"
 }
 
 ### Eliminar un modelo | listo 
-DELETE http://localhost:1234/model/1/51
+DELETE http://localhost:1234/model/1/61
 
 ### Router de Ordenes de Compra
 
@@ -290,6 +296,142 @@ DELETE http://localhost:1234/suppliers/1234567890
 GET http://localhost:1234/vehicles/
 
 ### Obtener un vehiculo por su placa | listo
-GET http://localhost:1234/vehicles/1
+GET http://localhost:1234/vehicles/ABC1235
 
 ### Agregar un nuevo vehiculo | listo
+POST http://localhost:1234/vehicles/
+Content-Type: application/json
+
+{
+    "plate": "ABC1235",
+    "oil_box": "Aceite 1",
+    "oil_motor": "Aceite 2",
+    "maintenance": "Mantenimiento 1",
+    "months_use": 1,
+    "mileage": 1000,
+    "id_model": 1,
+    "id_marca": 1,
+    "CI_owner": "27901234"
+}
+
+### Editar un vehículo. | listo
+PATCH http://localhost:1234/vehicles
+Content-Type: application/json
+
+{
+    "plate": "ABC1235",
+    "mileage": 2000,
+    "months_use": 5
+}
+
+### Eliminar un vehículo. | listo
+DELETE http://localhost:1234/vehicles
+Content-Type: application/json
+
+{
+    "plate": "ABC1235"
+}
+
+### Router de Familia de Productos.
+
+### Obtener todas las familias de productos. | listo
+GET http://localhost:1234/family-products/
+
+### Obtener una familia de productos por su id. | listo
+GET http://localhost:1234/family-products/4
+
+### Agregar una nueva familia de productos. | listo 
+POST http://localhost:1234/family-products/
+Content-Type: application/json
+
+{
+    "name": "Familia de Productos 4"
+}
+
+### Editar una familia de productos. | listo 
+PATCH http://localhost:1234/family-products/
+Content-Type: application/json
+
+{
+    "id_family": 4,
+    "name": "Familia de Productos 5"
+}
+
+### Eliminar una familia de productos. | listo 
+DELETE http://localhost:1234/family-products
+Content-Type: application/json
+
+{
+    "id_family": 4
+}
+
+### Router de Inventario.
+
+### Obtener todos los productos del inventario. | listo
+GET http://localhost:1234/inventory/
+
+### Obtener un producto del inventario por su RIF. | listo
+GET http://localhost:1234/inventory/J-00112233-4
+
+### Agregar un producto al inventario. | listo
+POST http://localhost:1234/inventory
+Content-Type: application/json
+
+{
+    "RIF": "J-00112233-4",
+    "id_producto": 1,
+    "cantidad": 10
+}
+
+### Editar el inventario de un producto. | listo
+PATCH http://localhost:1234/inventory
+Content-Type: application/json
+
+{
+    "RIF": "J-00112233-4",
+    "id_producto_str": 1,
+    "cantidad": 25
+}
+
+### Eliminar un producto del inventario. | listo
+DELETE http://localhost:1234/inventory
+Content-Type: application/json
+
+{
+    "RIF": "J-00112233-4",
+    "id_producto_str": 1
+}
+
+### Router de Compras.
+
+### Obtener todas las compras. | listo
+GET http://localhost:1234/buys
+
+### Obtener una compra por su id. | listo
+GET http://localhost:1234/buys/1
+
+### Eliminar una compra por su id. | listo
+DELETE http://localhost:1234/buys/1
+
+### Router de EmpleadosAsignados.
+
+### Obtener todos los empleados asignados de un establecimiento.
+GET http://localhost:1234/assignedEmployee/J-00112233-4
+
+### Obtener todos los empleados no asignados de un establecimiento.
+GET http://localhost:1234/assignedEmployee/J-00112233-4/no-assigned
+
+### Asignar un empleado a un establecimiento.
+POST http://localhost:1234/assignedEmployee
+Content-Type: application/json
+
+{
+    "RIF": "J-00112233-4",
+    "id_servicio": 1,
+    "Ci_emp": "27901234"
+}
+
+### Desasignar un empleado de un establecimiento.
+DELETE http://localhost:1234/assignedEmployee/J-00112233-4/1/27901234
+
+### Router de 

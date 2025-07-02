@@ -8,14 +8,14 @@ interface Vehicle{
     id_branc?: number;
     model: string;
     id_model?: number;
-    Ci_user: number;
+    Ci_user?: number;
     nameOwner?: string; 
     lastName?:string;
-    oil_box:string | null;
-    oil_motor: string | null; 
-    months_use: number; 
-    mileage: number;
-    maintenance: string | null;
+    oil_box?:string | null;
+    oil_motor?: string | null; 
+    months_use?: number; 
+    mileage?: number;
+    maintenance?: string | null;
 }
 
 export class VehicleController{
@@ -46,7 +46,7 @@ export class VehicleController{
 
     getByPlate = async(req:Request,res:Response<Vehicle | {message:string}>): Promise<void> =>{
 
-        const {plate} = req.body;
+        const {plate} = req.params;
 
         try{
             const vehicle: Vehicle = await vehicleModel.getByPlate(plate)
@@ -81,51 +81,50 @@ export class VehicleController{
             res.status(200).send({message:'Vehiculo creado con exito'})
 
         }catch (error){
-            console.error('Error al crear un nuevo vehiculo')
+            console.error('Error al crear un nuevo vehiculo', error)
             res.status(500).json({ error: 'Error interno del servidor al ingresar un vehiculo.' });
             return;
         }
 
     }
 
-    delete = async(req:Request,res:Response<Vehicle | {message:string}>): Promise<void> =>{
-        
-        const {plate} = req.body
+    delete = async(req:Request,res:Response<{message:string} | {error:string}>): Promise<void> =>{
+        const {plate} = req.body;
 
-        //validamos los datos 
+        console.log(plate);
 
         try{
-
             const result = await vehicleModel.delete(plate)
-            if(!result){
-                res.status(405).send({message:'bad request'})
+            
+            if(result.rowsAffected === 0){
+                res.status(405).send({error:'No se pudo eliminar el vehiculo'})
                 return 
             }
-            res.status(200).send({message:'Vehiculo eliminado cone exito'})
+            res.status(200).send({message:'Vehiculo eliminado con exito'})
         }catch(error){
-            console.error('Error al eliminar un vehiculo')
-            res.status(500).json({ message: 'Error interno del servidor al eliminar un vehiculo.' });
+            console.error('Error al eliminar un vehiculo', error)
+            res.status(500).json({ error: 'Error interno del servidor al eliminar un vehiculo.' });
             return;
         }
 
     }
 
-    edit = async(req:Request,res:Response<Vehicle | {message:string}>): Promise<void> =>{
-        const {plate,oil_box,oil_motor,maintenance,months_use,mileage,id_model,id_marca,CI_owner} = req.body
+    edit = async(req:Request,res:Response<{error: string} | {message:string}>): Promise<void> =>{
+        const {plate,oil_box = null,oil_motor = null,maintenance = null,months_use = null,mileage = null,CI_owner = null} = req.body
 
         try{
 
-            const result = await vehicleModel.edit(plate,oil_box,oil_motor,maintenance,months_use,mileage,id_model,id_marca,CI_owner)
+            const result = await vehicleModel.edit(plate,oil_box,oil_motor,maintenance,months_use,mileage,CI_owner)
 
-            if(!result){
-                res.status(405).send({message:'No se pudo modificar vehiculo'})
+            if(result['rowsAffected'] === 0){
+                res.status(405).send({error:'No se pudo modificar vehiculo'})
                 return 
             }
-            res.status(200).send({message:'Vehiculo creado con exito'})
+            res.status(200).send({message:'Vehiculo modificado con exito'})
 
         }catch (error){
-            console.error('Error al editar el vehiculo')
-            res.status(500).json({ message: 'Error interno del servidor al editar un vehiculo.' });
+            console.error('Error al editar el vehiculo', error)
+            res.status(500).json({error: 'Error interno del servidor al editar un vehiculo.' });
             return;
         }
     }

@@ -24,7 +24,7 @@ export class FamilyProductsModel {
 
         const result = await request.query("Insert into FamiliaProductos (nombre) values (@name)");
 
-        return result['recordset'][0];
+        return {rowsAffected: result['rowsAffected'][0]};
     }
 
     static async updateFamily(id_familia: number, nombre: string){

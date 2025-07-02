@@ -10,8 +10,8 @@ export const createFamilyProductsRouter = () => {
     FamilyProductsRouter.get('/', familyProductsController.getAll);
     FamilyProductsRouter.get('/:id_family', familyProductsController.getbyFamily);
     FamilyProductsRouter.post('/', familyProductsController.addFamily);
-    FamilyProductsRouter.put('/:id_family', familyProductsController.updateFamily);
-    FamilyProductsRouter.delete('/:id_family', familyProductsController.deleteFamily);
+    FamilyProductsRouter.patch('/', familyProductsController.updateFamily);
+    FamilyProductsRouter.delete('/', familyProductsController.deleteFamily);
 
     return FamilyProductsRouter;
 }

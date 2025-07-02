@@ -11,7 +11,7 @@ export class ComprasModel {
         const request = getDbPool().request();
         request.input('id', id);
 
-        const result = await request.query('');
+        const result = await request.query('Select * from Compras where nro_compra = @id');
         return result['recordset'];
     }
 
@@ -20,6 +20,6 @@ export class ComprasModel {
         request.input('id', id);
 
         const result = await request.query('');
-        return result['rowsAffected'];
+        return {rowsAffected: result['rowsAffected'][0]};
     }
 } 
