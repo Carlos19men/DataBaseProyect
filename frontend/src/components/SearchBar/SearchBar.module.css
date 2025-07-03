@@ -18,12 +18,12 @@
     outline: none;
 }
 .barra{
-    margin-top:1vh;
+    margin-top:2vh;
     border-radius: 10px;
     height: 6vh;
     background-color:#24A95F;
     border: #000000 1px;
-    font-size: 6vh;
+    font-size: 5vh;
     justify-content: center;
 }
 
