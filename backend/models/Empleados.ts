@@ -13,7 +13,7 @@ export class employeeModel {
         const request = getDbPool().request();
         request.input('CI', CI);
 
-        const result = await request.query('SELECT * from ObtenerEmpleados where CI = @CI;');
+        const result = await request.query('SELECT * from ObtenerEmpleados where CI_emp = @CI;');
         return result['recordset'][0];
     }
 
