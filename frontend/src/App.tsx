@@ -5,6 +5,7 @@ import Login from "./pages/Login/Login";
 import HomePage from "./pages/Home Page/HomePage";
 import PseudoAPI from "./pages/PseudoAPI/PseudoAPI";
 import Busqueda from "./pages/Busqueda/Busqueda";
+import RegistrarModelo from "./pages/Registrar Modelos/RegistrarModelo";
 
 const App = () => (
 
@@ -18,6 +19,7 @@ const App = () => (
       <Route path="/HomePage" element={<HomePage/>}></Route>
       <Route path="/API" element={<PseudoAPI/>}>  </Route>
       <Route path="/Busqueda" element={<Busqueda/>}></Route>
+      <Route path="/RegistrarModelo" element={<RegistrarModelo/>}></Route>
     </Routes>
   </Router>
 )
