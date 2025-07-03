@@ -13,33 +13,19 @@ export class PlanesMantenimiento{
     static async getByMarca(
         cod_marca:number
     ){
-        
-        if (cod_marca === undefined || cod_marca === null) {
-            return { error: "Marca necesaria" }
-        }
-
         const request = getDbPool().request()
 
-  
         request.input('cod_marca', cod_marca);
-
 
         const result = await request.query('SELECT * FROM getByMarca(@cod_marca);');
 
-        return result
+        return result['recordset']
     }
     
     static async getByModelo(
         cod_marca : number,
         nro_modelo : number
     ){
-        if (cod_marca === undefined || cod_marca === null ) {
-            return { error: "Marca necesaria" }
-        }
-        if (nro_modelo === undefined || nro_modelo === null ) {
-            return { error: "Modelo necesario" }
-        }
-
         const request = getDbPool().request()
 
         request.input('cod_marca',cod_marca);
@@ -47,7 +33,7 @@ export class PlanesMantenimiento{
 
         const result = await request.query('SELECT * FROM getByModelo(@cod_marca,@nro_modelo);');
 
-        return result
+        return result['recordset']
 
     }
 
@@ -55,29 +41,17 @@ export class PlanesMantenimiento{
     static async getByPlan(
         cod_marca:number,
         nro_modelo:number,
-        kilometraje:number
+        kilolmetraje:number
     ){
-        
-        if (cod_marca === undefined || cod_marca === null) {
-            return { error: "Marca necesaria" }
-        }
-
-        if (nro_modelo === undefined || nro_modelo === null) {
-            return { error: "Modelo necesario" }
-        }
-        if (kilometraje === undefined || kilometraje === null) {
-            return { error: "Kilometraje necesario" }
-        }
-
         const request = getDbPool().request()
 
 
         request.input('cod_marca',cod_marca);
         request.input('nro_modelo', nro_modelo);
-        request.input('kilometraje',kilometraje);
-        const result = await request.query('SELECT * FROM getPlan(@cod_marca,@nro_modelo);');
+        request.input('kilometraje', kilolmetraje);
+        const result = await request.query('SELECT * FROM getPlan(@cod_marca,@nro_modelo,@kilometraje);');
 
-        return result
+        return result['recordset']
     }
     
 
@@ -88,26 +62,7 @@ export class PlanesMantenimiento{
         nombre : String,
         descripcion : String
     ){
-
-        if (cod_marca === undefined || cod_marca === null) {
-            return { error: "Marca necesaria" }
-        }
-        if (nro_modelo === undefined || nro_modelo === null) {
-            return { error: "Modelo necesario" }
-        } 
-        if (kilolmetraje === undefined || kilolmetraje === null) {
-            return { error: "Kilometraje necesario" }
-        }
-
-        if (nombre === undefined || nombre === null || nombre.length === 0) {
-            return { error: "Nombre mecesario" }
-        }
-        if (descripcion === undefined || descripcion === null || descripcion.length === 0) {
-            return { error: "Descripcion necesaria" }
-        }
-
         const request = getDbPool().request()
-
 
         request.input('cod_marca', cod_marca);
         request.input('nro_modelo', nro_modelo);
@@ -118,8 +73,7 @@ export class PlanesMantenimiento{
 
         const result = await request.query('EXEC createPlan @cod_marca,@nro_modelo,@kilometraje,@nombre,@descripcion;');
 
-        return result
-
+        return {rowsAffected: result['rowsAffected'][0]}
     }
 
     static async updatePlan(
@@ -129,28 +83,6 @@ export class PlanesMantenimiento{
         nombre? : String,
         descripcion? : String
     ){
-        if (cod_marca === undefined || cod_marca === null) {
-            return { error: "Marca necesaria" }
-        }
-        if (nro_modelo === undefined || nro_modelo === null) {
-            return { error: "Modelo necesario" }
-        } 
-        if (kilolmetraje === undefined || kilolmetraje === null) {
-            return { error: "Kilometraje necesario" }
-        }
-
-        if (nombre !== undefined) {
-            if ( nombre === null || nombre.length === 0) {
-                return { error: "Nombre necesario" }
-            }
-        }
-        if (descripcion !== undefined) {
-            if (descripcion === null || descripcion.length === 0) {
-                return { error: "Descripcion necesaria" }
-            }
-        }
-    
-
         const request = getDbPool().request();
         
         request.input('cod_marca', cod_marca);
@@ -162,7 +94,7 @@ export class PlanesMantenimiento{
 
         const result = await request.query('EXEC updatePlan @cod_marca,@nro_modelo,@kilometraje,@nombre,@descripcion;');
 
-        return result
+        return {rowsAffected: result['rowsAffected'][0]}
 
     }
 
@@ -171,29 +103,14 @@ export class PlanesMantenimiento{
         nro_modelo :number,
         kilolmetraje :number
     ){
-        
-        if (cod_marca === undefined || cod_marca === null) {
-            return { error: "Marca necesaria" }
-        }
-        if (nro_modelo === undefined || nro_modelo === null) {
-            return { error: "Modelo necesario" }
-        } 
-        if (kilolmetraje === undefined || kilolmetraje === null) {
-            return { error: "Kilometraje necesario" }
-        }
-
-
         const request = getDbPool().request()
-
 
         request.input('cod_marca', cod_marca);
         request.input('nro_modelo', nro_modelo);
         request.input('kilometraje', kilolmetraje);
 
+        const result = await request.query('Delete FROM PlanesMantenimiento WHERE @cod_marca = cod_marca AND @nro_modelo = nro_modelo and @kilolmetraje = kilometraje;');
 
-        const result = await request.query('EXEC deletePlan @cod_marca,@nro_modelo,@kilometraje;');
-
-        return result
+        return {rowsAffected: result['rowsAffected'][0]}
     }
-
 }

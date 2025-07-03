@@ -1,48 +1,17 @@
-use MU_DB
+IF OBJECT_ID('ObtenerEmpleados', 'V') IS NOT NULL
+    DROP VIEW ObtenerEmpleados;
 GO
 
 Create view ObtenerEmpleados as
-select CI_emp, RIF_establecimiento, nombre, apellido
+select CI_emp, RIF_establecimiento, nombre, apellido,sueldo,direccion
 from Empleados;
 GO
 
-/*
-create FUNCTION getEmployee(
-    @CI VARCHAR(50)
-)
-RETURNS TABLE
-AS
-RETURN (
-    -- Get employee by CI
-    SELECT CI_emp as CI, RIF_establecimiento, nombre, apellido
-    FROM Empleados
-    WHERE CI_emp = @CI
-); */
+IF OBJECT_ID('addEmpleado','P') IS NOT NULL
+	drop procedure AddEmpleado;
+GO	
 
-/*create proc editEmployee
-    @CI VARCHAR(50),
-    @name VARCHAR(50),
-    @lastname VARCHAR(50),
-    @cellphone VARCHAR(50),
-    @address VARCHAR(100),
-    @salary DECIMAL(10,2)
-AS
-BEGIN
-    Set nocount on;
-    
-    Update Empleados 
-    SET nombre = ISNULL(@name, nombre), 
-        apellido = ISNULL(@lastname, apellido),
-        telefono = ISNULL(@cellphone, telefono), 
-        direccion = ISNULL(@address, direccion), 
-        sueldo = ISNULL(@salary, sueldo) 
-    WHERE CI_emp = @CI;
-END; 
-
-drop procedure editEmployee; */
-
-
-create proc AddEmployee
+create proc AddEmpleado
     @CI VARCHAR(50),
     @RIF VARCHAR(50),
     @name VARCHAR(50),
@@ -52,40 +21,22 @@ create proc AddEmployee
     @salary DECIMAL(10,2)
 AS
 BEGIN
-    Set nocount on;
-
-    -- Se verifica si el usuario existe.
-    IF EXISTS (SELECT 1 FROM Empleados WHERE CI_emp = @CI)
-    BEGIN
-        RAISERROR('El empleado ya existe.', 16, 1);
-        RETURN;
-    END
-
-    -- Insert new employee
     INSERT INTO Empleados (CI_emp, RIF_establecimiento, nombre, apellido, telefono, direccion, sueldo)
     VALUES (@CI, @RIF, @name, @lastname, @cellphone, @address, @salary);
 END;
+go
 
+CREATE PROCEDURE AddEncargado
+@RIF varchar(100),
+@CI varchar(100),
+@fecha DATE
+AS
+BEGIN 
+	--VALIDAR QUE EL EMPLEADO TRABAJE EN ESTE ESTABLECIMIETNO 
+	IF NOT EXISTS (SELECT 1 FROM Establecimientos Est, Empleados Em WHERE @RIF = Em.RIF_establecimiento AND Est.RIF = @RIF AND Em.CI_emp = @CI)
+		THROW 50001, 'Este empleado no trabaja en ese establecimiento',1; 
+
+	--ASIGNAR EL ENCARGADO 
+	UPDATE Establecimientos SET CI_encargado = @CI WHERE RIF = @RIF;
+END; 
 GO
-
-/*drop procedure AddEmployee;*/
-
-create proc deleteEmployee
-    @CI varchar(50)
-as BEGIN
-    set NOCOUNT on;
-
-    if exists(Select 1 from Empleados where CI_emp = @CI)
-    BEGIN
-        Delete from Empleados where CI_emp = @CI;
-    end    
-    ELSE BEGIN
-        RAISERROR('El empleado no existe en la base de datos',16,1);
-    end
-end;
-
-GO
-/*
-drop procedure deleteEmployee;
-
-Select CI_emp, nombre, apellido from Empleados where RIF_establecimiento = 'J-12345678-9';*/

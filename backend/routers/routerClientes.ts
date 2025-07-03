@@ -14,7 +14,7 @@ export const createCustomerRouter = () => {
 
     CustomerRouter.post('/', customerController.add);
 
-    CustomerRouter.patch('/:CI', customerController.edit);
+    CustomerRouter.patch('/', customerController.edit);
 
     CustomerRouter.delete('/:CI', customerController.delete);
 

@@ -54,15 +54,15 @@ export class ModelsController {
         }
     }
 
-    getbyMarca = async(req: Request, res: Response<Model[] | {message: string}>): Promise<void> => {
+    getbyMarca = async(req: Request, res: Response<Model[] | {error: string}>): Promise<void> => {
         //const id_marca = parseInt(req.params.id_marca, 10);
         const id_marca = req.params.id_marca;
 
         try {
             const result = await ModelsModel.getByMarca(parseInt(id_marca));
 
-            if('message' in result){
-                res.status(400).json({message: result.message});
+            if('error' in result){
+                res.status(400).json({error: result.error as string});
                 return;
             }
 
@@ -70,31 +70,112 @@ export class ModelsController {
             res.status(200).json(brand_data);
         } catch(error) {
             console.error("Ha ocurrido un error", error);
-            res.status(500).json({message: "Ha ocurrido un error en el servidor"});
+            res.status(500).json({error: "Ha ocurrido un error en el servidor"});
         }
     }
 
-    createModel = async(req: Request, res: Response<Model | {message: string}>): Promise<void> => {
+    createModel = async(req: Request, res: Response<{message: string} | {error: string}>): Promise<void> => {
         const id_marca = parseInt(req.params.id_marca, 10);
         const {nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso_str, descripcion, nro_puesto_str} = req.body; 
         
+        //console.log({id_marca, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puesto});
         const peso = parseInt(peso_str, 10);
         const nro_puesto = parseInt(nro_puesto_str,10);
 
         try{
-            const result: Model = await ModelsModel.createModel({id_marca, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puesto}); 
+            const result = await ModelsModel.createModel(id_marca, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puesto); 
 
-            if(!result){
-                res.status(400).json({message: "No se pudo crear el modelo"});
+            if('error' in result && result.error !== undefined){
+                res.status(400).json({error: result.error as string});
                 return;
             }
 
-            res.status(201).json(result);
+            if(result.rowsAffected === 0){
+                res.status(400).json({error: "No se pudo crear el modelo"});
+                return;
+            }
+
+            res.status(201).json({message: "Modelo creado correctamente"});
         } catch(error){
             console.error("Ha ocurrido un error", error);
-            res.status(500).json({message: ""});
+            res.status(500).json({error: "Ha ocurrido un error en el servidor"});
         }
     }
 
-    
+    editModel = async(req: Request, res: Response<{message: string} | {error: string}>): Promise<void> => {
+        const {
+            id_marca,
+            id_modelo,
+            nombre = null,
+            aceite_caja = null,
+            aceite_motor = null,
+            octanaje = null,
+            tipo_refrigerante = null,
+            descripcion = null,
+            peso_str = null,
+            nro_puesto_str = null
+        } = req.body;
+
+        const marcaId = parseInt(id_marca);
+        const modeloId = parseInt(id_modelo);
+        let peso: number | null = (peso_str != null && peso_str !== '') ? Number(peso_str) : null;
+        let nro_puesto: number | null = (nro_puesto_str != null && nro_puesto_str !== '') ? Number(nro_puesto_str) : null;
+
+        peso = isNaN(peso as number) ? null : peso;
+        nro_puesto = isNaN(nro_puesto as number) ? null : nro_puesto;
+
+        try{
+            const result = await ModelsModel.editModel(
+                marcaId,
+                modeloId,
+                nombre,
+                aceite_caja,
+                aceite_motor,
+                octanaje,
+                tipo_refrigerante,
+                peso,
+                descripcion,
+                nro_puesto
+            );
+
+            if('error' in result && result.error !== undefined){
+                res.status(400).json({error: result.error as string});
+                return;
+            }
+
+            if(result.rowsAffected === 0){
+                res.status(400).json({error: "No se pudo editar el modelo"});
+                return;
+            }
+
+            res.status(200).json({message: "Modelo editado correctamente"});
+        } catch(error){
+            console.error("Ha ocurrido un error", error);
+            res.status(500).json({error: "Ha ocurrido un error en el servidor"});
+        }
+    }
+
+    deleteModel = async(req: Request, res: Response<{message: string} | {error: string}>): Promise<void> => {
+        const id_marca = parseInt(req.params.id_marca, 10);
+        const id_modelo = parseInt(req.params.id_modelo, 10);
+
+        try{
+            const result = await ModelsModel.delete(id_marca, id_modelo);
+
+            if('error' in result && result.error !== undefined){
+                res.status(400).json({error: result.error as string});
+                return;
+            }
+
+            if(result.rowsAffected === 0){
+                res.status(400).json({error: "No se pudo eliminar el modelo"});
+                return;
+            }
+
+            res.status(200).json({message: "Modelo eliminado correctamente"});
+        } catch(error){
+            console.error("Ha ocurrido un error", error);
+            res.status(500).json({error: "Ha ocurrido un error en el servidor"});
+        }
+    }
 }

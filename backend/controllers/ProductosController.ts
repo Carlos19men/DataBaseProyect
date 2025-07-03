@@ -89,18 +89,18 @@ export class ProductosController {
         }
 
         try {
-            const result = await ProductModel.create({
+            const result = await ProductModel.create(
                 nombre,
                 tipo,
                 precio,
-                descripcion: descripcion || null,
-                minimo: minimo || null,
-                maximo: maximo || null,
-                tratamiento: tratamiento || null,
-                nivelCon: nivelCon || null,
-                inf_manejo: inf_manejo || null,
-                id_familia: id_familia || null
-            });
+                descripcion || null,
+                minimo || null,
+                maximo || null,
+                tratamiento || null,
+                nivelCon || null,
+                inf_manejo || null,
+                id_familia || null
+            );
 
             if (result && typeof result === 'object' && 'error' in result) {
                 res.status(400).json({ message: result.error });
@@ -118,9 +118,8 @@ export class ProductosController {
 
     // Editar producto existente
     edit = async (req: Request, res: Response): Promise<void> => {
-        const { id } = req.params;
+        const { id, nombre, tipo, precio, descripcion, minimo, maximo, tratamiento, nivelCon, inf_manejo, id_familia } = req.body;
         const productId = parseInt(id);
-        const { nombre, tipo, precio, descripcion, minimo, maximo, tratamiento, nivelCon, inf_manejo, id_familia } = req.body as Product;
 
         if (!id || isNaN(productId) || productId <= 0) {
             res.status(400).json({ message: 'ID de producto válido es requerido.' });
@@ -143,26 +142,26 @@ export class ProductosController {
         }
 
         try {
-            const result = await ProductModel.edit({
-                id_producto: productId,
+            const result = await ProductModel.edit(
+                productId,
                 nombre,
                 tipo,
                 precio,
-                descripcion: descripcion || null,
-                minimo: minimo || null,
-                maximo: maximo || null,
-                tratamiento: tratamiento || null,
-                nivelCon: nivelCon || null,
-                inf_manejo: inf_manejo || null,
-                id_familia: id_familia || null
-            });
+                descripcion || null,
+                minimo || null,
+                maximo || null,
+                tratamiento || null,
+                nivelCon || null,
+                inf_manejo || null,
+                id_familia || null
+            );
 
             if (result && typeof result === 'object' && 'error' in result) {
                 res.status(400).json({ message: result.error });
                 return;
             }
 
-            if (!result || result[0] === 0) {
+            if (!result || result.rowsAffected === 0) {
                 res.status(404).json({ message: 'Producto no encontrado.' });
                 return;
             }

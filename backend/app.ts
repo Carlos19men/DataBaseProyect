@@ -4,7 +4,7 @@ import { connectToDatabase } from "./config/SQLserverConection";
 import { createEstablishmentRouter } from "./routers/routerEstablecimiento";
 import { createEmployeeRouter } from "./routers/routerEmpleado";
 import { createSuppliersrouter } from "./routers/routerProveedores";
-import {createInventoryRouter} from "./routers/routerInventario";
+import { createInventoryRouter} from "./routers/routerInventario";
 import { createbrandRouter } from "./routers/routerMarca";
 import { createCustomerRouter } from "./routers/routerClientes";
 import { createProductosRouter } from "./routers/routerProductos";
@@ -13,6 +13,15 @@ import { createAsignedEmployeeRouter } from "./routers/routerEmpleadosAsignados"
 import { createServiceRouter } from "./routers/RouterServicios";
 import { createEmpleadosEspecializadosRouter } from "./routers/routerEmpleadosEspecializados";
 import { createOfferedServicesRouter } from "./routers/routerServiciosOfrecidos";
+import { createFamilyProductsRouter } from "./routers/routerFamiliaProductos";
+import { createInvoicePaymentsRouter } from "./routers/routerPagosFactura";
+import { createbuysOrderRouter } from "./routers/routerOrdenesCompra";
+import { createVehiclesRouter } from "./routers/routerVehiculos";
+import { createComprasRouter } from "./routers/routerCompras";
+import { createProveedoresAsociadosRouter } from "./routers/routerProveedoresAsociados";
+import { createActivityRouter } from "./routers/routerActividad";
+import { createActivityProductRouter } from "./routers/routerActividadProductos";
+import { createRouterServiceOrder } from "./routers/routerOrdenServicio";
 
 connectToDatabase()
 
@@ -39,6 +48,16 @@ export const createApp = () =>{
     app.use('/assignedEmployee', createAsignedEmployeeRouter());
     app.use('/specializedEmployee', createEmpleadosEspecializadosRouter());
     app.use('/offered-services', createOfferedServicesRouter());
+    app.use('/family-products', createFamilyProductsRouter());
+    app.use('/invoice-payments', createInvoicePaymentsRouter());
+    app.use('/buys-order', createbuysOrderRouter());
+    app.use('/vehicles', createVehiclesRouter());
+    app.use('/buys', createComprasRouter());
+    app.use('/associated-suppliers', createProveedoresAsociadosRouter());
+    app.use('/activity', createActivityRouter());
+    app.use('/activity-product', createActivityProductRouter());
+    
+    app.use('/service-order', createRouterServiceOrder());
 
     const PORT = process.env.PORT ?? 1234
 

@@ -1,4 +1,5 @@
 import { getDbPool } from "../config/SQLserverConection";
+import * as sql from 'mssql';
 
 export class employeeModel {
 
@@ -9,135 +10,60 @@ export class employeeModel {
     }
 
     static async getByCI(CI: string) {
-        if (CI === undefined || CI === null || CI.length === 0) {
-            return { error: "Se necesita la cédula" };
-        }
-
         const request = getDbPool().request();
         request.input('CI', CI);
 
-        const result = await request.query('SELECT CI_emp, nombre, apellido, RIF_establecimiento from Empleados where CI_emp = @CI;');
+        const result = await request.query('SELECT * from ObtenerEmpleados where CI = @CI;');
         return result['recordset'][0];
     }
 
     static async getbyRIF(RIF: string) {
-        if(RIF === undefined || RIF === null || RIF.length === 0){
-            return {error: "Se requiere el RIF"};
-        }
 
         const request = getDbPool().request();
         request.input('RIF', RIF);
         
-        const query = `Select CI_emp, nombre, apellido from Empleados where RIF_establecimiento = @RIF;`
+        const query = `Select CI,nombre, apellido,sueldo,direccion from ObtenerEmpleados where RIF_establecimiento = @RIF;`
 
         const result = await request.query(query);
         return result['recordset'];
     }
 
 
-    static async editEmployee({ CI, name, lastName ,telefono, direccion, sueldo }: { CI: string | null, name: string | null, lastName: string | null, telefono: string | null, direccion: string | null, sueldo: number | null }) {
-
-        if (CI !== null) {
-            if (CI === undefined || CI.length === 0) {
-                return { error: "Se necesita la cédula" };
-            }
-        }
-
-        if (name !== null) {
-            if (name === undefined || name.length === 0) {
-                return { error: "Se necesita el nombre" };
-            }
-        }
-
-        if (lastName !== null) {
-            if (lastName === undefined || lastName.length === 0) {
-                return { error: "Se necesita el apellido" };
-            }
-        }
-
-        if (telefono !== null) {
-            if (telefono === undefined || telefono.length === 0) {
-                return { error: "Se necesita el teléfono" };
-            }
-        }
-
-        if (direccion !== null) {
-            if (direccion === undefined || direccion.length === 0) {
-                return { error: "Se necesita la dirección" };
-            }
-        }
-
-        if (sueldo !== null) {
-            if (sueldo === undefined || typeof sueldo !== 'number') {
-                return { error: "Se necesita que el sueldo sea un número" };
-            }
-        }
+    static async editEmployee(CI: string, name: string | null, lastName: string | null, cellphone: string | null, address: string | null, salary: number | null ) {  
 
         const request = getDbPool().request();
         request.input('CI', CI);
-        request.input('name', name);
-        request.input('lastName', lastName);
-        request.input('telefono', telefono);
-        request.input('direccion', direccion);
-        request.input('sueldo', sueldo);
+        request.input('name', sql.NVarChar(50), name);
+        request.input('lastName', sql.NVarChar(50), lastName);
+        request.input('cellphone', sql.NVarChar(15), cellphone);
+        request.input('address', sql.NVarChar(150), address);
+        request.input('salary',sql.Int, salary);  
 
-        // Using isNULL to keep existing values if the new value is null.
+        console.log({CI, name, lastName, cellphone, address, salary})
+
+        
         const query = `UPDATE Empleados SET 
-        nombre = isNULL(@name, nombre), 
-        apellido = isNULL(@lastName, apellido), 
-        telefono = isNULL(@telefono, telefono), 
-        direccion = isNULL(@direccion, direccion), 
-        sueldo = isNULL(@sueldo, sueldo) 
+        nombre = ISNULL(@name, nombre), 
+        apellido = ISNULL(@lastName, apellido), 
+        telefono = ISNULL(@cellphone, telefono), 
+        direccion = ISNULL(@address, direccion), 
+        sueldo = ISNULL(@salary, sueldo) 
         WHERE CI_emp = @CI; `;
 
         const result = await request.query(query);
-        return result['recordset'][0];
+
+        return { rowsAffected: result['rowsAffected'][0] }; // Devuelve objeto consistente
     }
 
     static async deleteEmpleado(CI: string) {
-        if (CI === undefined || CI === null || CI.length === 0) {
-            return { error: "Se necesita la cédula" };
-        }
-
         const request = getDbPool().request();
         request.input('CI', CI);
         const result = await request.query('delete from Empleados where CI_emp = @CI;');
         
-        if (result.rowsAffected[0] === 0) {
-            return { error: "No se encontró el empleado con la cédula proporcionada." };
-        }
-        return result['recordset'][0];
+        return {rowsAffected: result['rowsAffected'][0]};
     }
 
-    static async addEmpleado({CI, name, lastName, cellphone, address, salary, RIF}: {CI: string, name: string, lastName: string, cellphone: string, address: string, salary: number, RIF: string}) {
-        if (CI === undefined || CI.length === 0) {
-            return { error: "Se necesita la cédula" };
-        }
-
-        if (name === undefined || name.length === 0) {
-            return { error: "Se necesita el nombre" };
-        }
-
-        if (lastName === undefined || lastName.length === 0) {
-            return { error: "Se necesita el apellido" };
-        }
-
-        if (cellphone === undefined || cellphone.length === 0) {
-            return { error: "Se necesita el teléfono" };
-        }
-
-        if (address === undefined || address.length === 0) {
-            return { error: "Se necesita la dirección" };
-        }
-
-        if (salary === undefined || typeof salary !== 'number') {
-            return { error: "Se necesita que el sueldo sea un número" };
-        }
-
-        if (RIF === undefined || RIF.length === 0) {
-            return { error: "Se necesita el RIF" };
-        }
-
+    static async addEmpleado(CI: string, name: string, lastName: string, cellphone: string, address: string, salary: number, RIF: string) {
         const request = getDbPool().request();
         request.input('CI', CI);
         request.input('name', name);
@@ -147,12 +73,29 @@ export class employeeModel {
         request.input('salary', salary);
         request.input('RIF', RIF);
 
-        const query = 
-            'Insert into Empleados (CI_emp, nombre, apellido, telefono, direccion, sueldo, RIF) ' +
-            'values (@CI, @name, @lastName, @cellphone, @address, @salary, @RIF);';
+        const query = 'EXEC addEmpleado @CI, @RIF, @name, @lastName, @cellphone, @address, @salary;';
 
         const result = await request.query(query);
         
-        return result['recordset'][0];
+        return result['rowsAffected'];
+    }
+
+    static async asigPersonInCharge(RIF: string, CI_encargado: string | null, fecha: Date | null) {
+        const request = getDbPool().request();
+
+        request.input("RIF", RIF);
+        request.input("CI_encargado", CI_encargado);
+        request.input("fecha_encargado", fecha);
+
+        const result = await request.query(`UPDATE Establecimientos 
+                                            SET CI_encargado = @CI_encargado,
+                                            fecha_encargado = @fecha_encargado
+                                            WHERE RIF_establecimiento = @RIF;`);
+
+        return {rowsAffected: result['rowsAffected'][0]};
+    }
+
+    static async removePersonInCharge(RIF: string) {
+        return this.asigPersonInCharge(RIF, null, null);
     }
 }

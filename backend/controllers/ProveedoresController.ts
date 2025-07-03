@@ -39,7 +39,7 @@ export class SuppliersController {
         try {
             const supplier = await SuppliersModel.getByRif(RIF);
             
-            if (supplier.length === 0) {
+            if (!supplier) {
                 res.status(404).json({ message: 'Supplier not found' });
                 return;
             }
@@ -52,58 +52,59 @@ export class SuppliersController {
     }
 
     // Create a new supplier
-    addSupplier = async(req: Request, res: Response<Suppliers | { message: string }>): Promise<void> => {
+    addSupplier = async(req: Request, res: Response<{message: string} | { error: string }>): Promise<void> => {
         const {RIF} = req.params;
         const {razonSo, direccion, local_, telefono, persona_contacto } = req.body;
 
         try {
-            const newSupplier = await SuppliersModel.create({ RIF, razonSo, direccion, local_, telefono, persona_contacto });
+            const result = await SuppliersModel.create(RIF, razonSo, direccion, local_, telefono, persona_contacto);
 
-            if(!newSupplier){
-                res.status(400).json({message: "No se pudo encontrar un proveedor con ese RIF"});
+            if(result.rowsAffected === 0){
+                res.status(400).json({error: "No se pudo encontrar un proveedor con ese RIF"});
                 return;
             }
 
-            res.status(201).json(newSupplier);
+            res.status(201).json({message: "Proveedor creado correctamente"});
         } catch (error) {
             res.status(500).json({ message: 'Error creating supplier'});
         }
     }
 
-    updateSupplier = async(req: Request, res: Response<Suppliers | {message: string}>): Promise<void> => {
+    updateSupplier = async(req: Request, res: Response<{error: string} | {message: string}>): Promise<void> => {
         const {RIF} = req.params;
-        const {razonSo, direccion, local_, telefono, persona_contacto } = req.body;
+        const {razonSo = null, direccion = null, local_ = null, telefono = null, persona_contacto = null } = req.body;
 
+        console.log({razonSo, direccion, local_, telefono, persona_contacto});
         try{
-            const result: Suppliers = await SuppliersModel.create({RIF, razonSo, direccion, local_, telefono, persona_contacto});
+            const result = await SuppliersModel.update(RIF, razonSo, direccion, local_, telefono, persona_contacto);
 
-            if(!result){
-                res.status(400).json({message: "No se pudo realizar la actualización del proveedor"});
+            if(result.rowsAffected === 0){
+                res.status(400).json({error: "No se pudo realizar la actualización del proveedor"});
                 return;
             }
 
-            res.status(200).json(result);
+            res.status(200).json({message: "Proveedor actualizado correctamente"});
         } catch(error){
             console.error("Ha ocurrido un error", error);
-            res.status(500).json({message: "Ocurrió un error interno en el servidor"});
+            res.status(500).json({error: "Ocurrió un error interno en el servidor"});
         }
     }
 
-    deleteSupplier = async(req: Request, res: Response<Suppliers | {message: string}>): Promise<void> => {
-        const {RIF} = req.params;
+    deleteSupplier = async(req: Request, res: Response<{error: string} | {message: string}>): Promise<void> => {
+        const RIF: string = req.params.RIF;
 
         try{
             const result = await SuppliersModel.deleted(RIF);
 
-            if (!result) {
-                res.status(404).json({ message: "Supplier not found" });
+            if (result.rowsAffected === 0) {
+                res.status(404).json({ error: "Supplier not found" });
                 return;
             }
 
-            res.status(200).json({ message: "Supplier deleted successfully" });
+            res.status(200).json({ message: "Proveedor eliminado correctamente" });
         } catch(error){
             console.error("Ha ocurrido un error al eliminar el proveedor", error);
-            res.status(500).json({ message: "Error eliminando a un proveedor"});
+            res.status(500).json({ error: "Error eliminando a un proveedor"});
         }
     }
 }

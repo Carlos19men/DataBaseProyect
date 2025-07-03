@@ -7,30 +7,19 @@ export class invoice{
         return result['recordset'];
     }
 
-    static async getbyID({nro_factura}: {nro_factura: number}){
-        if(nro_factura != null){
-            if(nro_factura === undefined || nro_factura <= 0){
-                return {error: "El número de factura no es válido"};
-            }
-        }
-
+    static async getbyID(nro_factura: number){
         const request = getDbPool().request();
 
         request.input('nro_factura', nro_factura);
 
+        //hacer 
         const query = `Select * from Facturas where nro_factura = @nro_factura`;
 
         const result = await request.query(query);
         return result['recordset'];
     }
 
-   static async deleteInvoice({nro_factura}: {nro_factura: number}){
-        if(nro_factura != null){
-            if(nro_factura === undefined || nro_factura <= 0){
-                return {error: "El número de factura no es válido"};
-            }
-        }
-
+   static async deleteInvoice(nro_factura: number){
         const request = getDbPool().request();
 
         request.input('nro_factura', nro_factura);

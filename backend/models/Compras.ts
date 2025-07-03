@@ -8,26 +8,18 @@ export class ComprasModel {
     }
 
     static async getByID(id: number) {
-        if (id === undefined || id === null || id <= 0) {
-            return { error: "Se necesita el ID de la compra" };
-        }
-
         const request = getDbPool().request();
         request.input('id', id);
 
-        const result = await request.query('');
+        const result = await request.query('Select * from Compras where nro_compra = @id');
         return result['recordset'];
     }
 
     static async deleteByID(id: number) {
-        if (id === null || id === undefined || id <= 0) {
-            return { error: "Se necesita el ID de la compra" };
-        }
-
         const request = getDbPool().request();
         request.input('id', id);
 
         const result = await request.query('');
-        return result['rowsAffected'];
+        return {rowsAffected: result['rowsAffected'][0]};
     }
 } 
