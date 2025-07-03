@@ -32,7 +32,7 @@ http://localhost:1234/employee/
 http://localhost:1234/employee/12345718
 
 ### empleados que trabajen en cierto establecimiento  | listo 
-http://localhost:1234/employee/RIF/J-11223344-5
+http://localhost:1234/employee/RIF/J-00112233-4
 
 ### agregar un nuevo empleado |listo
 POST http://localhost:1234/employee/ 

@@ -1,0 +1,38 @@
+### Obtener todas las ordenes de servicio
+http://localhost:1234/service-order
+
+### Obtener las ordenes de servicio de un establecimiento 
+http://localhost:1234/service-order/rif/1234567890
+
+
+### Crear una nueva orden de servicio
+POST http://localhost:1234/service-order
+Content-Type: application/json
+
+{
+    "codigo_vehiculo": 1,
+    "fecha_entrada": "2021-01-01",
+    "hora_entrada": "10:00",
+    "hora_estimada_salida": "15:00",
+    "persona_autoriza": "Juan Perez",
+    "actividades": [
+        {
+            "nro_servicio": 3,
+            "nro_correlativo": 8,
+            "id_producto": 1,
+            "precio_producto": 100,
+            "precio_actividad": 100,
+            "cantidad_producto": 1,
+            "ci_empleAsig": "12345718"
+        }
+    ],
+    "id_rif": "J-00112233-4"
+}
+
+### Eliminar una orden de servicio
+DELETE http://localhost:1234/service-order/1
+
+### Obtener una orden de servicio por ID
+GET http://localhost:1234/service-order/1
+
+### Actualizar una orden de servicio
