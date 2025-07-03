@@ -563,5 +563,23 @@ Content-Type: application/json
     "cant_utilizada": 10
 }
 
-### 
+### Router de Actualizaciones de Inventario
 
+### Obtener todas las actualizaciones de inventario por establecimiento
+GET http://localhost:1234/inventory-updates/establishment/J-00112233-4
+
+### Obtener actualizaciones de inventario por producto específico en un establecimiento
+GET http://localhost:1234/inventory-updates/establishment/J-00112233-4/product/1
+
+### Crear nueva actualización de inventario
+POST http://localhost:1234/inventory-updates
+Content-Type: application/json
+
+{
+    "RIF": "J-00112233-4",
+    "id_producto": 1,
+    "cantidad": 5,
+    "tipo": "FALTANTE"
+}
+
+### 

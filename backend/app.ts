@@ -21,6 +21,7 @@ import { createComprasRouter } from "./routers/routerCompras";
 import { createProveedoresAsociadosRouter } from "./routers/routerProveedoresAsociados";
 import { createActivityRouter } from "./routers/routerActividad";
 import { createActivityProductRouter } from "./routers/routerActividadProductos";
+import { createActualizacionesInventarioRouter } from "./routers/routerActualizacionesInventario";
 
 connectToDatabase()
 
@@ -55,6 +56,7 @@ export const createApp = () =>{
     app.use('/associated-suppliers', createProveedoresAsociadosRouter());
     app.use('/activity', createActivityRouter());
     app.use('/activity-product', createActivityProductRouter());
+    app.use('/inventory-updates', createActualizacionesInventarioRouter());
     
     const PORT = process.env.PORT ?? 1234
 
