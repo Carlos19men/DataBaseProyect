@@ -21,7 +21,7 @@ const MenuDespegable: React.FC = () => {
     return(
         <div>
             {/*Boton Hamburguesa */}
-            <button className={`${styles.hamburguesa} ${activo ? styles.activo : ''}`}
+            <button className={`${styles.hamburguesa} ${activo ? styles.activo : ''} `}
                 onClick={alternarMenu}>☰
             </button>
 

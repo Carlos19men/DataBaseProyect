@@ -63,7 +63,6 @@
     padding:1vw;
     display: grid;
     grid-template-columns: 75% 15%;
-    width: 100%;
     gap: 2vw;
     margin-top: 2vh;
 }
@@ -73,7 +72,7 @@
     display:grid;
     grid-template-columns:repeat(3, 33%);
     gap : 1vw;
-    background-color: lightgrey;
+
 }
 
 .item{
@@ -84,11 +83,12 @@
     padding: 2vh 2vw;
     font-size: 3vh;
     gap: 1vh;
+    border:2px ridge black;
 }
 
 .filtros {
 
-    background-color: lightgrey;
+
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   padding: 2vh 2vw;

@@ -1,5 +1,5 @@
 use MU_DB;
-
+Go
 --Telefono Clientes 
 
 --creamos la vista 

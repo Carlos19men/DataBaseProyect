@@ -41,13 +41,13 @@ BEGIN
         -- Validar que el vehículo existe
         IF NOT EXISTS (SELECT 1 FROM Vehiculos WHERE codigo = @codigo_vehiculo)
         BEGIN
-            THROW 50004, 'El vehículo especificado no existe', 1;
+            ;THROW 50004, 'El vehículo especificado no existe', 1;
         END;
         
         -- Validar que el establecimiento existe
         IF NOT EXISTS (SELECT 1 FROM Establecimientos WHERE RIF = @RIF_establecimiento)
         BEGIN
-            THROW 50005, 'El establecimiento especificado no existe', 1;
+            ;THROW 50005, 'El establecimiento especificado no existe', 1;
         END;
         
         -- 1. Crear la Orden de Servicio
@@ -85,7 +85,7 @@ BEGIN
             WHERE act.nro_servicio IS NULL
         )
         BEGIN
-            THROW 50001, 'Una o más actividades especificadas no existen', 1;
+            ;THROW 50001, 'Una o más actividades especificadas no existen', 1;
         END;
         
         -- 3. Validar que todos los productos existen
@@ -95,7 +95,7 @@ BEGIN
             WHERE p.id_producto IS NULL
         )
         BEGIN
-            THROW 50002, 'Uno o más productos especificados no existen', 1;
+            ;THROW 50002, 'Uno o más productos especificados no existen', 1;
         END;
         
         -- 4. Insertar todas las actividades de la orden
@@ -176,19 +176,19 @@ BEGIN
         -- Verificar que la orden de servicio existe
         IF NOT EXISTS (SELECT 1 FROM OrdenesServicio WHERE cod_OS = @cod_OS)
         BEGIN
-            THROW 50003, 'La orden de servicio especificada no existe', 1;
+            ;THROW 50003, 'La orden de servicio especificada no existe', 1;
         END;
         
         -- Verificar que el vehículo existe si se proporciona
         IF @codigo_vehiculo IS NOT NULL AND NOT EXISTS (SELECT 1 FROM Vehiculos WHERE codigo = @codigo_vehiculo)
         BEGIN
-            THROW 50004, 'El vehículo especificado no existe', 1;
+            ;THROW 50004, 'El vehículo especificado no existe', 1;
         END;
         
         -- Verificar que el establecimiento existe si se proporciona
         IF @RIF_establecimiento IS NOT NULL AND NOT EXISTS (SELECT 1 FROM Establecimientos WHERE RIF = @RIF_establecimiento)
         BEGIN
-            THROW 50005, 'El establecimiento especificado no existe', 1;
+            ;THROW 50005, 'El establecimiento especificado no existe', 1;
         END;
         
         -- Construir la consulta de actualización dinámicamente

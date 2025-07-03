@@ -24,7 +24,7 @@ AS
 RETURN (
 	SELECT * FROM Empleados EM WHERE CI_emp NOT IN (SELECT CedulaEmpleado FROM empleadosAsignadosSer(@RIF)) AND RIF_establecimiento = @RIF
 );
-
+GO
 --asignar empleado 
 CREATE PROCEDURE asigEmpleado
 @RIF_establecimiento VARCHAR(100),
@@ -43,5 +43,5 @@ BEGIN
 	INSERT INTO EmpleadosAsignados (nro_servicio, CI_empleado) VALUES (@id_servicio,@CI_empleado); 
 END;
 
-drop procedure asigEmpleado; 
+/* drop procedure asigEmpleado; */
 

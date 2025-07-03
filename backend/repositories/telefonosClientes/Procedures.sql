@@ -58,24 +58,24 @@ BEGIN
 		--IF la cedula existe es porque ya tiene numeros asociados 
 		IF EXISTS (SELECT 1 FROM telefonosCliente WHERE CI_cliente = @CI)
 		BEGIN 
-			THROW 50000,'Este cliente ya tiene telefonos asociados',1;
+			;THROW 50000,'Este cliente ya tiene telefonos asociados',1;
 		END; 
 
 		-- Los números deben ser diferentes
 		IF (@tel1 = @tel2)
 		BEGIN
-			THROW 50001, 'Los números de teléfono no deben ser iguales.', 1; -- CORRECCIÓN: Añadido el 'state' (1) a THROW
+			;THROW 50001, 'Los números de teléfono no deben ser iguales.', 1; -- CORRECCIÓN: Añadido el 'state' (1) a THROW
 		END;
 
 		IF (LEN(@tel1) < 10) OR (LEN(@tel2) < 10)
 		BEGIN
-			THROW 50002, 'Lo números ingresados no son validos',1;
+			;THROW 50002, 'Lo números ingresados no son validos',1;
 		END; 
 		-- CORRECCIÓN: El mensaje en THROW debe ser claro sobre la acción (o falta de ella).
 		IF EXISTS (SELECT 1 FROM telefonosCliente WHERE numero = @tel1) OR
 			EXISTS (SELECT 1 FROM telefonosCliente WHERE numero = @tel2)
 		BEGIN
-			THROW 50003, 'Uno o ambos números de teléfono ya se encuentran registrados. No se realizará ninguna inserción.', 1;
+			;THROW 50003, 'Uno o ambos números de teléfono ya se encuentran registrados. No se realizará ninguna inserción.', 1;
 		END
 		ELSE
 		BEGIN
@@ -170,24 +170,24 @@ BEGIN
 			SAVE TRANSACTION SP_puntoControl;
 
 		--Logica del procedimiento incluyendo las validaciones 
-		IF NOT EXISTS (SELECT 1 FROM telefonosClientes WHERE CI_cliente = @CI)
+		IF NOT EXISTS (SELECT 1 FROM telefonosCliente WHERE CI_cliente = @CI)
 		BEGIN
-			THROW 50001,'Este cliente no se encuentra registrado',1;
+			;THROW 50001,'Este cliente no se encuentra registrado',1;
 		END; 
 
-		IF NOT EXISTS (SELECT 1 FROM telefonosClientes WHERE numero = @telf)
+		IF NOT EXISTS (SELECT 1 FROM telefonosCliente WHERE numero = @telf)
 		BEGIN
-			THROW 50002,'El numero a editar no se encuentra registrado',1;
+			;THROW 50002,'El numero a editar no se encuentra registrado',1;
 		END; 
 
-		IF EXISTS (SELECT 1 FROM telefonosClientes WHERE numero = @newTelf) 
+		IF EXISTS (SELECT 1 FROM telefonosCliente WHERE numero = @newTelf) 
 		BEGIN 
-			THROW 50003,'El numero nuevo ya se encuentra registrado',1;
+			;THROW 50003,'El numero nuevo ya se encuentra registrado',1;
 		END; 
 
 		--EDITAMOS EL NUEVO NUMERO 
 
-		UPDATE telefonosClientes SET numero = @newTelf WHERE CI_cliente=@CI AND numero = @telf; 
+		UPDATE telefonosCliente SET numero = @newTelf WHERE CI_cliente=@CI AND numero = @telf; 
 		PRINT 'La modificación del numero '+@telf+' a '+@newTelf+' se ha realizado con exito'; 
 
 		-- Finalización de la Transacción: COMMIT (Solo si este SP la inició)

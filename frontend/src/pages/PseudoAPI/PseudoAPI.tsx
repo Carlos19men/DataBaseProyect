@@ -29,10 +29,10 @@ const ofrecidos = JSON.stringify(usegetAllAPI("offered-services"),null,2);
     const empleadosPorId=JSON.stringify(usegetById("employee","12345724"), null, 2);
    
     const proveedoresPorId=JSON.stringify(usegetById("suppliers","J-50077889-1"), null, 2);
-    const inventariosPorId=JSON.stringify(usegetById("inventory",1), null, 2);
+    const inventariosPorId=JSON.stringify(usegetById("inventory","J-00112233-4"), null, 2);
     const marcasPorId=JSON.stringify(usegetById("brand",1), null, 2);
     const serviciosPorId=JSON.stringify(usegetById("servicie",1), null, 2);
-    const clientesPorId=JSON.stringify(usegetById("customer",1), null, 2);
+    const clientesPorId=JSON.stringify(usegetById("customer",27901234), null, 2);
     const productosPorId =JSON.stringify(usegetById("product",1), null, 2);
     const modelosPorId =JSON.stringify(usegetById("model",1), null, 2);
     const especializadosPorId = JSON.stringify(usegetById("specializedEmployee/ci","12345758"), null, 2);

@@ -1,0 +1,90 @@
+.container{
+    flex: auto;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+}
+
+.centrado{
+    margin: 5vh;
+    display: flex;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.form{
+    margin-bottom: 20px;
+    display: flex;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.label{
+    min-width: 160px;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+}
+
+.textarea{
+    width: 100%;
+    min-height: 60px;
+    resize: vertical;
+    font-size: 1rem;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-family: 'Poppins', sans-serif;
+}
+
+select {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.body{
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.buttonContainer{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.formRow {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    margin-bottom: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.textBoxContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.texto {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    min-width: 120px;
+}
+
+.select {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #fff;
+    min-width: 180px;
+    height: 38px;
+} 
