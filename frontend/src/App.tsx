@@ -7,6 +7,8 @@ import PseudoAPI from "./pages/PseudoAPI/PseudoAPI";
 import Busqueda from "./pages/Busqueda/Busqueda";
 import Estadisticas from "./pages/Estadísticas/Estadisticas";
 import VisualizarFactura from "./pages/VisualizarFactura/VisualizarFactura";
+import RegistrarModelo from "./pages/Registrar Modelos/RegistrarModelo";
+import RegistrarVehiculo from "./pages/Registrar Vehiculo/RegistrarVehiculo";
 
 const App = () => (
 
@@ -22,8 +24,10 @@ const App = () => (
       <Route path="/Search" element={<Busqueda/>}></Route>
       <Route path="/Stats" element={<Estadisticas/>}></Route>
       <Route path="/Factura" element={<VisualizarFactura/>}></Route>
-    </Routes>
+      <Route path="/RegistrarModelo" element={<RegistrarModelo/>}></Route>
+      <Route path="/RegistrarVehiculo" element={<RegistrarVehiculo/>}></Route>
+    </Routes>             
   </Router>
 )
 
-export default App;
+export default App;                     
