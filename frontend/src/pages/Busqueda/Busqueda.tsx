@@ -3,6 +3,7 @@ import MenuDespegable from "../../components/Menu Desplegable/MenuDesplegable";
 import styles from "./Busqueda.module.css";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Button from "../../components/Button/button";
+import Busquedas2 from "./Busquedas2";
 
 
 const Busqueda : React.FC = ({}) => {
@@ -71,6 +72,8 @@ async function buscar(ID:string="") {
                     <Button texto="Establecimientos" viewHeight={5} onClick={() => { setUrl("establishement"); }}></Button>
                     <Button texto="Clientes" viewHeight={5} onClick={() => { setUrl("customer");  }}></Button>
                     <Button texto="Proveedores" viewHeight={5} onClick={() => { setUrl("suppliers"); }}></Button>
+                    <Button texto="Productos" viewHeight={5} onClick={() => { setUrl("product"); }}></Button>
+                    
                 </div>
                 </div>
 
@@ -79,4 +82,4 @@ async function buscar(ID:string="") {
     )
 }
 
-export default Busqueda;
+export default Busquedas2;
