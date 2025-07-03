@@ -16,7 +16,7 @@ PRINT '=== ESTABLECIMIENTOS EXISTENTES ===';
 SELECT 
     RIF,
     nombre,
-    direccion
+    ciudad
 FROM Establecimientos
 ORDER BY RIF;
 
