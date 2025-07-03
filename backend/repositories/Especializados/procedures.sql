@@ -1,5 +1,6 @@
 USE MU_DB;
 GO
+
 CREATE VIEW Especializados AS
 SELECT 
 	EM.CI_emp, EM.apellido apellidoEmpleado, EM.nombre nombreEmpleado,EM.RIF_establecimiento RIF, SER.nro_servicio, SER.nombre_ser servicio
@@ -10,7 +11,6 @@ WHERE
 	SER.nro_servicio = EE.nro_servicio;
 
 --Especializados de un establecimiento y un servicio especifico 
-
 
 go
 
@@ -23,6 +23,7 @@ RETURN(
 	SELECT CI_emp,apellidoEmpleado,nombreEmpleado,nro_servicio,servicio FROM Especializados WHERE RIF = @rif
 );
 go
+
 --bontener todos los empleados y el servicio en el que se especializan 
 
 --nuevo especializacion 

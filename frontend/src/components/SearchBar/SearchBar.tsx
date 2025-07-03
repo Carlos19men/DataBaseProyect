@@ -30,10 +30,10 @@ const SearchBar: React.FC<SearchBarProps> = ({
             margin: 0,
             cursor: "pointer",
             alignItems: "center",
-            transform: "translate(-5vw,1vh) "
+            transform: "translate(-5vw,1.5vh) "
           }}
         >
-          <svg width="8vh" height="8vh" viewBox="0 0 20 20" fill="none">
+          <svg width="7vh" height="7vh" viewBox="0 0 20 20" fill="none">
           <circle cx="9" cy="9" r="7" stroke="rgba(0,0,0,0.4)" strokeWidth="2"/>
           <line x1="14.5" y1="14.5" x2="19" y2="19" stroke="rgba(0,0,0,0.4)" strokeWidth="2" strokeLinecap="round"/>
           </svg>

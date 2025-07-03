@@ -804,7 +804,7 @@ INSERT INTO OrdenesCompra (fecha_compra, RIF_est, monto_total) VALUES
 ('2024-06-05', 'J-00112233-4', 900);
 
 -- ALMACENA (usa RIF de Establecimientos y id_producto existentes)
-INSERT INTO Almacena (RIF_establecimiento, id_producto, cantidad) VALUES
+INSERT INTO Inventario(RIF_establecimiento, id_producto, cantidad) VALUES
 ('J-12345678-9', 1, 20),
 ('J-98765432-1', 2, 15),
 ('J-11223344-5', 1, 10),
@@ -821,28 +821,30 @@ INSERT INTO ActualizacionesInventarios (RIF_establecimiento, id_producto, fecha_
 
 -- PROVEEDORESASOCIADOS (usa RIF_proveedor y nro_orden de OrdenesCompra)
 INSERT INTO ProveedoresAsociados (RIF_proveedor, nro_orden) VALUES
-('J-50011223-5', 3),
-('J-50033445-7', 4),
-('J-50055667-9', 5),
-('J-50077889-1', 6),
-('J-50099001-3', 7);
+('J-50011223-5', 1),
+('J-50033445-7', 2),
+('J-50055667-9', 3),
+('J-50077889-1', 4),
+('J-50099001-3', 5);
 
+select * from Establecimientos
 
 -- ORDENESSERVICIO (usa códigos de vehículos existentes)
-INSERT INTO OrdenesServicio (fecha_entrada, hora_entrada, hora_estimada_salida, hora_real_salida, fecha_salida, justificacion, persona_autorizada, codigo_vehiculo) VALUES
-('2024-06-01', '08:00', '12:00', '12:30', '2024-06-01', 'Mantenimiento preventivo', 'Juan Pérez', 1),
-('2024-06-02', '09:00', '13:00', '13:15', '2024-06-02', 'Cambio de aceite', 'Ana Gómez', 2),
-('2024-06-03', '10:00', '14:00', '14:05', '2024-06-03', 'Revisión general', 'Luis Torres', 3),
-('2024-06-04', '11:00', '15:00', '15:20', '2024-06-04', 'Reparación de frenos', 'María Ruiz', 4),
-('2024-06-05', '12:00', '16:00', '16:10', '2024-06-05', 'Diagnóstico eléctrico', 'Pedro Díaz', 5);
+INSERT INTO OrdenesServicio (fecha_entrada,RIF_establecimiento, hora_entrada, hora_estimada_salida, hora_real_salida, fecha_salida, justificacion, persona_autorizada, codigo_vehiculo) VALUES
+('2024-06-01','J-00112233-4', '08:00', '12:00', '12:30', '2024-06-01', 'Mantenimiento preventivo', 'Juan Pérez', 1),
+('2024-06-02','J-11223344-5', '09:00', '13:00', '13:15', '2024-06-02', 'Cambio de aceite', 'Ana Gómez', 2),
+('2024-06-03','J-23456789-0', '10:00', '14:00', '14:05', '2024-06-03', 'Revisión general', 'Luis Torres', 3),
+('2024-06-04','J-33445566-7', '11:00', '15:00', '15:20', '2024-06-04', 'Reparación de frenos', 'María Ruiz', 4),
+('2024-06-05','J-87654321-0', '12:00', '16:00', '16:10', '2024-06-05', 'Diagnóstico eléctrico', 'Pedro Díaz', 5);
 
 -- FACTURAS (usa cod_OS de OrdenesServicio)
-INSERT INTO Facturas (cod_OS, descuento, iva, monto_total, fecha_emision) VALUES
-(1, 10.00, 16, 150.00, '2024-06-01'),
-(2, 5.00, 16, 200.00, '2024-06-02'),
-(3, 0.00, 16, 180.00, '2024-06-03'),
-(4, 15.00, 16, 220.00, '2024-06-04'),
-(5, 8.00, 16, 170.00, '2024-06-05');
+INSERT INTO Facturas ( descuento, iva, monto_total, fecha_emision,cod_OS) VALUES
+( 10.00, 16, 150.00, '2024-06-01',4),
+( 5.00, 16, 200.00, '2024-06-02',3),
+( 0.00, 16, 180.00, '2024-06-03',5),
+( 15.00, 16, 220.00, '2024-06-04',6),
+( 8.00, 16, 170.00, '2024-06-05',7);
+
 
 -- METODOSPAGO
 INSERT INTO MetodosPago (tipo_moneda, monto_ef, fechaPago_Tar, tipo_tarjeta, banco, nro_tarjeta, monto_tar, referenciaPM, fecha_PM, monto_PM, telefono) VALUES
@@ -880,8 +882,8 @@ INSERT INTO ActividadProductos (id_producto, nro_servicio, nro_correlativo, cant
 
 -- COMPRAS (usa nro_compra de OrdenesCompra y id_producto de Productos)
 INSERT INTO Compras (nro_compra, id_producto, cantidad_producto, precio_und) VALUES
-(6, 1, 10, 15.99),
-(7, 2, 5, 8.20),
+(1, 1, 10, 15.99),
+(2, 2, 5, 8.20),
 (3, 1, 8, 15.99),
 (4, 2, 12, 8.20),
 (5, 1, 15, 15.99);
@@ -898,16 +900,17 @@ INSERT INTO ActividadesPlan (cod_marca, nro_modelo, kilometraje, nro_servicio, n
 
 -- PAGOSFACTURA (usa nro_factura de Facturas y id_pago de MetodosPago)
 INSERT INTO PagosFactura (nro_factura, id_pago) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5);
+(7, 1),
+(8, 2),
+(9, 3),
+(10, 4),
+(11, 5);
+
 
 -- ACTIVIDADESOS (usa cod_OS de OrdenesServicio, nro_servicio y nro_correlativo de Actividades, id_producto de Productos)
-INSERT INTO ActividadesOS (cod_OS, nro_servicio, nro_correlativo, id_producto, precio_producto, precio_actividad, cantidad) VALUES
-(6, 1, 1, 1, 15.99, 1.50, 2),
-(7, 2, 5, 2, 8.20, 2.50, 1),
-(3, 3, 8, 1, 15.99, 5.00, 3),
-(4, 4, 11, 2, 8.20, 1.00, 2),
-(5, 5, 16, 1, 15.99, 3.00, 1);
+INSERT INTO ActividadesOS (ci_empleado, cod_OS, nro_servicio, nro_correlativo, id_producto, precio_producto, precio_actividad, cantidad) VALUES
+(12345689,6, 1, 1, 1, 15.99, 1.50, 2),
+(12345689,7, 2, 5, 2, 8.20, 2.50, 1),
+(12345689,3, 3, 8, 1, 15.99, 5.00, 3),
+(12345689,4, 4, 11, 2, 8.20, 1.00, 2),
+(12345689,5, 5, 16, 1, 15.99, 3.00, 1);

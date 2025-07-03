@@ -1,3 +1,6 @@
+use MU_DB
+GO
+
 IF OBJECT_ID('ObtenerEmpleados', 'V') IS NOT NULL
     DROP VIEW ObtenerEmpleados;
 GO

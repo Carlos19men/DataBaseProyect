@@ -32,19 +32,17 @@ async function buscar(ID:string="") {
     }, [url]);
 
     return (
-        <div>
+        <div >
 
             <div className={styles.bar} >
                 <MenuDespegable ></MenuDespegable> 
                 <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
 
-                    <SearchBar etiqueta="" ejemplo="Buscar" viewWidth={70} viewHeight={10} value={busqueda} onSearchClick={() => { buscar(busqueda) }} onChange={(e) => {setBusqueda(e.target.value)}}></SearchBar>
+                    <SearchBar etiqueta="" ejemplo="Buscar" viewWidth={70} viewHeight={8} value={busqueda} onSearchClick={() => { buscar(busqueda) }} onChange={(e) => {setBusqueda(e.target.value)}}></SearchBar>
                 </div>
             </div>
 
-
             <div className={styles.columnas}>
-               
                     <div className={styles.resultados}>
                     {typeof resultados === "string" ? (
                         <div>{resultados}</div>
@@ -75,7 +73,6 @@ async function buscar(ID:string="") {
                     <Button texto="Proveedores" viewHeight={5} onClick={() => { setUrl("suppliers"); }}></Button>
                 </div>
                 </div>
-               
 
             </div>
 

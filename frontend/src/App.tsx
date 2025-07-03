@@ -5,7 +5,8 @@ import Login from "./pages/Login/Login";
 import HomePage from "./pages/Home Page/HomePage";
 import PseudoAPI from "./pages/PseudoAPI/PseudoAPI";
 import Busqueda from "./pages/Busqueda/Busqueda";
-import RegistrarModelo from "./pages/Registrar Modelos/RegistrarModelo";
+import Estadisticas from "./pages/Estadísticas/Estadisticas";
+import VisualizarFactura from "./pages/VisualizarFactura/VisualizarFactura";
 
 const App = () => (
 
@@ -18,8 +19,9 @@ const App = () => (
       <Route path="/Login" element={<Login/>}></Route>
       <Route path="/HomePage" element={<HomePage/>}></Route>
       <Route path="/API" element={<PseudoAPI/>}>  </Route>
-      <Route path="/Busqueda" element={<Busqueda/>}></Route>
-      <Route path="/RegistrarModelo" element={<RegistrarModelo/>}></Route>
+      <Route path="/Search" element={<Busqueda/>}></Route>
+      <Route path="/Stats" element={<Estadisticas/>}></Route>
+      <Route path="/Factura" element={<VisualizarFactura/>}></Route>
     </Routes>
   </Router>
 )

@@ -51,6 +51,7 @@ GO
 
 CREATE PROCEDURE createPlan(
 @cod_marca int ,
+@nro_modelo int,
 @kilolmetraje int,
 @nombre varchar(50),
 @descripcion varchar(200))
@@ -61,7 +62,7 @@ BEGIN
 
 		--Si no existe la actividad, la cramos
 		INSERT INTO PlanesMantenimiento(cod_marca,descripcion,kilometraje,nombre,nro_modelo) values 
-		(@cod_marca,@kilolmetraje ,@nombre ,@descripcion)
+		(@cod_marca,@kilolmetraje ,@nombre ,@descripcion,@nro_modelo)
 
 END;
 GO
