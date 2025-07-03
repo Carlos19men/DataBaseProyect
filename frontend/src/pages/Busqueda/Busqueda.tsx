@@ -42,9 +42,7 @@ async function buscar(ID:string="") {
                 </div>
             </div>
 
-
             <div className={styles.columnas}>
-               
                     <div className={styles.resultados}>
                     {typeof resultados === "string" ? (
                         <div>{resultados}</div>
