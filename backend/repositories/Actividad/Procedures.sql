@@ -45,8 +45,6 @@ RETURN
 )
 GO
 
-
-
 IF OBJECT_ID('dbo.createActividad', 'P') IS NOT NULL
     DROP PROCEDURE dbo.createActividad;
 GO

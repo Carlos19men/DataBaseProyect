@@ -1,3 +1,7 @@
+USE MU_DB
+GO
+
+
 -- Procedimiento para calcular el descuento para un cliente dependiendo de la cantidad de servicios solicitados en los ultimos 3 meses
 CREATE PROCEDURE CalcularDescuento(
 	@ClienteID int,
@@ -26,6 +30,8 @@ BEGIN
 				SET @Descuento = 0.15;
 END;
 
+GO
+
 -- Funcion para calcular el monto total de una factura considerando el descuento
 CREATE FUNCTION CalcularMontoTotal (
     @Monto DECIMAL(10,2),
@@ -35,8 +41,10 @@ CREATE FUNCTION CalcularMontoTotal (
 RETURNS DECIMAL(10,2)
 AS
 BEGIN
-    RETURN @Monto - (@Monto * @Descuento) + ((@Monto - (@Monto * @Descuento))*IVA) ;
+    RETURN @Monto - (@Monto * @Descuento) + ((@Monto - (@Monto * @Descuento))*@IVA) ;
 END;
+
+GO
 
 -- Funcion para obtener los datos del cliente
 CREATE FUNCTION ObtenerDatosCliente(
@@ -53,6 +61,8 @@ RETURN(
 	WHERE O.cod_OS = @cod_OS
 );
 
+GO
+
 -- Funcion para obtener los datos de la factura
 CREATE FUNCTION ObtenerDatosFactura(
 	@cod_OS int
@@ -65,6 +75,8 @@ RETURN(
 	JOIN OrdenesServicio O ON F.cod_OS = O.cod_OS
 	WHERE O.cod_OS = @cod_OS
 );
+
+GO
 
 -- Funcion para obtener los datos del vehiculo
 CREATE FUNCTION ObtenerDatosVehiculo(
@@ -79,6 +91,8 @@ RETURN(
 	JOIN Vehiculos V ON O.codigo_vehiculo = V.codigo
 	WHERE O.cod_OS = @cod_OS
 );
+
+GO
 
 CREATE FUNCTION ObtenerDatosPago(
 	@cod_OS int
@@ -102,25 +116,29 @@ RETURN(
 	AND F.cod_OS = @cod_OS
 );
 
+GO
+
 -- Funcion para obtener los datos correspondientes al establecimiento
 CREATE FUNCTION ObtenerDatosEstablecimientos(
 	@cod_OS int
 )
 RETURNS TABLE
-AS(
+AS RETURN(
 	SELECT E.RIF, E.nombre, E.ciudad
 	FROM Establecimientos E, OrdenesServicio O
 	WHERE E.RIF = O.RIF_establecimiento
 	AND O.cod_OS = @cod_OS
 );
 
+GO
+
 -- Funcion correspondiente a la obtencion de todos los datos correspondiente a los servicios ofrecidos
 CREATE FUNCTION ObtenerDatosServicios(
 	@cod_OS int
 )
 RETURNS TABLE 
-AS(
-	SELECT S.nombre_ser, A.nombre, P.nombre, AOS.precio_producto, AOS.cantidad, AOS.precio_actividad
+AS RETURN(
+	SELECT S.nombre_ser, A.nombre as nombre_act, P.nombre, AOS.precio_producto, AOS.cantidad, AOS.precio_actividad
 	FROM ActividadesOS AOS, Actividades A, Servicios S, Productos P
 	WHERE S.nro_servicio= AOS.nro_servicio
 	AND AOS.nro_correlativo = A.nro_correlativo
@@ -128,10 +146,4 @@ AS(
 	
 );
 
-
-
-SELECT * FROM OrdenesServicio;
-
-SELECT * FROM Clientes;
-
-SELECT * FROM Servicios;
+GO
