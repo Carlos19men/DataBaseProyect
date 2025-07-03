@@ -1,4 +1,4 @@
-### Obtener todos los clientes  |Listo 
+### Obtener todos los             |Listo 
 http://localhost:1234/customer/
 
 ###Obtener un cliente por su cedula | listo 
@@ -204,7 +204,7 @@ GET http://localhost:1234/model/
 GET http://localhost:1234/model/1
 
 ### Obtener un modelo por su id | listo 
-GET http://localhost:1234/model/1/61
+GET http://localhost:1234/model/1/58
 
 ### Agregar un nuevo modelo | listo 
 POST http://localhost:1234/model/1
@@ -296,7 +296,7 @@ DELETE http://localhost:1234/suppliers/1234567890
 GET http://localhost:1234/vehicles/
 
 ### Obtener un vehiculo por su placa | listo
-GET http://localhost:1234/vehicles/ABC1235
+GET http://localhost:1234/vehicles/AJL123                                                                                                                                                                                                                                                                                                                                                                                                                           
 
 ### Agregar un nuevo vehiculo | listo
 POST http://localhost:1234/vehicles/

@@ -1,16 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../../components/Button/button";
 import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
 import TopBar from "../../components/TopBar/TopBar";
 import styles from "./RegistrarModelo.module.css";
-
-// Relación de marcas a su id (esto debería venir de la API en producción)
-const marcas = [
-    { value: "", label: "Seleccione una marca", id: "" },
-    { value: "Toyota", label: "Toyota", id: 1 },
-    { value: "Ford", label: "Ford", id: 2 },
-    { value: "Chevrolet", label: "Chevrolet", id: 3 },
-];
 
 const RegistrarModelo: React.FC = () => {
     const [marca, setMarca] = useState("");
@@ -25,21 +17,33 @@ const RegistrarModelo: React.FC = () => {
     const [mensaje, setMensaje] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
+    // Marcas dinámicas
+    const [marcas, setMarcas] = useState<{cod_marca: number, nombre_marca: string}[]>([]);
+    const [loadingMarcas, setLoadingMarcas] = useState(false);
+
+    useEffect(() => {
+        setLoadingMarcas(true);
+        fetch("http://localhost:1234/brand/")
+            .then(res => res.json())
+            .then(data => setMarcas(data))
+            .catch(() => setMarcas([]))
+            .finally(() => setLoadingMarcas(false));
+    }, []);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setMensaje(null);
         setError(null);
-        // Buscar el id de la marca seleccionada
-        const marcaObj = marcas.find(m => m.value === marca);
-        if (!marcaObj || !marcaObj.id) {
+        if (!marca) {
             setError("Debe seleccionar una marca válida.");
             return;
         }
         try {
-            const res = await fetch(`http://localhost:1234/model/${marcaObj.id}`, {
+            const res = await fetch(`http://localhost:1234/model/`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
+                    id_marca: parseInt(marca),
                     nombre: numeroModelo,
                     aceite_caja: aceiteCaja,
                     aceite_motor: aceiteMotor,
@@ -53,16 +57,7 @@ const RegistrarModelo: React.FC = () => {
             const data = await res.json();
             if (res.ok) {
                 setMensaje("Modelo registrado correctamente.");
-                // Limpiar campos
-                setMarca("");
-                setNumeroModelo("");
-                setAceiteCaja("");
-                setAceiteMotor("");
-                setTipoRefrigerante("");
-                setPeso("");
-                setOctanaje("");
-                setCantidadAsientos("");
-                setDescripcion("");
+                setMarca(""); setNumeroModelo(""); setAceiteCaja(""); setAceiteMotor(""); setTipoRefrigerante(""); setPeso(""); setOctanaje(""); setCantidadAsientos(""); setDescripcion("");
             } else {
                 setError(data.error || data.message || "Error al registrar el modelo");
             }
@@ -79,9 +74,10 @@ const RegistrarModelo: React.FC = () => {
                     <div className={styles.formRow}>
                         <span className={styles.textBoxContainer}>
                             <span className={styles.texto}>Marca:</span>
-                            <select className={styles.select} value={marca} onChange={e => setMarca(e.target.value)} required>
+                            <select className={styles.select} value={marca} onChange={e => setMarca(e.target.value)} required disabled={loadingMarcas}>
+                                <option value="">{loadingMarcas ? "Cargando..." : "Seleccione una marca"}</option>
                                 {marcas.map(m => (
-                                    <option key={m.value} value={m.value}>{m.label}</option>
+                                    <option key={m.cod_marca} value={m.cod_marca}>{m.nombre_marca}</option>
                                 ))}
                             </select>
                         </span>
@@ -93,7 +89,16 @@ const RegistrarModelo: React.FC = () => {
                     </div>
                     <div className={styles.formRow}>
                         <TextBoxMU etiqueta="Aceite del motor:" value={aceiteMotor} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAceiteMotor(e.target.value)} viewWidth={20} ejemplo="Ej: 10W-40" />
-                        <TextBoxMU etiqueta="Octanaje:" value={octanaje} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setOctanaje(e.target.value)} viewWidth={20} ejemplo="Ej: 95" />
+                        <span className={styles.textBoxContainer}>
+                            <span className={styles.texto}>Octanaje:</span>
+                            <select className={styles.select} value={octanaje} onChange={e => setOctanaje(e.target.value)} required>
+                                <option value="">Seleccione</option>
+                                <option value="87">87</option>
+                                <option value="91">91</option>
+                                <option value="95">95</option>
+                                <option value="98">98</option>
+                            </select>
+                        </span>
                     </div>
                     <div className={styles.formRow}>
                         <TextBoxMU etiqueta="Tipo de Refrigerante:" value={tipoRefrigerante} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTipoRefrigerante(e.target.value)} viewWidth={20} ejemplo="Ej: G12" />

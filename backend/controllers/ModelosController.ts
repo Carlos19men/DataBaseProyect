@@ -75,10 +75,17 @@ export class ModelsController {
     }
 
     createModel = async(req: Request, res: Response<{message: string} | {error: string}>): Promise<void> => {
-        const id_marca = parseInt(req.params.id_marca, 10);
-        const {nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso_str, descripcion, nro_puesto_str} = req.body; 
+        // Recibe id_marca desde el body
+        const {id_marca, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso_str, descripcion, nro_puesto_str} = req.body; 
         
-        //console.log({id_marca, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puesto});
+        if (!id_marca) {
+            res.status(400).json({error: "Debe proporcionar el id de la marca."});
+            return;
+        }
+        if (!nombre || !aceite_caja || !aceite_motor || !octanaje || !tipo_refrigerante || !peso_str || !descripcion || !nro_puesto_str) {
+            res.status(400).json({error: "Faltan campos obligatorios para crear el modelo."});
+            return;
+        }
         const peso = parseInt(peso_str, 10);
         const nro_puesto = parseInt(nro_puesto_str,10);
 
@@ -86,19 +93,19 @@ export class ModelsController {
             const result = await ModelsModel.createModel(id_marca, nombre, aceite_caja, aceite_motor, octanaje, tipo_refrigerante, peso, descripcion, nro_puesto); 
 
             if('error' in result && result.error !== undefined){
-                res.status(400).json({error: result.error as string});
+                res.status(400).json({error: `Error de base de datos: ${result.error}`});
                 return;
             }
 
             if(result.rowsAffected === 0){
-                res.status(400).json({error: "No se pudo crear el modelo"});
+                res.status(400).json({error: "No se pudo crear el modelo. Verifique los datos enviados."});
                 return;
             }
 
             res.status(201).json({message: "Modelo creado correctamente"});
-        } catch(error){
-            console.error("Ha ocurrido un error", error);
-            res.status(500).json({error: "Ha ocurrido un error en el servidor"});
+        } catch(error: any){
+            console.error("Error al crear modelo:", error);
+            res.status(500).json({error: error.message || "Error inesperado en el servidor al crear el modelo."});
         }
     }
 
