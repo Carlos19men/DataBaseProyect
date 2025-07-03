@@ -1,0 +1,52 @@
+.container{
+    display: flex;
+    justify-content: space-between;
+    align-items: normal;
+}
+
+.containerMain{
+    display: flex;
+    justify-content: space-between;
+    align-items: normal;
+    margin-top: -100px;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    padding-left: 50px;
+    height: 15vh;
+    margin-top: 50px;
+}
+
+.subtitle{
+    padding-left: 50px;
+    text-align: center;
+    padding-top: 50px;
+    padding-right: 50px;
+}
+
+.greentext{
+    color: #2FA061;
+}
+
+.elements{
+    padding-left: 50px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    font-size: small;
+}
+
+/* Aplica márgenes y rellenos reducidos a los textos */
+h1, h2, h3, p, label, span {
+  margin-top: -4px;
+  margin-bottom: 4px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.facturaContainer{
+    transform: scale(0.8);
+    transform-origin: center;
+}
