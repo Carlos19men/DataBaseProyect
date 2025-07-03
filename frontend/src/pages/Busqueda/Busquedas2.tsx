@@ -46,7 +46,7 @@ const Busquedas2: React.FC = () => {
         setProveedores(Array.isArray(prov) ? prov : []);
         setProductos(Array.isArray(prod) ? prod : []);
       })
-      .catch((err) => setError("Error al cargar los datos: " + err))
+      .catch(() => setError("No se pueden cargar los datos"))
       .finally(() => setLoading(false));
   }, []);
 
@@ -199,11 +199,11 @@ const Busquedas2: React.FC = () => {
         </div>
         <div className={styles.filtros}>
           <div className={styles.subtitle}>Filtros</div>
-          <Button texto="Empleados" viewHeight={5} onClick={() => setTipo("employee")} />
-          <Button texto="Establecimientos" viewHeight={5} onClick={() => setTipo("establishement")} />
-          <Button texto="Clientes" viewHeight={5} onClick={() => setTipo("customer")} />
-          <Button texto="Proveedores" viewHeight={5} onClick={() => setTipo("suppliers")} />
-          <Button texto="Productos" viewHeight={5} onClick={() => setTipo("product")} />
+          <Button texto="Empleados" viewHeight={5} onClick={() => setTipo("employee")} selected={tipo === "employee"} />
+          <Button texto="Establecimientos" viewHeight={5} onClick={() => setTipo("establishement")} selected={tipo === "establishement"} />
+          <Button texto="Clientes" viewHeight={5} onClick={() => setTipo("customer")} selected={tipo === "customer"} />
+          <Button texto="Proveedores" viewHeight={5} onClick={() => setTipo("suppliers")} selected={tipo === "suppliers"} />
+          <Button texto="Productos" viewHeight={5} onClick={() => setTipo("product")} selected={tipo === "product"} />
         </div>
       </div>
     </div>

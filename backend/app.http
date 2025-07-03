@@ -368,7 +368,7 @@ Content-Type: application/json
 ### Router de Inventario.
 
 ### Obtener todos los productos del inventario. | listo
-GET http://localhost:1234/inventory/
+GET http://localhost:1234/product
 
 ### Obtener un producto del inventario por su RIF. | listo
 GET http://localhost:1234/inventory/J-00112233-4

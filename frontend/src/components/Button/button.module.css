@@ -23,5 +23,12 @@
   background-color: #EDEDED;
 }
 .button:hover{
-  background-color: #2DD377;
+  background-color: #38e47c;
+  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.15);
+}
+.selected {
+  background-color: #22b86c;
+  color: #fff !important;
+  border: 2px solid #1a7f37;
+  box-shadow: 0 4px 16px rgba(46, 204, 113, 0.25);
 }
