@@ -10,8 +10,8 @@ const RegistrarVehiculo: React.FC = () => {
     const [dueno, setDueno] = useState("");
     const [tiempoUso, setTiempoUso] = useState("");
     const [kilometraje, setKilometraje] = useState("");
-    const [marca, setMarca] = useState("");
-    const [modelo, setModelo] = useState("");
+    const [marca, setMarca] = useState<number | "">("");
+    const [modelo, setModelo] = useState<number | "">("");
     const [aceite, setAceite] = useState("");
     const [plan, setPlan] = useState("");
     const [mensaje, setMensaje] = useState<string | null>(null);
@@ -46,10 +46,48 @@ const RegistrarVehiculo: React.FC = () => {
         }
     }, [marca]);
 
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setMensaje(null);
+        setError(null);
+        // Validación básica
+        if (!placa || !cedula || !dueno || !tiempoUso || !kilometraje || !marca || !modelo || !aceite) {
+            setError("Por favor, complete todos los campos obligatorios.");
+            return;
+        }
+        try {
+            const res = await fetch("http://localhost:1234/vehicles/", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    plate: placa,
+                    oil_box: aceite,
+                    oil_motor: aceite,
+                    maintenance: plan,
+                    months_use: parseInt(tiempoUso),
+                    mileage: parseFloat(kilometraje),
+                    id_model: typeof modelo === 'number' ? modelo : parseInt(modelo as any),
+                    id_marca: typeof marca === 'number' ? marca : parseInt(marca as any),
+                    CI_owner: cedula
+                })
+            });           
+            const data = await res.json();
+            if (res.ok) {
+                setMensaje("Vehículo registrado correctamente.");
+                // Limpiar campos
+                setPlaca(""); setCedula(""); setDueno(""); setTiempoUso(""); setKilometraje(""); setMarca(""); setModelo(""); setAceite(""); setPlan("");
+            } else {
+                setError(data.error || data.message || "Error al registrar el vehículo");
+            }
+        } catch (err) {
+            setError("Dueño no registrado. Inserte una cédula de identidad válida.");
+        }
+    };
+
     return (
         <div className={styles.body}>
             <TopBar text="Registrar Vehículo" menu={true} />
-            <form className={styles.centrado}>
+            <form className={styles.centrado} onSubmit={handleSubmit}>
                 <div className={styles.container}>
                     <div className={styles.formRow}>
                         <TextBoxMU etiqueta="Placa del Vehículo:" value={placa} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPlaca(e.target.value)} viewWidth={20} ejemplo="ABC123" />
@@ -63,7 +101,7 @@ const RegistrarVehiculo: React.FC = () => {
                     <div className={styles.formRow}>
                         <span className={styles.textBoxContainer}>
                             <span className={styles.texto}>Marca:</span>
-                            <select className={styles.select} value={marca} onChange={e => setMarca(e.target.value)} required disabled={loadingMarcas}>
+                            <select className={styles.select} value={marca} onChange={e => { setMarca(Number(e.target.value) || ""); setModelo(""); }} required disabled={loadingMarcas}>
                                 <option value="">{loadingMarcas ? "Cargando..." : "Seleccione una marca"}</option>
                                 {marcas.map(m => (
                                     <option key={m.cod_marca} value={m.cod_marca}>{m.nombre_marca}</option>
@@ -72,7 +110,7 @@ const RegistrarVehiculo: React.FC = () => {
                         </span>
                         <span className={styles.textBoxContainer}>
                             <span className={styles.texto}>Modelo:</span>
-                            <select className={styles.select} value={modelo} onChange={e => setModelo(e.target.value)} required disabled={!marca || loadingModelos}>
+                            <select className={styles.select} value={modelo} onChange={e => setModelo(Number(e.target.value) || "")} required disabled={!marca || loadingModelos}>
                                 <option value="">{loadingModelos ? "Cargando..." : "Seleccione un modelo"}</option>
                                 {modelos.map(m => (
                                     <option key={m.cod_modelo} value={m.cod_modelo}>{m.modelo}</option>
@@ -80,7 +118,7 @@ const RegistrarVehiculo: React.FC = () => {
                             </select>
                         </span>
                     </div>
-                    <div className={styles.formRow}>
+                    <div className={styles.formRow}>                                                                                                                                                                                                                                                                                                                                                                                                                  
                         <span className={styles.textBoxContainer}>
                             <span className={styles.texto}>Tipo de Aceite usado:</span>
                             <select className={styles.select} value={aceite} onChange={e => setAceite(e.target.value)} required>
@@ -109,7 +147,7 @@ const RegistrarVehiculo: React.FC = () => {
                 </div>
             </form>
         </div>
-    );
+    );                                                                                                                                                                                                                                                                          
 };
 
 export default RegistrarVehiculo; 
