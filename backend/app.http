@@ -32,7 +32,7 @@ http://localhost:1234/employee/
 http://localhost:1234/employee/12345718
 
 ### empleados que trabajen en cierto establecimiento  | listo 
-http://localhost:1234/employee/RIF/J-11223344-5
+http://localhost:1234/employee/RIF/J-00112233-4
 
 ### agregar un nuevo empleado |listo
 POST http://localhost:1234/employee/ 
@@ -432,136 +432,6 @@ Content-Type: application/json
 }
 
 ### Desasignar un empleado de un establecimiento.
-DELETE http://localhost:1234/assignedEmployee
-Content-Type: application/json
+DELETE http://localhost:1234/assignedEmployee/J-00112233-4/1/27901234
 
-{
-    "id_servicio": 1,
-    "Ci_emp": "27901234"
-}
-
-### Router de Proveedores Asociados
-
-### Obtener todos los proveedores asociados
-GET http://localhost:1234/associated-suppliers
-
-### Obtener proveedores asociados por RIF
-GET http://localhost:1234/associated-suppliers/J-00112233-4
-
-### Insertar un nuevo proveedor asociado
-POST http://localhost:1234/associated-suppliers
-Content-Type: application/json
-
-{
-    "RIF_proveedor": "J-00112233-4",
-    "nro_orden": 1
-}
-
-### Actualizar un proveedor asociado
-PATCH http://localhost:1234/associated-suppliers
-Content-Type: application/json
-
-{
-    "RIF_proveedor": "J-00112233-4",
-    "nro_orden": 1,
-    "new_RIF_proveedor": "J-00112233-5",
-    "new_nro_orden": 2
-}
-
-### Eliminar un proveedor asociado
-DELETE http://localhost:1234/associated-suppliers
-Content-Type: application/json
-
-{
-    "RIF_proveedor": "J-00112233-4",
-    "nro_orden": 1
-}
-
-### Router de Actividades
-
-### Obtener todas las actividades | listo
-GET http://localhost:1234/activity/
-
-### Obtener actividades por establecimiento | listo
-GET http://localhost:1234/activity/establecimiento/J-00112233-4
-
-### Obtener actividades por servicio | listo
-GET http://localhost:1234/activity/servicio/1
-
-### Obtener una actividad específica | listo
-GET http://localhost:1234/activity/1/60
-
-### Crear una nueva actividad | listo
-POST http://localhost:1234/activity/
-Content-Type: application/json
-
-{
-    "nro_servicio": 1,
-    "nombre": "Cambio de Aceite",
-    "descripcion": "Cambio de aceite de motor",
-    "costo": 50.0
-}
-
-### Actualizar una actividad | listo
-PATCH http://localhost:1234/activity
-Content-Type: application/json
-
-{
-    "nro_servicio": 1,
-    "nro_correlativo": 60,
-    "costo": 90.0
-}
-
-### Eliminar una actividad | listo
-DELETE http://localhost:1234/activity/
-Content-Type: application/json
-
-{
-    "nro_servicio": 1,
-    "nro_correlativo": 60
-}
-
-### Router de ActividadProductos
-
-### Obtener todas las actividades de productos | listo
-GET http://localhost:1234/activity-product/
-
-### Obtener una actividad de producto por su clave primaria | listo
-GET http://localhost:1234/activity-product/1/1/1
-Content-Type: application/json
-
-
-### Eliminar una actividad de producto por su clave primaria | listo
-DELETE http://localhost:1234/activity-product/
-Content-Type: application/json
-
-{
-    "id_producto": 1,
-    "nro_servicio": 1,
-    "nro_correlativo": 1
-}
-
-### Crear una nueva actividad de producto | listo
-POST http://localhost:1234/activity-product/
-Content-Type: application/json
-
-{
-    "id_producto": 1,
-    "nro_servicio": 1,
-    "nro_correlativo": 1,
-    "cant_utilizada": 5
-}
-
-### Actualizar una actividad de producto | listo
-PATCH http://localhost:1234/activity-product/
-Content-Type: application/json
-
-{
-    "id_producto": 1,
-    "nro_servicio": 1,
-    "nro_correlativo": 1,
-    "cant_utilizada": 10
-}
-
-### 
-
+### Router de 
