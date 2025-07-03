@@ -1,6 +1,20 @@
 import { Request, Response } from 'express';
 import { OrdenesServicioModel } from '../models/OrdenesServicio';
 
+//validar horas 
+function isValidTime(timeString: string): boolean {
+    const timeRegex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
+    
+    if (!timeRegex.test(timeString)) {
+        return false;
+    }
+    
+    const [hours, minutes] = timeString.split(':').map(Number);
+    return hours >= 0 && hours <= 23 && 
+    minutes >= 0 && minutes <= 59;
+}
+
+
 // Tipos para las interfaces
 interface ServiceActivity {
     nro_servicio: number;
@@ -17,9 +31,21 @@ interface CompleteServiceOrder {
     fecha_entrada: Date;
     hora_entrada: string;
     hora_estimada_salida: string;
-    persona_autoriza: string;
+    persona_autoriza?: string; // Opcional
     actividades: ServiceActivity[];
     id_rif: string;
+}
+
+interface UpdateServiceOrder {
+    codigo_vehiculo?: number;
+    fecha_entrada?: Date;
+    hora_entrada?: string;
+    hora_estimada_salida?: string;
+    hora_real_salida?: string;
+    fecha_salida?: Date;
+    justificacion?: string;
+    persona_autoriza?: string;
+    id_rif?: string;
 }
 
 export class OrdenesServicioController {
@@ -56,12 +82,12 @@ export class OrdenesServicioController {
         try {
             const result = await OrdenesServicioModel.getById(orderId);
 
-            if (!result || result.length === 0) {
+            if (!result) {
                 res.status(404).json({ message: 'Service order not found.' });
                 return;
             }
 
-            res.status(200).json(result[0]);
+            res.status(200).json(result);
             return;
         } catch (error) {
             console.error('Error getting service order by ID:', error);
@@ -101,6 +127,11 @@ export class OrdenesServicioController {
         try {
             const orderData: CompleteServiceOrder = req.body;
 
+            //parseamos las fecha 
+            orderData.fecha_entrada = new Date(orderData.fecha_entrada);
+
+            console.log(orderData); 
+
             // Validaciones básicas
             if (!orderData.codigo_vehiculo || orderData.codigo_vehiculo <= 0) {
                 res.status(400).json({ message: 'Valid vehicle code is required.' });
@@ -112,13 +143,13 @@ export class OrdenesServicioController {
                 return;
             }
 
-            if (!orderData.hora_entrada || !orderData.hora_estimada_salida) {
-                res.status(400).json({ message: 'Entry time and estimated exit time are required.' });
+            if(isNaN(orderData.fecha_entrada.getTime())) {
+                res.status(400).json({ message: 'Valid entry date is required.' });
                 return;
-            }
+            }   
 
-            if (!orderData.persona_autoriza || orderData.persona_autoriza.trim() === '') {
-                res.status(400).json({ message: 'Authorized person is required.' });
+            if (!orderData.hora_entrada || !isValidTime(orderData.hora_entrada) || !orderData.hora_estimada_salida || !isValidTime(orderData.hora_estimada_salida)) {
+                res.status(400).json({ message: 'Entry time and estimated exit time are required and must be in valid format (HH:MM).' });
                 return;
             }
 
@@ -183,7 +214,93 @@ export class OrdenesServicioController {
             return;
         } catch (error) {
             console.error('Error creating service order:', error);
-            res.status(500).json({ message: 'Internal server error while creating service order.' });
+            res.status(500).json({ message: 'Internal server error while creating service order.  '+ error });
+            return;
+        }
+    }
+
+    // Actualizar orden de servicio
+    static async update(req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
+        const orderId = parseInt(id);
+
+        if (!id || isNaN(orderId) || orderId <= 0) {
+            res.status(400).json({ message: 'Valid order ID is required.' });
+            return;
+        }
+
+        try {
+            const orderData: UpdateServiceOrder = req.body;
+
+            // Validar que al menos un campo sea proporcionado
+            if (Object.keys(orderData).length === 0) {
+                res.status(400).json({ message: 'At least one field to update is required.' });
+                return;
+            }
+
+            // Validar fecha de entrada si se proporciona
+            if (orderData.fecha_entrada) {
+                const fecha = new Date(orderData.fecha_entrada);
+                if (isNaN(fecha.getTime())) {
+                    res.status(400).json({ message: 'Valid entry date is required.' });
+                    return;
+                }
+                orderData.fecha_entrada = fecha;
+            }
+
+            // Validar fecha de salida si se proporciona
+            if (orderData.fecha_salida) {
+                const fecha = new Date(orderData.fecha_salida);
+                if (isNaN(fecha.getTime())) {
+                    res.status(400).json({ message: 'Valid exit date is required.' });
+                    return;
+                }
+                orderData.fecha_salida = fecha;
+            }
+
+            // Validar horas si se proporcionan
+            if (orderData.hora_entrada && !isValidTime(orderData.hora_entrada)) {
+                res.status(400).json({ message: 'Valid entry time is required.' });
+                return;
+            }
+
+            if (orderData.hora_estimada_salida && !isValidTime(orderData.hora_estimada_salida)) {
+                res.status(400).json({ message: 'Valid estimated exit time is required.' });
+                return;
+            }
+
+            if (orderData.hora_real_salida && !isValidTime(orderData.hora_real_salida)) {
+                res.status(400).json({ message: 'Valid real exit time is required.' });
+                return;
+            }
+
+            // Validar código de vehículo si se proporciona
+            if (orderData.codigo_vehiculo !== undefined && orderData.codigo_vehiculo <= 0) {
+                res.status(400).json({ message: 'Valid vehicle code is required.' });
+                return;
+            }
+
+            // Validar RIF si se proporciona
+            if (orderData.id_rif && orderData.id_rif.trim() === '') {
+                res.status(400).json({ message: 'Valid establishment RIF is required.' });
+                return;
+            }
+
+            const result = await OrdenesServicioModel.update(orderId, orderData);
+
+            if (result.rowsAffected === 0) {
+                res.status(404).json({ message: 'Service order not found.' });
+                return;
+            }
+
+            res.status(200).json({ 
+                message: 'Service order updated successfully.',
+                success: true 
+            });
+            return;
+        } catch (error) {
+            console.error('Error updating service order:', error);
+            res.status(500).json({ message: 'Internal server error while updating service order.' });
             return;
         }
     }
@@ -201,7 +318,7 @@ export class OrdenesServicioController {
         try {
             const result = await OrdenesServicioModel.deleteByID(orderId);
 
-            if (result === 0) {
+            if (result.rowsAffected === 0) {
                 res.status(404).json({ message: 'Service order not found.' });
                 return;
             }

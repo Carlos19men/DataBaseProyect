@@ -111,7 +111,7 @@ create table OrdenesServicio(
 	fecha_entrada date not null,
 	hora_entrada time not null,
 	hora_estimada_salida time not null,
-	hora_real_salida time not null,
+	hora_real_salida time,
 	fecha_salida date,
 	justificacion varchar(255),
 	persona_autorizada varchar(50),

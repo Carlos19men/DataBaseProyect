@@ -2,9 +2,8 @@ import { Router } from 'express';
 import { OrdenesServicioController } from '../controllers/OrdenesServicioController';
 
 
-export const  createRouterBusyOrder = () => {
+export const  createRouterServiceOrder = () => {
     const router = Router();
-    const busyOrderController = new OrdenesServicioController()
         
     // Obtener todas las órdenes de servicio
     router.get('/', OrdenesServicioController.getAll);
@@ -18,8 +17,11 @@ export const  createRouterBusyOrder = () => {
     // Crear nueva orden de servicio completa
     router.post('/', OrdenesServicioController.create);
 
+    // Actualizar orden de servicio por ID
+    router.put('/:id', OrdenesServicioController.update);
+
     // Eliminar orden de servicio por ID
     router.delete('/:id', OrdenesServicioController.deleteByID);    
 
-    return busyOrderController
+    return router
 }

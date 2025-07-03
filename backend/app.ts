@@ -18,6 +18,7 @@ import { createInvoicePaymentsRouter } from "./routers/routerPagosFactura";
 import { createbuysOrderRouter } from "./routers/routerOrdenesCompra";
 import { createVehiclesRouter } from "./routers/routerVehiculos";
 import { createComprasRouter } from "./routers/routerCompras";
+import { createRouterServiceOrder } from "./routers/routerOrdenServicio";
 
 connectToDatabase()
 
@@ -49,7 +50,8 @@ export const createApp = () =>{
     app.use('/buys-order', createbuysOrderRouter());
     app.use('/vehicles', createVehiclesRouter());
     app.use('/buys', createComprasRouter());
-    
+    app.use('/service-order', createRouterServiceOrder());
+
     const PORT = process.env.PORT ?? 1234
 
     //Escuchando el puerto 

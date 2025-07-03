@@ -12,20 +12,32 @@ interface ActividadOS{
     ci_empleAsig: string;
 }
 
-interface OrdenServicioCompleta{
+interface OrdenServicioCompleta{   
     codigo_vehiculo: number;
     fecha_entrada: Date;
     hora_entrada: string;
     hora_estimada_salida: string;
-    persona_autoriza: string;
+    persona_autoriza?: string; // Opcional
     actividades: ActividadOS[];
     id_rif: string
+}
+
+interface OrdenServicioUpdate{
+    codigo_vehiculo?: number;
+    fecha_entrada?: Date;
+    hora_entrada?: string;
+    hora_estimada_salida?: string;
+    hora_real_salida?: string;
+    fecha_salida?: Date;
+    justificacion?: string;
+    persona_autoriza?: string;
+    id_rif?: string;
 }
 
 export class OrdenesServicioModel {
 
     static async getAll() {
-        const result = await getDbPool().query('');
+        const result = await getDbPool().query('SELECT * FROM OrdenesServicio;');
         return result['recordset'];
     }
 
@@ -33,55 +45,59 @@ export class OrdenesServicioModel {
         const request = getDbPool().request();
         request.input('id_rif', id_rif);
 
-        const result = await request.query('');
+        const result = await request.query('SELECT * FROM OrdenesServicio WHERE RIF_establecimiento = @id_rif;');
         return result['recordset'];
     } 
 
     static async getById(id: number){
         const request = getDbPool().request();
         request.input('id', id);
-        const result = await request.query('');
+        const result = await request.query('SELECT * FROM OrdenesServicio WHERE cod_OS = @id;');
         return result['recordset'][0];
     }
 
-    static async create(order:OrdenServicioCompleta){
+    static async create(order: OrdenServicioCompleta){
         const pool = getDbPool();
         const transaction = new sql.Transaction(pool)
         
         try{
             await transaction.begin();
 
-            //crear table de parámetros 
-            const table = new sql.Table('ActividadType')
+            // Crear tabla con las 7 columnas exactas del tipo ActividadOSType
+            const table = new sql.Table('ActividadOSType')
             table.columns.add('nro_servicio', sql.Int, {nullable: false})
             table.columns.add('nro_correlativo', sql.Int, {nullable: false})
+            table.columns.add('CI_empAsig', sql.VarChar(20), {nullable: false})
             table.columns.add('id_producto', sql.Int, {nullable: false})
-            table.columns.add('precio_producto', sql.Float, {nullable: false})
-            table.columns.add('precio_actividad', sql.Float, {nullable: false})
-            table.columns.add('cantidad_producto', sql.Int, {nullable: false})
+            table.columns.add('precio_producto', sql.Decimal(10,2), {nullable: false})
+            table.columns.add('precio_actividad', sql.Decimal(10,2), {nullable: false})
+            table.columns.add('cantidad', sql.Int, {nullable: false})
 
-            //agreaga datos a la tabla
-            order.actividades.map(actividad => ({
-                nro_servicio: actividad.nro_servicio,
-                nro_correlativo: actividad.nro_correlativo,
-                id_producto: actividad.id_producto,
-                precio_producto: actividad.precio_producto,
-                precio_actividad: actividad.precio_actividad,
-                cantidad_producto: actividad.cantidad_producto,
-                ci_empleAsig: actividad.ci_empleAsig
-            }))
+            // Agregar datos en el orden correcto
+            order.actividades.forEach(actividad => {
+                table.rows.add(
+                    actividad.nro_servicio,        // 1
+                    actividad.nro_correlativo,     // 2
+                    actividad.ci_empleAsig,        // 3
+                    actividad.id_producto,         // 4
+                    actividad.precio_producto,     // 5
+                    actividad.precio_actividad,    // 6
+                    actividad.cantidad_producto    // 7
+                );
+            });
 
-            // creamos la request con la transacción para la orden de servicio y actividades
+            // Crear request con parámetros correctos
             const request = new sql.Request(transaction);
+            request.input('RIF_establecimiento', sql.VarChar(20), order.id_rif);
             request.input('codigo_vehiculo', sql.Int, order.codigo_vehiculo);
             request.input('fecha_entrada', sql.Date, order.fecha_entrada);
-            request.input('hora_entrada', sql.VarChar(5), order.hora_entrada);
-            request.input('hora_estimada_salida', sql.VarChar(5), order.hora_estimada_salida);
-            request.input('persona_autoriza', sql.VarChar(50), order.persona_autoriza);
+            request.input('hora_entrada', sql.Time, new Date(`2000-01-01T${order.hora_entrada}:00`));
+            request.input('hora_estimada_salida', sql.Time, new Date(`2000-01-01T${order.hora_estimada_salida}:00`));
+            request.input('persona_autorizada', sql.VarChar(50), order.persona_autoriza || null);
             request.input('actividades', table);
-            request.input('id_rif',sql.VarChar(20), order.id_rif);
+            request.output('cod_OS', sql.Int);
 
-            await request.execute('');
+            await request.execute('CrearOrdenServicioCompleta');
 
             await transaction.commit();
             return true;
@@ -91,11 +107,75 @@ export class OrdenesServicioModel {
         }
     }
 
+    static async update(id: number, orderData: OrdenServicioUpdate) {
+        const request = getDbPool().request();
+        
+        // Configurar parámetros del procedimiento almacenado
+        request.input('cod_OS', sql.Int, id);
+        
+        if (orderData.codigo_vehiculo !== undefined) {
+            request.input('codigo_vehiculo', sql.Int, orderData.codigo_vehiculo);
+        } else {
+            request.input('codigo_vehiculo', sql.Int, null);
+        }
+        
+        if (orderData.fecha_entrada !== undefined) {
+            request.input('fecha_entrada', sql.Date, orderData.fecha_entrada);
+        } else {
+            request.input('fecha_entrada', sql.Date, null);
+        }
+        
+        if (orderData.hora_entrada !== undefined) {
+            request.input('hora_entrada', sql.Time, new Date(`2000-01-01T${orderData.hora_entrada}:00`));
+        } else {
+            request.input('hora_entrada', sql.Time, null);
+        }
+        
+        if (orderData.hora_estimada_salida !== undefined) {
+            request.input('hora_estimada_salida', sql.Time, new Date(`2000-01-01T${orderData.hora_estimada_salida}:00`));
+        } else {
+            request.input('hora_estimada_salida', sql.Time, null);
+        }
+        
+        if (orderData.hora_real_salida !== undefined) {
+            request.input('hora_real_salida', sql.Time, new Date(`2000-01-01T${orderData.hora_real_salida}:00`));
+        } else {
+            request.input('hora_real_salida', sql.Time, null);
+        }
+        
+        if (orderData.fecha_salida !== undefined) {
+            request.input('fecha_salida', sql.Date, orderData.fecha_salida);
+        } else {
+            request.input('fecha_salida', sql.Date, null);
+        }
+        
+        if (orderData.justificacion !== undefined) {
+            request.input('justificacion', sql.VarChar(255), orderData.justificacion);
+        } else {
+            request.input('justificacion', sql.VarChar(255), null);
+        }
+        
+        if (orderData.persona_autoriza !== undefined) {
+            request.input('persona_autorizada', sql.VarChar(50), orderData.persona_autoriza);
+        } else {
+            request.input('persona_autorizada', sql.VarChar(50), null);
+        }
+        
+        if (orderData.id_rif !== undefined) {
+            request.input('RIF_establecimiento', sql.VarChar(20), orderData.id_rif);
+        } else {
+            request.input('RIF_establecimiento', sql.VarChar(20), null);
+        }
+        
+        const result = await request.execute('ActualizarOrdenServicio');
+        return {rowsAffected: Array.isArray(result['rowsAffected']) ? result['rowsAffected'][0] : result['rowsAffected']};
+    }
+
     static async deleteByID(id: number) {
         const request = getDbPool().request();
         request.input('id', id);
 
-        const result = await request.query('');
-        return {rowsAffected: result['recordset'][0]}
+        const result = await request.query('DELETE FROM OrdenesServicio WHERE cod_OS = @id;');
+        return {rowsAffected: Array.isArray(result['rowsAffected']) ? result['rowsAffected'][0] : result['rowsAffected']}
     }
 } 

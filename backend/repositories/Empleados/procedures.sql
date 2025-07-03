@@ -40,6 +40,3 @@ BEGIN
 	UPDATE Establecimientos SET CI_encargado = @CI WHERE RIF = @RIF;
 END; 
 GO
-
-
-SELECT * FROM Establecimientos;
