@@ -24,28 +24,26 @@ export class employeeAsigModel {
         return result['recordset']
     }
 
-    static async asigEmployee(RIF:string,id_servicio:number,Ci_emp:string){
+    static async asigEmployee(RIF: string, id_servicio: number, Ci_emp: string) {
+        const request = getDbPool().request();
 
-        const request = getDbPool().request()
+        request.input('RIF_establecimiento', RIF);
+        request.input('id_servicio', id_servicio);
+        request.input('CI_empleado', Ci_emp);
 
-        request.input('RIF',RIF)
-        request.input('id_servicio',id_servicio)
-        request.input('Ci_emp',Ci_emp)
+        const result = await request.query('EXEC asigEmpleado @RIF_establecimiento, @id_servicio, @CI_empleado;');
 
-        const result = await request.query('EXEC asigEmpleado(@RIF,@id_servicio,@Ci_emp);')
-
-        return {rowsAffected: result['rowsAffected'][0]};
+        return { rowsAffected: result['rowsAffected'][0] };
     }
 
-    static async unasigEmployee(id_servicio:number,Ci_emp:string){
+    static async unasigEmployee(id_servicio: number, Ci_emp: string) {
+        const request = getDbPool().request();
 
-        const request = getDbPool().request()
+        request.input('id_servicio', id_servicio);
+        request.input('Ci_emp', Ci_emp);
+        const result = await request.query('DELETE FROM EmpleadosAsignados WHERE nro_servicio = @id_servicio AND CI_empleado = @Ci_emp;');
 
-        request.input('id_servicio',id_servicio)
-        request.input('Ci_emp',Ci_emp)
-        const result = await request.query('DELETE EmpleadosAsignados WHERE ID_servicio = @id_servicio AND Ci_emp = @Ci_emp;');
-
-        return {rowsAffected:  result['recordset'][0]}
+        return { rowsAffected: result['rowsAffected'][0] };
     }
 
     static async getByEmployee(RIF: string, Ci_emp: string) {

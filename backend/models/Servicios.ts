@@ -31,7 +31,7 @@ export class ServicesModel {
 
         //cuerpo de query 
         const query = `Update Servicios set
-        nombre_ser = @nombre_serv
+        nombre_ser = ISNULL(@nombre_serv, nombre_ser)
         where nro_servicio = @nro_servicio;`;
 
         //enviamos la query y capturamos las columnas afectadas 

@@ -85,8 +85,8 @@ BEGIN
 -- Configuramos la parte inicial
 	SET NOCOUNT ON; -- Suprimimos los mensajes de filas afectadas
 
-	-- Declaramos las variables de control de transacción
-	-- CORRECCIÓN: NVARCHAR(4000) es más común para mensajes de error, 400 es muy corto
+	-- Declaramos las variables de control de transacciï¿½n
+	-- CORRECCIï¿½N: NVARCHAR(4000) es mï¿½s comï¿½n para mensajes de error, 400 es muy corto
 	DECLARE @TranCounter INT;
 	DECLARE @ErrorMessage NVARCHAR(4000);
 	DECLARE @ErrorSeverity INT;
@@ -95,26 +95,26 @@ BEGIN
 
 	-- Iniciamos el bloque TRY
 	BEGIN TRY
-		-- CORRECCIÓN: La asignación de @@TRANCOUNT debe ser así.
-		-- La línea `SELECT @TranCounter INT;` estaba incorrecta.
-		-- La línea `IF @TranCounter = @@TRANCOUNT;` era una condición IF sin cuerpo y era redundante/mal colocada.
+		-- CORRECCIï¿½N: La asignaciï¿½n de @@TRANCOUNT debe ser asï¿½.
+		-- La lï¿½nea `SELECT @TranCounter INT;` estaba incorrecta.
+		-- La lï¿½nea `IF @TranCounter = @@TRANCOUNT;` era una condiciï¿½n IF sin cuerpo y era redundante/mal colocada.
 		SELECT @TranCounter = @@TRANCOUNT;
 
-		IF @TranCounter = 0 -- Si @@TRANCOUNT es 0, este SP inicia una nueva transacción
+		IF @TranCounter = 0 -- Si @@TRANCOUNT es 0, este SP inicia una nueva transacciï¿½n
 			BEGIN TRANSACTION;
 		ELSE
-			-- Si @@TRANCOUNT > 0, es porque ya estamos dentro de una transacción y creamos un SAVEPOINT
-			-- CORRECCIÓN: El nombre del SAVEPOINT debe ser usado consistentemente en el CATCH.
+			-- Si @@TRANCOUNT > 0, es porque ya estamos dentro de una transacciï¿½n y creamos un SAVEPOINT
+			-- CORRECCIï¿½N: El nombre del SAVEPOINT debe ser usado consistentemente en el CATCH.
 			SAVE TRANSACTION SP_puntoControl;
 
 		--LOGICA DEL PROCEDIMIENTO 
 		
 		
 		--Verificamos si la cedula se encuentra registrada 
-		IF NOT EXISTS (SELECT * FROM getActividad(@nro_servicio,@nro_correlativo))
-		BEGIN 
-			;THROW 50001,'Esta actividad no existe',1; 
-		END;
+		--IF NOT EXISTS (SELECT * FROM getActividad(@nro_servicio,@nro_correlativo))
+		--BEGIN 
+		--	;THROW 50001,'Esta actividad no existe',1; 
+		--	END;
 
 		--verificamos si los campos se van a modificar 
 		IF (@nombre IS NOT NULL)
@@ -127,7 +127,7 @@ BEGIN
 		IF (@descripcion IS NOT NULL)
 		BEGIN 
 			UPDATE Actividades SET descripcion= @descripcion WHERE nro_correlativo = @nro_correlativo AND nro_servicio = @nro_servicio; 
-			PRINT 'Descripción actualizada con exito';
+			PRINT 'Descripciï¿½n actualizada con exito';
 		END; 
 
 		--verificamos si los campos se van a modificar 
@@ -137,44 +137,44 @@ BEGIN
 			PRINT 'Costo actualizado con exito';
 		END; 
 
-		-- Finalización de la Transacción: COMMIT (Solo si este SP la inició)
+		-- Finalizaciï¿½n de la Transacciï¿½n: COMMIT (Solo si este SP la iniciï¿½)
 		IF @TranCounter = 0
 			COMMIT TRANSACTION;
-		-- Si se usó SAVEPOINT, la transacción padre es la responsable del COMMIT.
+		-- Si se usï¿½ SAVEPOINT, la transacciï¿½n padre es la responsable del COMMIT.
 
 	END TRY
 	BEGIN CATCH
 		-- Manejo de Errores y ROLLBACK
 
-		-- Capturar los detalles del error que ocurrió
+		-- Capturar los detalles del error que ocurriï¿½
 		SELECT
 			@ErrorMessage = ERROR_MESSAGE(),
 			@ErrorSeverity = ERROR_SEVERITY(),
 			@ErrorState = ERROR_STATE();
 
-		-- Determinar qué tipo de ROLLBACK hacer
-		IF @@TRANCOUNT > 0 -- Solo si hay una transacción activa para revertir
+		-- Determinar quï¿½ tipo de ROLLBACK hacer
+		IF @@TRANCOUNT > 0 -- Solo si hay una transacciï¿½n activa para revertir
 		BEGIN
-			IF @TranCounter = 0 -- Si este SP fue quien inició la transacción principal
+			IF @TranCounter = 0 -- Si este SP fue quien iniciï¿½ la transacciï¿½n principal
 			BEGIN
-				-- XACT_STATE() <> 0 significa que la transacción no está en estado "commitable"
-				-- Un error de severidad alta (>16) suele poner la transacción en estado irrecuperable (-1)
+				-- XACT_STATE() <> 0 significa que la transacciï¿½n no estï¿½ en estado "commitable"
+				-- Un error de severidad alta (>16) suele poner la transacciï¿½n en estado irrecuperable (-1)
 				IF XACT_STATE() <> 0
-					ROLLBACK TRANSACTION; -- Revertir toda la transacción
-				PRINT 'Error: Transacción completa revertida por el SP.';
+					ROLLBACK TRANSACTION; -- Revertir toda la transacciï¿½n
+				PRINT 'Error: Transacciï¿½n completa revertida por el SP.';
 			END
-			ELSE -- Si el SP fue llamado dentro de otra transacción (anidada)
+			ELSE -- Si el SP fue llamado dentro de otra transacciï¿½n (anidada)
 			BEGIN
-				-- Si XACT_STATE() = 1, la transacción padre sigue committable.
-				-- Revertir solo a nuestro SAVEPOINT para no afectar la transacción padre.
-				-- CORRECCIÓN: Usar el nombre del SAVEPOINT definido en el TRY.
+				-- Si XACT_STATE() = 1, la transacciï¿½n padre sigue committable.
+				-- Revertir solo a nuestro SAVEPOINT para no afectar la transacciï¿½n padre.
+				-- CORRECCIï¿½N: Usar el nombre del SAVEPOINT definido en el TRY.
 				IF XACT_STATE() = 1
 					ROLLBACK TRANSACTION SP_puntoControl;
 				PRINT 'Error: Cambios revertidos a punto de guardado en SP anidado.';
 			END;
 		END;
 
-		-- Re-lanzar el error para que la aplicación cliente o el procedimiento padre lo capture
+		-- Re-lanzar el error para que la aplicaciï¿½n cliente o el procedimiento padre lo capture
 		RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
 
 	END CATCH;
@@ -195,8 +195,8 @@ BEGIN
 -- Configuramos la parte inicial
 	SET NOCOUNT ON; -- Suprimimos los mensajes de filas afectadas
 
-	-- Declaramos las variables de control de transacción
-	-- CORRECCIÓN: NVARCHAR(4000) es más común para mensajes de error, 400 es muy corto
+	-- Declaramos las variables de control de transacciï¿½n
+	-- CORRECCIï¿½N: NVARCHAR(4000) es mï¿½s comï¿½n para mensajes de error, 400 es muy corto
 	DECLARE @TranCounter INT;
 	DECLARE @ErrorMessage NVARCHAR(4000);
 	DECLARE @ErrorSeverity INT;
@@ -205,16 +205,16 @@ BEGIN
 
 	-- Iniciamos el bloque TRY
 	BEGIN TRY
-		-- CORRECCIÓN: La asignación de @@TRANCOUNT debe ser así.
-		-- La línea `SELECT @TranCounter INT;` estaba incorrecta.
-		-- La línea `IF @TranCounter = @@TRANCOUNT;` era una condición IF sin cuerpo y era redundante/mal colocada.
+		-- CORRECCIï¿½N: La asignaciï¿½n de @@TRANCOUNT debe ser asï¿½.
+		-- La lï¿½nea `SELECT @TranCounter INT;` estaba incorrecta.
+		-- La lï¿½nea `IF @TranCounter = @@TRANCOUNT;` era una condiciï¿½n IF sin cuerpo y era redundante/mal colocada.
 		SELECT @TranCounter = @@TRANCOUNT;
 
-		IF @TranCounter = 0 -- Si @@TRANCOUNT es 0, este SP inicia una nueva transacción
+		IF @TranCounter = 0 -- Si @@TRANCOUNT es 0, este SP inicia una nueva transacciï¿½n
 			BEGIN TRANSACTION;
 		ELSE
-			-- Si @@TRANCOUNT > 0, es porque ya estamos dentro de una transacción y creamos un SAVEPOINT
-			-- CORRECCIÓN: El nombre del SAVEPOINT debe ser usado consistentemente en el CATCH.
+			-- Si @@TRANCOUNT > 0, es porque ya estamos dentro de una transacciï¿½n y creamos un SAVEPOINT
+			-- CORRECCIï¿½N: El nombre del SAVEPOINT debe ser usado consistentemente en el CATCH.
 			SAVE TRANSACTION SP_puntoControl;
 
 		--LOGICA DEL PROCEDIMIENTO 
@@ -227,44 +227,44 @@ BEGIN
 			BEGIN
 			;THROW 50001,'Esta actividad no existe',1; 
 			END
-		-- Finalización de la Transacción: COMMIT (Solo si este SP la inició)
+		-- Finalizaciï¿½n de la Transacciï¿½n: COMMIT (Solo si este SP la iniciï¿½)
 		IF @TranCounter = 0
 			COMMIT TRANSACTION;
-		-- Si se usó SAVEPOINT, la transacción padre es la responsable del COMMIT.
+		-- Si se usï¿½ SAVEPOINT, la transacciï¿½n padre es la responsable del COMMIT.
 
 	END TRY
 	BEGIN CATCH
 		-- Manejo de Errores y ROLLBACK
 
-		-- Capturar los detalles del error que ocurrió
+		-- Capturar los detalles del error que ocurriï¿½
 		SELECT
 			@ErrorMessage = ERROR_MESSAGE(),
 			@ErrorSeverity = ERROR_SEVERITY(),
 			@ErrorState = ERROR_STATE();
 
-		-- Determinar qué tipo de ROLLBACK hacer
-		IF @@TRANCOUNT > 0 -- Solo si hay una transacción activa para revertir
+		-- Determinar quï¿½ tipo de ROLLBACK hacer
+		IF @@TRANCOUNT > 0 -- Solo si hay una transacciï¿½n activa para revertir
 		BEGIN
-			IF @TranCounter = 0 -- Si este SP fue quien inició la transacción principal
+			IF @TranCounter = 0 -- Si este SP fue quien iniciï¿½ la transacciï¿½n principal
 			BEGIN
-				-- XACT_STATE() <> 0 significa que la transacción no está en estado "commitable"
-				-- Un error de severidad alta (>16) suele poner la transacción en estado irrecuperable (-1)
+				-- XACT_STATE() <> 0 significa que la transacciï¿½n no estï¿½ en estado "commitable"
+				-- Un error de severidad alta (>16) suele poner la transacciï¿½n en estado irrecuperable (-1)
 				IF XACT_STATE() <> 0
-					ROLLBACK TRANSACTION; -- Revertir toda la transacción
-				PRINT 'Error: Transacción completa revertida por el SP.';
+					ROLLBACK TRANSACTION; -- Revertir toda la transacciï¿½n
+				PRINT 'Error: Transacciï¿½n completa revertida por el SP.';
 			END
-			ELSE -- Si el SP fue llamado dentro de otra transacción (anidada)
+			ELSE -- Si el SP fue llamado dentro de otra transacciï¿½n (anidada)
 			BEGIN
-				-- Si XACT_STATE() = 1, la transacción padre sigue committable.
-				-- Revertir solo a nuestro SAVEPOINT para no afectar la transacción padre.
-				-- CORRECCIÓN: Usar el nombre del SAVEPOINT definido en el TRY.
+				-- Si XACT_STATE() = 1, la transacciï¿½n padre sigue committable.
+				-- Revertir solo a nuestro SAVEPOINT para no afectar la transacciï¿½n padre.
+				-- CORRECCIï¿½N: Usar el nombre del SAVEPOINT definido en el TRY.
 				IF XACT_STATE() = 1
 					ROLLBACK TRANSACTION SP_puntoControl;
 				PRINT 'Error: Cambios revertidos a punto de guardado en SP anidado.';
 			END;
 		END;
 
-		-- Re-lanzar el error para que la aplicación cliente o el procedimiento padre lo capture
+		-- Re-lanzar el error para que la aplicaciï¿½n cliente o el procedimiento padre lo capture
 		RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
 
 	END CATCH;

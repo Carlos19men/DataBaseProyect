@@ -54,13 +54,15 @@ export class ServicesController {
         const nro_servicio = req.params.nro_servicio;
         const nombre_ser = req.body.nombre_ser;
 
-        /*if (!nro_servicio) {
+        if (!nro_servicio) {
             res.status(400).json({ error: "Se necesita el numero de servicio del servicio" });
             return;
-        }*/
+        }
 
-        if(nombre_ser === null || nombre_ser === undefined || nombre_ser.length === 0){
-            res.status(400).json({error:'Se require un nombre válido, no puedo saber vacio ni nulo'})
+        // Permitir valores nulos para actualizaciones parciales
+        if (nombre_ser !== undefined && nombre_ser !== null && nombre_ser.length === 0) {
+            res.status(400).json({error: 'Si se proporciona nombre, no puede estar vacío'});
+            return;
         }
 
         try {
