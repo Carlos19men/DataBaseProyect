@@ -7,8 +7,11 @@ import PseudoAPI from "./pages/PseudoAPI/PseudoAPI";
 import Busqueda from "./pages/Busqueda/Busqueda";
 import Estadisticas from "./pages/Estadísticas/Estadisticas";
 import VisualizarFactura from "./pages/VisualizarFactura/VisualizarFactura";
-import RegistrarModelo from "./pages/Registrar Modelos/RegistrarModelo";
-import RegistrarVehiculo from "./pages/Registrar Vehiculo/RegistrarVehiculo";
+import RegistrarModelo from "./pages/RegistrarModelos/RegistrarModelo";
+import RegistrarVehiculo from "./pages/RegistrarVehiculo/RegistrarVehiculo";
+import RegistrarProveedor from "./pages/RegistrarProveedores/RegistrarProveedores";
+import RegistrarOrdenCompra from "./pages/RegistrarOrden_Compra/RegistrarOrdenCompra";
+import RegistrarPlan from "./pages/RegistrarPlan/RegistrarPlan";
 
 const App = () => (
 
@@ -21,11 +24,14 @@ const App = () => (
       <Route path="/Login" element={<Login/>}></Route>
       <Route path="/HomePage" element={<HomePage/>}></Route>
       <Route path="/API" element={<PseudoAPI/>}>  </Route>
-      <Route path="/Search" element={<Busqueda/>}></Route>
+      <Route path="/Search" element={<Busqueda/>}></Route>                                                                      
       <Route path="/Stats" element={<Estadisticas/>}></Route>
       <Route path="/Factura" element={<VisualizarFactura/>}></Route>
       <Route path="/RegistrarModelo" element={<RegistrarModelo/>}></Route>
       <Route path="/RegistrarVehiculo" element={<RegistrarVehiculo/>}></Route>
+      <Route path="/RegistrarProveedor" element={<RegistrarProveedor/>}></Route>
+      <Route path="/RegistrarOrdenCompra" element={<RegistrarOrdenCompra/>}></Route>
+      <Route path="/RegistrarPlan" element={<RegistrarPlan/>}></Route>
     </Routes>             
   </Router>
 )
