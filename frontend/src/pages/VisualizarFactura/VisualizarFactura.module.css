@@ -50,3 +50,20 @@ h1, h2, h3, p, label, span {
     transform: scale(0.8);
     transform-origin: center;
 }
+
+.montoTotalWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.lineaSobreMonto {
+  width: calc(100% + 150px);
+  margin-left: -10px;
+  margin-right: -10px;
+  height: 2px;
+  background-color: #000;
+  margin-bottom: 6px;
+}
+
