@@ -24,7 +24,7 @@
 
 
 .oculto{
-  height: 0;
+  height: 10vh;
 }
 .buttonPart {
   display: flex;

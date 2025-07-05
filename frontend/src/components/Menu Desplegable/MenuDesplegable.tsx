@@ -37,7 +37,7 @@ const MenuDespegable: React.FC = () => {
                     <ul>
 
                         <li><a href="/"><img src={home} alt="Inicio" /> Inicio</a></li>
-                        <li><a href="/Busqueda"><img src={search} alt="Buscar" /> Busqueda</a></li>
+                        <li><a href="/Search"><img src={search} alt="Buscar" /> Busqueda</a></li>
                         <li><a href="/Proveedores"><img src={box} alt="Proveedores" /> Proveedores</a></li>
                         <li><a href="/AboutUs"><img src={more_horizontal} alt="Sobre nosotros" /> Sobre M&U</a></li>
                         <li><a href="/Usuario"><img src={user} alt="Usuario" /> Usuario</a></li>

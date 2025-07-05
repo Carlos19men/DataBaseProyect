@@ -89,7 +89,7 @@ const Busquedas2: React.FC = () => {
       const ciudad = item.ciudad || item.city || "";
       return (
         <div className={styles.item}>
-          <div style={{ fontSize: '1.2em', color: '#2ecc40', fontWeight: 400, marginBottom: '0.2em', wordBreak: 'break-word', minHeight: '2.2em', lineHeight: 1.1 }}>{nombre}</div>
+          <div style={{ fontSize: '1.2em', color: '#000000', fontWeight: 400, marginBottom: '0.2em', wordBreak: 'break-word', minHeight: '2.2em', lineHeight: 1.1 }}>{nombre}</div>
           <div style={{ color: '#222', marginBottom: '0.1em', fontWeight: 400, fontSize: '0.95em' }}>RIF:<span style={{ color: '#444', marginLeft: '0.5em', fontWeight: 400 }}> {rif}</span></div>
           <div style={{ color: '#222', marginBottom: '0.1em', fontWeight: 400, fontSize: '0.95em' }}>Encargado:<span style={{ color: '#444', marginLeft: '0.5em', fontWeight: 400 }}> {encargadoNombre}</span></div>
           <div style={{ color: '#222', marginBottom: '0.1em', fontWeight: 400, fontSize: '0.95em' }}>Fecha de encargo:<span style={{ color: '#444', marginLeft: '0.5em', fontWeight: 400 }}> {dateString}</span></div>
