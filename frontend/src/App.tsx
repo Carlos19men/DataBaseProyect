@@ -16,6 +16,9 @@ import RegistrarActividad from "./pages/RegistrarActividad/RegistrarActividad";
 import RegistrarServicio from "./pages/RegistrarServicio/RegistrarServicio";
 import RegistrarFamilia from "./pages/RegistrarFamilia/RegistrarFamilia";
 import RegistrarMarca from "./pages/RegistrarMarca/RegistrarMarca";
+import RegistrarOrdenServicio from "./pages/RegistrarOrden_Servicio/RegistrarOrdenServicio";
+import RegistrarProducto from "./pages/RegistrarProducto/RegistrarProducto";
+
 const App = () => (
 
 
@@ -39,6 +42,8 @@ const App = () => (
       <Route path = "/RegistrarServicio" element={<RegistrarServicio/>}></Route>
       <Route path = "/RegistrarFamilia" element={<RegistrarFamilia/>}></Route>
       <Route path = "/RegistrarMarca" element={<RegistrarMarca/>}></Route>
+      <Route path="/RegistrarOrdenServicio" element={<RegistrarOrdenServicio/>}></Route>
+      <Route path="/RegistrarProducto" element={<RegistrarProducto/>}></Route>
     </Routes>             
   </Router>
 )
