@@ -17,8 +17,6 @@ import RegistrarServicio from "./pages/RegistrarServicio/RegistrarServicio";
 import RegistrarFamilia from "./pages/RegistrarFamilia/RegistrarFamilia";
 import RegistrarMarca from "./pages/RegistrarMarca/RegistrarMarca";
 import ProtectedRoute from "./components/RutaProtegida/ProtectedRoute";
-import RegistrarProducto from "./pages/RegistrarProducto/RegistrarProducto";
-import RegistrarOrdenServicio from "./pages/RegistrarOrden_Servicio/RegistrarOrdenServicio";
 
 const App = () => (
 
@@ -31,7 +29,6 @@ const App = () => (
       <Route path="/API" element={<ProtectedRoute><PseudoAPI/></ProtectedRoute>}></Route>
       <Route path="/Search" element={<ProtectedRoute><Busqueda/></ProtectedRoute>}></Route>                                                                      
       <Route path="/Stats" element={<ProtectedRoute><Estadisticas/></ProtectedRoute>}></Route>
-      <Route path="/Factura" element={<ProtectedRoute><VisualizarFactura cod_OS={4}/></ProtectedRoute>}></Route>
       <Route path="/Factura" element={<ProtectedRoute><VisualizarFactura cod_OS={4}/></ProtectedRoute>}></Route>
       <Route path="/RegistrarModelo" element={<ProtectedRoute><RegistrarModelo/></ProtectedRoute>}></Route>
       <Route path="/RegistrarVehiculo" element={<ProtectedRoute><RegistrarVehiculo/></ProtectedRoute>}></Route>
