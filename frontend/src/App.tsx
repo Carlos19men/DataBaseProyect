@@ -12,7 +12,10 @@ import RegistrarVehiculo from "./pages/RegistrarVehiculo/RegistrarVehiculo";
 import RegistrarProveedor from "./pages/RegistrarProveedores/RegistrarProveedores";
 import RegistrarOrdenCompra from "./pages/RegistrarOrden_Compra/RegistrarOrdenCompra";
 import RegistrarPlan from "./pages/RegistrarPlan/RegistrarPlan";
-
+import RegistrarActividad from "./pages/RegistrarActividad/RegistrarActividad";
+import RegistrarServicio from "./pages/RegistrarServicio/RegistrarServicio";
+import RegistrarFamilia from "./pages/RegistrarFamilia/RegistrarFamilia";
+import RegistrarMarca from "./pages/RegistrarMarca/RegistrarMarca";
 const App = () => (
 
 
@@ -32,6 +35,10 @@ const App = () => (
       <Route path="/RegistrarProveedor" element={<RegistrarProveedor/>}></Route>
       <Route path="/RegistrarOrdenCompra" element={<RegistrarOrdenCompra/>}></Route>
       <Route path="/RegistrarPlan" element={<RegistrarPlan/>}></Route>
+      <Route path = "/RegistrarActividad" element={<RegistrarActividad/>}></Route>
+      <Route path = "/RegistrarServicio" element={<RegistrarServicio/>}></Route>
+      <Route path = "/RegistrarFamilia" element={<RegistrarFamilia/>}></Route>
+      <Route path = "/RegistrarMarca" element={<RegistrarMarca/>}></Route>
     </Routes>             
   </Router>
 )
