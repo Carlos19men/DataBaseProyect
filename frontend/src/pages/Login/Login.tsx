@@ -32,6 +32,7 @@ const Login: React.FC = () => {
                 empleadoData.message === undefined &&
                 Array.isArray(empleadoData) === false
             ) {
+                localStorage.setItem("isLoggedIn", "true"); // <--- Guarda login
                 navigator("/HomePage");
             } else {
                 setTextoErr("Empleado no encontrado");

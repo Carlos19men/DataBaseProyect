@@ -10,6 +10,7 @@ import more_horizontal from "../../assets/More horizontal.png";
 import search from "../../assets/Search.png";
 import user from "../../assets/User.png";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const MenuDespegable: React.FC = () => {
     const [activo, setActivo] = useState(false);
@@ -17,7 +18,7 @@ const MenuDespegable: React.FC = () => {
     const alternarMenu = () => setActivo(!activo);
 
     const cerrarMenu = () => setActivo(false);
-
+    const navigator = useNavigate();
     return(
         <div>
             {/*Boton Hamburguesa */}
@@ -41,7 +42,7 @@ const MenuDespegable: React.FC = () => {
                         <li><a href="/Proveedores"><img src={box} alt="Proveedores" /> Proveedores</a></li>
                         <li><a href="/AboutUs"><img src={more_horizontal} alt="Sobre nosotros" /> Sobre M&U</a></li>
                         <li><a href="/Usuario"><img src={user} alt="Usuario" /> Usuario</a></li>
-                        <li><a href="/Salir"><img src={arrowLeft_circle} alt="Salir" /> Salir</a></li>
+                        <li><a onClick={() => {localStorage.removeItem("isLoggedIn");navigator("/login");} }><img src={arrowLeft_circle} alt="Salir" onClick={() => {localStorage.removeItem("isLoggedIn");navigator("/login");}} /> Salir</a></li>
                     </ul>
                 </div>
             </nav>
