@@ -119,35 +119,40 @@
   gap: 0.5em;
   min-width: 260px;
   max-width: 320px;
-  min-height: 250px;
-  height: 250px;
+  min-height: 220px;
+  height: 220px;
   box-sizing: border-box;
   justify-content: flex-start;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
-.establecimientoNombre {
-  font-size: 1.7em;
+
+.establecimientoCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: #2196F3;
+}
+
+.establecimientoTitulo {
+  font-size: 1.3em;
   color: #000000;
   font-weight: 600;
-  margin-bottom: 0.2em;
+  margin-bottom: 0.5em;
+  margin-top: 0.2em;
   word-break: break-word;
-  min-height: 2.5em;
-  line-height: 1.1;
+  line-height: 1.2;
 }
-.establecimientoAtributo {
-  color: #222;
-  margin-bottom: 0.1em;
+
+.establecimientoEtiqueta {
+  color: #333;
+  margin-bottom: 0.3em;
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+.establecimientoValor {
+  color: #555;
   font-weight: 400;
-}
-.establecimientoDato {
-  color: #444;
-  margin-left: 0.5em;
-  font-weight: 400;
-}
-.establecimientoCiudad {
-  font-style: italic;
-  color: #888;
-  margin-top: 0.5em;
-  font-size: 0.98em;
 }
 
 /* Card específica para producto */
@@ -164,15 +169,81 @@
   gap: 0.5em;
   min-width: 260px;
   max-width: 320px;
-  min-height: 180px;
-  height: 180px;
+  min-height: 220px;
+  height: 220px;
   box-sizing: border-box;
   justify-content: flex-start;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
+
+.productoCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: #9C27B0;
+}
+
+.productoTitulo {
+  font-size: 1.3em;
+  color: #222;
+  font-weight: 800;
+  margin-bottom: 0.5em;
+  margin-top: 0.2em;
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.productoEtiqueta {
+  color: #444;
+  margin-bottom: 0.3em;
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+.productoValor {
+  color: #555;
+  font-weight: 400;
+}
+
 .productoPrecio {
   color: #1976d2;
   font-weight: 700;
   font-size: 1.1em;
+}
+
+.productoTipoEco {
+  color: #2ecc40;
+  font-weight: 600;
+}
+
+.productoTipoNoEco {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+.productoNivelContaminacion1 {
+  color: #2ecc40;
+  font-weight: 600;
+}
+
+.productoNivelContaminacion2 {
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.productoNivelContaminacion3 {
+  color: #f39c12;
+  font-weight: 600;
+}
+
+.productoNivelContaminacion4 {
+  color: #e67e22;
+  font-weight: 600;
+}
+
+.productoNivelContaminacion5 {
+  color: #e74c3c;
+  font-weight: 600;
 }
 
 /* Card específica para cliente/proveedor */
@@ -213,10 +284,40 @@
   gap: 0.5em;
   min-width: 260px;
   max-width: 320px;
-  min-height: 180px;
-  height: 180px;
+  min-height: 220px;
+  height: 220px;
   box-sizing: border-box;
   justify-content: flex-start;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clienteCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: #FF9800;
+}
+
+.clienteTitulo {
+  font-size: 1.3em;
+  color: #000000;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+  margin-top: 0.2em;
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.clienteEtiqueta {
+  color: #333;
+  margin-bottom: 0.3em;
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+.clienteValor {
+  color: #555;
+  font-weight: 400;
 }
 
 .proveedorCard {
@@ -232,10 +333,40 @@
   gap: 0.5em;
   min-width: 260px;
   max-width: 320px;
-  min-height: 180px;
-  height: 180px;
+  min-height: 240px;
+  height: 240px;
   box-sizing: border-box;
   justify-content: flex-start;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.proveedorCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: #00BCD4;
+}
+
+.proveedorTitulo {
+  font-size: 1.3em;
+  color: #000000;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+  margin-top: 0.2em;
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.proveedorEtiqueta {
+  color: #333;
+  margin-bottom: 0.3em;
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+.proveedorValor {
+  color: #555;
+  font-weight: 400;
 }
 
 .empleadoCard {
@@ -251,8 +382,38 @@
   gap: 0.5em;
   min-width: 260px;
   max-width: 320px;
-  min-height: 180px;
-  height: 180px;
+  min-height: 270px;
+  height: 270px;
   box-sizing: border-box;
   justify-content: flex-start;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.empleadoCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: #4CAF50;
+}
+
+.empleadoTitulo {
+  font-size: 1.3em;
+  color: #000000;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+  margin-top: 0.2em;
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.empleadoEtiqueta {
+  color: #333;
+  margin-bottom: 0.3em;
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+.empleadoValor {
+  color: #555;
+  font-weight: 400;
 }

@@ -5,7 +5,7 @@ export class employeeModel {
 
     static async getAll() {
         const pool = getDbPool();
-        const result = await pool.query('SELECT * FROM ObtenerEmpleados ORDER BY apellido;');
+        const result = await pool.query('SELECT * FROM ObtenerEmpleados ORDER BY empleado;');
         return result['recordset'];
     }
 

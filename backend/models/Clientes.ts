@@ -4,7 +4,7 @@ export class customerModel {
 
     static async getAll(){
 
-        const result = await getDbPool().query('select * from ObtenerClientes ORDER BY apellido;')
+        const result = await getDbPool().query('select * from ObtenerClientes ORDER BY cliente;')
 
         return result['recordset']
     }

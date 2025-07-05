@@ -1,8 +1,8 @@
 ### Obtener todos los             |Listo 
-http://localhost:1234/customer/
+http://localhost:1234/product
 
 ###Obtener un cliente por su cedula | listo 
-http://localhost:1234/customer/
+http://localhost:1234/customer/(numero de ci)
 
 ###Post un nuevo cliente | Listo
 POST http://localhost:1234/customer
