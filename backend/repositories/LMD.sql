@@ -878,6 +878,13 @@ INSERT INTO ActividadProductos (id_producto, nro_servicio, nro_correlativo, cant
 (2, 4, 11, 2),
 (1, 5, 16, 1);
 
+INSERT INTO PagosFactura(nro_factura, id_pago) VALUES 
+(6,4),
+(7,1),
+(8,3),
+(9,7),
+(10,10);
+
 
 
 -- COMPRAS (usa nro_compra de OrdenesCompra y id_producto de Productos)
