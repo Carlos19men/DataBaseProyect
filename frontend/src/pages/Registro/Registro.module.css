@@ -5,7 +5,7 @@
 .botones{
     display: flex;
     justify-content: center;
-    gap: 15px; /* Espacio entre botones */
+    gap: 5vw; /* Espacio entre botones */
     margin: 5vh 0;
 }
 

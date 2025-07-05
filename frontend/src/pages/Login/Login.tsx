@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "../../components/Button/button";
 import TopBar from "../../components/TopBar/TopBar";
 import styles from "./Login.module.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
 import { usegetAllAPI } from "../PseudoAPI/PseudoAPI";
 /*import { customerModel } from "../../../../backend/models/Clientes";
@@ -47,6 +47,7 @@ const Login: React.FC = () => {
             <TopBar menu={false} text="Inicio de sesión" />
             <div className={styles.centrado}>
                     <div>
+                        <div className={styles.oculto}></div>
                         <TextBoxMU etiqueta="Ingrese su cedula: " ejemplo="12345724" viewWidth={60} value={cedulaEmpleado} onChange={e => setCedulaE(e.target.value)} ></TextBoxMU>
                     </div>   
             </div>
@@ -54,6 +55,15 @@ const Login: React.FC = () => {
             <div className={styles.centrado}>
                 <Button texto="Ingresar" onClick={handleLogin}></Button>
             </div>
+            <div className={styles.centrado}>
+                <p className="miniText">No tienes una cuenta?</p>
+                </div>
+                <div className={styles.centrado}>
+                <Link to="/Registro" className="miniText">
+                    Registrate Aqui
+                </Link>
+                </div>
+            
         </div>
     );
 };

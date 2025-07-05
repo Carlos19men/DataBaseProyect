@@ -20,8 +20,8 @@ const Button : React.FC<BotonProps> = ({ texto, onClick, inactivo=false,viewHeig
         }   
     }
     return(
-        <span>
-            <button className={`${styles.button} ${inactivo ? styles.inactivo : ""} ${selected ? styles.selected : ""}`} onClick={onClick}  style={{height:`${viewHeight}vh`, padding:0}}><span className={styles.buttonText} style={{ fontSize:`${fuente}vh`, textAlign:"center"}}>{texto}  </span></button>
+        <span className={styles.container} >
+            <button className={`${styles.button} ${inactivo ? styles.inactivo : ""} ${selected ? styles.selected : ""}`} onClick={onClick}  style={{height:`${viewHeight}vh`, padding:"0 5%"}}><span className={styles.buttonText} style={{ fontSize:`${fuente}vh`}}>{texto}  </span></button>
         </span>
     )
 }
