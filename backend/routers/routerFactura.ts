@@ -15,6 +15,7 @@ export const createInvoiceRouter = () => {
     router.get("/pago/:cod_OS", InvoiceController.getPaymentData);
     router.get("/establecimiento/:cod_OS", InvoiceController.getEstablishmentData);
     router.get("/servicio/:cod_OS", InvoiceController.getServiceData);
+    router.get("/montos/:cod_OS", InvoiceController.getMontosData);
 
     return router;
 }

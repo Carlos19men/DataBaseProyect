@@ -90,4 +90,14 @@ export class InvoiceController {
       res.status(500).json({ message: "Error retrieving service data", error });
     }
   }
+
+  static async getMontosData(req: Request, res: Response) {
+    const { cod_OS } = req.params;
+    try {
+      const result = await invoice.getMontosData(Number(cod_OS));
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json({ message: "Error retrieving montos data", error });
+    }
+  }
 }

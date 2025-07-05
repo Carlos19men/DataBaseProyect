@@ -22,8 +22,6 @@ import RegistrarOrdenServicio from "./pages/RegistrarOrden_Servicio/RegistrarOrd
 
 const App = () => (
 
-
-  
   <Router>
     <Routes>
       <Route path="/" element={<Landing/>}></Route>
@@ -33,7 +31,8 @@ const App = () => (
       <Route path="/API" element={<ProtectedRoute><PseudoAPI/></ProtectedRoute>}></Route>
       <Route path="/Search" element={<ProtectedRoute><Busqueda/></ProtectedRoute>}></Route>                                                                      
       <Route path="/Stats" element={<ProtectedRoute><Estadisticas/></ProtectedRoute>}></Route>
-      <Route path="/Factura" element={<ProtectedRoute><VisualizarFactura/></ProtectedRoute>}></Route>
+      <Route path="/Factura" element={<ProtectedRoute><VisualizarFactura cod_OS={4}/></ProtectedRoute>}></Route>
+      <Route path="/Factura" element={<ProtectedRoute><VisualizarFactura cod_OS={4}/></ProtectedRoute>}></Route>
       <Route path="/RegistrarModelo" element={<ProtectedRoute><RegistrarModelo/></ProtectedRoute>}></Route>
       <Route path="/RegistrarVehiculo" element={<ProtectedRoute><RegistrarVehiculo/></ProtectedRoute>}></Route>
       <Route path="/RegistrarProveedor" element={<ProtectedRoute><RegistrarProveedor/></ProtectedRoute>}></Route>

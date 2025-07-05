@@ -95,4 +95,15 @@ export class invoice{
         const result =  await request.query(query);
         return result['recordset'];
     }
+
+    static async getMontosData(cod_OS: number){
+        const request = getDbPool().request();
+
+        request.input('cod_OS',cod_OS);
+
+        const query = `SELECT * FROM dbo.ObtenerDatosMontos(@cod_OS);`;
+
+        const result =  await request.query(query);
+        return result['recordset'];
+    }
 }   

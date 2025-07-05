@@ -82,6 +82,22 @@ RETURN(
 SELECT * 
 FROM dbo.ObtenerDatosFactura(4);
 
+-- Funcion para obtener los datos de los pagos
+CREATE FUNCTION ObtenerDatosMontos(
+	@cod_OS int
+)
+RETURNS TABLE
+AS
+RETURN(
+	SELECT F.monto_total, F.iva, F.descuento
+	FROM Facturas F
+	JOIN OrdenesServicio O ON F.cod_OS = O.cod_OS
+	WHERE O.cod_OS = @cod_OS
+);
+
+SELECT * 
+FROM dbo.ObtenerDatosMontos(4);
+
 SELECT * FROM Facturas;
 
 
