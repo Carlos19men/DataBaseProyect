@@ -18,8 +18,9 @@
 }
 
 .titles {
-  width: fit-content;
-
+    width: fit-content;
+    margin :10vh;
+    margin-bottom: 5vh;
 }
 
 
