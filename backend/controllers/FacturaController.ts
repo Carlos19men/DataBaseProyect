@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { invoice } from "../models/Factura";
 
 export class InvoiceController {
-  static async getAll(req: Request, res: Response) {
+  static async getAll(_: Request, res: Response) {
     try {
       const data = await invoice.getAll();
       res.status(200).json(data);
