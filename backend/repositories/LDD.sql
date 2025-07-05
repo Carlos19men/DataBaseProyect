@@ -351,7 +351,6 @@ create table telefonosCliente(
 );
 
 
-/*Drops tables 
 DROP TABLE telefonosCliente;    
 DROP TABLE Inventario; 
 DROP TABLE ActividadesOS;
@@ -385,5 +384,5 @@ DROP TABLE Modelos;
 DROP TABLE Marcas;
 
 
-DROP DATABASE MU_DB; */
+DROP DATABASE MU_DB; 
 

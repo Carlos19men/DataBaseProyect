@@ -17,6 +17,13 @@ import RegistrarServicio from "./pages/RegistrarServicio/RegistrarServicio";
 import RegistrarFamilia from "./pages/RegistrarFamilia/RegistrarFamilia";
 import RegistrarMarca from "./pages/RegistrarMarca/RegistrarMarca";
 import ProtectedRoute from "./components/RutaProtegida/ProtectedRoute";
+
+// Importar páginas de detalle
+import EmpleadoDetalle from "./pages/Detalle/EmpleadoDetalle";
+import EstablecimientoDetalle from "./pages/Detalle/EstablecimientoDetalle";
+import ClienteDetalle from "./pages/Detalle/ClienteDetalle";
+import ProveedorDetalle from "./pages/Detalle/ProveedorDetalle";
+import ProductoDetalle from "./pages/Detalle/ProductoDetalle";
 const App = () => (
 
 
@@ -40,6 +47,13 @@ const App = () => (
       <Route path = "/RegistrarServicio" element={<ProtectedRoute><RegistrarServicio/></ProtectedRoute>}></Route>
       <Route path = "/RegistrarFamilia" element={<ProtectedRoute><RegistrarFamilia/></ProtectedRoute>}></Route>
       <Route path = "/RegistrarMarca" element={<ProtectedRoute><RegistrarMarca/></ProtectedRoute>}></Route>
+      
+      {/* Rutas para páginas de detalle */}
+      <Route path="/empleado-detalle" element={<ProtectedRoute><EmpleadoDetalle/></ProtectedRoute>}></Route>
+      <Route path="/establecimiento-detalle" element={<ProtectedRoute><EstablecimientoDetalle/></ProtectedRoute>}></Route>
+      <Route path="/cliente-detalle" element={<ProtectedRoute><ClienteDetalle/></ProtectedRoute>}></Route>
+      <Route path="/proveedor-detalle" element={<ProtectedRoute><ProveedorDetalle/></ProtectedRoute>}></Route>
+      <Route path="/producto-detalle" element={<ProtectedRoute><ProductoDetalle/></ProtectedRoute>}></Route>
     </Routes>             
   </Router>
 )
