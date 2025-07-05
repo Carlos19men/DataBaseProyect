@@ -8,7 +8,7 @@
     display: flex;
     justify-content: space-between;
     align-items: normal;
-    margin-top: -100px;
+    margin-top: 0 !important;
 }
 
 .logo{
@@ -16,14 +16,15 @@
     align-items: center;
     padding-left: 50px;
     height: 15vh;
-    margin-top: 50px;
+    margin-top: 0 !important;
 }
 
 .subtitle{
     padding-left: 50px;
     text-align: center;
-    padding-top: 50px;
+    padding-top: 10px;
     padding-right: 50px;
+    font-size: 1.7vh;
 }
 
 .greentext{
@@ -46,9 +47,30 @@ h1, h2, h3, p, label, span {
   padding-bottom: 0;
 }
 
+.containerMain h2.title, .subtitle h2.title {
+  font-size: 2.2vh;
+}
+
+/* Si hay un selector general para h2.title fuera de .containerMain, lo reduzco también */
+h2.title {
+  font-size: 2.2vh;
+}
+
+/* Reducir tamaño de títulos específicos */
+.subtitle h2.title {
+  font-size: 1.8vh;
+}
+
+/* Títulos de monto, descuento e IVA */
+.subtitle h2.subtitle {
+  font-size: 1.1vh;
+  margin-bottom: 2.5vh;
+}
+
 .facturaContainer{
     transform: scale(0.8);
     transform-origin: center;
+    margin-top: 0.1vh;
 }
 
 .montoTotalWrapper {
@@ -65,5 +87,64 @@ h1, h2, h3, p, label, span {
   height: 2px;
   background-color: #000;
   margin-bottom: 6px;
+}
+
+.actividadesTableWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 2vh 0;
+}
+
+.actividadesTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 2vh;
+}
+
+.headerCell {
+  background: var(--primary-green, #22b86c);
+  color: #fff;
+  font-weight: 700;
+  font-size: 3.5vh;
+  padding: 2.5vh 2.5vw;
+  text-align: left;
+  border-bottom: 2px solid #1a7f37;
+}
+
+.servicioRow {
+  background: #ededed;
+  font-weight: 600;
+  font-size: 3vh;
+}
+.servicioCell {
+  color: #222;
+  padding: 2vh 2.5vw;
+  font-weight: 700;
+  font-size: 3vh;
+}
+
+.actividadesTable td {
+  padding: 2vh 2.5vw;
+  font-size: 2.8vh;
+  color: #222;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.totalRow {
+  background: #f6f6f6;
+  font-weight: 700;
+  color: #222;
+  font-size: 2.8vh;
+}
+
+.actividadesTable tr:last-child td {
+  border-bottom: none;
 }
 

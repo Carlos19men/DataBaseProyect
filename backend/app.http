@@ -296,7 +296,7 @@ DELETE http://localhost:1234/suppliers/1234567890
 GET http://localhost:1234/vehicles/
 
 ### Obtener un vehiculo por su placa | listo
-GET http://localhost:1234/vehicles/AJL123                                                                                                                                                                                                                                                                                                                                                                                                                           
+GET http://localhost:1234/vehicles/AJL123                                                                                                                                                                                                                                                                                                                                                                                                                       
 
 ### Agregar un nuevo vehiculo | listo
 POST http://localhost:1234/vehicles/
@@ -368,7 +368,7 @@ Content-Type: application/json
 ### Router de Inventario.
 
 ### Obtener todos los productos del inventario. | listo
-GET http://localhost:1234/product
+GET http://localhost:1234/inventory/
 
 ### Obtener un producto del inventario por su RIF. | listo
 GET http://localhost:1234/inventory/J-00112233-4

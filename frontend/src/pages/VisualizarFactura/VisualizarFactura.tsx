@@ -105,6 +105,47 @@ const VisualizarFactura: React.FC = () =>{
                         </div>
                     </div>
                 </div>
+                {/* TABLA DE ACTIVIDADES/SERVICIOS */}
+                <div className={styles.actividadesTableWrapper}>
+                    <table className={styles.actividadesTable}>
+                        <thead>
+                            <tr>
+                                <th className={styles.headerCell}>Servicio</th>
+                                <th className={styles.headerCell}>Actividad</th>
+                                <th className={styles.headerCell}>Precio</th>
+                                <th className={styles.headerCell}>Producto</th>
+                                <th className={styles.headerCell}>Costo</th>
+                                <th className={styles.headerCell}>Cant</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/* Ejemplo de agrupación por servicio */}
+                            <tr className={styles.servicioRow}>
+                                <td className={styles.servicioCell} colSpan={6}>Pulitura</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>A1</td>
+                                <td>5</td>
+                                <td>aceite</td>
+                                <td>10</td>
+                                <td>1</td>
+                            </tr>
+                            <tr className={styles.totalRow}>
+                                <td></td>
+                                <td>A2</td>
+                                <td>...</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr className={styles.totalRow}>
+                                <td colSpan={5} style={{textAlign:'right', fontWeight:'bold'}}>total</td>
+                                <td>100</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div className={styles.container}>
                     <div className={styles.subtitle}>
                         <h2 className="subtitle">INFORMACION DE PAGO:</h2>
