@@ -1,0 +1,87 @@
+.container {
+  background: #fff;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.form {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #fff;
+  border-radius: 10px;
+  padding: 24px 32px 40px 32px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.input {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #bdbdbd;
+  background: #f3f3f3;
+  font-size: 1rem;
+}
+
+.checkGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-left: 16px;
+  font-weight: 400;
+}
+
+.rowGroup {
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+  justify-content: space-between;
+}
+
+.rowDateTime {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.inputDate {
+  width: 2.5em;
+  padding: 4px;
+  border-radius: 5px;
+  border: 1px solid #bdbdbd;
+  background: #eaeaea;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 60px;
+  border-radius: 6px;
+  border: 1px solid #bdbdbd;
+  padding: 8px;
+  font-size: 1rem;
+  background: #f3f3f3;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+} 
