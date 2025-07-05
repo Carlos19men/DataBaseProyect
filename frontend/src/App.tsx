@@ -17,6 +17,9 @@ import RegistrarServicio from "./pages/RegistrarServicio/RegistrarServicio";
 import RegistrarFamilia from "./pages/RegistrarFamilia/RegistrarFamilia";
 import RegistrarMarca from "./pages/RegistrarMarca/RegistrarMarca";
 import ProtectedRoute from "./components/RutaProtegida/ProtectedRoute";
+import RegistrarProducto from "./pages/RegistrarProducto/RegistrarProducto";
+import RegistrarOrdenServicio from "./pages/RegistrarOrden_Servicio/RegistrarOrdenServicio";
+
 const App = () => (
 
 
@@ -40,6 +43,8 @@ const App = () => (
       <Route path = "/RegistrarServicio" element={<ProtectedRoute><RegistrarServicio/></ProtectedRoute>}></Route>
       <Route path = "/RegistrarFamilia" element={<ProtectedRoute><RegistrarFamilia/></ProtectedRoute>}></Route>
       <Route path = "/RegistrarMarca" element={<ProtectedRoute><RegistrarMarca/></ProtectedRoute>}></Route>
+      <Route path = "/RegistrarOrdenServicio" element={<ProtectedRoute><RegistrarOrdenServicio/></ProtectedRoute>}></Route>
+      <Route path = "RegistrarProducto" element={<ProtectedRoute><RegistrarProducto/></ProtectedRoute>}></Route>
     </Routes>             
   </Router>
 )

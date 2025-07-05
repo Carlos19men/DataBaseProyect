@@ -5,8 +5,8 @@ import Button from "../../components/Button/button";
 import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
 
 interface Familia {
-  id_family: number;
-  name: string;
+  id_familia: number;
+  nombre: string;
 }
 
 const RegistrarProducto = () => {
@@ -32,8 +32,6 @@ const RegistrarProducto = () => {
         <div className={styles.row}>
           <label className={styles.label}>Nombre:</label>
           <TextBoxMU etiqueta="" viewWidth={30} viewHeight={6} ejemplo="Nombre del producto" />
-        </div>
-        <div className={styles.row}>
           <label className={styles.label}>Tipo:</label>
           <select
             className={styles.input}
@@ -48,27 +46,25 @@ const RegistrarProducto = () => {
         <div className={styles.row}>
           <label className={styles.label}>Precio:</label>
           <TextBoxMU etiqueta="" viewWidth={30} viewHeight={6} ejemplo="Precio" />
-        </div>
-        <div className={styles.row}>
           <label className={styles.label}>Descripción:</label>
           <TextBoxMU etiqueta="" viewWidth={30} viewHeight={6} ejemplo="Descripción" />
         </div>
         {/* Fila 3: Cantidad máxima y mínima */}
         <div className={styles.row}>
           <label className={styles.label}>Cantidad máxima:</label>
-          <TextBoxMU etiqueta="" viewWidth={15} viewHeight={6} ejemplo="Máxima" />
-        </div>
-        <div className={styles.row}>
+          <div className={styles.cantidadInput}>
+            <TextBoxMU etiqueta="" viewWidth={22} viewHeight={6} ejemplo="Máxima" />
+          </div>
           <label className={styles.label}>Cantidad mínima:</label>
-          <TextBoxMU etiqueta="" viewWidth={15} viewHeight={6} ejemplo="Mínima" />
+          <div className={styles.cantidadInput}>
+            <TextBoxMU etiqueta="" viewWidth={22} viewHeight={6} ejemplo="Mínima" />
+          </div>
         </div>
         {/* Fila condicional: Tratamiento y Nivel de contaminación */}
         {tipo === "NO ECOLÓGICO" && <>
           <div className={styles.row}>
             <label className={styles.label}>Tratamiento de residuos:</label>
             <TextBoxMU etiqueta="" viewWidth={30} viewHeight={6} ejemplo="Tratamiento de residuos" value={tratamiento} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTratamiento(e.target.value)} />
-          </div>
-          <div className={styles.row}>
             <label className={styles.label}>Nivel de contaminación:</label>
             <select
               className={styles.input}
@@ -98,7 +94,7 @@ const RegistrarProducto = () => {
           >
             <option value="">Seleccione una familia</option>
             {familias.map(f => (
-              <option key={f.id_family} value={f.id_family}>{f.name}</option>
+              <option key={f.id_familia} value={f.id_familia}>{f.nombre}</option>
             ))}
           </select>
         </div>
