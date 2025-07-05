@@ -28,5 +28,71 @@ export class invoice{
 
         const result = await request.query(query);
         return result['recordset'];
-   }
+    }
+
+    static async getClientData(cod_OS: number){
+        const request = getDbPool().request();
+
+        request.input('cod_OS',cod_OS);
+
+        const query = `SELECT * FROM dbo.ObtenerDatosCliente(@cod_OS)`;
+
+        const result =  await request.query(query);
+        return result['recordset'];
+    }
+
+    static async getFacturaData(cod_OS: number){
+        const request = getDbPool().request();
+
+        request.input('cod_OS',cod_OS);
+
+        const query = `SELECT * FROM dbo.ObtenerDatosFactura(@cod_OS);`;
+
+        const result =  await request.query(query);
+        return result['recordset'];
+    }
+
+    static async getVehicleData(cod_OS: number){
+        const request = getDbPool().request();
+
+        request.input('cod_OS',cod_OS);
+
+        const query = `SELECT * FROM dbo.ObtenerDatosVehiculo(@cod_OS);`;
+
+        const result =  await request.query(query);
+        return result['recordset'];
+    }
+
+    static async getPaymentData(cod_OS: number){
+        const request = getDbPool().request();
+
+        request.input('cod_OS',cod_OS);
+
+        const query = `SELECT * FROM dbo.ObtenerDatosPago(@cod_OS);`;
+
+        const result =  await request.query(query);
+        return result['recordset'];
+    }
+
+    static async getEstablishmentData(cod_OS: number){
+        const request = getDbPool().request();
+
+        request.input('cod_OS',cod_OS);
+
+        const query = `SELECT * FROM dbo.ObtenerDatosEstablecimientos(@cod_OS);`;
+
+        const result =  await request.query(query);
+        return result['recordset'];
+    }
+
+     static async getServiceData(cod_OS: number){
+        const request = getDbPool().request();
+
+        request.input('cod_OS',cod_OS);
+
+        const query = `SELECT * FROM dbo.ObtenerDatosServicios(@cod_OS);`;
+
+        const result =  await request.query(query);
+        return result['recordset'];
+    }
 }   
