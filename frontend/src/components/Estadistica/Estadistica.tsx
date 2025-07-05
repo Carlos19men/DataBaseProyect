@@ -1,14 +1,14 @@
 import  styles  from "./Estadistica.module.css";
 
 interface EstadisticaProps {
-    puntos: number;
     nombre:string;
-}
+    ancho:number;
+}  
 
-const Estadistica:React.FC<EstadisticaProps> =({puntos,nombre}) => {
+const Estadistica:React.FC<EstadisticaProps> =({nombre,ancho}) => {
 
     return(<span>
-            <div className={styles.estadistica} style={{width:`${puntos}vh`}}>{nombre}</div>
+            <div className={styles.estadistica} style={{width:`${ancho}%`}}>{nombre}</div>
     </span>
     )
 }
