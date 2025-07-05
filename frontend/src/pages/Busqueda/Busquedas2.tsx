@@ -32,11 +32,11 @@ const Busquedas2: React.FC = () => {
 
   // Funciones de navegación
   const handleEmpleadoClick = (empleado: any) => {
-    navigate('/empleado-detalle', { state: { empleado } });
+    navigate('/empleado-detalle', { state: { empleado, ci: empleado.CI_emp } });
   };
 
   const handleEstablecimientoClick = (establecimiento: any) => {
-    navigate('/establecimiento-detalle', { state: { establecimiento } });
+    navigate('/establecimiento-detalle', { state: { establecimiento, rif: establecimiento.RIF } });
   };
 
   const handleClienteClick = (cliente: any) => {
@@ -44,11 +44,11 @@ const Busquedas2: React.FC = () => {
   };
 
   const handleProveedorClick = (proveedor: any) => {
-    navigate('/proveedor-detalle', { state: { proveedor } });
+    navigate('/proveedor-detalle', { state: { proveedor, rif: proveedor.RIF } });
   };
 
   const handleProductoClick = (producto: any) => {
-    navigate('/producto-detalle', { state: { producto } });
+    navigate('/producto-detalle', { state: { producto, id: producto.id_producto } });
   };
 
   // Fetchs iniciales
