@@ -9,7 +9,7 @@ export class ActulizationInteroyModel{
 
         request.input('RIF',RIF)
 
-        const result = await request.query('SELECT * FROM ActualizacoinesInventarios WHERE RIF_establecimiento = @RIF;')
+        const result = await request.query('SELECT * FROM ActualizacionesInventarios WHERE RIF_establecimiento = @RIF;')
 
         return result['recordset']
     }
@@ -22,18 +22,19 @@ export class ActulizationInteroyModel{
         request.input('id_producto',id_producto)
 
 
-        const result = await request.query('SELECT * FROM ActualizacoinesInventarios WHERE RIF_establecimiento = @RIF AND id_producto = @id_producto;')
+        const result = await request.query('SELECT * FROM ActualizacionesInventarios WHERE RIF_establecimiento = @RIF AND id_producto = @id_producto;')
         return result['recordset']
     }
 
-    static async newModification(RIF:string, id_producto: number, cantidad: number){
+    static async newModification(RIF:string, id_producto: number, cantidad: number, tipo: string){
         const request = getDbPool().request()
 
         request.input('RIF',RIF)
         request.input('id_producto',id_producto)
         request.input('cantidad',cantidad)
+        request.input('tipo',tipo)
 
-        const result = await request.query('INSERT INTO ActualizacoinesInventarios (RIF_establecimiento, id_producto, cantidad) VALUES (@RIF, @id_producto, @cantidad);')
+        const result = await request.query('INSERT INTO ActualizacionesInventarios (RIF_establecimiento, id_producto, cantidad, tipo) VALUES (@RIF, @id_producto, @cantidad, @tipo);')
         
         return {rowsAffected: result['rowsAffected'][0]}
     }

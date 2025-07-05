@@ -17,6 +17,9 @@ import RegistrarServicio from "./pages/RegistrarServicio/RegistrarServicio";
 import RegistrarFamilia from "./pages/RegistrarFamilia/RegistrarFamilia";
 import RegistrarMarca from "./pages/RegistrarMarca/RegistrarMarca";
 import ProtectedRoute from "./components/RutaProtegida/ProtectedRoute";
+import RegistrarOrdenServicio from "./pages/RegistrarOrden_Servicio/RegistrarOrdenServicio";
+import RegistrarProducto from "./pages/RegistrarProducto/RegistrarProducto";
+
 
 // Importar páginas de detalle
 import EmpleadoDetalle from "./pages/Detalle/EmpleadoDetalle";
@@ -26,8 +29,6 @@ import ProveedorDetalle from "./pages/Detalle/ProveedorDetalle";
 import ProductoDetalle from "./pages/Detalle/ProductoDetalle";
 const App = () => (
 
-
-  
   <Router>
     <Routes>
       <Route path="/" element={<Landing/>}></Route>
@@ -37,7 +38,7 @@ const App = () => (
       <Route path="/API" element={<ProtectedRoute><PseudoAPI/></ProtectedRoute>}></Route>
       <Route path="/Search" element={<ProtectedRoute><Busqueda/></ProtectedRoute>}></Route>                                                                      
       <Route path="/Stats" element={<ProtectedRoute><Estadisticas/></ProtectedRoute>}></Route>
-      <Route path="/Factura" element={<ProtectedRoute><VisualizarFactura/></ProtectedRoute>}></Route>
+      <Route path="/Factura" element={<ProtectedRoute><VisualizarFactura cod_OS={4}/></ProtectedRoute>}></Route>
       <Route path="/RegistrarModelo" element={<ProtectedRoute><RegistrarModelo/></ProtectedRoute>}></Route>
       <Route path="/RegistrarVehiculo" element={<ProtectedRoute><RegistrarVehiculo/></ProtectedRoute>}></Route>
       <Route path="/RegistrarProveedor" element={<ProtectedRoute><RegistrarProveedor/></ProtectedRoute>}></Route>
@@ -47,6 +48,8 @@ const App = () => (
       <Route path = "/RegistrarServicio" element={<ProtectedRoute><RegistrarServicio/></ProtectedRoute>}></Route>
       <Route path = "/RegistrarFamilia" element={<ProtectedRoute><RegistrarFamilia/></ProtectedRoute>}></Route>
       <Route path = "/RegistrarMarca" element={<ProtectedRoute><RegistrarMarca/></ProtectedRoute>}></Route>
+      <Route path = "/RegistrarOrdenServicio" element={<ProtectedRoute><RegistrarOrdenServicio/></ProtectedRoute>}></Route>
+      <Route path = "RegistrarProducto" element={<ProtectedRoute><RegistrarProducto/></ProtectedRoute>}></Route>
       
       {/* Rutas para páginas de detalle */}
       <Route path="/empleado-detalle" element={<ProtectedRoute><EmpleadoDetalle/></ProtectedRoute>}></Route>

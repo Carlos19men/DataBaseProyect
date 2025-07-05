@@ -61,6 +61,9 @@ RETURN(
 	WHERE O.cod_OS = @cod_OS
 );
 
+SELECT * 
+FROM dbo.ObtenerDatosCliente(4);
+
 GO
 
 -- Funcion para obtener los datos de la factura
@@ -75,6 +78,28 @@ RETURN(
 	JOIN OrdenesServicio O ON F.cod_OS = O.cod_OS
 	WHERE O.cod_OS = @cod_OS
 );
+
+SELECT * 
+FROM dbo.ObtenerDatosFactura(4);
+
+-- Funcion para obtener los datos de los pagos
+CREATE FUNCTION ObtenerDatosMontos(
+	@cod_OS int
+)
+RETURNS TABLE
+AS
+RETURN(
+	SELECT F.monto_total, F.iva, F.descuento
+	FROM Facturas F
+	JOIN OrdenesServicio O ON F.cod_OS = O.cod_OS
+	WHERE O.cod_OS = @cod_OS
+);
+
+SELECT * 
+FROM dbo.ObtenerDatosMontos(4);
+
+SELECT * FROM Facturas;
+
 
 GO
 
@@ -91,6 +116,9 @@ RETURN(
 	JOIN Vehiculos V ON O.codigo_vehiculo = V.codigo
 	WHERE O.cod_OS = @cod_OS
 );
+
+SELECT * 
+FROM dbo.ObtenerDatosVehiculo(4);
 
 GO
 
@@ -118,6 +146,9 @@ RETURN(
 
 GO
 
+SELECT * 
+FROM dbo.ObtenerDatosPago(4);
+
 -- Funcion para obtener los datos correspondientes al establecimiento
 CREATE FUNCTION ObtenerDatosEstablecimientos(
 	@cod_OS int
@@ -132,18 +163,29 @@ AS RETURN(
 
 GO
 
+SELECT * 
+FROM dbo.ObtenerDatosEstablecimientos(4);
+
 -- Funcion correspondiente a la obtencion de todos los datos correspondiente a los servicios ofrecidos
 CREATE FUNCTION ObtenerDatosServicios(
 	@cod_OS int
 )
 RETURNS TABLE 
 AS RETURN(
-	SELECT S.nombre_ser, A.nombre as nombre_act, P.nombre, AOS.precio_producto, AOS.cantidad, AOS.precio_actividad
-	FROM ActividadesOS AOS, Actividades A, Servicios S, Productos P
-	WHERE S.nro_servicio= AOS.nro_servicio
+	SELECT S.nombre_ser, A.nombre as nombre_act, P.nombre as nombreProducto, AOS.precio_producto, AOS.cantidad, AOS.precio_actividad
+	FROM ActividadesOS AOS, Actividades A, Servicios S, Productos P, Empleados E, OrdenesServicio O
+	WHERE A.nro_servicio= AOS.nro_servicio
 	AND AOS.nro_correlativo = A.nro_correlativo
+	AND A.nro_servicio = S.nro_servicio
 	AND AOS.id_producto = P.id_producto
-	
+	AND AOS.ci_empleado = E.CI_emp
+	AND AOS.cod_OS = O.cod_OS
+	AND AOS.cod_OS = 4
 );
+
+DROP FUNCTION ObtenerDatosServicios;
+
+SELECT * 
+FROM dbo.ObtenerDatosServicios(4);
 
 GO
