@@ -107,15 +107,11 @@ export class invoice{
         return result['recordset'];
     }
 
-    static async createFromOrder(cod_OS: number, iva: number = 16, fecha_emision: string | null = null) {
+    static async createFromOrder(cod_OS: number, iva?: number, fecha_emision?: string) {
         const request = getDbPool().request();
         request.input('cod_OS', cod_OS);
-        request.input('iva', iva);
-        if (fecha_emision) {
-            request.input('fecha_emision', fecha_emision);
-        } else {
-            request.input('fecha_emision', null);
-        }
+        if (iva !== undefined) request.input('iva', iva);
+        if (fecha_emision !== undefined) request.input('fecha_emision', fecha_emision);
         const result = await request.execute('CrearFacturaDesdeOrdenServicio');
         return result.recordset;
     }
