@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'; // Importa los tipos de Express
 import { customerModel } from "../models/Clientes"; // Tu modelo de cliente
-import { phonesCustomerModel } from "../models/Telefonos"; // Modelo de teléfonos
 
 
 interface Customer{

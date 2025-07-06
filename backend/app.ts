@@ -57,9 +57,7 @@ export const createApp = () =>{
     app.use('/associated-suppliers', createProveedoresAsociadosRouter());
     app.use('/activity', createActivityRouter());
     app.use('/activity-product', createActivityProductRouter());
-    
     app.use('/service-order', createRouterServiceOrder());
-
     app.use('/invoice',createInvoiceRouter());
 
     const PORT = process.env.PORT ?? 1234

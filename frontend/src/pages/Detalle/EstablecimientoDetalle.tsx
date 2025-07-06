@@ -48,7 +48,7 @@ const EstablecimientoDetalle: React.FC = () => {
         setError("");
         
         // Fetch del establecimiento específico usando el RIF
-        const response = await fetch(`http://localhost:1234/establishment/${rif}`);
+        const response = await fetch(`http://localhost:1234/establishement/${rif}`);
         
         if (!response.ok) {
           throw new Error(`Error ${response.status}: ${response.statusText}`);

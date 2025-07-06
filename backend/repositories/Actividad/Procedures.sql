@@ -52,7 +52,6 @@ GO
 
 CREATE PROCEDURE createActividad(
 	@nro_servicio int ,
-	@nro_correlativo int,
 	@nombre varchar(255),
 	@descripcion varchar(200),
 	@costo decimal(10,2) 
@@ -60,14 +59,14 @@ CREATE PROCEDURE createActividad(
 AS
 BEGIN
 		--Si no existe la actividad, la cramos
-		INSERT INTO Actividades (costo,descripcion,nombre,nro_correlativo,nro_servicio) values 
+		INSERT INTO Actividades (costo,descripcion,nombre,nro_servicio) values 
 		(@costo,@descripcion,@nombre,@nro_servicio)
 END;
 GO
 
 
 IF OBJECT_ID('dbo.updateActividad', 'P') IS NOT NULL
-    DROP PROCEDURE dbo.editarCliente;
+    DROP PROCEDURE dbo.updateActividad;
 GO
 
 CREATE PROCEDURE updateActividad(
@@ -181,7 +180,7 @@ END;
 GO
 
 IF OBJECT_ID('deleteActividad', 'P') IS NOT NULL
-    DROP PROCEDURE dbo.eliminarCliente;
+    DROP PROCEDURE dbo.deleteActividad;
 GO
 
 CREATE PROCEDURE deleteActividad(

@@ -1,5 +1,43 @@
+/*
+DROP TABLE telefonosCliente;    
+DROP TABLE Inventario; 
+DROP TABLE ActividadesOS;
+DROP TABLE PagosFactura;
+DROP TABLE ActividadesPlan;
+DROP TABLE Compras;
+DROP TABLE ActividadProductos;
+DROP TABLE ServiciosOfrecidos;
+DROP TABLE EspecializacionEmpleados;
+DROP TABLE EmpleadosAsignados;
+DROP TABLE Actividades;
+DROP TABLE PlanesMantenimiento;
+DROP TABLE ProveedoresAsociados;  
+DROP TABLE OrdenesCompra;
+DROP TABLE Proveedores;
+DROP TABLE Facturas;
+DROP TABLE OrdenesServicio;
+DROP TABLE Vehiculos;
+ALTER TABLE Empleados drop constraint RIF_establecimiento ; 
+ALTER TABLE Establecimientos drop constraint CI_encargado; 
+ALTER TABLE Empleados drop constraint nro_servicio_supervisar;
+DROP TABLE Servicios; 
+DROP TABLE Empleados; 
+DROP TABLE ActualizacionesInventarios; 
+DROP TABLE Establecimientos;
+DROP TABLE Productos;
+DROP TABLE FamiliaProductos;
+DROP TABLE MetodosPago;
+DROP TABLE Clientes;
+DROP TABLE Modelos;
+DROP TABLE Marcas;
+
+
+DROP DATABASE MU_DB; 
+
 -- Esquema de la base de datos.
---create database MU_DB;
+create database MU_DB;
+*/
+
 
 USE MU_DB; 
 
@@ -349,40 +387,4 @@ create table telefonosCliente(
 	primary key(numero, CI_cliente),
 	foreign key (CI_cliente) references Clientes(CI_cliente) ON DELETE CASCADE
 );
-
-
-DROP TABLE telefonosCliente;    
-DROP TABLE Inventario; 
-DROP TABLE ActividadesOS;
-DROP TABLE PagosFactura;
-DROP TABLE ActividadesPlan;
-DROP TABLE Compras;
-DROP TABLE ActividadProductos;
-DROP TABLE ServiciosOfrecidos;
-DROP TABLE EspecializacionEmpleados;
-DROP TABLE EmpleadosAsignados;
-DROP TABLE Actividades;
-DROP TABLE PlanesMantenimiento;
-DROP TABLE ProveedoresAsociados;  
-DROP TABLE OrdenesCompra;
-DROP TABLE Proveedores;
-DROP TABLE Facturas;
-DROP TABLE OrdenesServicio;
-DROP TABLE Vehiculos;
-ALTER TABLE Empleados drop constraint RIF_establecimiento ; 
-ALTER TABLE Establecimientos drop constraint CI_encargado; 
-ALTER TABLE Empleados drop constraint nro_servicio_supervisar;
-DROP TABLE Servicios; 
-DROP TABLE Empleados; 
-DROP TABLE ActualizacionesInventarios; 
-DROP TABLE Establecimientos;
-DROP TABLE Productos;
-DROP TABLE FamiliaProductos;
-DROP TABLE MetodosPago;
-DROP TABLE Clientes;
-DROP TABLE Modelos;
-DROP TABLE Marcas;
-
-
-DROP DATABASE MU_DB; 
 
