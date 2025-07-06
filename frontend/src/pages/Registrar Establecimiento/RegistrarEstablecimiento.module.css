@@ -1,18 +1,209 @@
-.container{
-    flex: auto;
+/* Estilos para el input de fecha */
+.dateContainer {
+    display: flex;
     flex-direction: column;
+    gap: 6px;
+    margin-bottom: 25px;
+    width: 100%;
+    align-items: center;
 }
 
-.centrado{
-    margin: 5vh;
+.dateLabel {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 3px;
+    letter-spacing: 0.3px;
+}
+
+.dateInput {
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 300px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.dateInput:focus {
+    outline: none;
+    border-color: #4CAF50;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(76, 175, 80, 0.2);
+    transform: translateY(-1px);
+}
+
+.dateInput:hover {
+    border-color: #ccc;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Estilos más sutiles para el contenedor general */
+.container {
+    flex: auto;
+    flex-direction: column;
+    background: #fefefe;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    border: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.centrado {
+    margin: 4vh auto;
+    display: flex;
+    justify-content: center;
+    max-width: 800px;
+}
+
+.form {
+    margin-bottom: 20px;
+    width: 100%;
     display: flex;
     justify-content: center;
 }
 
-.form{
-    margin-bottom: 30px;
+/* Estilos más sutiles para los mensajes */
+.errorMessage {
+    margin: 15px auto;
+    max-width: 600px;
+    padding: 12px 18px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    color: #dc2626;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(220, 38, 38, 0.1);
+    font-size: 13px;
 }
 
-.body{
-    margin: 0;
+.empleadoInfo {
+    margin: 15px auto;
+    max-width: 600px;
+    padding: 18px 20px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.empleadoInfo h3 {
+    color: #374151;
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.empleadoInfo p {
+    margin: 6px 0;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.empleadoInfo strong {
+    color: #374151;
+    font-weight: 500;
+}
+
+/* Estilos sutiles para el menú desplegable */
+.dropdownContainer {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    max-height: 180px;
+    overflow-y: auto;
+    z-index: 1000;
+    margin-top: 2px;
+    min-width: 300px;
+}
+
+.dropdownItem {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 13px;
+    color: #374151;
+    transition: background-color 0.15s ease;
+}
+
+.dropdownItem:hover {
+    background-color: #f9fafb;
+    color: #111827;
+}
+
+.dropdownItem:last-child {
+    border-bottom: none;
+}
+
+/* Estilos para mensajes de error individuales */
+/* Mensaje de error debajo del entry y con espacio reservado */
+.errorField {
+    color: #dc2626;
+    font-size: 12px;
+    min-height: 18px;
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    opacity: 1;
+    text-align: left;
+    margin: 0 0 4px 0;
+    padding-left: 4px;
+    transition: opacity 0.2s;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Estilos para mostrar el nombre del empleado */
+/* Rectángulo verde ancho debajo del entry de cédula */
+.empleadoNombre {
+    margin-top: 10px;
+    padding: 16px 18px;
+    background: #e8f5e8;
+    border: 1.5px solid #4CAF50;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #2e7d32;
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    min-height: 40px;
+    box-sizing: border-box;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.empleadoNombre strong {
+    color: #1b5e20;
+    font-weight: 500;
 }

@@ -51,6 +51,31 @@ const Busquedas2: React.FC = () => {
     navigate('/producto-detalle', { state: { producto, id: producto.id_producto } });
   };
 
+  // Función para manejar el clic del FAB según el tipo de entidad
+  const handleFabClick = () => {
+    switch (tipo) {
+      case "employee":
+        // TODO: Crear página de registro de empleados
+        alert('Página de registro de empleados en desarrollo');
+        break;
+      case "establishement":
+        navigate('/RegistrarEstablecimiento');
+        break;
+      case "customer":
+        // TODO: Crear página de registro de clientes
+        alert('Página de registro de clientes en desarrollo');
+        break;
+      case "suppliers":
+        navigate('/RegistrarProveedor');
+        break;
+      case "product":
+        navigate('/RegistrarProducto');
+        break;
+      default:
+        alert('Página de registro de empleados en desarrollo');
+    }
+  };
+
   // Fetchs iniciales
   useEffect(() => {
     setLoading(true);
@@ -281,6 +306,10 @@ const Busquedas2: React.FC = () => {
           <Button texto="Productos" viewHeight={5} onClick={() => setTipo("product")} selected={tipo === "product"} />
         </div>
       </div>
+      {/* Floating Action Button */}
+      <button className={styles.fab} onClick={handleFabClick}>
+        +
+      </button>
     </div>
   );
 };

@@ -5,9 +5,10 @@ IF OBJECT_ID('ObtenerEmpleados', 'V') IS NOT NULL
     DROP VIEW ObtenerEmpleados;
 GO
 
-Create view ObtenerEmpleados as
-select CI_emp, RIF_establecimiento, es.nombre Establecimiento,CONCAT(em.nombre,' ',apellido) empleado,sueldo,direccion
-from Empleados em, Establecimientos es;
+CREATE VIEW  ObtenerEmpleados as
+SELECT CI_emp, RIF_establecimiento, es.nombre Establecimiento,CONCAT(em.nombre,' ',apellido) empleado,sueldo,direccion
+FROM Empleados em, Establecimientos es
+WHERE em.RIF_establecimiento = es.RIF;
 GO
 
 IF OBJECT_ID('addEmpleado','P') IS NOT NULL
