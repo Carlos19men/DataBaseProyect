@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import MenuDespegable from "../../components/Menu Desplegable/MenuDesplegable";
+import MenuDespegable from "../../components/Menu Desplegable/MenuDespegable";
 import styles from "./Busqueda.module.css";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Button from "../../components/Button/button";
@@ -39,7 +39,7 @@ async function buscar(ID:string="") {
                 <MenuDespegable ></MenuDespegable> 
                 <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
 
-                    <SearchBar etiqueta="" ejemplo="Buscar" viewWidth={70} viewHeight={8} value={busqueda} onSearchClick={() => { buscar(busqueda) }} onChange={(e) => {setBusqueda(e.target.value)}}></SearchBar>
+                    <SearchBar etiqueta="" ejemplo="Buscar" viewWidth={70} viewHeight={8} value={busqueda} onSearchClick={() => { buscar(busqueda) }} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setBusqueda(e.target.value)}}></SearchBar>
                 </div>
             </div>
 
@@ -68,11 +68,14 @@ async function buscar(ID:string="") {
                     
                     <div className={styles.filtros}>
                     <div className={styles.subtitle}>Filtros</div>
-                    <Button texto="Empleados" viewHeight={5} onClick={() => {setUrl("employee");}}></Button>
-                    <Button texto="Establecimientos" viewHeight={5} onClick={() => { setUrl("establishement"); }}></Button>
-                    <Button texto="Clientes" viewHeight={5} onClick={() => { setUrl("customer");  }}></Button>
-                    <Button texto="Proveedores" viewHeight={5} onClick={() => { setUrl("suppliers"); }}></Button>
-                    <Button texto="Productos" viewHeight={5} onClick={() => { setUrl("product"); }}></Button>
+                    <Button texto="Empleados" viewHeight={5} onClick={() => {setUrl("employee");}} selected={url === "employee"}></Button>
+                    <Button texto="Establecimientos" viewHeight={5} onClick={() => { setUrl("establishement"); }} selected={url === "establishement"}></Button>
+                    <Button texto="Clientes" viewHeight={5} onClick={() => { setUrl("customer");  }} selected={url === "customer"}></Button>
+                    <Button texto="Proveedores" viewHeight={5} onClick={() => { setUrl("suppliers"); }} selected={url === "suppliers"}></Button>
+                    <Button texto="Productos" viewHeight={5} onClick={() => { setUrl("product"); }} selected={url === "product"}></Button>
+                    <Button texto="Vehículos" viewHeight={5} onClick={() => { setUrl("vehicles"); }} selected={url === "vehicles"}></Button>
+                    <Button texto="Marcas" viewHeight={5} onClick={() => { setUrl("brand"); }} selected={url === "brand"}></Button>
+                    <Button texto="Modelos" viewHeight={5} onClick={() => { setUrl("model"); }} selected={url === "model"}></Button>
                     
                 </div>
                 </div>

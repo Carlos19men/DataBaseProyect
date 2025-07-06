@@ -2,20 +2,18 @@ import { Request, Response } from 'express'; // Importa los tipos de Express
 import { vehicleModel } from '../models/Vehiculos'
 
 interface Vehicle{
-    id:number;
-    plate:string; 
-    brand: string;
-    id_branc?: number;
-    model: string;
-    id_model?: number;
-    Ci_user?: number;
-    nameOwner?: string; 
-    lastName?:string;
-    oil_box?:string | null;
-    oil_motor?: string | null; 
-    months_use?: number; 
-    mileage?: number;
-    maintenance?: string | null;
+    codigo: number;
+    placa: string; 
+    nombre_marca: string;
+    nombre: string;
+    CI_cliente: string;
+    nombre_cli: string; 
+    apellido_cli: string;
+    aceite_utilizado_motor: string | null;
+    aceite_utilizado_caja: string | null;
+    meses_uso: number; 
+    kilometraje: number;
+    resumen_mantenimiento: string | null;
 }
 
 export class VehicleController{
@@ -70,7 +68,7 @@ export class VehicleController{
 
         //validamos los datos 
 
-        try{
+        try{                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 
             const result = await vehicleModel.newVehicle(plate,oil_box,oil_motor,maintenance,months_use,mileage,id_model,id_marca,CI_owner)
 
