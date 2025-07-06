@@ -180,7 +180,7 @@ AS RETURN(
 	AND AOS.id_producto = P.id_producto
 	AND AOS.ci_empleado = E.CI_emp
 	AND AOS.cod_OS = O.cod_OS
-	AND AOS.cod_OS = 4
+	AND AOS.cod_OS = @cod_OS
 );
 
 DROP FUNCTION ObtenerDatosServicios;
@@ -189,3 +189,56 @@ SELECT *
 FROM dbo.ObtenerDatosServicios(4);
 
 GO
+
+CREATE PROCEDURE CrearFacturaDesdeOrdenServicio
+    @cod_OS INT,
+    @iva INT = 16,
+    @fecha_emision DATE = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @monto_total DECIMAL(10,2) = 0;
+    DECLARE @descuento DECIMAL(10,3) = 0;
+    DECLARE @nro_factura INT;
+    DECLARE @ClienteID INT;
+
+    -- Obtener el CI_cliente a partir del cod_OS
+    SELECT @ClienteID = V.CI_dueño
+    FROM OrdenesServicio O
+    JOIN Vehiculos V ON O.codigo_vehiculo = V.codigo
+    WHERE O.cod_OS = @cod_OS;
+
+    -- Calcular el descuento usando el procedimiento almacenado
+    EXEC CalcularDescuento @ClienteID, @descuento OUTPUT;
+
+    -- Calcular el monto total basado en las actividades de la orden de servicio
+    SELECT @monto_total = SUM((precio_producto * cantidad) + precio_actividad)
+    FROM ActividadesOS
+    WHERE cod_OS = @cod_OS;
+
+    IF @monto_total IS NULL OR @monto_total = 0
+        SET @monto_total = 50.00;
+
+    -- Aplicar descuento e IVA
+    DECLARE @monto_con_descuento DECIMAL(10,2) = @monto_total - (@monto_total * @descuento);
+    DECLARE @monto_final DECIMAL(10,2) = @monto_con_descuento + (@monto_con_descuento * (@iva / 100.0));
+
+    IF @fecha_emision IS NULL
+        SET @fecha_emision = GETDATE();
+
+    -- Insertar la factura
+    INSERT INTO Facturas (cod_OS, descuento, iva, monto_total, fecha_emision)
+    VALUES (@cod_OS, @descuento, @iva, @monto_final, @fecha_emision);
+
+    SET @nro_factura = SCOPE_IDENTITY();
+
+    -- Retornar la información de la factura creada
+    SELECT 
+        @nro_factura AS nro_factura,
+        @cod_OS AS cod_OS,
+        @descuento AS descuento,
+        @iva AS iva,
+        @monto_final AS monto_total,
+        @fecha_emision AS fecha_emision;
+END;

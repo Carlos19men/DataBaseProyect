@@ -90,15 +90,14 @@ const OrdenServicioDetalle: React.FC = () => {
     
     setCreatingInvoice(true);
     try {
-      const response = await fetch(`http://localhost:1234/invoice/crear-desde-orden/${cod_OS}`, {
+      const response = await fetch(`http://localhost:1234/invoice/crear`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          descuento: 0,
-          iva: 16,
-          fecha_emision: new Date().toISOString().split('T')[0]
+          cod_OS: cod_OS
+          // Puedes incluir iva y fecha_emision si lo deseas
         })
       });
 
@@ -108,7 +107,7 @@ const OrdenServicioDetalle: React.FC = () => {
       }
 
       const result = await response.json();
-      alert(`Factura creada exitosamente. Número de factura: ${result.factura.nro_factura}`);
+      alert(`Factura creada exitosamente.`);
       
       // Redirigir a la página de visualización de factura usando cod_OS
       navigate(`/Factura?cod_OS=${cod_OS}`);

@@ -245,6 +245,14 @@ const RegistrarOrdenServicio = () => {
                   ci_empleAsig: "12345678", // Placeholder
                 },
               ]);
+              // --- AGREGAR SERVICIO AUTOMÁTICAMENTE SI NO ESTÁ ---
+              if (!serviciosSeleccionados.find(s => s.nro_servicio === actividad.nro_servicio)) {
+                const servicio = servicios.find(s => s.nro_servicio === actividad.nro_servicio);
+                if (servicio) {
+                  setServiciosSeleccionados([...serviciosSeleccionados, servicio]);
+                }
+              }
+              // ---------------------------------------------------
               setActividadSeleccionada("");
             } else {
               alert(

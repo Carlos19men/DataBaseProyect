@@ -65,6 +65,7 @@ const App = () => (
       <Route path="/cliente-detalle" element={<ProtectedRoute><ClienteDetalle/></ProtectedRoute>}></Route>
       <Route path="/proveedor-detalle" element={<ProtectedRoute><ProveedorDetalle/></ProtectedRoute>}></Route>
       <Route path="/producto-detalle" element={<ProtectedRoute><ProductoDetalle/></ProtectedRoute>}></Route>
+      <Route path="/ordenes-servicio" element={<ProtectedRoute><OrdenServicio/></ProtectedRoute>}></Route>
       <Route path="/ordenservicio-detalle/:cod_OS" element={<ProtectedRoute><OrdenServicioDetalle/></ProtectedRoute>}></Route>
     </Routes>             
   </Router>

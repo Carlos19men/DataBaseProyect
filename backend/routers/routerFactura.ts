@@ -1,21 +1,24 @@
 import { Router } from "express";
 import { InvoiceController } from "../controllers/FacturaController";
+import { invoice } from "../models/Factura";
 
 export const createInvoiceRouter = () => {
     const router = Router();
+    const controller = new InvoiceController(invoice);
 
-    router.get("/", InvoiceController.getAll);
-    router.get("/:nro_factura", InvoiceController.getById);
-    router.delete("/:nro_factura", InvoiceController.delete);
+    router.get("/", controller.getAll);
+    router.get("/:nro_factura", controller.getById);
+    router.delete("/:nro_factura", controller.delete);
 
     // Related to cod_OS
-    router.get("/cliente/:cod_OS", InvoiceController.getClientData);
-    router.get("/factura/:cod_OS", InvoiceController.getFacturaData);
-    router.get("/vehiculo/:cod_OS", InvoiceController.getVehicleData);
-    router.get("/pago/:cod_OS", InvoiceController.getPaymentData);
-    router.get("/establecimiento/:cod_OS", InvoiceController.getEstablishmentData);
-    router.get("/servicio/:cod_OS", InvoiceController.getServiceData);
-    router.get("/montos/:cod_OS", InvoiceController.getMontosData);
+    router.get("/cliente/:cod_OS", controller.getClientData);
+    router.get("/factura/:cod_OS", controller.getFacturaData);
+    router.get("/vehiculo/:cod_OS", controller.getVehicleData);
+    router.get("/pago/:cod_OS", controller.getPaymentData);
+    router.get("/establecimiento/:cod_OS", controller.getEstablishmentData);
+    router.get("/servicio/:cod_OS", controller.getServiceData);
+    router.get("/montos/:cod_OS", controller.getMontosData);
+    router.post("/crear", controller.createFromOrder);
 
     return router;
 }
