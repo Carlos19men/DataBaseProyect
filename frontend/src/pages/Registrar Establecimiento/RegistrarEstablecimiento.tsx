@@ -232,12 +232,65 @@ const RegistrarEstablecimiento: React.FC = () => {
         navigate('/Search');
     };
 
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+    const [nuevoEstablecimientoRIF, setNuevoEstablecimientoRIF] = useState<string>("");
+    const [mensaje, setMensaje] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
+
+    // Función para navegar al detalle del establecimiento
+    const handleViewEstablecimientoDetail = () => {
+        setShowSuccessPopup(false);
+        navigate(`/establishement/${nuevoEstablecimientoRIF}`);
+    };
+
+    // Función para cerrar el popup
+    const handleClosePopup = () => {
+        setShowSuccessPopup(false);
+        navigate('/Search');
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setMensaje(null);
+        setError(null);
+        // Validaciones
+        if (!validarRIF(rifEstablecimiento) | !validarNombre(nombreEstablecimiento) | !validarCiudad(ciudadEstablecimiento) | !validarEmpleado(empleadoSeleccionado) | !validarFecha(fechaEncargado)) {
+            setError("Por favor, corrija los errores antes de continuar.");
+            return;
+        }
+        try {
+            const res = await fetch(`http://localhost:1234/establishement/`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    RIF: rifEstablecimiento,
+                    name: nombreEstablecimiento,
+                    city: ciudadEstablecimiento,
+                    CI_encargado: empleadoSeleccionado?.CI_emp,
+                    fecha_encargado: fechaEncargado
+                })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                setNuevoEstablecimientoRIF(rifEstablecimiento);
+                setShowSuccessPopup(true);
+                setRifEstablecimiento(""); setNombreEstablecimiento(""); setCiudadEstablecimiento(""); setEmpleadoSeleccionado(null); setFechaEncargado(""); setBusquedaEmpleado(""); setBusquedaCiudad("");
+            } else {
+                setError(data.error || data.message || "Error al registrar el establecimiento");
+                setTimeout(() => setError(null), 5000);
+            }
+        } catch (err) {
+            setError("Error de conexión con el servidor");
+            setTimeout(() => setError(null), 5000);
+        }
+    };
+
     return(
         <div>
             <TopBar text="Registrar Establecimiento" menu={false}></TopBar>
             <div className={styles.container}>
                 <div className={styles.detailCard}>
-                    <form className={styles.form}>
+                    <form className={styles.form} onSubmit={handleSubmit}>
                         <div className={styles.formRow}>
                             <label className={styles.formLabel}>RIF del Establecimiento</label>
                             <input
@@ -343,6 +396,33 @@ const RegistrarEstablecimiento: React.FC = () => {
             <button className={styles.backFab} onClick={handleBackClick}>
                 ←
             </button>
+
+            {/* Success Popup */}
+            {showSuccessPopup && (
+                <div className={styles.popupOverlay}>
+                    <div className={styles.popupContent}>
+                        <div className={styles.popupIcon}>✓</div>
+                        <h3 className={styles.popupTitle}>¡Establecimiento Registrado con Éxito!</h3>
+                        <p className={styles.popupMessage}>
+                            El establecimiento con RIF: {nuevoEstablecimientoRIF} ha sido registrado correctamente.
+                        </p>
+                        <div className={styles.popupButtons}>
+                            <button 
+                                className={styles.popupButtonPrimary}
+                                onClick={handleViewEstablecimientoDetail}
+                            >
+                                Ver Detalle del Establecimiento
+                            </button>
+                            <button 
+                                className={styles.popupButtonSecondary}
+                                onClick={handleClosePopup}
+                            >
+                                Continuar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
