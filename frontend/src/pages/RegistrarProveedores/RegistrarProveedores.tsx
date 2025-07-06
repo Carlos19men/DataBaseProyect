@@ -3,8 +3,10 @@ import TopBar from "../../components/TopBar/TopBar";
 import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
 import Button from "../../components/Button/button";
 import styles from "./RegistrarProveedores.module.css";
+import { useNavigate } from "react-router-dom";
 
 const RegistrarProveedores: React.FC = () => {
+    const navigate = useNavigate();
     const [rif, setRif] = useState("");
     const [razon, setRazon] = useState("");
     const [local, setLocal] = useState("");
@@ -13,6 +15,11 @@ const RegistrarProveedores: React.FC = () => {
     const [contacto, setContacto] = useState("");
     const [mensaje, setMensaje] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
+
+    // Función para manejar el regreso
+    const handleBackClick = () => {
+        navigate('/Search');
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -70,6 +77,10 @@ const RegistrarProveedores: React.FC = () => {
             </div>
             {mensaje && <div style={{ color: 'green', textAlign: 'center', marginTop: 16 }}>{mensaje}</div>}
             {error && <div style={{ color: 'red', textAlign: 'center', marginTop: 16 }}>{error}</div>}
+            {/* Floating Action Button - Back */}
+            <button className={styles.backFab} onClick={handleBackClick}>
+                ←
+            </button>
         </div>
     );
 };

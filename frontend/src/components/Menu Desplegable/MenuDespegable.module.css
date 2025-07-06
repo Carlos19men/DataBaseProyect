@@ -1,6 +1,6 @@
 .hamburguesa {
   font-size: 2rem;
-  background: none;
+  background: #1a7f37;
   border: none;
   cursor: pointer;
   position: fixed;
@@ -8,44 +8,59 @@
   margin: 0;
   margin-left: 2vh;
   padding: 0%;
-  font-size:10vh;
-  color: #333;
+  font-size: 7vh;
+  color: white;
   transform: translatex(-1vh);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  opacity: 0.3;
+  top: 20px;
+  left: 20px;
+  line-height: 1;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Mostrar solo cuando el cursor esté cerca de la esquina superior izquierda */
+.hamburguesa:hover,
+.hamburguesa.visible {
+  opacity: 1;
+  transform: translatex(-1vh) scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
 .hamburguesa.activo {
-  color: var(--primary-green);
-  font-size: 10vh;
+  color: white;
+  font-size: 7vh;
+  background-color: #22b86c;
+  opacity: 1;
 }
 
 .hamburguesa:focus {
   outline: none;
-    text-emphasis: none;
-  text-decoration: none;
-  font-size: 10vh;
-  padding-top: 3vh;
-}
-.hamburguesa:hover  {
-  color: #333;
   text-emphasis: none;
   text-decoration: none;
-  background-color: transparent;
-  font-size: 10vh;
-   padding-top: 3vh;
+  font-size: 7vh;
 }
 
 .menu {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 250px; 
+  height: 100vh;
+  min-height: 700px;
+  width: 320px;
   background-color: #ffffff;
   transform: translateX(-100%);
   transition: transform 0.4s ease-in-out;
   z-index: 1001;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-
 }
 
 .menu.activo {
@@ -54,43 +69,56 @@
 
 .h2{
   font-family: 'Poppins', sans-serif;
-  font-weight: 600; /* SemiBold suele ser 600 */
-  font-size: 10vh;
-  line-height: 100%;
-  letter-spacing: 0.5px;  
-  text-align: right; 
+  font-weight: 700;
+  font-size: 3.5rem;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+  text-align: center;
   background-color: #ffffff;
-  height: 12vh;
-    margin: 0;
-    padding-bottom: 5vh;
-    margin-bottom: 5vh;
-    font-size: 10vh; 
-    padding: 0%;
-    margin: 0%;
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-    padding-bottom:1vh;
-
+  margin: 0;
+  padding: 5.5rem 0 1.2rem 0;
+  color: #333;
+  text-transform: uppercase;
+  z-index: 2;
+  position: relative;
 }
 
 .menu ul {
   list-style: none;
-  padding: 2em;
+  padding: 0 2rem;
   margin: 0;
-  margin: 0;
-    padding-bottom: 5vh;
-    margin-bottom: 5vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
 .menu li {
-  margin: 1.2em 0;
-  padding-bottom: 10px;
+  margin: 0;
+  padding: 0;
 }
 
 .menu a {
   text-decoration: none;
   color: #333;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.menu a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(5px);
+}
+
+.menu a img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 .overlay {
@@ -105,5 +133,8 @@
 
 .menuVerde{
   background-color: var(--primary-green);
-  height: 100vh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 3.5rem 0 1rem 0;
 }

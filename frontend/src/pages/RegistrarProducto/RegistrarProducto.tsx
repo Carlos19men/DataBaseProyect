@@ -3,6 +3,7 @@ import styles from "./RegistrarProducto.module.css";
 import TopBar from "../../components/TopBar/TopBar";
 import Button from "../../components/Button/button";
 import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
+import { useNavigate } from "react-router-dom";
 
 interface Familia {
   id_familia: number;
@@ -10,12 +11,18 @@ interface Familia {
 }
 
 const RegistrarProducto = () => {
+  const navigate = useNavigate();
   const [tipo, setTipo] = useState("ECOLÓGICO");
   const [tratamiento, setTratamiento] = useState("");
   const [nivel, setNivel] = useState("1");
   const [manejo, setManejo] = useState("");
   const [familias, setFamilias] = useState<Familia[]>([]);
   const [familiaSeleccionada, setFamiliaSeleccionada] = useState<string>("");
+
+  // Función para manejar el regreso
+  const handleBackClick = () => {
+    navigate('/Search');
+  };
 
   useEffect(() => {
     fetch("http://localhost:1234/family-products/")
@@ -103,6 +110,10 @@ const RegistrarProducto = () => {
           <Button texto="Registrar" />
         </div>
       </form>
+      {/* Floating Action Button - Back */}
+      <button className={styles.backFab} onClick={handleBackClick}>
+        ←
+      </button>
     </div>
   );
 };

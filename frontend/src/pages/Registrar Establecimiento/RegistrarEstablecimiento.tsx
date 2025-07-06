@@ -3,6 +3,7 @@ import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
 import TopBar from "../../components/TopBar/TopBar";
 import styles from "./RegistrarEstablecimiento.module.css";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Empleado {
   CI_emp: string;
@@ -22,6 +23,7 @@ interface Establecimiento {
 }
 
 const RegistrarEstablecimiento: React.FC = () => {
+    const navigate = useNavigate();
     const [empleados, setEmpleados] = useState<Empleado[]>([]);
     const [establecimientos, setEstablecimientos] = useState<Establecimiento[]>([]);
     const [empleadoSeleccionado, setEmpleadoSeleccionado] = useState<Empleado | null>(null);
@@ -226,6 +228,11 @@ const RegistrarEstablecimiento: React.FC = () => {
         }
     }, [fechaEncargado]);
 
+    // Función para manejar el regreso
+    const handleBackClick = () => {
+        navigate('/Search');
+    };
+
     return(
         <div>
             <TopBar text="Registrar Establecimiento" menu={false}></TopBar>
@@ -348,6 +355,10 @@ const RegistrarEstablecimiento: React.FC = () => {
                     }}
                 />
             </div>
+            {/* Floating Action Button - Back */}
+            <button className={styles.backFab} onClick={handleBackClick}>
+                ←
+            </button>
         </div>
     )
 }

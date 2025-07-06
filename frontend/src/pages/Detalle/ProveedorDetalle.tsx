@@ -11,6 +11,29 @@ const ProveedorDetalle: React.FC = () => {
   const [proveedorData, setProveedorData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  const [menuAbierto, setMenuAbierto] = useState(false);
+  
+  useEffect(() => {
+    const checkMenuState = () => {
+      const menuState = localStorage.getItem('menuAbierto') === 'true';
+      setMenuAbierto(menuState);
+    };
+    
+    // Verificar estado inicial
+    checkMenuState();
+    
+    // Escuchar cambios en localStorage
+    const handleStorageChange = () => checkMenuState();
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Verificar cada 100ms para cambios locales
+    const interval = setInterval(checkMenuState, 100);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchProveedorData = async () => {
@@ -114,7 +137,12 @@ const ProveedorDetalle: React.FC = () => {
           </h3>
         </div>
       </div>
-      
+      {/* Botón flotante de regreso */}
+      {!menuAbierto && (
+        <button className={styles.backFab} onClick={() => navigate('/Search')}>
+          ←
+        </button>
+      )}
       <div className={styles.container}>
         <div className={styles.detailCard}>
           <div className={styles.clientHeader}>

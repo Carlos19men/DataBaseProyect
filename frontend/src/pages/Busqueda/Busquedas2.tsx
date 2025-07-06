@@ -306,6 +306,10 @@ const Busquedas2: React.FC = () => {
 					<Button texto="Productos" viewHeight={5} onClick={() => setTipo("product")} selected={tipo === "product"} />
 				</div>
 			</div>
+			{/* Floating Action Button */}
+			<button className={styles.fab} onClick={handleFabClick}>
+				+
+			</button>
 		</div>
 	);
 };
