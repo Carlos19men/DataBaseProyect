@@ -22,8 +22,8 @@ create table Empleados(
 	apellido varchar(50) not null,
 	telefono varchar(15) not null,
 	direccion varchar(150) not null,
-	sueldo int CHECK(sueldo > 0),
-	RIF_establecimiento varchar(20),
+	sueldo int CHECK(sueldo > 0) not null,
+	RIF_establecimiento varchar(20) not null,
 	nro_servicio_supervisar int,
 	
 	primary key(CI_emp)

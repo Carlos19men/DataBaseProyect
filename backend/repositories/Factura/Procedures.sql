@@ -100,6 +100,8 @@ FROM dbo.ObtenerDatosMontos(4);
 
 SELECT * FROM Facturas;
 
+SELECT * FROM Empleados;
+
 
 GO
 
