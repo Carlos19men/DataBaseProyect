@@ -2,7 +2,7 @@ USE MU_DB;
 GO
 
 IF OBJECT_ID('ObtenerCliente','F') IS NOT NULL
-	DROP FUNCTION ObtenerCliente
+	DROP FUNCTION dbo.ObtenerCliente
 GO
 
 --función para retornar obtener cliente por la cedula 
@@ -43,7 +43,7 @@ GO
 
 --Nuevo cliente 
 IF OBJECT_ID('nuevoCliente','P') IS NOT NULL
-    DROP PROCEDURE nuevoCliente
+    DROP PROCEDURE dbo.nuevoCliente
 GO
 
 CREATE PROCEDURE nuevoCliente

@@ -58,15 +58,7 @@ const Login: React.FC = () => {
             <div className={styles.centrado}>
                 <Button texto="Ingresar" onClick={handleLogin}></Button>
             </div>
-            <div className={styles.centrado}>
-                <p className="miniText">No tienes una cuenta?</p>
-                </div>
-                <div className={styles.centrado}>
-                <Link to="/Registro" className="miniText">
-                    <u>Registrate Aqui</u>
-                </Link>
-                </div>
-            
+
         </div>
     );
 };

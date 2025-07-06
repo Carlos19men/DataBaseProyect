@@ -1,34 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import MenuDespegable from "../../components/Menu Desplegable/MenuDesplegable";
 import styles from './Detalle.module.css';
+import TopBar from '../../components/TopBar/TopBar';
 
 const ProductoDetalle: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { producto, id } = location.state || {};
-  
+  const { id } = location.state || {};
+
   const [productoData, setProductoData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [menuAbierto, setMenuAbierto] = useState(false);
-  
+
   useEffect(() => {
     const checkMenuState = () => {
       const menuState = localStorage.getItem('menuAbierto') === 'true';
       setMenuAbierto(menuState);
     };
-    
-    // Verificar estado inicial
+
     checkMenuState();
-    
-    // Escuchar cambios en localStorage
     const handleStorageChange = () => checkMenuState();
     window.addEventListener('storage', handleStorageChange);
-    
-    // Verificar cada 100ms para cambios locales
     const interval = setInterval(checkMenuState, 100);
-    
+
     return () => {
       window.removeEventListener('storage', handleStorageChange);
       clearInterval(interval);
@@ -36,19 +31,43 @@ const ProductoDetalle: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const handler = (e: any) => setMenuAbierto(!!e.detail?.activo);
-    window.addEventListener('menu-toggle', handler);
-    return () => window.removeEventListener('menu-toggle', handler);
-  }, []);
+    const fetchProductoData = async () => {
+      if (!id) {
+        setError("No se proporcionó el ID del producto");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError("");
+        const response = await fetch(`http://localhost:1234/product/${id}`);
+        
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+        const data = await response.json();
+
+        setProductoData(Array.isArray(data) ? data[0] : data);
+
+      } catch (err) {
+        setError("No se pudo cargar la información del producto");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProductoData();
+  }, [id]);
 
   const getContaminationColor = (nivel: number) => {
     switch (nivel) {
-      case 1: return '#4CAF50'; // Verde - Muy bajo
-      case 2: return '#8BC34A'; // Verde claro - Bajo
-      case 3: return '#FFC107'; // Amarillo - Medio
-      case 4: return '#FF9800'; // Naranja - Alto
-      case 5: return '#F44336'; // Rojo - Muy alto
-      default: return '#9E9E9E'; // Gris - No disponible
+      case 1: return '#4CAF50';
+      case 2: return '#8BC34A';
+      case 3: return '#FFC107';
+      case 4: return '#FF9800';
+      case 5: return '#F44336';
+      default: return '#9E9E9E';
     }
   };
 
@@ -66,17 +85,7 @@ const ProductoDetalle: React.FC = () => {
   if (loading) {
     return (
       <div>
-        <div className={styles.bar}>
-          <MenuDespegable />
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
-              Detalles del Producto
-            </h1>
-            <h3 style={{ color: "white", margin: "0.5rem 0 0 0", fontSize: "1.2rem", fontWeight: 400 }}>
-              Información General
-            </h3>
-          </div>
-        </div>
+        <TopBar text='Detalles del Producto' menu={true} />
         <div className={styles.container}>
           <div className={styles.detailCard}>
             <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -91,17 +100,7 @@ const ProductoDetalle: React.FC = () => {
   if (error || !productoData) {
     return (
       <div>
-        <div className={styles.bar}>
-          <MenuDespegable />
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
-              Detalles del Producto
-            </h1>
-            <h3 style={{ color: "white", margin: "0.5rem 0 0 0", fontSize: "1.2rem", fontWeight: 400 }}>
-              Información General
-            </h3>
-          </div>
-        </div>
+        <TopBar text='Detalles del Producto' menu={true} />
         <div className={styles.container}>
           <div className={styles.detailCard}>
             <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -122,28 +121,18 @@ const ProductoDetalle: React.FC = () => {
 
   return (
     <div>
-      <div className={styles.bar}>
-        <MenuDespegable />
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
-            Detalles del Producto
-          </h1>
-          <h3 style={{ color: "white", margin: "0.5rem 0 0 0", fontSize: "1.2rem", fontWeight: 400 }}>
-            Información General
-          </h3>
-        </div>
-      </div>
+      <TopBar text='Detalles del Producto' menu={true} />
       {/* Botón flotante de regreso */}
       {!menuAbierto && (
         <button className={styles.backFab} onClick={() => navigate('/Search')}>
           ←
         </button>
       )}
+      
       <div className={styles.container}>
         <div className={styles.detailCard}>
           <div className={styles.clientHeader}>
-            <h2>{productoData?.nombre || "Nombre no disponible"}</h2>
-            
+            <h2 style={{textAlign:"center"}}>{productoData?.nombreProducto || "Nombre no disponible"}</h2>
             <div className={styles.clientInfoGrid}>
               <div className={styles.infoSection}>
                 <h3>Detalles</h3>
@@ -153,7 +142,7 @@ const ProductoDetalle: React.FC = () => {
                 </div>
                 <div className={styles.infoRow}>
                   <span className={styles.label}>Nombre:</span>
-                  <span className={styles.value}>{productoData?.nombre || "No disponible"}</span>
+                  <span className={styles.value}>{productoData?.nombreProducto || "No disponible"}</span>
                 </div>
                 <div className={styles.infoRow}>
                   <span className={styles.label}>Tipo:</span>
@@ -164,7 +153,6 @@ const ProductoDetalle: React.FC = () => {
                   <span className={styles.value}>${productoData?.precio || "No disponible"}</span>
                 </div>
               </div>
-
               <div className={styles.infoSection}>
                 <h3>Inventario</h3>
                 <div className={styles.infoRow}>
@@ -192,7 +180,7 @@ const ProductoDetalle: React.FC = () => {
           </div>
 
           <div className={styles.infoSection}>
-            <h3>Información Técnica</h3>
+            <h3 style={{textAlign:"center"}}>Información Técnica</h3>
             <div className={styles.infoRow}>
               <span className={styles.label}>Descripción:</span>
               <span className={styles.value}>{productoData?.descripcion || "No disponible"}</span>
@@ -213,7 +201,7 @@ const ProductoDetalle: React.FC = () => {
 
           {/* Tabla de secciones */}
           <div className={styles.tableSection}>
-            <h3>Información Adicional</h3>
+            <h3 style={{textAlign:"center"}}>Información Adicional</h3>
             <div className={styles.tableContainer}>
               <table className={styles.dataTable}>
                 <thead>
@@ -267,4 +255,4 @@ const ProductoDetalle: React.FC = () => {
   );
 };
 
-export default ProductoDetalle; 
+export default ProductoDetalle;

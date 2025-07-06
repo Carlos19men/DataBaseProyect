@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import MenuDespegable from "../../components/Menu Desplegable/MenuDesplegable";
 import styles from './Detalle.module.css';
+import TopBar from '../../components/TopBar/TopBar';
 
 const ClienteDetalle: React.FC = () => {
   const location = useLocation();
@@ -11,6 +11,7 @@ const ClienteDetalle: React.FC = () => {
   const [clienteData, setClienteData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+const [nombre, apellido] = (clienteData?.cliente || "").split(" ");
   const [menuAbierto, setMenuAbierto] = useState(false);
   
   useEffect(() => {
@@ -70,17 +71,7 @@ const ClienteDetalle: React.FC = () => {
   if (loading) {
     return (
       <div>
-        <div className={styles.bar}>
-          <MenuDespegable />
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
-              Detalles del Cliente
-            </h1>
-            <h3 style={{ color: "white", margin: "0.5rem 0 0 0", fontSize: "1.2rem", fontWeight: 400 }}>
-              Datos Personales
-            </h3>
-          </div>
-        </div>
+        <TopBar text='Detalles del Cliente' menu={true} />
         <div className={styles.container}>
           <div className={styles.detailCard}>
             <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -95,17 +86,7 @@ const ClienteDetalle: React.FC = () => {
   if (error || !clienteData) {
     return (
       <div>
-        <div className={styles.bar}>
-          <MenuDespegable />
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
-              Detalles del Cliente
-            </h1>
-            <h3 style={{ color: "white", margin: "0.5rem 0 0 0", fontSize: "1.2rem", fontWeight: 400 }}>
-              Datos Personales
-            </h3>
-          </div>
-        </div>
+        <TopBar text='Detalles del Cliente' menu={true} />
         <div className={styles.container}>
           <div className={styles.detailCard}>
             <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -126,17 +107,7 @@ const ClienteDetalle: React.FC = () => {
 
   return (
     <div>
-      <div className={styles.bar}>
-        <MenuDespegable />
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
-            Detalles del Cliente
-          </h1>
-          <h3 style={{ color: "white", margin: "0.5rem 0 0 0", fontSize: "1.2rem", fontWeight: 400 }}>
-            Datos Personales
-          </h3>
-        </div>
-      </div>
+      <TopBar text='Detalles del Cliente' menu={true} />
       {/* Botón flotante de regreso */}
       {!menuAbierto && (
         <button className={styles.backFab} onClick={() => navigate('/Search')}>
@@ -147,7 +118,7 @@ const ClienteDetalle: React.FC = () => {
         {/* Cabecera con información detallada */}
         <div className={styles.detailCard}>
           <div className={styles.clientHeader}>
-            <h2>{clienteData?.nombre && clienteData?.apellido ? `${clienteData.nombre} ${clienteData.apellido}` : "Nombre no disponible"}</h2>
+            <h2 style={{textAlign:"center"}}>{clienteData?.cliente ? `${clienteData.cliente}` : "Nombre no disponible"}</h2>
             
             <div className={styles.clientInfoGrid}>
               <div className={styles.infoSection}>
@@ -158,11 +129,11 @@ const ClienteDetalle: React.FC = () => {
                 </div>
                 <div className={styles.infoRow}>
                   <span className={styles.label}>Nombre:</span>
-                  <span className={styles.value}>{clienteData?.nombre || "No disponible"}</span>
+                  <span className={styles.value}>{nombre || "No disponible"}</span>
                 </div>
                 <div className={styles.infoRow}>
                   <span className={styles.label}>Apellido:</span>
-                  <span className={styles.value}>{clienteData?.apellido || "No disponible"}</span>
+                  <span className={styles.value}>{apellido || "No disponible"}</span>
                 </div>
               </div>
 

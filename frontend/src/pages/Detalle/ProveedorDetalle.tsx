@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MenuDespegable from "../../components/Menu Desplegable/MenuDesplegable";
 import styles from './Detalle.module.css';
+import TopBar from '../../components/TopBar/TopBar';
 
 const ProveedorDetalle: React.FC = () => {
   const location = useLocation();
@@ -48,7 +49,7 @@ const ProveedorDetalle: React.FC = () => {
         setError("");
         
         // Fetch del proveedor específico usando el RIF
-        const response = await fetch(`http://localhost:1234/supplier/${rif}`);
+        const response = await fetch(`http://localhost:1234/suppliers/${rif}`);
         
         if (!response.ok) {
           throw new Error(`Error ${response.status}: ${response.statusText}`);
@@ -70,17 +71,7 @@ const ProveedorDetalle: React.FC = () => {
   if (loading) {
     return (
       <div>
-        <div className={styles.bar}>
-          <MenuDespegable />
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
-              Detalles del Proveedor
-            </h1>
-            <h3 style={{ color: "white", margin: "0.5rem 0 0 0", fontSize: "1.2rem", fontWeight: 400 }}>
-              Información General
-            </h3>
-          </div>
-        </div>
+        <TopBar text='Detalles del Proveedor' menu={true} />
         <div className={styles.container}>
           <div className={styles.detailCard}>
             <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -95,17 +86,7 @@ const ProveedorDetalle: React.FC = () => {
   if (error || !proveedorData) {
     return (
       <div>
-        <div className={styles.bar}>
-          <MenuDespegable />
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
-              Detalles del Proveedor
-            </h1>
-            <h3 style={{ color: "white", margin: "0.5rem 0 0 0", fontSize: "1.2rem", fontWeight: 400 }}>
-              Información General
-            </h3>
-          </div>
-        </div>
+        <TopBar text='Detalles del Proveedor' menu={true} />
         <div className={styles.container}>
           <div className={styles.detailCard}>
             <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -126,17 +107,7 @@ const ProveedorDetalle: React.FC = () => {
 
   return (
     <div>
-      <div className={styles.bar}>
-        <MenuDespegable />
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
-            Detalles del Proveedor
-          </h1>
-          <h3 style={{ color: "white", margin: "0.5rem 0 0 0", fontSize: "1.2rem", fontWeight: 400 }}>
-            Información General
-          </h3>
-        </div>
-      </div>
+      <TopBar text='Detalles del Proveedor' menu={true} />
       {/* Botón flotante de regreso */}
       {!menuAbierto && (
         <button className={styles.backFab} onClick={() => navigate('/Search')}>

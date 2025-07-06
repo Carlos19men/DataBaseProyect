@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import MenuDespegable from "../../components/Menu Desplegable/MenuDesplegable";
 import styles from './Detalle.module.css';
+import TopBar from '../../components/TopBar/TopBar';
 
 const OrdenServicioDetalle: React.FC = () => {
   const location = useLocation();
@@ -127,14 +128,7 @@ const OrdenServicioDetalle: React.FC = () => {
   if (loading) {
     return (
       <div>
-        <div className={styles.bar}>
-          <MenuDespegable />
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
-              Detalles de la Orden de Servicio
-            </h1>
-          </div>
-        </div>
+        <TopBar text='Detalles de Orden de Servicio' menu={true} />
         <div className={styles.container}>
           <div className={styles.detailCard}>
             <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -149,14 +143,7 @@ const OrdenServicioDetalle: React.FC = () => {
   if (error || !ordenData) {
     return (
       <div>
-        <div className={styles.bar}>
-          <MenuDespegable />
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
-              Detalles de la Orden de Servicio
-            </h1>
-          </div>
-        </div>
+        <TopBar text='Detalles de Orden de Servicio' menu={true} />
         <div className={styles.container}>
           <div className={styles.detailCard}>
             <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -178,14 +165,7 @@ const OrdenServicioDetalle: React.FC = () => {
   // Mostrar todos los campos relevantes de la orden de servicio
   return (
     <div>
-      <div className={styles.bar}>
-        <MenuDespegable />
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
-            Detalles de la Orden de Servicio
-          </h1>
-        </div>
-      </div>
+      <TopBar text='Detalles de Orden de Servicio' menu={true} />
       {/* Botón flotante de regreso */}
       {!menuAbierto && (
         <button className={styles.backFab} onClick={() => navigate('/Search')}>
