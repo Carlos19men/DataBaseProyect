@@ -55,15 +55,13 @@ const Busquedas2: React.FC = () => {
   const handleFabClick = () => {
     switch (tipo) {
       case "employee":
-        // TODO: Crear página de registro de empleados
-        alert('Página de registro de empleados en desarrollo');
+        navigate('/RegistrarEmpleado');
         break;
       case "establishement":
         navigate('/RegistrarEstablecimiento');
         break;
       case "customer":
-        // TODO: Crear página de registro de clientes
-        alert('Página de registro de clientes en desarrollo');
+        navigate('/RegistrarCliente');
         break;
       case "suppliers":
         navigate('/RegistrarProveedor');
@@ -72,7 +70,7 @@ const Busquedas2: React.FC = () => {
         navigate('/RegistrarProducto');
         break;
       default:
-        alert('Página de registro de empleados en desarrollo');
+        navigate('/RegistrarEmpleado');
     }
   };
 
