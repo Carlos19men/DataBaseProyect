@@ -43,7 +43,7 @@ const RegistrarEmpleado: React.FC = () => {
 
   useEffect(() => {
     // Cargar establecimientos disponibles
-    fetch("http://localhost:1234/establishments/")
+    fetch("http://localhost:1234/establishement")
       .then(res => res.json())
       .then(data => setEstablecimientos(data))
       .catch(() => setEstablecimientos([]));
@@ -180,6 +180,16 @@ const RegistrarEmpleado: React.FC = () => {
                   <option key={est.RIF} value={est.RIF}>{est.RIF} - {est.nombre}</option>
                 ))}
               </select>
+              <div className={styles.helpText}>
+                ¿No encuentra el establecimiento? 
+                <button 
+                  type="button"
+                  className={styles.linkButton}
+                  onClick={() => navigate('/RegistrarEstablecimiento')}
+                >
+                  Regístrelo aquí
+                </button>
+              </div>
             </div>
             
             <div className={styles.buttonContainer}>

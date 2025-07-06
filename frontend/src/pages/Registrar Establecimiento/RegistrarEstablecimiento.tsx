@@ -254,7 +254,7 @@ const RegistrarEstablecimiento: React.FC = () => {
         setMensaje(null);
         setError(null);
         // Validaciones
-        if (!validarRIF(rifEstablecimiento) | !validarNombre(nombreEstablecimiento) | !validarCiudad(ciudadEstablecimiento) | !validarEmpleado(empleadoSeleccionado) | !validarFecha(fechaEncargado)) {
+        if (!validarRIF(rifEstablecimiento) || !validarNombre(nombreEstablecimiento) || !validarCiudad(ciudadEstablecimiento) || !validarEmpleado(empleadoSeleccionado) || !validarFecha(fechaEncargado)) {
             setError("Por favor, corrija los errores antes de continuar.");
             return;
         }
