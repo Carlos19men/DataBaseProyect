@@ -1,0 +1,63 @@
+import React, { useEffect, useState } from "react";
+import MenuDespegable from "../../components/Menu Desplegable/MenuDesplegable";
+import styles from "./OrdenServicio.module.css";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button/button";
+
+const OrdenServicio : React.FC = ({}) => {
+    const [busqueda, setBusqueda] = React.useState<string>("");
+    const [resultados, setResultados] = React.useState<any[]|any>([]);
+    const navigate = useNavigate();
+
+    async function buscar(ID:string="") {
+        const res = await fetch("http://localhost:1234/service-order/" + ID,
+            {method:"GET",headers:{"Content-Type":"application/json"}})
+          .then(res => res.json())
+          .then(lista => (lista))
+          .catch(err => ("Solicitud falló con: " + err));
+
+        setResultados(res)
+    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+
+    useEffect(() => {
+        buscar();
+    }, []);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
+    return (
+        <div >
+            <div className={styles.bar} >
+                <MenuDespegable ></MenuDespegable> 
+                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                    <SearchBar etiqueta="" ejemplo="Buscar Orden de Servicio" viewWidth={70} viewHeight={8} value={busqueda} onSearchClick={() => { buscar(busqueda) }} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {setBusqueda(e.target.value)}}></SearchBar>
+                </div>
+            </div>
+            <div className={styles.columnas}>
+                <div className={styles.resultados}>
+                    {typeof resultados === "string" ? (
+                        <div>{resultados}</div>
+                    ) : !Array.isArray(resultados) ? (
+                        JSON.stringify(resultados, null, 2)
+                        ) : (
+                        resultados.map((item: any, idx: number) => (
+                        <div className={styles.item} key={idx} onClick={() => navigate(`/ordenservicio-detalle/${item.cod_OS}`)} style={{cursor: 'pointer'}}>
+                            <div style={{fontWeight: 700, fontSize: '2.2vh', marginBottom: '1vh'}}>Orden #{item.cod_OS}</div>
+                            <div><strong>Código Vehículo:</strong> {item.codigo_vehiculo}</div>
+                            <div><strong>RIF Establecimiento:</strong> {item.RIF_establecimiento}</div>
+                            {item.persona_autorizada && <div><strong>Persona Autorizada:</strong> {item.persona_autorizada}</div>}
+                        </div>
+                        ))
+                    )}
+                </div> 
+                <div className={styles.filtros}>
+                    <div className={styles.subtitle}>Operaciones</div>
+                    <Button texto="Crear Orden" viewHeight={5} onClick={() => navigate('/RegistrarOrdenServicio')} />
+                    <Button texto="Actualizar Orden" viewHeight={5} />
+                    <Button texto="Eliminar Orden" viewHeight={5} />
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default OrdenServicio; 

@@ -63,8 +63,15 @@ h2.title {
 
 /* Títulos de monto, descuento e IVA */
 .subtitle h2.subtitle {
-  font-size: 1.1vh;
-  margin-bottom: 2.5vh;
+  font-size: 2.2vh;
+  margin-right: 10px;
+  display: inline-block;
+}
+
+/* Estilos para los valores de monto, descuento e IVA */
+.subtitle .minitext {
+  font-size: 1.3vh;
+  margin-left: 10px;
 }
 
 .facturaContainer{
@@ -94,6 +101,7 @@ h2.title {
   display: flex;
   justify-content: center;
   margin: 2vh 0;
+  margin-top: 4vh;
 }
 
 .actividadesTable {
@@ -146,5 +154,14 @@ h2.title {
 
 .actividadesTable tr:last-child td {
   border-bottom: none;
+}
+
+.valorMonto {
+  margin-left: 18px;
+  font-size: 4vh !important;
+  font-weight: 700;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.2;
 }
 

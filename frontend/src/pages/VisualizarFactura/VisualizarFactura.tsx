@@ -3,14 +3,17 @@ import TopBar from "../../components/TopBar/TopBar";
 import styles from "./VisualizarFactura.module.css";
 import Button from "../../components/Button/button";
 import { useEffect, useState } from "react";
+import React from "react";
+import { useParams, useLocation } from "react-router-dom";
 
 interface Props {
-  cod_OS: number;
+  cod_OS?: number;
 }
 
 interface Factura{
     nro_factura: number;
     fecha_emision: string;
+    cod_OS: number;
 }
 
 interface Cliente{
@@ -71,7 +74,14 @@ const agruparActividadesPorServicio = (actividades: Actividad[]): ActividadesPor
   }, {} as ActividadesPorServicio);
 };
 
-const VisualizarFactura: React.FC<Props> = ({ cod_OS }) =>{
+const VisualizarFactura: React.FC<Props> = ({ cod_OS: propCodOS }) =>{
+    const params = useParams();
+    const location = useLocation();
+    const nro_factura = params.nro_factura;
+    const queryParams = new URLSearchParams(location.search);
+    const cod_OS = queryParams.get("cod_OS") ? Number(queryParams.get("cod_OS")) : null;
+    const [loading, setLoading] = useState(true);
+    
     //obtener datos de la factura
     const [factura, setFactura] = useState<Factura | null>(null);
     const [cliente,setCliente] = useState<Cliente | null>(null);
@@ -80,126 +90,169 @@ const VisualizarFactura: React.FC<Props> = ({ cod_OS }) =>{
     const [montos,setMontos] = useState<Montos | null>(null);
     const [pago,setPago] = useState<Pago | null>(null);
     const [actividadesPorServicio, setActividadesPorServicio] = useState<ActividadesPorServicio>({});
-    const [loading, setLoading] = useState(true);
 
-    //obtener informacion de la factura
+    // Limpiar estado y logs al cambiar cod_OS
     useEffect(() => {
-    fetch(`http://localhost:1234/invoice/factura/${cod_OS}`)
-        .then((res) => {
-            if (!res.ok) throw new Error("Error al obtener datos");
-            return res.json();
-        })
-        .then((data: Factura[]) => {
-            console.log(data[0]);
-            setFactura(data[0] || null);
-            setLoading(false);
-        })
-        .catch((err) => {
-            console.error("Error:", err);
-            setLoading(false);
-        });
+      console.log('Cambiando cod_OS a:', cod_OS);
+      setFactura(null);
+      setCliente(null);
+      setEstablecimiento(null);
+      setVehiculo(null);
+      setMontos(null);
+      setPago(null);
+      setActividadesPorServicio({});
+      setLoading(true);
     }, [cod_OS]);
+
+    //obtener datos de la factura
+    useEffect(() => {
+        if (nro_factura && !cod_OS) {
+            fetch(`http://localhost:1234/invoices/${nro_factura}`)
+                .then((res) => {
+                    if (!res.ok) throw new Error("Error al obtener datos de la factura");
+                    return res.json();
+                })
+                .then((data: Factura[]) => {
+                    if (data && data[0]) {
+                        // setCodOS(data[0].cod_OS); // Ya no se usa estado
+                        setFactura(data[0]);
+                    }
+                })
+                .catch((err) => {
+                    console.error("Error:", err);
+                    setLoading(false);
+                });
+        } else if (cod_OS) {
+            fetch(`http://localhost:1234/invoice/factura/${cod_OS}`)
+                .then((res) => {
+                    if (!res.ok) throw new Error("Error al obtener datos");
+                    return res.json();
+                })
+                .then((data: Factura[]) => {
+                    console.log('Factura:', data[0]);
+                    setFactura(data[0] || null);
+                })
+                .catch((err) => {
+                    console.error("Error:", err);
+                });
+        }
+    }, [nro_factura, cod_OS]);
 
     //obtener informacion del cliente
     useEffect(() => {
-    fetch(`http://localhost:1234/invoice/cliente/${cod_OS}`)
-        .then((res) => {
-            if (!res.ok) throw new Error("Error al obtener datos");
-            return res.json();
-        })
-        .then((data: Cliente[]) => {
-            console.log(data[0]);
-            setCliente(data[0] || null);
-            setLoading(false);
-        })
-        .catch((err) => {
-            console.error("Error:", err);
-            setLoading(false);
-        });
+        if (!cod_OS) return;
+        fetch(`http://localhost:1234/invoice/cliente/${cod_OS}`)
+            .then((res) => {
+                if (!res.ok) throw new Error("Error al obtener datos");
+                return res.json();
+            })
+            .then((data: Cliente[]) => {
+                console.log('Cliente:', data[0]);
+                setCliente(data[0] || null);
+            })
+            .catch((err) => {
+                console.error("Error:", err);
+            });
     }, [cod_OS]);
 
     //obtener informacion del establecimiento
     useEffect(() => {
-    fetch(`http://localhost:1234/invoice/establecimiento/${cod_OS}`)
-        .then((res) => {
-            if (!res.ok) throw new Error("Error al obtener datos");
-            return res.json();
-        })
-        .then((data: Establecimiento[]) => {
-            console.log(data[0]);
-            setEstablecimiento(data[0] || null);
-            setLoading(false);
-        })
-        .catch((err) => {
-            console.error("Error:", err);
-            setLoading(false);
-        });
+        if (!cod_OS) return;
+        fetch(`http://localhost:1234/invoice/establecimiento/${cod_OS}`)
+            .then((res) => {
+                if (!res.ok) throw new Error("Error al obtener datos");
+                return res.json();
+            })
+            .then((data: Establecimiento[]) => {
+                console.log('Establecimiento:', data[0]);
+                setEstablecimiento(data[0] || null);
+            })
+            .catch((err) => {
+                console.error("Error:", err);
+            });
     }, [cod_OS]);
 
     //obtener informacion del vehiculo
     useEffect(() => {
-    fetch(`http://localhost:1234/invoice/vehiculo/${cod_OS}`)
-        .then((res) => {
-            if (!res.ok) throw new Error("Error al obtener datos");
-            return res.json();
-        })
-        .then((data: Vehiculo[]) => {
-            console.log(data[0]);
-            setVehiculo(data[0] || null);
-            setLoading(false);
-        })
-        .catch((err) => {
-            console.error("Error:", err);
-            setLoading(false);
-        });
+        if (!cod_OS) return;
+        fetch(`http://localhost:1234/invoice/vehiculo/${cod_OS}`)
+            .then((res) => {
+                if (!res.ok) throw new Error("Error al obtener datos");
+                return res.json();
+            })
+            .then((data: Vehiculo[]) => {
+                console.log('Vehiculo:', data[0]);
+                setVehiculo(data[0] || null);
+            })
+            .catch((err) => {
+                console.error("Error:", err);
+            });
     }, [cod_OS]);
 
     //obtener informacion de los pagos
     useEffect(() => {
-    fetch(`http://localhost:1234/invoice/pago/${cod_OS}`)
-        .then((res) => {
-            if (!res.ok) throw new Error("Error al obtener datos");
-            return res.json();
-        })
-        .then((data: Pago[]) => {
-            console.log(data[0]);
-            setPago(data[0] || null);
-            setLoading(false);
-        })
-        .catch((err) => {
-            console.error("Error:", err);
-            setLoading(false);
-        });
+        if (!cod_OS) return;
+        fetch(`http://localhost:1234/invoice/pago/${cod_OS}`)
+            .then((res) => {
+                if (!res.ok) throw new Error("Error al obtener datos");
+                return res.json();
+            })
+            .then((data: Pago[]) => {
+                console.log('Pago:', data[0]);
+                setPago(data[0] || null);
+            })
+            .catch((err) => {
+                console.error("Error:", err);
+            });
     }, [cod_OS]);
 
     //obtener informacion de los montos
     useEffect(() => {
-    fetch(`http://localhost:1234/invoice/montos/${cod_OS}`)
-        .then((res) => {
-            if (!res.ok) throw new Error("Error al obtener datos");
-            return res.json();
-        })
-        .then((data: Montos[]) => {
-            console.log(data[0]);
-            setMontos(data[0] || null);
-            setLoading(false);
-        })
-        .catch((err) => {
-            console.error("Error:", err);
-            setLoading(false);
-        });
+        if (!cod_OS) return;
+        fetch(`http://localhost:1234/invoice/montos/${cod_OS}`)
+            .then((res) => {
+                if (!res.ok) throw new Error("Error al obtener datos");
+                return res.json();
+            })
+            .then((data: Montos[]) => {
+                console.log('Montos:', data[0]);
+                setMontos(data[0] || null);
+            })
+            .catch((err) => {
+                console.error("Error:", err);
+            });
     }, [cod_OS]);
 
     //obtener informacion de los servicios
     useEffect(() => {
-    fetch(`http://localhost:1234/invoice/servicio/${cod_OS}`)
-        .then(res => res.json())
-        .then((data: Actividad[]) => {
-        const agrupadas = agruparActividadesPorServicio(data);
-        setActividadesPorServicio(agrupadas);
-        })
-        .catch(err => console.error("Error al cargar actividades:", err));
+        if (!cod_OS) return;
+        fetch(`http://localhost:1234/invoice/servicio/${cod_OS}`)
+            .then(res => res.json())
+            .then((data: Actividad[]) => {
+                const agrupadas = agruparActividadesPorServicio(data);
+                console.log('Actividades:', agrupadas);
+                setActividadesPorServicio(agrupadas);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error("Error al cargar actividades:", err);
+                setLoading(false);
+            });
     }, [cod_OS]);
+    
+    // Mostrar estado de carga
+    if (loading) {
+        return (
+            <div>
+                <TopBar menu={false} text="Visualizar Factura"></TopBar>
+                <div className={styles.facturaContainer}>
+                    <div style={{ textAlign: 'center', padding: '2rem' }}>
+                        <h3>Cargando información de la factura...</h3>
+                    </div>
+                </div>
+            </div>
+        );
+    }
     
     return(
         <div>
@@ -315,37 +368,45 @@ const VisualizarFactura: React.FC<Props> = ({ cod_OS }) =>{
                             <tr>
                                 <th className={styles.headerCell}>Servicio</th>
                                 <th className={styles.headerCell}>Actividad</th>
-                                <th className={styles.headerCell}>Precio</th>
                                 <th className={styles.headerCell}>Producto</th>
-                                <th className={styles.headerCell}>Costo</th>
-                                <th className={styles.headerCell}>Cant</th>
+                                <th className={styles.headerCell}>Precio Actividad</th>
+                                <th className={styles.headerCell}>Precio Producto</th>
+                                <th className={styles.headerCell}>Cantidad</th>
+                                <th className={styles.headerCell}>Monto</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {/* Ejemplo de agrupación por servicio */}
-                            <tr className={styles.servicioRow}>
-                                <td className={styles.servicioCell} colSpan={6}>Pulitura</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>A1</td>
-                                <td>5</td>
-                                <td>aceite</td>
-                                <td>10</td>
-                                <td>1</td>
-                            </tr>
-                            <tr className={styles.totalRow}>
-                                <td></td>
-                                <td>A2</td>
-                                <td>...</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr className={styles.totalRow}>
-                                <td colSpan={5} style={{textAlign:'right', fontWeight:'bold'}}>total</td>
-                                <td>100</td>
-                            </tr>
+                            {Object.entries(actividadesPorServicio).map(([servicio, actividades]) =>
+                                actividades.map((actividad, actividadIndex) => {
+                                    const montoActividad = (actividad.precio_actividad || 0) + ((actividad.precio_producto || 0) * (actividad.cantidad || 0));
+                                    return (
+                                        <tr key={`${servicio}-${actividadIndex}`}>
+                                            <td>{servicio}</td>
+                                            <td>{actividad.nombre_act}</td>
+                                            <td>{actividad.nombreProducto || '-'}</td>
+                                            <td>${actividad.precio_actividad?.toFixed(2) || '0.00'}</td>
+                                            <td>${actividad.precio_producto?.toFixed(2) || '0.00'}</td>
+                                            <td>{actividad.cantidad || '0'}</td>
+                                            <td>${montoActividad.toFixed(2)}</td>
+                                        </tr>
+                                    );
+                                })
+                            )}
+                            {/* Fila del total general */}
+                            {Object.keys(actividadesPorServicio).length > 0 && (
+                                <tr className={styles.totalRow}>
+                                    <td colSpan={6} style={{textAlign:'right', fontWeight:'bold'}}>TOTAL GENERAL:</td>
+                                    <td style={{fontWeight:'bold'}}>
+                                        ${Object.values(actividadesPorServicio)
+                                            .flat()
+                                            .reduce((sum, act) => {
+                                                const montoActividad = (act.precio_actividad || 0) + ((act.precio_producto || 0) * (act.cantidad || 0));
+                                                return sum + montoActividad;
+                                            }, 0)
+                                            .toFixed(2)}
+                                    </td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -405,15 +466,23 @@ const VisualizarFactura: React.FC<Props> = ({ cod_OS }) =>{
                         <div className={styles.elements}>&nbsp;</div>
                         <div className={styles.elements}>
                             <h2 className="subtitle">Monto:</h2>
-                            <h1 className="minitext">XXXXXX</h1>
+                            <span className={styles.valorMonto}>
+                                {Object.values(actividadesPorServicio)
+                                    .flat()
+                                    .reduce((sum, act) => {
+                                        const montoActividad = (act.precio_actividad || 0) + ((act.precio_producto || 0) * (act.cantidad || 0));
+                                        return sum + montoActividad;
+                                    }, 0)
+                                    .toFixed(2)}
+                            </span>
                         </div> 
                         <div className={styles.elements}>
                             <h2 className="subtitle">Descuento:</h2>
-                            <h1 className="minitext">{montos?.descuento ?? "..."}</h1>
+                            <span className={styles.valorMonto}>{montos?.descuento ?? "..."}</span>
                         </div>
                         <div className={styles.elements}>
                             <h2 className="subtitle">IVA:</h2>
-                            <h1 className="minitext">{montos?.iva ?? "..."}</h1>
+                            <span className={styles.valorMonto}>{montos?.iva ?? "..."}</span>
                         </div>
                         <div className={styles.elements}>
                             <div className={styles.montoTotalWrapper}>
