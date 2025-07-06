@@ -14,9 +14,23 @@ const RegistrarCliente: React.FC = () => {
   const [telefono2, setTelefono2] = useState("");
   const [mensaje, setMensaje] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [nuevoClienteCI, setNuevoClienteCI] = useState<string>("");
 
   // Función para manejar el regreso
   const handleBackClick = () => {
+    navigate('/Search');
+  };
+
+  // Función para navegar al detalle del cliente
+  const handleViewClientDetail = () => {
+    setShowSuccessPopup(false);
+    navigate(`/customer/${nuevoClienteCI}`);
+  };
+
+  // Función para cerrar el popup
+  const handleClosePopup = () => {
+    setShowSuccessPopup(false);
     navigate('/Search');
   };
 
@@ -46,14 +60,15 @@ const RegistrarCliente: React.FC = () => {
           name: nombre,
           lastName: apellido,
           email: email,
-          telefono1: telefono1,
-          telefono2: telefono2
+          phone1: telefono1,
+          phone2: telefono2
         })
       });
       
       const data = await res.json();
       if (res.ok) {
-        setMensaje("Cliente registrado correctamente.");
+        setNuevoClienteCI(ci);
+        setShowSuccessPopup(true);
         // Limpiar formulario
         setCi(""); 
         setNombre(""); 
@@ -61,8 +76,6 @@ const RegistrarCliente: React.FC = () => {
         setEmail(""); 
         setTelefono1(""); 
         setTelefono2("");
-        // Limpiar mensaje después de 3 segundos
-        setTimeout(() => setMensaje(null), 3000);
       } else {
         setError(data.error || data.message || "Error al registrar el cliente");
         // Limpiar error después de 5 segundos
@@ -183,6 +196,33 @@ const RegistrarCliente: React.FC = () => {
       <button className={styles.backFab} onClick={handleBackClick}>
         ←
       </button>
+
+      {/* Success Popup */}
+      {showSuccessPopup && (
+        <div className={styles.popupOverlay}>
+          <div className={styles.popupContent}>
+            <div className={styles.popupIcon}>✓</div>
+            <h3 className={styles.popupTitle}>¡Cliente Registrado con Éxito!</h3>
+            <p className={styles.popupMessage}>
+              El cliente con CI: {nuevoClienteCI} ha sido registrado correctamente.
+            </p>
+            <div className={styles.popupButtons}>
+              <button 
+                className={styles.popupButtonPrimary}
+                onClick={handleViewClientDetail}
+              >
+                Ver Detalle del Cliente
+              </button>
+              <button 
+                className={styles.popupButtonSecondary}
+                onClick={handleClosePopup}
+              >
+                Continuar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

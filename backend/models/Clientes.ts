@@ -52,7 +52,7 @@ export class customerModel {
         request.input('phone1', phone1);
         request.input('phone2', phone2);
 
-        const result = await request.query('EXEC nuevoCliente(@CI,@name,@lastName,@email,@phone1,@phone2);')
+        const result = await request.query('EXEC nuevoCliente @CI,@name,@lastName,@email,@phone1,@phone2;')
 
         return {rowsAffected: result['rowsAffected'][0]}
     }
