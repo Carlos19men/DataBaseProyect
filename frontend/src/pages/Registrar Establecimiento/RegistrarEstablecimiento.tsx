@@ -293,24 +293,27 @@ const RegistrarEstablecimiento: React.FC = () => {
                                 }}
                             />
                             {menuAbierto && empleadosFiltrados.length > 0 && (
-                                <div className={styles.dropdown}>
-                                    {empleadosFiltrados.map((empleado, index) => (
-                                        <div 
-                                            key={index} 
-                                            className={styles.dropdownItem}
-                                            onClick={() => seleccionarEmpleado(empleado)}
-                                        >
-                                            {empleado.empleado} - {empleado.CI_emp}
-                                        </div>
-                                    ))}
+                                    <div className={styles.dropdown}>
+                                        {empleadosFiltrados.map((empleado, index) => (
+                                            <div 
+                                                key={index} 
+                                                className={styles.dropdownItem}
+                                                onClick={() => seleccionarEmpleado(empleado)}
+                                            >
+                                                {empleado.empleado} - {empleado.CI_emp}
+                                            </div>
+                                        ))}
+                                    </div>
+                            )}
+                            
+                        </div>
+                        <div>
+                            {empleadoSeleccionado && (
+                                <div className={styles.empleadoNombre}>
+                                    <span>Empleado seleccionado: <strong>{empleadoSeleccionado.empleado}</strong></span>
                                 </div>
                             )}
-                        </div>
-                        {empleadoSeleccionado && (
-                            <div className={styles.empleadoNombre}>
-                                <span>Empleado seleccionado: <strong>{empleadoSeleccionado.empleado}</strong></span>
-                            </div>
-                        )}
+                        </div> 
                         {errorEmpleado && <div className={styles.errorField}>{errorEmpleado}</div>}
                     </div>
                     <div className={styles.form}>
