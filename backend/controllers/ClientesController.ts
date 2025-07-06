@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'; // Importa los tipos de Express
 import { customerModel } from "../models/Clientes"; // Tu modelo de cliente
-//import { phonesCustomerModel } from "../models/Telefonos"; // Modelo de teléfonos
 
 
 interface Customer{
@@ -102,7 +101,7 @@ export class CustomerController {
     
     //add customer 
     add = async (req:Request, res:Response<Customer | {message:string}>): Promise<void> => {
-        const { CI, name, lastName, email, telefono1, telefono2 } = req.body; // Obtiene los datos del cliente del cuerpo de la solicitud
+        const { CI, name, lastName, email, phone1, phone2 } = req.body; // Obtiene los datos del cliente del cuerpo de la solicitud
        
         if (!CI || CI.length === 0) {
             res.status(400).json({ message: 'CI es requerido.' });
@@ -124,32 +123,32 @@ export class CustomerController {
             return;
         }
 
-        if (!telefono1 || telefono1.length === 0) {
+        if (!phone1 || phone1.length === 0) {
             res.status(400).json({ message: 'Teléfono principal es requerido.' });
             return;
         }
 
-        if (!telefono2 || telefono2.length === 0) {
+        if (!phone2 || phone2.length === 0) {
             res.status(400).json({ message: 'Teléfono secundario es requerido.' });
             return;
         }
 
         // Validar que los teléfonos sean distintos
-        if (telefono1 === telefono2) {
+        if (phone1 === phone2) {
             res.status(400).json({ message: 'Los teléfonos deben ser diferentes.' });
             return;
         }
 
         // Validar formato de teléfonos (opcional, puedes ajustar según tus necesidades)
         const telefonoRegex = /^[0-9-]+$/;
-        if (!telefonoRegex.test(telefono1) || !telefonoRegex.test(telefono2)) {
+        if (!telefonoRegex.test(phone1) || !telefonoRegex.test(phone2)) {
             res.status(400).json({ message: 'Formato de teléfono inválido. Use solo números y guiones.' });
             return;
         }
 
         try {
             // Primero agregar el cliente
-            const result = await customerModel.add(CI, name, lastName, email,telefono1,telefono2);
+            const result = await customerModel.add(CI, name, lastName, email,phone1,phone2);
             if(result['rowsAffected'] === 0){
                 res.status(400).json({message: 'No se pudo agregar el cliente'});
                 return;

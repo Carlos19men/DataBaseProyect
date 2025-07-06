@@ -24,7 +24,6 @@ const Login: React.FC = () => {
                 headers: { 'Content-Type': 'application/json' }
             });
             const empleadoData = await res.json();
-
             if (
                 empleadoData &&
                 empleadoData !== "Cargando" &&
@@ -35,9 +34,11 @@ const Login: React.FC = () => {
                 localStorage.setItem("isLoggedIn", "true"); // <--- Guarda login
                 navigator("/HomePage");
             } else {
+
                 setTextoErr("Empleado no encontrado");
             }
         } catch (err) {
+            
             setTextoErr("Error de conexión");
         }
     };
@@ -47,11 +48,13 @@ const Login: React.FC = () => {
             <TopBar menu={false} text="Inicio de sesión" />
             <div className={styles.centrado}>
                     <div>
+                        <div className={styles.error}>{textoErr}</div>
                         <div className={styles.oculto}></div>
-                        <TextBoxMU etiqueta="Ingrese su cedula: " ejemplo="12345724" viewWidth={60} value={cedulaEmpleado} onChange={e => setCedulaE(e.target.value)} ></TextBoxMU>
+                        
+                        <TextBoxMU etiqueta="Ingrese su Cédula: " ejemplo="12345724" viewWidth={60} value={cedulaEmpleado} onChange={e => setCedulaE(e.target.value)} ></TextBoxMU>
                     </div>   
             </div>
-            <div className={styles.error}>{textoErr}</div>
+            
             <div className={styles.centrado}>
                 <Button texto="Ingresar" onClick={handleLogin}></Button>
             </div>
@@ -60,7 +63,7 @@ const Login: React.FC = () => {
                 </div>
                 <div className={styles.centrado}>
                 <Link to="/Registro" className="miniText">
-                    Registrate Aqui
+                    <u>Registrate Aqui</u>
                 </Link>
                 </div>
             

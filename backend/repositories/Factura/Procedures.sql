@@ -1,13 +1,12 @@
 USE MU_DB
 GO
 
-
 -- Procedimiento para calcular el descuento para un cliente dependiendo de la cantidad de servicios solicitados en los ultimos 3 meses
+
 CREATE PROCEDURE CalcularDescuento(
 	@ClienteID int,
 	@Descuento decimal(10,3) OUTPUT
-
-)
+	)
 AS
 BEGIN
 	DECLARE @CantServicios int;
@@ -61,9 +60,6 @@ RETURN(
 	WHERE O.cod_OS = @cod_OS
 );
 
-SELECT * 
-FROM dbo.ObtenerDatosCliente(4);
-
 GO
 
 -- Funcion para obtener los datos de la factura
@@ -79,9 +75,7 @@ RETURN(
 	WHERE O.cod_OS = @cod_OS
 );
 
-SELECT * 
-FROM dbo.ObtenerDatosFactura(4);
-
+GO
 -- Funcion para obtener los datos de los pagos
 CREATE FUNCTION ObtenerDatosMontos(
 	@cod_OS int
@@ -94,14 +88,9 @@ RETURN(
 	JOIN OrdenesServicio O ON F.cod_OS = O.cod_OS
 	WHERE O.cod_OS = @cod_OS
 );
-
-SELECT * 
-FROM dbo.ObtenerDatosMontos(4);
-
-SELECT * FROM Facturas;
-
-
 GO
+
+
 
 -- Funcion para obtener los datos del vehiculo
 CREATE FUNCTION ObtenerDatosVehiculo(
@@ -116,9 +105,6 @@ RETURN(
 	JOIN Vehiculos V ON O.codigo_vehiculo = V.codigo
 	WHERE O.cod_OS = @cod_OS
 );
-
-SELECT * 
-FROM dbo.ObtenerDatosVehiculo(4);
 
 GO
 
@@ -146,8 +132,7 @@ RETURN(
 
 GO
 
-SELECT * 
-FROM dbo.ObtenerDatosPago(4);
+
 
 -- Funcion para obtener los datos correspondientes al establecimiento
 CREATE FUNCTION ObtenerDatosEstablecimientos(
@@ -163,8 +148,8 @@ AS RETURN(
 
 GO
 
-SELECT * 
-FROM dbo.ObtenerDatosEstablecimientos(4);
+
+
 
 -- Funcion correspondiente a la obtencion de todos los datos correspondiente a los servicios ofrecidos
 CREATE FUNCTION ObtenerDatosServicios(
@@ -183,10 +168,7 @@ AS RETURN(
 	AND AOS.cod_OS = @cod_OS
 );
 
-DROP FUNCTION ObtenerDatosServicios;
 
-SELECT * 
-FROM dbo.ObtenerDatosServicios(4);
 
 GO
 

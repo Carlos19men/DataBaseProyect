@@ -24,8 +24,8 @@
     color: red;
     font-size: 1.2em;
     text-align: center;
-    margin-top: 20px;
-     margin: 5vh;
     display: flex;
-    justify-content: center;
+   
+    position: absolute;
+     left: 40.5%;
 }

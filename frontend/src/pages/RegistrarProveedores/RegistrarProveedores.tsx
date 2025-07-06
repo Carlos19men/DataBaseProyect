@@ -15,9 +15,23 @@ const RegistrarProveedores: React.FC = () => {
     const [contacto, setContacto] = useState("");
     const [mensaje, setMensaje] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+    const [nuevoProveedorRIF, setNuevoProveedorRIF] = useState<string>("");
 
     // Función para manejar el regreso
     const handleBackClick = () => {
+        navigate('/Search');
+    };
+
+    // Función para navegar al detalle del proveedor
+    const handleViewProveedorDetail = () => {
+        setShowSuccessPopup(false);
+        navigate(`/suppliers/${nuevoProveedorRIF}`);
+    };
+
+    // Función para cerrar el popup
+    const handleClosePopup = () => {
+        setShowSuccessPopup(false);
         navigate('/Search');
     };
 
@@ -43,7 +57,8 @@ const RegistrarProveedores: React.FC = () => {
             });
             const data = await res.json();
             if (res.ok) {
-                setMensaje("Proveedor registrado correctamente.");
+                setNuevoProveedorRIF(rif);
+                setShowSuccessPopup(true);
                 setRif(""); setRazon(""); setLocal(""); setDireccion(""); setTelefono(""); setContacto("");
             } else {
                 setError(data.error || data.message || "Error al registrar el proveedor");
@@ -137,6 +152,33 @@ const RegistrarProveedores: React.FC = () => {
             <button className={styles.backFab} onClick={handleBackClick}>
                 ←
             </button>
+
+            {/* Success Popup */}
+            {showSuccessPopup && (
+                <div className={styles.popupOverlay}>
+                    <div className={styles.popupContent}>
+                        <div className={styles.popupIcon}>✓</div>
+                        <h3 className={styles.popupTitle}>¡Proveedor Registrado con Éxito!</h3>
+                        <p className={styles.popupMessage}>
+                            El proveedor con RIF: {nuevoProveedorRIF} ha sido registrado correctamente.
+                        </p>
+                        <div className={styles.popupButtons}>
+                            <button 
+                                className={styles.popupButtonPrimary}
+                                onClick={handleViewProveedorDetail}
+                            >
+                                Ver Detalle del Proveedor
+                            </button>
+                            <button 
+                                className={styles.popupButtonSecondary}
+                                onClick={handleClosePopup}
+                            >
+                                Continuar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

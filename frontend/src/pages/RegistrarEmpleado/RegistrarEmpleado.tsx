@@ -21,15 +21,29 @@ const RegistrarEmpleado: React.FC = () => {
   const [establecimientos, setEstablecimientos] = useState<Establecimiento[]>([]);
   const [mensaje, setMensaje] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [nuevoEmpleadoCI, setNuevoEmpleadoCI] = useState<string>("");
 
   // Función para manejar el regreso
   const handleBackClick = () => {
     navigate('/Search');
   };
 
+  // Función para navegar al detalle del empleado
+  const handleViewEmpleadoDetail = () => {
+    setShowSuccessPopup(false);
+    navigate(`/employee/${nuevoEmpleadoCI}`);
+  };
+
+  // Función para cerrar el popup
+  const handleClosePopup = () => {
+    setShowSuccessPopup(false);
+    navigate('/Search');
+  };
+
   useEffect(() => {
     // Cargar establecimientos disponibles
-    fetch("http://localhost:1234/establishments/")
+    fetch("http://localhost:1234/establishement")
       .then(res => res.json())
       .then(data => setEstablecimientos(data))
       .catch(() => setEstablecimientos([]));
@@ -62,7 +76,8 @@ const RegistrarEmpleado: React.FC = () => {
       
       const data = await res.json();
       if (res.ok) {
-        setMensaje("Empleado registrado correctamente.");
+        setNuevoEmpleadoCI(ci);
+        setShowSuccessPopup(true);
         // Limpiar formulario
         setCi(""); 
         setNombre(""); 
@@ -71,16 +86,12 @@ const RegistrarEmpleado: React.FC = () => {
         setDireccion(""); 
         setSueldo(""); 
         setRifEstablecimiento("");
-        // Limpiar mensaje después de 3 segundos
-        setTimeout(() => setMensaje(null), 3000);
       } else {
         setError(data.error || data.message || "Error al registrar el empleado");
-        // Limpiar error después de 5 segundos
         setTimeout(() => setError(null), 5000);
       }
     } catch (err) {
       setError("Error de conexión con el servidor");
-      // Limpiar error después de 5 segundos
       setTimeout(() => setError(null), 5000);
     }
   };
@@ -169,6 +180,16 @@ const RegistrarEmpleado: React.FC = () => {
                   <option key={est.RIF} value={est.RIF}>{est.RIF} - {est.nombre}</option>
                 ))}
               </select>
+              <div className={styles.helpText}>
+                ¿No encuentra el establecimiento? 
+                <button 
+                  type="button"
+                  className={styles.linkButton}
+                  onClick={() => navigate('/RegistrarEstablecimiento')}
+                >
+                  Regístrelo aquí
+                </button>
+              </div>
             </div>
             
             <div className={styles.buttonContainer}>
@@ -207,6 +228,33 @@ const RegistrarEmpleado: React.FC = () => {
       <button className={styles.backFab} onClick={handleBackClick}>
         ←
       </button>
+
+      {/* Success Popup */}
+      {showSuccessPopup && (
+        <div className={styles.popupOverlay}>
+          <div className={styles.popupContent}>
+            <div className={styles.popupIcon}>✓</div>
+            <h3 className={styles.popupTitle}>¡Empleado Registrado con Éxito!</h3>
+            <p className={styles.popupMessage}>
+              El empleado con CI: {nuevoEmpleadoCI} ha sido registrado correctamente.
+            </p>
+            <div className={styles.popupButtons}>
+              <button 
+                className={styles.popupButtonPrimary}
+                onClick={handleViewEmpleadoDetail}
+              >
+                Ver Detalle del Empleado
+              </button>
+              <button 
+                className={styles.popupButtonSecondary}
+                onClick={handleClosePopup}
+              >
+                Continuar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

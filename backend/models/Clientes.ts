@@ -40,7 +40,7 @@ export class customerModel {
         return {rowsAffected: result['rowsAffected'][0]}
     }
     
-    static async add(CI:string,name:string,lastName:string | null,email:string,phone1:string,phone2:string){
+    static async add(CI:string,name:string,lastName:string,email:string,phone1:string,phone2:string){
         //agregamos la request
         const request = getDbPool().request()
 
@@ -52,7 +52,7 @@ export class customerModel {
         request.input('phone1', phone1);
         request.input('phone2', phone2);
 
-        const result = await request.query('INSERT INTO Clientes (CI_cliente, nombre_cli, apellido_cli, email, telefono1, telefono2, direccion, ciudad, estado, codigo_postal, pais) VALUES (@CI,@name, @lastName, @email, @phone1, @phone2, @address, @city, @state, @zip, @country); ')
+        const result = await request.query('EXEC nuevoCliente @CI,@name,@lastName,@email,@phone1,@phone2;')
 
         return {rowsAffected: result['rowsAffected'][0]}
     }
