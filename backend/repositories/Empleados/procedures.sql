@@ -7,7 +7,8 @@ GO
 
 Create view ObtenerEmpleados as
 select CI_emp, RIF_establecimiento, es.nombre Establecimiento,CONCAT(em.nombre,' ',apellido) empleado,sueldo,direccion
-from Empleados em, Establecimientos es;
+from Empleados em, Establecimientos es
+where em.RIF_establecimiento = es.RIF;
 GO
 
 IF OBJECT_ID('addEmpleado','P') IS NOT NULL
@@ -28,6 +29,10 @@ BEGIN
     VALUES (@CI, @RIF, @name, @lastname, @cellphone, @address, @salary);
 END;
 go
+
+IF OBJECT_ID('AddEncargado','P') IS NOT NULL
+	drop procedure AddEncargado;
+GO	
 
 CREATE PROCEDURE AddEncargado
 @RIF varchar(100),

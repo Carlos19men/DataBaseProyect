@@ -33,7 +33,7 @@ const MenuDespegable: React.FC = () => {
                     
                 <div className={styles.menuVerde}> 
                     <ul className={styles.h2} style={{padding: "0"}}>
-                        <div style={{transform:"translateY(2vh)" }}>Menu</div>
+                        <div style={{ height:"12vh",marginTop: "5vh",marginBottom: "5vh",paddingBottom:"1vh",fontSize: "10vh"}}>Menu</div>
                     </ul>  
                     <ul>
 
