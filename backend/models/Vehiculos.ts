@@ -4,7 +4,7 @@ import * as sql from 'mssql';
 export class vehicleModel{
 
     static async getAll(){
-        const result = await getDbPool().query('SELECT * FROM Vehiculos ORDER BY codigo;')
+        const result = await getDbPool().query('SELECT * FROM ObtenerVehiculos ORDER BY codigo;')
         return result['recordset']
     }
 
@@ -14,7 +14,7 @@ export class vehicleModel{
 
         request.input('Plate',plate)
 
-        const result = await request.query('SELECT * FROM Vehiculos where placa = @Plate;')
+        const result = await request.query('SELECT * FROM ObtenerVehiculos where placa = @Plate;')
 
         return result['recordset'][0]
     }

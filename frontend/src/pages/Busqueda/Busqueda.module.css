@@ -413,6 +413,153 @@
   font-weight: 400;
 }
 
+/* Card específica para vehículo */
+.vehiculoCard {
+  background: #fff5f5;
+  border-radius: 14px;
+  border: 1.5px solid #e0e0e0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  padding: 2vh 2vw;
+  margin-bottom: 2vh;
+  font-size: 2.5vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  min-width: 260px;
+  max-width: 320px;
+  min-height: 220px;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.vehiculoCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: #FF6B35;
+}
+
+.vehiculoTitulo {
+  font-size: 1.3em;
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+  margin-top: 0.2em;
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.vehiculoEtiqueta {
+  color: #444;
+  margin-bottom: 0.3em;
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+.vehiculoValor {
+  color: #666;
+  font-weight: 400;
+}
+
+/* Card específica para marca */
+.marcaCard {
+  background: #f0f8ff;
+  border-radius: 14px;
+  border: 1.5px solid #e0e0e0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  padding: 2vh 2vw;
+  margin-bottom: 2vh;
+  font-size: 2.5vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  min-width: 260px;
+  max-width: 320px;
+  min-height: 220px;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.marcaCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: #4CAF50;
+}
+
+.marcaTitulo {
+  font-size: 1.3em;
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+  margin-top: 0.2em;
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.marcaEtiqueta {
+  color: #34495e;
+  margin-bottom: 0.3em;
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+.marcaValor {
+  color: #7f8c8d;
+  font-weight: 400;
+}
+
+/* Card específica para modelo */
+.modeloCard {
+  background: #fafafa;
+  border-radius: 14px;
+  border: 1.5px solid #e0e0e0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  padding: 2vh 2vw;
+  margin-bottom: 2vh;
+  font-size: 2.5vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  min-width: 260px;
+  max-width: 320px;
+  min-height: 220px;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modeloCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: #9C27B0;
+}
+
+.modeloTitulo {
+  font-size: 1.3em;
+  color: #000000;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+  margin-top: 0.2em;
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.modeloEtiqueta {
+  color: #333;
+  margin-bottom: 0.3em;
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+.modeloValor {
+  color: #555;
+  font-weight: 400;
+}
+
 /* Floating Action Button */
 .fab {
   position: fixed;
