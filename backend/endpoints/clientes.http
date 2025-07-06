@@ -1,0 +1,26 @@
+
+###Obtener un cliente por su cedula | listo 
+http://localhost:1234/customer
+
+###Post un nuevo cliente | Listo
+POST http://localhost:1234/customer
+Content-Type: application/json
+
+{
+    "CI": "27",
+    "lastName":"Guzman",
+    "name":"Juan",
+    "email":"juan@gmail.com",
+    "phone1":"1234567890",
+    "phone2":"1234567891"
+}
+
+###PATCH actualizar un cliente | listo 
+PATCH  http://localhost:1234/customer
+Content-Type: application/json
+
+{
+    "CI": "27",
+    "lastName":"Guzman",
+    "name":"Carlos"
+}

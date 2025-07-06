@@ -1,5 +1,4 @@
 import Button from "../../components/Button/button";
-import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
 import TopBar from "../../components/TopBar/TopBar";
 import styles from "./RegistrarEstablecimiento.module.css";
 import { useState, useEffect } from "react";
