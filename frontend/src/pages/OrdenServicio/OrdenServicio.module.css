@@ -1,0 +1,140 @@
+.bar{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 12vh;
+    margin: 0;
+    background-color: var(--primary-green);
+}
+
+.serviceBox{
+    grid-column: auto;
+}
+
+.subtitle{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 100%;
+    letter-spacing: 0.5px;  
+    text-align: center; 
+    font-size: 5vh; 
+    padding: 0%;
+    margin: 0%;
+    margin-top: 2vh;
+}
+
+.texto{
+    width: 100%;
+    height: 100%;
+    padding-inline: 2vw;
+    padding-top: 2vh;
+    color: #000000;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+.busquedaBarContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 3vh;
+  margin-bottom: 1.5vh;
+}
+
+.busquedaBarInput {
+  padding: 1.2vh 2vw;
+  border-radius: 8px;
+  border: 1px solid #b2dfdb;
+  font-size: 2.2vh;
+  outline: none;
+  background: #f8fafc;
+  width: 40vw;
+  max-width: 260px;
+}
+
+.columnas {
+    padding:1vw;
+    display: grid;
+    grid-template-columns: 75% 15%;
+    gap: 2vw;
+    margin-top: 2vh;
+}
+
+.resultados {
+    padding: 2vw;
+    display:grid;
+    grid-template-columns:repeat(3, 33%);
+    gap : 1vw;
+}
+
+.item{
+    background: #f8fafc;
+    border-radius: 14px;
+    border: 1.5px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2vh;
+    padding: 2vh 2vw;
+    font-size: 3vh;
+    gap: 1vh;
+}
+
+.item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: #2196F3;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.filtros {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 2vh 2vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  align-items: flex-start;
+  min-width: 270px;
+  max-width: 350px;
+  background: #fff;
+  margin-left: 2vw;
+  font-family: 'Poppins', sans-serif;
+}
+
+.filtros .subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 2.5vh;
+  margin-bottom: 1vh;
+  color: #222;
+}
+
+.filtros :global(button), .filtros button, .filtros .Button_button__* {
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 100%;
+  display: block;
+  font-size: 2vh !important;
+  white-space: nowrap;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.crudButton {
+  background: var(--primary-green, #22b86c);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 2.2vh;
+  border: none;
+  border-radius: 8px;
+  padding: 1.2vh 0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.crudButton:hover {
+  background: #1a7f37;
+} 

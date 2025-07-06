@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MenuDespegable from "../../components/Menu Desplegable/MenuDesplegable";
 import styles from './Detalle.module.css';
+import TopBar from '../../components/TopBar/TopBar';
 
 const EmpleadoDetalle: React.FC = () => {
   const location = useLocation();
@@ -11,7 +12,7 @@ const EmpleadoDetalle: React.FC = () => {
   const [empleadoData, setEmpleadoData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
-
+  const [nombre, apellido] = (empleadoData?.empleado || "").split(" ");
   useEffect(() => {
     const fetchEmpleadoData = async () => {
       if (!ci) {
@@ -32,7 +33,9 @@ const EmpleadoDetalle: React.FC = () => {
         }
         
         const data = await response.json();
+      
         setEmpleadoData(data);
+     
       } catch (err) {
         console.error("Error fetching empleado data:", err);
         setError("No se pudo cargar la información del empleado");
@@ -47,17 +50,8 @@ const EmpleadoDetalle: React.FC = () => {
   if (loading) {
     return (
       <div>
-        <div className={styles.bar}>
-          <MenuDespegable />
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
-              Detalles del Empleado
-            </h1>
-            <h3 style={{ color: "white", margin: "0.5rem 0 0 0", fontSize: "1.2rem", fontWeight: 400 }}>
-              Datos Personales
-            </h3>
-          </div>
-        </div>
+          <TopBar text='Detalles del Empleado' menu={true}></TopBar>
+
         <div className={styles.container}>
           <div className={styles.detailCard}>
             <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -72,17 +66,7 @@ const EmpleadoDetalle: React.FC = () => {
   if (error || !empleadoData) {
     return (
       <div>
-        <div className={styles.bar}>
-          <MenuDespegable />
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
-              Detalles del Empleado
-            </h1>
-            <h3 style={{ color: "white", margin: "0.5rem 0 0 0", fontSize: "1.2rem", fontWeight: 400 }}>
-              Datos Personales
-            </h3>
-          </div>
-        </div>
+       <TopBar text='Detalles del Empleado' menu={true}></TopBar>
         <div className={styles.container}>
           <div className={styles.detailCard}>
             <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -102,23 +86,14 @@ const EmpleadoDetalle: React.FC = () => {
   }
 
   return (
+    
     <div>
-      <div className={styles.bar}>
-        <MenuDespegable />
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
-            Detalles del Empleado
-          </h1>
-          <h3 style={{ color: "white", margin: "0.5rem 0 0 0", fontSize: "1.2rem", fontWeight: 400 }}>
-            Datos Personales
-          </h3>
-        </div>
-      </div>
-      
+     <TopBar text='Detalles del Empleado' menu={true}></TopBar>
       <div className={styles.container}>
         <div className={styles.detailCard}>
           <div className={styles.clientHeader}>
-            <h2>{empleadoData?.nombre && empleadoData?.apellido ? `${empleadoData.nombre} ${empleadoData.apellido}` : "Nombre no disponible"}</h2>
+           
+            <h2 style={{textAlign:"center"}}>{empleadoData?.empleado ? `${empleadoData.empleado}` : "Nombre no disponible"}</h2>
             
             <div className={styles.clientInfoGrid}>
               <div className={styles.infoSection}>
@@ -129,11 +104,11 @@ const EmpleadoDetalle: React.FC = () => {
                 </div>
                 <div className={styles.infoRow}>
                   <span className={styles.label}>Nombre:</span>
-                  <span className={styles.value}>{empleadoData?.nombre || "No disponible"}</span>
+                  <span className={styles.value}>{nombre ? nombre : "Nombre no disponible"}</span>
                 </div>
                 <div className={styles.infoRow}>
                   <span className={styles.label}>Apellido:</span>
-                  <span className={styles.value}>{empleadoData?.apellido || "No disponible"}</span>
+                  <span className={styles.value}> {apellido ? apellido : ""}</span>
                 </div>
               </div>
 
@@ -156,7 +131,7 @@ const EmpleadoDetalle: React.FC = () => {
           </div>
 
           <div className={styles.infoSection}>
-            <h3>Información de Contacto</h3>
+            <h3 style={{textAlign:"center"}}>Información de Contacto</h3>
             <div className={styles.infoRow}>
               <span className={styles.label}>Teléfono:</span>
               <span className={styles.value}>{empleadoData?.telefono || "No disponible"}</span>
@@ -169,7 +144,7 @@ const EmpleadoDetalle: React.FC = () => {
 
           {/* Tabla de secciones */}
           <div className={styles.tableSection}>
-            <h3>Información Adicional</h3>
+            <h3 style={{textAlign:"center"}}>Información Adicional</h3>
             <div className={styles.tableContainer}>
               <table className={styles.dataTable}>
                 <thead>

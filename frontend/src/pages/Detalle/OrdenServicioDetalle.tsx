@@ -1,0 +1,239 @@
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import MenuDespegable from "../../components/Menu Desplegable/MenuDesplegable";
+import styles from './Detalle.module.css';
+
+const OrdenServicioDetalle: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const params = useParams();
+  const cod_OS = params.cod_OS;
+
+  const [ordenData, setOrdenData] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
+  const [creatingInvoice, setCreatingInvoice] = useState<boolean>(false);
+  const [facturaExistente, setFacturaExistente] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchOrdenData = async () => {
+      if (!cod_OS) {
+        setError("No se proporcionó el código de la orden de servicio");
+        setLoading(false);
+        return;
+      }
+      try {
+        setLoading(true);
+        setError("");
+        // Fetch de la orden de servicio específica
+        const response = await fetch(`http://localhost:1234/service-order/${cod_OS}`);
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setOrdenData(data);
+      } catch (err) {
+        setError("No se pudo cargar la información de la orden de servicio");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOrdenData();
+
+    // Verificar si ya existe una factura para esta orden de servicio
+    const fetchFactura = async () => {
+      if (!cod_OS) return;
+      try {
+        const res = await fetch(`http://localhost:1234/invoice/factura/${cod_OS}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length > 0) {
+            setFacturaExistente(data[0]);
+          } else {
+            setFacturaExistente(null);
+          }
+        } else {
+          setFacturaExistente(null);
+        }
+      } catch {
+        setFacturaExistente(null);
+      }
+    };
+    fetchFactura();
+  }, [cod_OS]);
+
+  const handleCreateInvoice = async () => {
+    if (!cod_OS) return;
+    
+    setCreatingInvoice(true);
+    try {
+      const response = await fetch(`http://localhost:1234/invoice/crear-desde-orden/${cod_OS}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          descuento: 0,
+          iva: 16,
+          fecha_emision: new Date().toISOString().split('T')[0]
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error al crear la factura');
+      }
+
+      const result = await response.json();
+      alert(`Factura creada exitosamente. Número de factura: ${result.factura.nro_factura}`);
+      
+      // Redirigir a la página de visualización de factura usando cod_OS
+      navigate(`/Factura?cod_OS=${cod_OS}`);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Error al crear la factura';
+      alert(`Error: ${errorMessage}`);
+    } finally {
+      setCreatingInvoice(false);
+    }
+  };
+
+  const handleVerificarFactura = () => {
+    console.log('Redirigiendo a factura de orden:', cod_OS);
+    navigate(`/Factura?cod_OS=${cod_OS}`);
+  };
+
+  if (loading) {
+    return (
+      <div>
+        <div className={styles.bar}>
+          <MenuDespegable />
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
+              Detalles de la Orden de Servicio
+            </h1>
+          </div>
+        </div>
+        <div className={styles.container}>
+          <div className={styles.detailCard}>
+            <div style={{ textAlign: 'center', padding: '2rem' }}>
+              <h3>Cargando información de la orden de servicio...</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !ordenData) {
+    return (
+      <div>
+        <div className={styles.bar}>
+          <MenuDespegable />
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
+              Detalles de la Orden de Servicio
+            </h1>
+          </div>
+        </div>
+        <div className={styles.container}>
+          <div className={styles.detailCard}>
+            <div style={{ textAlign: 'center', padding: '2rem' }}>
+              <h3>Error: {error || "Orden de servicio no encontrada"}</h3>
+              <button 
+                onClick={() => navigate('/OrdenesServicio')} 
+                className={styles.actionButton}
+                style={{ marginTop: '1rem' }}
+              >
+                Volver a listado
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Mostrar todos los campos relevantes de la orden de servicio
+  return (
+    <div>
+      <div className={styles.bar}>
+        <MenuDespegable />
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <h1 style={{ color: "white", margin: 0, fontSize: "2.5rem", fontWeight: 600 }}>
+            Detalles de la Orden de Servicio
+          </h1>
+        </div>
+      </div>
+      <div className={styles.container}>
+        <div className={styles.detailCard}>
+          <div className={styles.clientHeader}>
+            <h2>Orden #{ordenData.cod_OS}</h2>
+            <div className={styles.clientInfoGrid}>
+              <div className={styles.infoSection}>
+                <h3>Datos Generales</h3>
+                <div className={styles.infoRow}><span className={styles.label}>Código Vehículo:</span> <span className={styles.value}>{ordenData.codigo_vehiculo}</span></div>
+                <div className={styles.infoRow}><span className={styles.label}>RIF Establecimiento:</span> <span className={styles.value}>{ordenData.RIF_establecimiento}</span></div>
+                <div className={styles.infoRow}><span className={styles.label}>Fecha Entrada:</span> <span className={styles.value}>{ordenData.fecha_entrada ? new Date(ordenData.fecha_entrada).toLocaleDateString('es-VE') : 'No disponible'}</span></div>
+                <div className={styles.infoRow}><span className={styles.label}>Hora Entrada:</span> <span className={styles.value}>{ordenData.hora_entrada ? new Date(ordenData.hora_entrada).toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' }) : 'No disponible'}</span></div>
+                <div className={styles.infoRow}><span className={styles.label}>Hora Estimada Salida:</span> <span className={styles.value}>{ordenData.hora_estimada_salida ? new Date(ordenData.hora_estimada_salida).toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' }) : 'No disponible'}</span></div>
+                <div className={styles.infoRow}><span className={styles.label}>Hora Real Salida:</span> <span className={styles.value}>{ordenData.hora_real_salida ? new Date(ordenData.hora_real_salida).toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' }) : 'No disponible'}</span></div>
+                <div className={styles.infoRow}><span className={styles.label}>Fecha Salida:</span> <span className={styles.value}>{ordenData.fecha_salida ? new Date(ordenData.fecha_salida).toLocaleDateString('es-VE') : 'No disponible'}</span></div>
+                <div className={styles.infoRow}><span className={styles.label}>Persona Autorizada:</span> <span className={styles.value}>{ordenData.persona_autorizada || 'No disponible'}</span></div>
+                <div className={styles.infoRow}><span className={styles.label}>Justificación:</span> <span className={styles.value}>{ordenData.justificacion || 'No disponible'}</span></div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Botón para crear factura */}
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            marginTop: '2rem', 
+            padding: '1rem',
+            borderTop: '1px solid #e0e0e0'
+          }}>
+            {facturaExistente ? (
+              <button
+                onClick={handleVerificarFactura}
+                style={{
+                  backgroundColor: '#28a745',
+                  color: 'white',
+                  border: 'none',
+                  padding: '12px 24px',
+                  borderRadius: '6px',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                Verificar Factura
+              </button>
+            ) : (
+              <button
+                onClick={handleCreateInvoice}
+                disabled={creatingInvoice}
+                style={{
+                  backgroundColor: '#007bff',
+                  color: 'white',
+                  border: 'none',
+                  padding: '12px 24px',
+                  borderRadius: '6px',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  cursor: creatingInvoice ? 'not-allowed' : 'pointer',
+                  opacity: creatingInvoice ? 0.7 : 1,
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                {creatingInvoice ? 'Creando Factura...' : 'Crear Factura'}
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default OrdenServicioDetalle; 

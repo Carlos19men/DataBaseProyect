@@ -9,6 +9,10 @@
     margin: 5vh 0;
 }
 
+.oculto{
+    height: 18vh;
+}
+
 .centrado{
     margin: 5vh;
     display: flex;

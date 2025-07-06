@@ -30,6 +30,10 @@ BEGIN
 END;
 go
 
+IF OBJECT_ID('AddEncargado','P') IS NOT NULL
+	drop procedure AddEncargado;
+GO	
+
 CREATE PROCEDURE AddEncargado
 @RIF varchar(100),
 @CI varchar(100),

@@ -20,6 +20,7 @@ import ProtectedRoute from "./components/RutaProtegida/ProtectedRoute";
 import RegistrarOrdenServicio from "./pages/RegistrarOrden_Servicio/RegistrarOrdenServicio";
 import RegistrarProducto from "./pages/RegistrarProducto/RegistrarProducto";
 import RegistrarEstablecimiento from "./pages/Registrar Establecimiento/RegistrarEstablecimiento";
+import OrdenServicio from "./pages/OrdenServicio/OrdenServicio";
 
 
 // Importar páginas de detalle
@@ -28,6 +29,8 @@ import EstablecimientoDetalle from "./pages/Detalle/EstablecimientoDetalle";
 import ClienteDetalle from "./pages/Detalle/ClienteDetalle";
 import ProveedorDetalle from "./pages/Detalle/ProveedorDetalle";
 import ProductoDetalle from "./pages/Detalle/ProductoDetalle";
+import OrdenServicioDetalle from "./pages/Detalle/OrdenServicioDetalle";
+
 const App = () => (
 
   <Router>
@@ -40,6 +43,7 @@ const App = () => (
       <Route path="/Search" element={<ProtectedRoute><Busqueda/></ProtectedRoute>}></Route>                                                                      
       <Route path="/Stats" element={<ProtectedRoute><Estadisticas/></ProtectedRoute>}></Route>
       <Route path="/Factura" element={<ProtectedRoute><VisualizarFactura cod_OS={4}/></ProtectedRoute>}></Route>
+      <Route path="/factura/:nro_factura" element={<ProtectedRoute><VisualizarFactura/></ProtectedRoute>}></Route>
       <Route path="/RegistrarModelo" element={<ProtectedRoute><RegistrarModelo/></ProtectedRoute>}></Route>
       <Route path="/RegistrarVehiculo" element={<ProtectedRoute><RegistrarVehiculo/></ProtectedRoute>}></Route>
       <Route path="/RegistrarProveedor" element={<ProtectedRoute><RegistrarProveedor/></ProtectedRoute>}></Route>
@@ -57,6 +61,7 @@ const App = () => (
       <Route path="/cliente-detalle" element={<ProtectedRoute><ClienteDetalle/></ProtectedRoute>}></Route>
       <Route path="/proveedor-detalle" element={<ProtectedRoute><ProveedorDetalle/></ProtectedRoute>}></Route>
       <Route path="/producto-detalle" element={<ProtectedRoute><ProductoDetalle/></ProtectedRoute>}></Route>
+      <Route path="/ordenservicio-detalle/:cod_OS" element={<ProtectedRoute><OrdenServicioDetalle/></ProtectedRoute>}></Route>
     </Routes>             
   </Router>
 )

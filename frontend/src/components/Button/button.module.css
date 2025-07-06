@@ -1,14 +1,13 @@
 .button{
   background-color: var(--primary-green);
   color: var(--black);
-  padding: 24px 26px;
   border: none; 
   outline: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   height: 13vh;
-  
+  padding-left: 0%;
 }
 
 .buttonText{
@@ -17,18 +16,27 @@
   font-size: 4vh;
   line-height: 100%;
   letter-spacing: 0.5px;  
-  text-align: center; 
+  text-align: center; padding: 0%;
+    padding-left: 0%;
 }
 .inactivo{
   background-color: #EDEDED;
+    padding-left: 0%;
 }
 .button:hover{
   background-color: #38e47c;
   box-shadow: 0 2px 8px rgba(46, 204, 113, 0.15);
+    padding-left: 0%;
 }
 .selected {
   background-color: #22b86c;
   color: #fff !important;
   border: 2px solid #1a7f37;
   box-shadow: 0 4px 16px rgba(46, 204, 113, 0.25);
+    padding-left: 0%;
+}
+
+.container{
+  justify-content: center;
+    padding-left: 0%;
 }
