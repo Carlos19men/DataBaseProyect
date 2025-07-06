@@ -10,7 +10,7 @@ const HomePage: React.FC = () => {
         <div>
             <TopBar text="Inicio" menu={true}></TopBar>
             <a href="/HomePage">
-                <h1 className="subtitle">Servicios más solicitados de nuestros clientes</h1>
+                <h1 className="subtitle" style={{margin:"5vh"}}>Servicios más solicitados de nuestros clientes</h1>
                 <div className={styles.tarjetaCont}>
                 <div className={styles.serviceBox}>
                     <h2>Servicio 1</h2>
@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
                 </div>
             </a>
             <a href="/HomePage">
-                <h1 className="subtitle">Empleados más activos</h1>
+                <h1 className="subtitle"style={{margin:"5vh"}}>Empleados más activos</h1>
                 <div className={styles.tarjetaCont}>
                 <div className={styles.serviceBox}>
                     <h2>Empleado 1</h2>
@@ -44,7 +44,7 @@ const HomePage: React.FC = () => {
                 </div>
             </a>
             <a href="/HomePage">
-                <h1 className="subtitle">Nuestros proveedores</h1>
+                <h1 className="subtitle"style={{margin:"5vh"}}>Nuestros proveedores</h1>
                 <div className={styles.tarjetaCont}>
                     <div className={styles.serviceBox}>
                         <h2>Proveedor 1</h2>
@@ -60,7 +60,9 @@ const HomePage: React.FC = () => {
                     </div>
                 </div>
             </a>
-            <TopBar text="" menu={false}></TopBar>
+            <div style={{transform:"translateY(5vh)"}}>
+                <TopBar text="" menu={false} ></TopBar>
+            </div>
         </div>
     )
 }
