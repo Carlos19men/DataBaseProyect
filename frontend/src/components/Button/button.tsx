@@ -8,9 +8,10 @@ interface BotonProps {
   viewHeight?: number;
    fuente?: number; 
   selected?: boolean;
+  disabled?: boolean;
 }
 
-const Button : React.FC<BotonProps> = ({ texto, onClick, inactivo=false,viewHeight ,fuente, selected }) => {
+const Button : React.FC<BotonProps> = ({ texto, onClick, inactivo=false,viewHeight ,fuente, selected, disabled }) => {
     
     if (!fuente) {
         if(!viewHeight){
@@ -21,7 +22,7 @@ const Button : React.FC<BotonProps> = ({ texto, onClick, inactivo=false,viewHeig
     }
     return(
         <span className={styles.container} >
-            <button className={`${styles.button} ${inactivo ? styles.inactivo : ""} ${selected ? styles.selected : ""}`} onClick={onClick}  style={{height:`${viewHeight}vh`, padding:"0 5%"}}><span className={styles.buttonText} style={{ fontSize:`${fuente}vh`}}>{texto}  </span></button>
+            <button className={`${styles.button} ${inactivo ? styles.inactivo : ""} ${selected ? styles.selected : ""}`} onClick={onClick}  style={{height:`${viewHeight}vh`, padding:"0 5%"}} disabled={disabled}><span className={styles.buttonText} style={{ fontSize:`${fuente}vh`}}>{texto}  </span></button>
         </span>
     )
 }

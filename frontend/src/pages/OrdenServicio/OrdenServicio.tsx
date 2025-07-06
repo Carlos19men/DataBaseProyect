@@ -4,10 +4,15 @@ import styles from "./OrdenServicio.module.css";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/button";
+import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
 
 const OrdenServicio : React.FC = ({}) => {
     const [busqueda, setBusqueda] = React.useState<string>("");
     const [resultados, setResultados] = React.useState<any[]|any>([]);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleteOrderId, setDeleteOrderId] = useState("");
+    const [deleteLoading, setDeleteLoading] = useState(false);
+    const [deleteError, setDeleteError] = useState("");
     const navigate = useNavigate();
 
     async function buscar(ID:string="") {
@@ -18,11 +23,35 @@ const OrdenServicio : React.FC = ({}) => {
           .catch(err => ("Solicitud falló con: " + err));
 
         setResultados(res)
-    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+    }
 
     useEffect(() => {
         buscar();
-    }, []);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+    }, []);
+
+    // Función para eliminar orden de servicio
+    const handleDeleteOrder = async () => {
+        setDeleteLoading(true);
+        setDeleteError("");
+        try {
+            const response = await fetch(`http://localhost:1234/service-order/${deleteOrderId}`, {
+                method: 'DELETE',
+            });
+            if (!response.ok) {
+                const errorData = await response.json();
+                setDeleteError(errorData.message || 'Error al eliminar la orden');
+            } else {
+                setShowDeleteModal(false);
+                setDeleteOrderId("");
+                buscar(); // Refrescar la lista
+                alert('Orden eliminada exitosamente');
+            }
+        } catch (error) {
+            setDeleteError('Error al eliminar la orden');
+        } finally {
+            setDeleteLoading(false);
+        }
+    };
 
     return (
         <div >
@@ -53,9 +82,54 @@ const OrdenServicio : React.FC = ({}) => {
                     <div className={styles.subtitle}>Operaciones</div>
                     <Button texto="Crear Orden" viewHeight={5} onClick={() => navigate('/RegistrarOrdenServicio')} />
                     <Button texto="Actualizar Orden" viewHeight={5} />
-                    <Button texto="Eliminar Orden" viewHeight={5} />
+                    <Button texto="Eliminar Orden" viewHeight={5} onClick={() => setShowDeleteModal(true)} />
                 </div>
             </div>
+            {/* Modal para eliminar orden */}
+            {showDeleteModal && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100vw',
+                    height: '100vh',
+                    background: 'rgba(0,0,0,0.4)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 1000
+                }}>
+                    <div style={{
+                        background: 'white',
+                        borderRadius: '16px',
+                        padding: '3rem 2.5rem',
+                        minWidth: '420px',
+                        minHeight: '220px',
+                        boxShadow: '0 4px 32px rgba(0,0,0,0.25)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center'
+                    }}>
+                        <div style={{width: '100%', marginBottom: '2rem', textAlign: 'left'}}>
+                            <span style={{fontWeight: 700, fontSize: '1.4rem'}}>Número Orden</span>
+                        </div>
+                        <div style={{display: 'flex', alignItems: 'center', marginBottom: '2rem'}}>
+                            <span style={{fontWeight: 700, fontSize: '1.4rem', marginRight: '1.5rem'}}>Número Orden</span>
+                            <TextBoxMU
+                                value={deleteOrderId}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDeleteOrderId(e.target.value)}
+                                ejemplo="Ej: 1"
+                                etiqueta=""
+                                viewWidth={18}
+                                viewHeight={5}
+                            />
+                        </div>
+                        <Button texto={deleteLoading ? "Eliminando..." : "Eliminar"} viewHeight={5} onClick={handleDeleteOrder} disabled={deleteLoading || !deleteOrderId} />
+                        {deleteError && <div style={{color: 'red', marginTop: '1.5rem'}}>{deleteError}</div>}
+                        <button onClick={() => setShowDeleteModal(false)} style={{marginTop: '1.5rem', background: 'none', border: 'none', color: '#007bff', cursor: 'pointer', fontSize: '1rem'}}>Cancelar</button>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
