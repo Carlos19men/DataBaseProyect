@@ -1,6 +1,7 @@
 USE MU_DB; -- Make sure this is the correct database.
 GO
 
+
 --obtenemos los telefonos de un cliente especifico 
 CREATE FUNCTION GetTelefonosClientes(
     @cedula VARCHAR(100) -- Good, you've added the length!

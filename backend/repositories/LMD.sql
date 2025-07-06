@@ -883,7 +883,8 @@ INSERT INTO PagosFactura(nro_factura, id_pago) VALUES
 (7,1),
 (8,3),
 (9,7),
-(10,10);
+(5,10);
+
 
 
 
@@ -894,6 +895,7 @@ INSERT INTO Compras (nro_compra, id_producto, cantidad_producto, precio_und) VAL
 (3, 1, 8, 15.99),
 (4, 2, 12, 8.20),
 (5, 1, 15, 15.99);
+
 
 
 

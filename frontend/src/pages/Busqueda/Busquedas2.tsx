@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																									import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MenuDespegable from "../../components/Menu Desplegable/MenuDesplegable";
 import styles from "./Busqueda.module.css";

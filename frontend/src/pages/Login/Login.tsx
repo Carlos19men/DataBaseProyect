@@ -48,7 +48,7 @@ const Login: React.FC = () => {
             <div className={styles.centrado}>
                     <div>
                         <div className={styles.oculto}></div>
-                        <TextBoxMU etiqueta="Ingrese su cedula: " ejemplo="12345724" viewWidth={60} value={cedulaEmpleado} onChange={e => setCedulaE(e.target.value)} ></TextBoxMU>
+                        <TextBoxMU etiqueta="Ingrese su Cédula: " ejemplo="12345724" viewWidth={60} value={cedulaEmpleado} onChange={e => setCedulaE(e.target.value)} ></TextBoxMU>
                     </div>   
             </div>
             <div className={styles.error}>{textoErr}</div>
@@ -60,7 +60,7 @@ const Login: React.FC = () => {
                 </div>
                 <div className={styles.centrado}>
                 <Link to="/Registro" className="miniText">
-                    Registrate Aqui
+                    <u>Registrate Aqui</u>
                 </Link>
                 </div>
             
