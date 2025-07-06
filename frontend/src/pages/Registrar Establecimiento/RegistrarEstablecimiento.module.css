@@ -45,19 +45,13 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-/* Estilos más sutiles para el contenedor general */
+/* Contenedor principal similar a páginas de detalle */
 .container {
-    flex: auto;
-    flex-direction: column;
-    background: #fefefe;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-    border: 1px solid #f0f0f0;
-    display: flex;
-    align-items: center;
-    max-width: 600px;
-    margin: 0 auto;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: white;
+  margin-top: 0; 
 }
 
 .centrado {
@@ -67,11 +61,61 @@
     max-width: 800px;
 }
 
+/* Tarjeta de detalle similar a páginas de detalle */
+.detailCard {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+/* Estilos para formularios con entries verticales */
 .form {
-    margin-bottom: 20px;
-    width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.formRow {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.formLabel {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.formInput {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    color: #333;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.formInput:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.formInput:hover {
+    border-color: #bbb;
 }
 
 /* Estilos más sutiles para los mensajes */
@@ -130,8 +174,8 @@
 .dropdown {
     position: absolute;
     top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
     background: white;
     border: 1px solid #e5e7eb;
     border-radius: 6px;
@@ -140,7 +184,6 @@
     overflow-y: auto;
     z-index: 1000;
     margin-top: 2px;
-    min-width: 300px;
 }
 
 .dropdownItem {
@@ -162,7 +205,6 @@
 }
 
 /* Estilos para mensajes de error individuales */
-/* Mensaje de error debajo del entry y con espacio reservado */
 .errorField {
     color: #dc2626;
     font-size: 12px;
@@ -172,7 +214,7 @@
     font-weight: 400;
     opacity: 1;
     text-align: left;
-    margin: 0 0 4px 0;
+    margin: 4px 0 0 0;
     padding-left: 4px;
     transition: opacity 0.2s;
 }
@@ -184,7 +226,6 @@
 }
 
 /* Estilos para mostrar el nombre del empleado */
-/* Rectángulo verde ancho debajo del entry de cédula */
 .empleadoNombre {
     margin-top: 10px;
     padding: 16px 18px;
@@ -206,4 +247,35 @@
 .empleadoNombre strong {
     color: #1b5e20;
     font-weight: 500;
+}
+
+/* Botón de regreso estándar */
+.backFab {
+  position: fixed;
+  top: 100px;
+  left: 30px;
+  width: 60px;
+  height: 60px;
+  background: var(--primary-green, #22b86c);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 2.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1200;
+}
+
+.backFab:hover {
+  transform: scale(1.1);
+  background: #1a7f37;
+}
+
+.backFab:active {
+  transform: scale(0.95);
 }

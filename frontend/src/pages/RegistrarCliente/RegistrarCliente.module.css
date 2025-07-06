@@ -64,10 +64,6 @@
   border-color: #bbb;
 }
 
-.cantidadInput {
-  flex: 1;
-}
-
 .buttonContainer {
   display: flex;
   justify-content: center;

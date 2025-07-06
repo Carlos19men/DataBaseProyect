@@ -11,38 +11,35 @@ const ProductoDetalle: React.FC = () => {
   const [productoData, setProductoData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  const [menuAbierto, setMenuAbierto] = useState(false);
+  
+  useEffect(() => {
+    const checkMenuState = () => {
+      const menuState = localStorage.getItem('menuAbierto') === 'true';
+      setMenuAbierto(menuState);
+    };
+    
+    // Verificar estado inicial
+    checkMenuState();
+    
+    // Escuchar cambios en localStorage
+    const handleStorageChange = () => checkMenuState();
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Verificar cada 100ms para cambios locales
+    const interval = setInterval(checkMenuState, 100);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, []);
 
   useEffect(() => {
-    const fetchProductoData = async () => {
-      if (!id) {
-        setError("No se proporcionó el ID del producto");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        setLoading(true);
-        setError("");
-        
-        // Fetch del producto específico usando el ID
-        const response = await fetch(`http://localhost:1234/product/${id}`);
-        
-        if (!response.ok) {
-          throw new Error(`Error ${response.status}: ${response.statusText}`);
-        }
-        
-        const data = await response.json();
-        setProductoData(data);
-      } catch (err) {
-        console.error("Error fetching producto data:", err);
-        setError("No se pudo cargar la información del producto");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProductoData();
-  }, [id]);
+    const handler = (e: any) => setMenuAbierto(!!e.detail?.activo);
+    window.addEventListener('menu-toggle', handler);
+    return () => window.removeEventListener('menu-toggle', handler);
+  }, []);
 
   const getContaminationColor = (nivel: number) => {
     switch (nivel) {
@@ -136,7 +133,12 @@ const ProductoDetalle: React.FC = () => {
           </h3>
         </div>
       </div>
-      
+      {/* Botón flotante de regreso */}
+      {!menuAbierto && (
+        <button className={styles.backFab} onClick={() => navigate('/Search')}>
+          ←
+        </button>
+      )}
       <div className={styles.container}>
         <div className={styles.detailCard}>
           <div className={styles.clientHeader}>

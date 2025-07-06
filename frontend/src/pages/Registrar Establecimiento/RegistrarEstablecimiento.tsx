@@ -3,6 +3,7 @@ import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
 import TopBar from "../../components/TopBar/TopBar";
 import styles from "./RegistrarEstablecimiento.module.css";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Empleado {
   CI_emp: string;
@@ -22,6 +23,7 @@ interface Establecimiento {
 }
 
 const RegistrarEstablecimiento: React.FC = () => {
+    const navigate = useNavigate();
     const [empleados, setEmpleados] = useState<Empleado[]>([]);
     const [establecimientos, setEstablecimientos] = useState<Establecimiento[]>([]);
     const [empleadoSeleccionado, setEmpleadoSeleccionado] = useState<Empleado | null>(null);
@@ -226,127 +228,124 @@ const RegistrarEstablecimiento: React.FC = () => {
         }
     }, [fechaEncargado]);
 
+    // Función para manejar el regreso
+    const handleBackClick = () => {
+        navigate('/Search');
+    };
+
     return(
         <div>
             <TopBar text="Registrar Establecimiento" menu={false}></TopBar>
-
-            <div className={styles.centrado} >
-                <div className={styles.container}>
-                    <div className={styles.form}>
-                        <TextBoxMU 
-                            etiqueta="RIF del Establecimiento: " 
-                            viewWidth={40} 
-                            ejemplo="Ej: J-12345678-9"
-                            value={rifEstablecimiento}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRifEstablecimiento(e.target.value)}
-                        />
-                        {errorRIF && <div className={styles.errorField}>{errorRIF}</div>}
-                    </div>
-                    <div className={styles.form}>
-                        <TextBoxMU 
-                            etiqueta="Nombre: " 
-                            viewWidth={40} 
-                            ejemplo="Ej: Establecimiento Central"
-                            value={nombreEstablecimiento}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNombreEstablecimiento(e.target.value)}
-                        />
-                        {errorNombre && <div className={styles.errorField}>{errorNombre}</div>}
-                    </div>
-                    <div className={styles.form}>
-                        <div className={styles.dropdownContainer}>
-                            <TextBoxMU 
-                                etiqueta="Ciudad: " 
-                                viewWidth={40} 
-                                ejemplo="Buscar estado..."
-                                value={busquedaCiudad}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                    setBusquedaCiudad(e.target.value);
-                                    setMenuCiudadesAbierto(true);
-                                }}
+            <div className={styles.container}>
+                <div className={styles.detailCard}>
+                    <form className={styles.form}>
+                        <div className={styles.formRow}>
+                            <label className={styles.formLabel}>RIF del Establecimiento</label>
+                            <input
+                                className={styles.formInput}
+                                type="text"
+                                placeholder="Ej: J-12345678-9"
+                                value={rifEstablecimiento}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRifEstablecimiento(e.target.value)}
                             />
-                            {menuCiudadesAbierto && ciudadesFiltradas.length > 0 && (
-                                <div className={styles.dropdown}>
-                                    {ciudadesFiltradas.map((ciudad, index) => (
-                                        <div 
-                                            key={index} 
-                                            className={styles.dropdownItem}
-                                            onClick={() => seleccionarCiudad(ciudad)}
-                                        >
-                                            {ciudad}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
+                            {errorRIF && <div className={styles.errorField}>{errorRIF}</div>}
                         </div>
-                        {errorCiudad && <div className={styles.errorField}>{errorCiudad}</div>}
-                    </div>
-                    <div className={styles.form}>
-                        <div className={styles.dropdownContainer}>
-                            <TextBoxMU 
-                                etiqueta="Cedula del encargado: " 
-                                viewWidth={40} 
-                                ejemplo="Buscar empleado..."
-                                value={busquedaEmpleado}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                    setBusquedaEmpleado(e.target.value);
-                                    setMenuAbierto(true);
-                                }}
+                        
+                        <div className={styles.formRow}>
+                            <label className={styles.formLabel}>Nombre</label>
+                            <input
+                                className={styles.formInput}
+                                type="text"
+                                placeholder="Ej: Establecimiento Central"
+                                value={nombreEstablecimiento}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNombreEstablecimiento(e.target.value)}
                             />
-                            {menuAbierto && empleadosFiltrados.length > 0 && (
-                                <div className={styles.dropdown}>
-                                    {empleadosFiltrados.map((empleado, index) => (
-                                        <div 
-                                            key={index} 
-                                            className={styles.dropdownItem}
-                                            onClick={() => seleccionarEmpleado(empleado)}
-                                        >
-                                            {empleado.empleado} - {empleado.CI_emp}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
+                            {errorNombre && <div className={styles.errorField}>{errorNombre}</div>}
                         </div>
-                        {empleadoSeleccionado && (
-                            <div className={styles.empleadoNombre}>
-                                <span>Empleado seleccionado: <strong>{empleadoSeleccionado.empleado}</strong></span>
+                        
+                        <div className={styles.formRow}>
+                            <label className={styles.formLabel}>Ciudad</label>
+                            <div className={styles.dropdownContainer}>
+                                <input
+                                    className={styles.formInput}
+                                    type="text"
+                                    placeholder="Buscar estado..."
+                                    value={busquedaCiudad}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                        setBusquedaCiudad(e.target.value);
+                                        setMenuCiudadesAbierto(true);
+                                    }}
+                                />
+                                {menuCiudadesAbierto && ciudadesFiltradas.length > 0 && (
+                                    <div className={styles.dropdown}>
+                                        {ciudadesFiltradas.map((ciudad, index) => (
+                                            <div 
+                                                key={index} 
+                                                className={styles.dropdownItem}
+                                                onClick={() => seleccionarCiudad(ciudad)}
+                                            >
+                                                {ciudad}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
-                        )}
-                        {errorEmpleado && <div className={styles.errorField}>{errorEmpleado}</div>}
-                    </div>
-                    <div className={styles.form}>
-                        <div className={styles.dateContainer}>
-                            <label className={styles.dateLabel}>Fecha desde la que es encargado:</label>
-                            <input 
-                                type="date" 
-                                className={styles.dateInput}
+                            {errorCiudad && <div className={styles.errorField}>{errorCiudad}</div>}
+                        </div>
+                        
+                        <div className={styles.formRow}>
+                            <label className={styles.formLabel}>Empleado Encargado</label>
+                            <div className={styles.dropdownContainer}>
+                                <input
+                                    className={styles.formInput}
+                                    type="text"
+                                    placeholder="Buscar empleado..."
+                                    value={busquedaEmpleado}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                        setBusquedaEmpleado(e.target.value);
+                                        setMenuAbierto(true);
+                                    }}
+                                />
+                                {menuAbierto && empleadosFiltrados.length > 0 && (
+                                    <div className={styles.dropdown}>
+                                        {empleadosFiltrados.map((empleado, index) => (
+                                            <div 
+                                                key={index} 
+                                                className={styles.dropdownItem}
+                                                onClick={() => seleccionarEmpleado(empleado)}
+                                            >
+                                                {empleado.CI_emp} - {empleado.empleado}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                            {errorEmpleado && <div className={styles.errorField}>{errorEmpleado}</div>}
+                        </div>
+                        
+                        <div className={styles.formRow}>
+                            <label className={styles.formLabel}>Fecha de Encargo</label>
+                            <input
+                                type="date"
+                                className={styles.formInput}
                                 value={fechaEncargado}
                                 onChange={(e) => setFechaEncargado(e.target.value)}
                             />
+                            {errorFecha && <div className={styles.errorField}>{errorFecha}</div>}
                         </div>
-                        {errorFecha && <div className={styles.errorField}>{errorFecha}</div>}
-                    </div>
+                        
+                        <div className={styles.buttonContainer}>
+                            <Button texto="Registrar Establecimiento" viewHeight={7} fuente={3} />
+                        </div>
+                    </form>
                 </div>
             </div>
-
-            <div className={styles.centrado}>
-                <Button 
-                    texto="Ingresar" 
-                    onClick={()=> {
-                        const rifValido = validarRIF(rifEstablecimiento);
-                        const nombreValido = validarNombre(nombreEstablecimiento);
-                        const ciudadValida = validarCiudad(ciudadEstablecimiento);
-                        const empleadoValido = validarEmpleado(empleadoSeleccionado);
-                        const fechaValida = validarFecha(fechaEncargado);
-
-                        if (rifValido && nombreValido && ciudadValida && empleadoValido && fechaValida) {
-                            // Aquí iría la lógica para registrar el establecimiento
-                            console.log("Registrando establecimiento...");
-                        }
-                    }}
-                />
-            </div>
+            {/* Floating Action Button - Back */}
+            <button className={styles.backFab} onClick={handleBackClick}>
+                ←
+            </button>
         </div>
-    )
+    );
 }
 
 export default RegistrarEstablecimiento;

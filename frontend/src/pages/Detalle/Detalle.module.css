@@ -57,6 +57,8 @@
   padding: 1rem;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .detailCard h2 {
@@ -65,6 +67,7 @@
   margin-bottom: 2rem;
   padding-bottom: 1rem;
   border-bottom: 2px solid #f0f0f0;
+  text-align: center;
 }
 
 .infoSection {
@@ -273,4 +276,34 @@
   .dataTable td {
     padding: 0.75rem 0.5rem;
   }
+} 
+
+.backFab {
+  position: fixed;
+  top: 100px;
+  left: 30px;
+  width: 60px;
+  height: 60px;
+  background: var(--primary-green, #22b86c);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 2.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1200;
+}
+
+.backFab:hover {
+  transform: scale(1.1);
+  background: #1a7f37;
+}
+
+.backFab:active {
+  transform: scale(0.95);
 } 

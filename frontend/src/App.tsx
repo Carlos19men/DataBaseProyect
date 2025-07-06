@@ -20,6 +20,8 @@ import ProtectedRoute from "./components/RutaProtegida/ProtectedRoute";
 import RegistrarOrdenServicio from "./pages/RegistrarOrden_Servicio/RegistrarOrdenServicio";
 import RegistrarProducto from "./pages/RegistrarProducto/RegistrarProducto";
 import RegistrarEstablecimiento from "./pages/Registrar Establecimiento/RegistrarEstablecimiento";
+import RegistrarEmpleado from "./pages/RegistrarEmpleado/RegistrarEmpleado";
+import RegistrarCliente from "./pages/RegistrarCliente/RegistrarCliente";
 import OrdenServicio from "./pages/OrdenServicio/OrdenServicio";
 
 
@@ -56,6 +58,8 @@ const App = () => (
       <Route path="/RegistrarOrdenServicio" element={<ProtectedRoute><RegistrarOrdenServicio/></ProtectedRoute>}></Route>
       <Route path="/RegistrarProducto" element={<ProtectedRoute><RegistrarProducto/></ProtectedRoute>}></Route>
       <Route path="/RegistrarEstablecimiento" element={<ProtectedRoute><RegistrarEstablecimiento/></ProtectedRoute>}></Route>
+      <Route path="/RegistrarEmpleado" element={<ProtectedRoute><RegistrarEmpleado/></ProtectedRoute>}></Route>
+      <Route path="/RegistrarCliente" element={<ProtectedRoute><RegistrarCliente/></ProtectedRoute>}></Route>
       <Route path="/empleado-detalle" element={<ProtectedRoute><EmpleadoDetalle/></ProtectedRoute>}></Route>
       <Route path="/establecimiento-detalle" element={<ProtectedRoute><EstablecimientoDetalle/></ProtectedRoute>}></Route>
       <Route path="/cliente-detalle" element={<ProtectedRoute><ClienteDetalle/></ProtectedRoute>}></Route>
