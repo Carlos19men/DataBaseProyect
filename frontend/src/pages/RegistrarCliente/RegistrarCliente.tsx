@@ -30,39 +30,29 @@ const RegistrarCliente: React.FC = () => {
       return;
     }
 
+    // Validar que los teléfonos sean distintos
+    if (telefono1 === telefono2) {
+      setError("Los teléfonos deben ser diferentes.");
+      return;
+    }
+
     try {
-      // Primero registrar el cliente
-      const resCliente = await fetch(`http://localhost:1234/customer/`, {
+      // Registrar cliente con teléfonos en una sola llamada
+      const res = await fetch(`http://localhost:1234/customer/`, {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           CI: ci,
           name: nombre,
           lastName: apellido,
-          email: email
+          email: email,
+          telefono1: telefono1,
+          telefono2: telefono2
         })
       });
       
-      if (!resCliente.ok) {
-        const data = await resCliente.json();
-        setError(data.error || data.message || "Error al registrar el cliente");
-        // Limpiar error después de 5 segundos
-        setTimeout(() => setError(null), 5000);
-        return;
-      }
-
-      // Luego registrar los teléfonos
-      const resTelefonos = await fetch(`http://localhost:1234/phones/`, {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          CI: ci,
-          num1: telefono1,
-          num2: telefono2
-        })
-      });
-
-      if (resTelefonos.ok) {
+      const data = await res.json();
+      if (res.ok) {
         setMensaje("Cliente registrado correctamente.");
         // Limpiar formulario
         setCi(""); 
@@ -74,8 +64,7 @@ const RegistrarCliente: React.FC = () => {
         // Limpiar mensaje después de 3 segundos
         setTimeout(() => setMensaje(null), 3000);
       } else {
-        const data = await resTelefonos.json();
-        setError(data.error || data.message || "Error al registrar los teléfonos");
+        setError(data.error || data.message || "Error al registrar el cliente");
         // Limpiar error después de 5 segundos
         setTimeout(() => setError(null), 5000);
       }

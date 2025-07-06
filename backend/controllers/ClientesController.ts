@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'; // Importa los tipos de Express
 import { customerModel } from "../models/Clientes"; // Tu modelo de cliente
+import { phonesCustomerModel } from "../models/Telefonos"; // Modelo de teléfonos
 
 
 interface Customer{
@@ -99,22 +100,63 @@ export class CustomerController {
         }
     }
     
-    //add cusomer 
+    //add customer 
     add = async (req:Request, res:Response<Customer | {message:string}>): Promise<void> => {
-        const { CI, name, lastName, email } = req.body; // Obtiene los datos del cliente del cuerpo de la solicitud
+        const { CI, name, lastName, email, telefono1, telefono2 } = req.body; // Obtiene los datos del cliente del cuerpo de la solicitud
        
         if (!CI || CI.length === 0) {
             res.status(400).json({ message: 'CI es requerido.' });
             return;
         }
 
+        if (!name || name.length === 0) {
+            res.status(400).json({ message: 'Nombre es requerido.' });
+            return;
+        }
+
+        if (!lastName || lastName.length === 0) {
+            res.status(400).json({ message: 'Apellido es requerido.' });
+            return;
+        }
+
+        if (!email || email.length === 0) {
+            res.status(400).json({ message: 'Email es requerido.' });
+            return;
+        }
+
+        if (!telefono1 || telefono1.length === 0) {
+            res.status(400).json({ message: 'Teléfono principal es requerido.' });
+            return;
+        }
+
+        if (!telefono2 || telefono2.length === 0) {
+            res.status(400).json({ message: 'Teléfono secundario es requerido.' });
+            return;
+        }
+
+        // Validar que los teléfonos sean distintos
+        if (telefono1 === telefono2) {
+            res.status(400).json({ message: 'Los teléfonos deben ser diferentes.' });
+            return;
+        }
+
+        // Validar formato de teléfonos (opcional, puedes ajustar según tus necesidades)
+        const telefonoRegex = /^[0-9-]+$/;
+        if (!telefonoRegex.test(telefono1) || !telefonoRegex.test(telefono2)) {
+            res.status(400).json({ message: 'Formato de teléfono inválido. Use solo números y guiones.' });
+            return;
+        }
+
         try {
-            const result = await customerModel.add(CI, name, lastName, email);
+            // Primero agregar el cliente
+            const result = await customerModel.add(CI, name, lastName, email,telefono1,telefono2);
             if(result['rowsAffected'] === 0){
-                res.status(201).json({message: 'No se agregó ningún cliente'}); // Envía el cliente agregado con status 201
+                res.status(400).json({message: 'No se pudo agregar el cliente'});
                 return;
             }
-            res.status(202).json({message: 'Cliente agregado con exito'}); // Envía el cliente agregado con status 201
+
+
+            res.status(201).json({message: 'Cliente agregado con éxito'}); // Envía el cliente agregado con status 201
             return;
         } catch (error:unknown) {
             
