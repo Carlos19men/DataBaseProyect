@@ -137,55 +137,6 @@ const Busquedas2: React.FC = () => {
 			}
 			const ciudad = item.ciudad || item.city || "";
 
-<<<<<<< HEAD
-  return (
-    <div>
-      <div className={styles.bar}>
-        <MenuDespegable />
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <SearchBar
-            etiqueta=""
-            ejemplo="Buscar"
-            viewWidth={70}
-            viewHeight={10}
-            value={busqueda}
-            onSearchClick={() => {}}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBusqueda(e.target.value)}
-          />
-        </div>
-      </div>
-      <div className={styles.columnas}>
-        <div className={styles.resultados}>
-          {loading ? (
-            <div>Cargando...</div>
-          ) : error ? (
-            <div>{error}</div>
-          ) : datosFiltrados.length === 0 ? (
-            <div>No hay resultados</div>
-          ) : (
-            datosFiltrados.map((item: any, idx: number) => (
-              <React.Fragment key={idx}>
-                {renderCard(item, tipo)}
-              </React.Fragment>
-            ))
-          )}
-        </div>
-        <div className={styles.filtros}>
-          <div className={styles.subtitle}>Filtros</div>
-          <Button texto="Empleados" viewHeight={5} onClick={() => setTipo("employee")} selected={tipo === "employee"} />
-          <Button texto="Establecimientos" viewHeight={5} onClick={() => setTipo("establishement")} selected={tipo === "establishement"} />
-          <Button texto="Clientes" viewHeight={5} onClick={() => setTipo("customer")} selected={tipo === "customer"} />
-          <Button texto="Proveedores" viewHeight={5} onClick={() => setTipo("suppliers")} selected={tipo === "suppliers"} />
-          <Button texto="Productos" viewHeight={5} onClick={() => setTipo("product")} selected={tipo === "product"} />
-        </div>
-      </div>
-      {/* Floating Action Button */}
-      <button className={styles.fab} onClick={handleFabClick}>
-        +
-      </button>
-    </div>
-  );
-=======
 			// Función para truncar texto si excede 200 caracteres
 			const truncarTexto = (texto: string) => {
 				if (texto.length > 200) {
@@ -355,9 +306,12 @@ const Busquedas2: React.FC = () => {
 					<Button texto="Productos" viewHeight={5} onClick={() => setTipo("product")} selected={tipo === "product"} />
 				</div>
 			</div>
+			{/* Floating Action Button */}
+			<button className={styles.fab} onClick={handleFabClick}>
+				+
+			</button>
 		</div>
 	);
->>>>>>> cc543f08e52cb25829a3263e757e7af5ce7fc066
 };
 
 export default Busquedas2; 
