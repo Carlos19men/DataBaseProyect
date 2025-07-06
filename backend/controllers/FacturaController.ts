@@ -100,4 +100,14 @@ export class InvoiceController {
       res.status(500).json({ message: "Error retrieving montos data", error });
     }
   }
+
+  static async createFromOrder(req: Request, res: Response) {
+    const { cod_OS, iva, fecha_emision } = req.body;
+    try {
+      const result = await invoice.createFromOrder(Number(cod_OS), iva ? Number(iva) : 16, fecha_emision || null);
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json({ message: "Error al crear la factura desde la orden de servicio", error });
+    }
+  }
 }
