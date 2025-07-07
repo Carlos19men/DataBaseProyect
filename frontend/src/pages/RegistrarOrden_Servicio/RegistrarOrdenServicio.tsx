@@ -78,7 +78,6 @@ const RegistrarOrdenServicio = () => {
   const [fechaSalidaAA, setFechaSalidaAA] = useState("");
   const [horaEstimadaSalidaHH, setHoraEstimadaSalidaHH] = useState("");
   const [horaEstimadaSalidaMM, setHoraEstimadaSalidaMM] = useState("");
-  const [justificacion, setJustificacion] = useState("");
   const [personaAutorizada, setPersonaAutorizada] = useState("");
 
   // Estado para las relaciones producto-actividad
@@ -486,7 +485,6 @@ const RegistrarOrdenServicio = () => {
         setHoraEntradaMM("");
         setHoraEstimadaSalidaHH("");
         setHoraEstimadaSalidaMM("");
-        setJustificacion("");
         setPersonaAutorizada("");
       } else {
         const errorData = await response.json();
@@ -678,65 +676,6 @@ const RegistrarOrdenServicio = () => {
               onChange={(e) => setHoraEntradaMM(e.target.value)}
             />
           </div>
-        </div>
-
-        <div className={styles.rowGroup}>
-          <div className={styles.rowDateTime}>
-            <label>Fecha Salida:</label>
-            <input 
-              className={styles.inputDate} 
-              type="text" 
-              placeholder="DD" 
-              maxLength={2} 
-              value={fechaSalidaDD}
-              onChange={(e) => setFechaSalidaDD(e.target.value)}
-            />
-            <input 
-              className={styles.inputDate} 
-              type="text" 
-              placeholder="MM" 
-              maxLength={2} 
-              value={fechaSalidaMM}
-              onChange={(e) => setFechaSalidaMM(e.target.value)}
-            />
-            <input 
-              className={styles.inputDate} 
-              type="text" 
-              placeholder="AA" 
-              maxLength={2} 
-              value={fechaSalidaAA}
-              onChange={(e) => setFechaSalidaAA(e.target.value)}
-            />
-          </div>
-          <div className={styles.rowDateTime}>
-            <label>Hora Estimada Salida:</label>
-            <input 
-              className={styles.inputDate} 
-              type="text" 
-              placeholder="HH" 
-              maxLength={2} 
-              value={horaEstimadaSalidaHH}
-              onChange={(e) => setHoraEstimadaSalidaHH(e.target.value)}
-            />
-            <input 
-              className={styles.inputDate} 
-              type="text" 
-              placeholder="MM" 
-              maxLength={2} 
-              value={horaEstimadaSalidaMM}
-              onChange={(e) => setHoraEstimadaSalidaMM(e.target.value)}
-            />
-          </div>
-        </div>
-
-        <div className={styles.row}>
-          <label>Justificación:</label>
-          <TextBoxMU 
-            etiqueta="" 
-            viewWidth={30} 
-            viewHeight={8} 
-            ejemplo="Justificación" 
-          />
         </div>
 
         <div className={styles.row}>

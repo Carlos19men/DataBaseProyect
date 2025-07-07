@@ -34,9 +34,10 @@ DROP TABLE Marcas;
 
 DROP DATABASE MU_DB; 
 */
-
 -- Esquema de la base de datos.
 create database MU_DB;
+
+
 
 USE MU_DB; 
 
@@ -139,11 +140,11 @@ create table Vehiculos(
 	CI_dueño varchar(15) not null,
 	
 	primary key(codigo),
-	foreign key(id_marca,id_modelo) references Modelos(cod_marca, nro_modelo),  -- ON DELETE NO ACTION (POR DEFECTO)
+	foreign key(id_marca,id_modelo) references Modelos(cod_marca, nro_modelo),  -- ON DELETE NO ACTIO																																																																																																									N (POR DEFECTO)
     foreign key(CI_dueño) references Clientes(CI_cliente) ON DELETE CASCADE
 );
 
-create table OrdenesServicio(
+create table 																					vicio(
 	cod_OS int identity(1,1) not null,
 	fecha_entrada date not null,
 	hora_entrada time not null,
@@ -157,7 +158,7 @@ create table OrdenesServicio(
 	
 	primary key(cod_OS),
 	foreign key(codigo_vehiculo) references Vehiculos(codigo) ON DELETE CASCADE,
-	foreign key(RIF_establecimiento) REFERENCES Establecimientos(RIF) ON DELETE CASCADE ON UPDATE
+	foreign key(RIF_establecimiento) REFERENCES Establecimientos(RIF) ON DELETE CASCADE
 );
 
 create table Facturas(
@@ -169,7 +170,7 @@ create table Facturas(
 	fecha_emision date not null,
 	
 	primary key(nro_factura),
-	foreign key(cod_OS) references OrdenesServicio(cod_OS) ON DELETE CASCADE ON UPDATE NO ACTION
+	foreign key(cod_OS) references OrdenesServicio(cod_OS) ON DELETE CASCADE
 );
 
 create table MetodosPago(
@@ -196,7 +197,7 @@ create table OrdenesCompra(
 	monto_total int CHECK(monto_total > 0),
 	
 	primary key(nro_OC),
-	foreign key(RIF_est) references Establecimientos(RIF) ON DELETE CASCADE ON UPDATE NO ACTION 
+	foreign key(RIF_est) references Establecimientos(RIF) ON DELETE CASCADE
 );
 
 
@@ -222,7 +223,7 @@ create table Productos(
 	id_familia int,
 	
 	primary key(id_producto),
-	foreign key(id_familia) references FamiliaProductos(id_familia) ON DELETE SET NULL ON UPDATE CASCADE
+	foreign key(id_familia) references FamiliaProductos(id_familia) ON DELETE SET NULL
 );
 
 create table Proveedores(
@@ -255,7 +256,7 @@ create table Actividades (
 	costo decimal(10,2) not null check(costo >= 0),
 	
 	primary key(nro_servicio, nro_correlativo),
-	foreign key(nro_servicio) references Servicios(nro_servicio) ON DELETE CASCADE ON UPDATE CASCADE
+	foreign key(nro_servicio) references Servicios(nro_servicio) ON DELETE CASCADE
 );
 
 create table EmpleadosAsignados(
