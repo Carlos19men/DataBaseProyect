@@ -44,7 +44,7 @@ const MenuDespegable: React.FC = () => {
                             </a>
                         </li>
                         <li>
-                            <a onClick={() => {cerrarMenu(); navigator("/sobre-nosotros");}} style={{cursor: "pointer"}}>
+                            <a onClick={() => {cerrarMenu(); navigator("/AboutUs");}} style={{cursor: "pointer"}}>
                                 <img src={more_horizontal} alt="Sobre nosotros" /> Sobre Nosotros
                             </a>
                         </li>
