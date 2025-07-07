@@ -18,12 +18,12 @@ export class buysOrderModel{
         return result['recordset'][0] || { error: "Buy orden not found" };
     }
 
-    static async create(fecha_compra:string,RIF_Est:string,RIF_proveedor:string,id_producto:number,cant_producto:number,precio:number){
+    static async create(fecha_compra:Date,RIF_Est:string,RIF_proveedor:string,id_producto:number,cant_producto:number,precio:number){
         //request
         const request = getDbPool().request();
 
         //inputs
-        request.input('fecha_compra',fecha_compra);
+        request.input('fecha_compra',sql.Date,fecha_compra);
         request.input('RIF_Est',RIF_Est);
         request.input('RIF_proveedor',RIF_proveedor);
         request.input('id_producto',id_producto);

@@ -4,7 +4,7 @@ import styles from "./MenuDespegable.module.css";
 //icons
 import arrowLeft_circle from "../../assets/Arrow left-circle.png";
 import box from "../../assets/Box.png";
-import home from "../../assets/Home.png";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+import home from "../../assets/Home.png";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 import more_horizontal from "../../assets/More horizontal.png";
 import search from "../../assets/Search.png";
 import { useState } from "react";
@@ -34,7 +34,6 @@ const MenuDespegable: React.FC = () => {
                         <div style={{ height:"12vh",marginTop: "5vh",marginBottom: "5vh",paddingBottom:"1vh",fontSize: "10vh"}}>Menu</div>
                     </ul>  
                     <ul>
-
                         <li><a href="/"><img src={home} alt="Inicio" /> Inicio</a></li>
                         <li><a href="/Search"><img src={search} alt="Buscar" /> Busqueda</a></li>
                         <li><a href="/Inventario"><img src={box} alt="Inventario" /> Inventario</a></li>
@@ -44,11 +43,16 @@ const MenuDespegable: React.FC = () => {
                             </a>
                         </li>
                         <li>
+                            <a onClick={() => {cerrarMenu(); navigator("/ordenes-compra");}} style={{cursor: "pointer"}}>
+                                <img src={box} alt="Ordenes Compra" /> Órdenes de Compra
+                            </a>
+                        </li>
+                        <li>
                             <a onClick={() => {cerrarMenu(); navigator("/AboutUs");}} style={{cursor: "pointer"}}>
                                 <img src={more_horizontal} alt="Sobre nosotros" /> Sobre Nosotros
                             </a>
                         </li>
-                        <li><a onClick={() => {localStorage.removeItem("isLoggedIn");navigator("/login");} }><img src={arrowLeft_circle} alt="Salir" onClick={() => {localStorage.removeItem("isLoggedIn");navigator("/login");}} /> Salir</a></li>
+                        <li><a onClick={() => {localStorage.removeItem("isLoggedIn");navigator("/Estats");} }><img src={arrowLeft_circle} alt="Salir" onClick={() => {localStorage.removeItem("isLoggedIn");navigator("E/stadsticas");}} /> Salir</a></li>
                     </ul>
                 </div>
             </nav>

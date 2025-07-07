@@ -27,6 +27,7 @@ import Inventario from "./pages/Inventario/Inventario";
 import RegistrarInventario from "./pages/RegistrarInventario/RegistrarInventario";
 import SobreNosotros from "./pages/SobreNosotros/SobreNosotros";
 import { UserProvider } from './components/UserContext';
+import OrdenesCompra from "./pages/OrdenesCompra/OrdenesCompra";
 
 // Importar páginas de detalle
 import EmpleadoDetalle from "./pages/Detalle/EmpleadoDetalle";
@@ -59,6 +60,7 @@ function App() {
           <Route path="/RegistrarVehiculo" element={<RegistrarVehiculo/>}></Route>
           <Route path="/RegistrarProveedor" element={<RegistrarProveedor/>}></Route>
           <Route path="/RegistrarOrdenCompra" element={<RegistrarOrdenCompra/>}></Route>
+          <Route path="/ordenes-compra" element={<OrdenesCompra/>}></Route>
           <Route path="/RegistrarPlan" element={<RegistrarPlan/>}></Route>
           <Route path="/RegistrarActividad" element={<RegistrarActividad/>}></Route>
           <Route path="/RegistrarServicio" element={<RegistrarServicio/>}></Route>
