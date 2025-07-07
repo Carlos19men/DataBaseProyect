@@ -22,7 +22,6 @@ export class ProductModel{
         descripcion: string | null,
         minimo: number | null, 
         maximo: number | null, 
-        tratamiento: string | null, 
         nivelCon: string | null, 
         inf_manejo: string | null, 
         id_familia: number | null
@@ -36,13 +35,14 @@ export class ProductModel{
         request.input('descripcion', descripcion);
         request.input('minimo', minimo);
         request.input('maximo', maximo);
-        request.input('tratamiento', tratamiento);
+
         request.input('nivelCon', nivelCon);
         request.input('inf_manejo', inf_manejo);
         request.input('id_familia', id_familia);
 
-        const result = await request.query('EXEC nuevoProducto @nombre @tipo @precio @descripcion @minimo @maximo @tratamiento @nivelCon @inf_manejo @id_familia;')
-
+        const result = await request.query(
+  'EXEC nuevoProducto @nombre, @tipo, @precio, @descripcion, @minimo, @maximo,  @nivelCon, @inf_manejo, @id_familia;'
+)
         return {rowsAffected: result['rowsAffected'][0]}
     }
     

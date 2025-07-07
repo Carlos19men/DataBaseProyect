@@ -3,6 +3,8 @@ import TopBar from "../../components/TopBar/TopBar";
 import Button from "../../components/Button/button";
 import styles from "./RegistrarCliente.module.css";
 import { useNavigate } from "react-router-dom";
+import ArrowBack from '../../assets/arrow_back_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24(1).svg';
+import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
 
 const RegistrarCliente: React.FC = () => {
   const navigate = useNavigate();
@@ -94,76 +96,61 @@ const RegistrarCliente: React.FC = () => {
       <div className={styles.container}>
         <div className={styles.detailCard}>
           <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Cédula de Identidad</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                placeholder="Ej: 12345678"
-                value={ci}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCi(e.target.value)}
-              />
-            </div>
-            
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Nombre</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                placeholder="Nombre del cliente"
-                value={nombre}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNombre(e.target.value)}
-              />
-            </div>
-            
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Apellido</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                placeholder="Apellido del cliente"
-                value={apellido}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setApellido(e.target.value)}
-              />
-            </div>
-            
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Correo Electrónico</label>
-              <input
-                className={styles.formInput}
-                type="email"
-                placeholder="Ej: cliente@email.com"
-                value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-              />
-            </div>
-            
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Teléfono Principal</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                placeholder="Ej: 0414-1234567"
-                value={telefono1}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTelefono1(e.target.value)}
-              />
-            </div>
-            
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Teléfono Secundario</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                placeholder="Ej: 0424-1234567"
-                value={telefono2}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTelefono2(e.target.value)}
-              />
-            </div>
-            
-            <div className={styles.buttonContainer}>
-              <Button texto="Registrar Cliente" viewHeight={7} fuente={3} />
-            </div>
-          </form>
+  <div className={styles.formRow}>
+    <TextBoxMU
+      etiqueta="Cédula"
+      ejemplo="Ej: 12345678"
+      viewWidth={25}
+      value={ci}
+      onChange={(e: any) => setCi(e.target.value.replace(/[^0-9]/g, "").slice(0, 15))}
+    />
+
+    <TextBoxMU
+      etiqueta="Nombre"
+      ejemplo="Nombre del cliente"
+      viewWidth={25}
+      value={nombre}
+      onChange={(e: any) => setNombre(e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]/g, "").slice(0, 50))}
+    />
+  </div>
+  <div className={styles.formRow}>
+    <TextBoxMU
+      etiqueta="Apellido"
+      ejemplo="Apellido del cliente"
+      viewWidth={25}
+      value={apellido}
+      onChange={(e: any) => setApellido(e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]/g, "").slice(0, 50))}
+    />
+ 
+    <TextBoxMU
+      etiqueta="Email"
+      ejemplo="Ej: cliente@email.com"
+      viewWidth={25}
+      value={email}
+      onChange={(e: any) => setEmail(e.target.value.slice(0, 100))}
+    />
+  </div>
+  <div className={styles.formRow}>
+    <TextBoxMU
+      etiqueta="Teléfono"
+      ejemplo="Ej: 0414-1234567"
+      viewWidth={22}
+      value={telefono1}
+      onChange={(e: any) => setTelefono1(e.target.value.replace(/[^0-9-]/g, "").slice(0, 15))}
+    />
+
+    <TextBoxMU
+      etiqueta="Alternativo"
+      ejemplo="Ej: 0424-1234567"
+      viewWidth={22}
+      value={telefono2}
+      onChange={(e: any) => setTelefono2(e.target.value.replace(/[^0-9-]/g, "").slice(0, 15))}
+    />
+  </div>
+  <div className={styles.buttonContainer}>
+    <Button texto="Registrar Cliente" viewHeight={7} fuente={3} />
+  </div>
+</form>
           {mensaje && (
             <div style={{ 
               color: 'green', 
@@ -194,7 +181,7 @@ const RegistrarCliente: React.FC = () => {
       </div>
       {/* Floating Action Button - Back */}
       <button className={styles.backFab} onClick={handleBackClick}>
-        ←
+        <img src={ArrowBack} alt="Volver" style={{ width: 24, height: 24 }} />
       </button>
 
       {/* Success Popup */}

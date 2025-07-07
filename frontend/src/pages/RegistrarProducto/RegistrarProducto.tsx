@@ -4,6 +4,7 @@ import TopBar from "../../components/TopBar/TopBar";
 import Button from "../../components/Button/button";
 import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
 import { useNavigate } from "react-router-dom";
+import ArrowBack from '../../assets/arrow_back_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24(1).svg';
 
 interface Familia {
   id_familia: number;
@@ -66,18 +67,25 @@ const RegistrarProducto = () => {
         maximo: maximo,
         minimo: minimo,
         id_familia: familiaSeleccionada
+
+        
       };
+      console.log(body)
       if (tipo === "NO ECOLÓGICO") {
         body.tratamiento_residuos = tratamiento;
         body.nivel_contaminacion = nivel;
         body.info_manejo = manejo;
       }
+      
       const res = await fetch(`http://localhost:1234/product`, {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       });
+
       const data = await res.json();
+
+      console.log(data)
       if (res.ok) {
         setNuevoProductoId(data.id_producto || "");
         setShowSuccessPopup(true);
@@ -105,133 +113,113 @@ const RegistrarProducto = () => {
       <div className={styles.container}>
         <div className={styles.detailCard}>
           <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Nombre</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                placeholder="Nombre del producto"
-                value={nombre}
-                onChange={e => setNombre(e.target.value)}
-              />
-            </div>
-            
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Tipo</label>
-              <select
-                className={styles.formInput}
-                value={tipo}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setTipo(e.target.value)}
-              >
-                <option value="ECOLÓGICO">ECOLÓGICO</option>
-                <option value="NO ECOLÓGICO">NO ECOLÓGICO</option>
-              </select>
-            </div>
-            
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Precio</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                placeholder="Precio"
-                value={precio}
-                onChange={e => setPrecio(e.target.value)}
-              />
-            </div>
-            
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Descripción</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                placeholder="Descripción"
-                value={descripcion}
-                onChange={e => setDescripcion(e.target.value)}
-              />
-            </div>
-            
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Cantidad máxima</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                placeholder="Máxima"
-                value={maximo}
-                onChange={e => setMaximo(e.target.value)}
-              />
-            </div>
-            
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Cantidad mínima</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                placeholder="Mínima"
-                value={minimo}
-                onChange={e => setMinimo(e.target.value)}
-              />
-            </div>
-            
-            {/* Campos condicionales para productos NO ECOLÓGICOS */}
-            {tipo === "NO ECOLÓGICO" && (
-              <>
-                <div className={styles.formRow}>
-                  <label className={styles.formLabel}>Tratamiento de residuos</label>
-                  <input
-                    className={styles.formInput}
-                    type="text"
-                    placeholder="Tratamiento de residuos"
-                    value={tratamiento}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTratamiento(e.target.value)}
-                  />
-                </div>
-                
-                <div className={styles.formRow}>
-                  <label className={styles.formLabel}>Nivel de contaminación</label>
-                  <select
-                    className={styles.formInput}
-                    value={nivel}
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setNivel(e.target.value)}
-                  >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </select>
-                </div>
-                
-                <div className={styles.formRow}>
-                  <label className={styles.formLabel}>Información de manejo</label>
-                  <input
-                    className={styles.formInput}
-                    type="text"
-                    placeholder="Información de manejo"
-                    value={manejo}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setManejo(e.target.value)}
-                  />
-                </div>
-              </>
-            )}
-            
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Familia de producto</label>
-              <select
-                className={styles.formInput}
-                value={familiaSeleccionada}
-                onChange={e => setFamiliaSeleccionada(e.target.value)}
-              >
-                <option value="">Seleccione una familia</option>
-                {familias.map(f => (
-                  <option key={f.id_familia} value={f.id_familia}>{f.nombre}</option>
-                ))}
-              </select>
-            </div>
-            
-            <div className={styles.buttonContainer}>
-              <Button texto="Registrar" />
-            </div>
-          </form>
+  <div className={styles.formRow}>
+    <TextBoxMU
+      etiqueta="Nombre"
+      ejemplo="Nombre del producto"
+      viewWidth={28}
+      value={nombre}
+      onChange={e => setNombre(e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]/g, "").slice(0, 50))}
+    />
+
+      <TextBoxMU etiqueta="Tipo" viewWidth={0} ejemplo="" />
+    <select
+      className={styles.formInput}
+      value={tipo}
+      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setTipo(e.target.value)}
+    >
+      <option value="ECOLÓGICO">ECOLÓGICO</option>
+      <option value="NO ECOLÓGICO">NO ECOLÓGICO</option>
+    </select>
+  </div>
+  
+  <div className={styles.formRow}>
+    <TextBoxMU
+      etiqueta="Precio"
+      ejemplo="Precio"
+      viewWidth={21}
+      value={precio}
+      onChange={e => setPrecio(e.target.value.replace(/[^0-9.]/g, "").slice(0, 10))}
+    />
+
+    <TextBoxMU
+      etiqueta="Descripción"
+      ejemplo="Descripción"
+      viewWidth={25}
+      value={descripcion}
+      onChange={e => setDescripcion(e.target.value.slice(0, 100))}
+    />
+  </div>
+  <div className={styles.formRow}>
+    <TextBoxMU
+      etiqueta="Máximo"
+      ejemplo="Máxima"
+      viewWidth={18}
+      value={maximo}
+      onChange={e => setMaximo(e.target.value.replace(/[^0-9]/g, "").slice(0, 7))}
+    />
+
+    <TextBoxMU
+      etiqueta="Mínimo"
+      ejemplo="Mínima"
+      viewWidth={18}
+      value={minimo}
+      onChange={e => setMinimo(e.target.value.replace(/[^0-9]/g, "").slice(0, 7))}
+    />
+  </div>
+  {/* Campos condicionales para productos NO ECOLÓGICOS */}
+  {tipo === "NO ECOLÓGICO" && (
+    <>
+      <div className={styles.formRow}>
+        <TextBoxMU
+          etiqueta="Tratamiento de residuos"
+          ejemplo="Tratamiento de residuos"
+          viewWidth={25}
+          value={tratamiento}
+          onChange={e => setTratamiento(e.target.value.slice(0, 50))}
+        />
+
+        <label className={styles.formLabel}>Nivel de contaminación</label>
+        <select
+          className={styles.formInput}
+          value={nivel}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setNivel(e.target.value)}
+        >
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <div className={styles.formRow}>
+        <TextBoxMU
+          etiqueta="Información de manejo"
+          ejemplo="Información de manejo"
+          viewWidth={25}
+          value={manejo}
+          onChange={e => setManejo(e.target.value.slice(0, 50))}
+        />
+      </div>
+    </>
+  )}
+  <div className={styles.formRow}>
+    <TextBoxMU etiqueta="Familia de producto" viewWidth={0} ejemplo="" />
+    <select
+      className={styles.formInput}
+      value={familiaSeleccionada}
+      onChange={e => setFamiliaSeleccionada(e.target.value)}
+    >
+      <option value="">Seleccione una familia</option>
+      {familias.map(f => (
+        <option key={f.id_familia} value={f.id_familia}>{f.nombre}</option>
+      ))}
+    </select>
+  </div>
+  <div className={styles.buttonContainer}>
+    <Button texto="Registrar" />
+  </div>
+</form>
           {mensaje && (
             <div style={{ color: 'green', textAlign: 'center', marginTop: 16 }}>{mensaje}</div>
           )}
@@ -242,7 +230,7 @@ const RegistrarProducto = () => {
       </div>
       {/* Floating Action Button - Back */}
       <button className={styles.backFab} onClick={handleBackClick}>
-        ←
+        <img src={ArrowBack} alt="Volver" style={{ width: 24, height: 24 }} />
       </button>
       {/* Success Popup */}
       {showSuccessPopup && (

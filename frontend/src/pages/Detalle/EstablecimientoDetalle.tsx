@@ -4,6 +4,9 @@ import MenuDespegable from "../../components/Menu Desplegable/MenuDesplegable";
 import styles from './Detalle.module.css';
 import TopBar from '../../components/TopBar/TopBar';
 
+import ArrowBack from '../../assets/arrow_back_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24(1).svg';
+
+
 const EstablecimientoDetalle: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();

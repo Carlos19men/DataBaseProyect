@@ -17,9 +17,16 @@ const TextBoxMU: React.FC<TextBoxMUProps> = ({
     <span className={styles.container}>
 
       <span className={styles.texto}   style={{height:`${viewHeight}vh`}} >{etiqueta}</span>
-
-        <input type="text" className={styles.barra}  placeholder={ejemplo}  style={{width:`${viewWidth}vw`,height:`${viewHeight}vh`,fontSize:`100%`}}
-        value={value} onChange={onChange}></input>
+{viewWidth !== 0 ? (
+      <input
+        type="text"
+        className={styles.barra}
+        placeholder={ejemplo}
+        style={{width:`${viewWidth}vw`, height:`${viewHeight}vh`, fontSize:`100%`}}
+        value={value}
+        onChange={onChange}
+      />
+    ) : null}
 
     </span>
   );

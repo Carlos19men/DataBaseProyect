@@ -3,7 +3,8 @@ import TopBar from "../../components/TopBar/TopBar";
 import Button from "../../components/Button/button";
 import styles from "./RegistrarEmpleado.module.css";
 import { useNavigate } from "react-router-dom";
-
+import ArrowBack from '../../assets/arrow_back_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24(1).svg';
+import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
 interface Establecimiento {
   RIF: string;
   nombre: string;
@@ -53,7 +54,7 @@ const RegistrarEmpleado: React.FC = () => {
     e.preventDefault();
     setMensaje(null);
     setError(null);
-    
+
     if (!ci || !nombre || !apellido || !telefono || !direccion || !sueldo || !rifEstablecimiento) {
       setError("Por favor, complete todos los campos obligatorios.");
       return;
@@ -73,18 +74,18 @@ const RegistrarEmpleado: React.FC = () => {
           RIF: rifEstablecimiento
         })
       });
-      
+
       const data = await res.json();
       if (res.ok) {
         setNuevoEmpleadoCI(ci);
         setShowSuccessPopup(true);
         // Limpiar formulario
-        setCi(""); 
-        setNombre(""); 
-        setApellido(""); 
-        setTelefono(""); 
-        setDireccion(""); 
-        setSueldo(""); 
+        setCi("");
+        setNombre("");
+        setApellido("");
+        setTelefono("");
+        setDireccion("");
+        setSueldo("");
         setRifEstablecimiento("");
       } else {
         setError(data.error || data.message || "Error al registrar el empleado");
@@ -103,73 +104,70 @@ const RegistrarEmpleado: React.FC = () => {
         <div className={styles.detailCard}>
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.formRow}>
-              <label className={styles.formLabel}>Cédula de Identidad</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                placeholder="Ej: 12345678"
+              <TextBoxMU
+                etiqueta="Cédula "
+                ejemplo="Ej: 12345678"
+                viewWidth={25}
                 value={ci}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCi(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setCi(e.target.value.replace(/[^0-9]/g, "").slice(0, 15))
+                }
               />
-            </div>
-            
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Nombre</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                placeholder="Nombre del empleado"
+
+              <TextBoxMU
+                etiqueta="Nombre"
+                ejemplo="Nombre del empleado"
+                viewWidth={25}
                 value={nombre}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNombre(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setNombre(e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]/g, "").slice(0, 50))
+                }
               />
             </div>
-            
             <div className={styles.formRow}>
-              <label className={styles.formLabel}>Apellido</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                placeholder="Apellido del empleado"
+              <TextBoxMU
+                etiqueta="Apellido"
+                ejemplo="Apellido del empleado"
+                viewWidth={25}
                 value={apellido}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setApellido(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setApellido(e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]/g, "").slice(0, 50))
+                }
               />
-            </div>
-            
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Teléfono</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                placeholder="Ej: 0414-1234567"
+
+              <TextBoxMU
+                etiqueta="Teléfono"
+                ejemplo="Ej: 04141234567"
+                viewWidth={25}
                 value={telefono}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTelefono(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setTelefono(e.target.value.replace(/[^0-9]/g, "").slice(0, 15))
+                }
               />
             </div>
-            
             <div className={styles.formRow}>
-              <label className={styles.formLabel}>Dirección</label>
-              <input
-                className={styles.formInput}
-                type="text"
-                placeholder="Dirección completa"
+              <TextBoxMU
+                etiqueta="Dirección"
+                ejemplo="Dirección completa"
+                viewWidth={25}
                 value={direccion}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDireccion(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setDireccion(e.target.value.slice(0, 150))
+                }
               />
-            </div>
-            
-            <div className={styles.formRow}>
-              <label className={styles.formLabel}>Sueldo</label>
-              <input
-                className={styles.formInput}
-                type="number"
-                placeholder="Ej: 800"
+
+              <TextBoxMU
+                etiqueta="Sueldo"
+                ejemplo="Ej: 800"
+                viewWidth={25}
                 value={sueldo}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSueldo(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSueldo(e.target.value.replace(/[^0-9]/g, "").slice(0, 9))
+                }
               />
             </div>
-            
             <div className={styles.formRow}>
-              <label className={styles.formLabel}>Establecimiento</label>
+              <TextBoxMU etiqueta="Establecimiento" ejemplo="" viewWidth={0} />
               <select
                 className={styles.formInput}
                 value={rifEstablecimiento}
@@ -181,8 +179,8 @@ const RegistrarEmpleado: React.FC = () => {
                 ))}
               </select>
               <div className={styles.helpText}>
-                ¿No encuentra el establecimiento? 
-                <button 
+                ¿No encuentra el establecimiento?
+                <button
                   type="button"
                   className={styles.linkButton}
                   onClick={() => navigate('/RegistrarEstablecimiento')}
@@ -191,15 +189,14 @@ const RegistrarEmpleado: React.FC = () => {
                 </button>
               </div>
             </div>
-            
             <div className={styles.buttonContainer}>
               <Button texto="Registrar Empleado" viewHeight={7} fuente={3} />
             </div>
           </form>
           {mensaje && (
-            <div style={{ 
-              color: 'green', 
-              textAlign: 'center', 
+            <div style={{
+              color: 'green',
+              textAlign: 'center',
               marginTop: 16,
               padding: '12px',
               backgroundColor: '#f0f9ff',
@@ -210,9 +207,9 @@ const RegistrarEmpleado: React.FC = () => {
             </div>
           )}
           {error && (
-            <div style={{ 
-              color: 'red', 
-              textAlign: 'center', 
+            <div style={{
+              color: 'red',
+              textAlign: 'center',
               marginTop: 16,
               padding: '12px',
               backgroundColor: '#fef2f2',
@@ -226,7 +223,7 @@ const RegistrarEmpleado: React.FC = () => {
       </div>
       {/* Floating Action Button - Back */}
       <button className={styles.backFab} onClick={handleBackClick}>
-        ←
+        <img src={ArrowBack} alt="Volver" style={{ width: 24, height: 24 }} />
       </button>
 
       {/* Success Popup */}
@@ -239,13 +236,13 @@ const RegistrarEmpleado: React.FC = () => {
               El empleado con CI: {nuevoEmpleadoCI} ha sido registrado correctamente.
             </p>
             <div className={styles.popupButtons}>
-              <button 
+              <button
                 className={styles.popupButtonPrimary}
                 onClick={handleViewEmpleadoDetail}
               >
                 Ver Detalle del Empleado
               </button>
-              <button 
+              <button
                 className={styles.popupButtonSecondary}
                 onClick={handleClosePopup}
               >
