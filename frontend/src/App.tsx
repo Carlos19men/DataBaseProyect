@@ -54,7 +54,7 @@ function App() {
           <Route path="/Search" element={<ProtectedRoute><Busqueda/></ProtectedRoute>}></Route>                                                                      
           <Route path="/Inventario" element={<ProtectedRoute><Inventario/></ProtectedRoute>}></Route>
           <Route path="/RegistrarInventario" element={<ProtectedRoute><RegistrarInventario/></ProtectedRoute>}></Route>
-          <Route path="/Stats" element={<ProtectedRoute roles={['Administrador']}><Estadisticas/></ProtectedRoute>}></Route>
+          {/*<Route path="/Stats" element={<ProtectedRoute roles={['Administrador']}><Estadisticas/></ProtectedRoute>}></Route>*/}
           <Route path="/Factura" element={<ProtectedRoute><VisualizarFactura cod_OS={4}/></ProtectedRoute>}></Route>
           <Route path="/factura/:nro_factura" element={<ProtectedRoute><VisualizarFactura/></ProtectedRoute>}></Route>
           <Route path="/RegistrarModelo" element={<ProtectedRoute><RegistrarModelo/></ProtectedRoute>}></Route>

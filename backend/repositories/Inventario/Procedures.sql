@@ -12,13 +12,37 @@ DROP TABLE InventarioAuditable;
 
 -- Crear trigger que verifica la cantidad en stock
 CREATE TRIGGER StockBajo
-ON Inventario																																																																				
+ON Inventario
 AFTER UPDATE
 AS
 BEGIN
-	INSERT INTO InventarioAuditable(RIF_Establecimiento, id_producto,fecha)
+	INSERT INTO InventarioAuditable(RIF_Establecimiento, id_producto, fecha)
 	SELECT i.RIF_establecimiento, i.id_producto, GETDATE()
 	FROM inserted i
 	INNER JOIN deleted d ON i.id_producto = d.id_producto
-	WHERE i.cantidad < 20 AND d.cantidad >= 20;
+	WHERE i.cantidad < 20 
+	  AND d.cantidad >= 20
+	  AND NOT EXISTS (
+		SELECT 1 
+		FROM InventarioAuditable ia
+		WHERE ia.RIF_Establecimiento = i.RIF_establecimiento
+		  AND ia.id_producto = i.id_producto
+	  );
+END;
+
+
+CREATE TRIGGER EliminarAlertaInventario
+ON Compras
+AFTER INSERT
+AS
+BEGIN
+    DELETE ia
+    FROM InventarioAuditable ia
+    INNER JOIN inserted i
+        ON ia.id_producto = i.id_producto
+        AND ia.RIF_Establecimiento = (
+            SELECT oc.RIF_Establecimiento
+            FROM OrdenesCompra oc
+            WHERE oc.nro_OC = i.nro_compra
+        )
 END;
