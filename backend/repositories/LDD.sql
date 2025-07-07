@@ -33,11 +33,10 @@ DROP TABLE Marcas;
 
 
 DROP DATABASE MU_DB; 
+*/
 
 -- Esquema de la base de datos.
 create database MU_DB;
-*/
-
 
 USE MU_DB; 
 
