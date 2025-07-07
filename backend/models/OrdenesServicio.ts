@@ -102,7 +102,7 @@ export class OrdenesServicioModel {
             console.log("fecha_entrada.toISOString():", order.fecha_entrada.toISOString());
             console.log("hora_entrada:", order.hora_entrada);
             console.log("hora_estimada_salida:", order.hora_estimada_salida);
-            console.log("persona_autorizada:", order.persona_autoriza);
+            console.log("persona_autoriza:", order.persona_autoriza);
             console.log("actividades:", order.actividades);
             
             console.log("🔍 VALORES EXACTOS QUE SE ENVÍAN AL PROCEDIMIENTO:");
@@ -111,7 +111,7 @@ export class OrdenesServicioModel {
             console.log("fecha_entrada:", order.fecha_entrada, "tipo:", typeof order.fecha_entrada, "es Date:", order.fecha_entrada instanceof Date);
             console.log("hora_entrada:", order.hora_entrada, "tipo:", typeof order.hora_entrada);
             console.log("hora_estimada_salida:", order.hora_estimada_salida, "tipo:", typeof order.hora_estimada_salida);
-            console.log("persona_autorizada:", order.persona_autoriza, "tipo:", typeof order.persona_autoriza);
+            console.log("persona_autoriza:", order.persona_autoriza, "tipo:", typeof order.persona_autoriza);
             console.log("actividades count:", order.actividades.length);
             
             request.input('RIF_establecimiento', sql.VarChar(20), order.id_rif);
@@ -139,23 +139,6 @@ export class OrdenesServicioModel {
         // Configurar parámetros del procedimiento almacenado
         request.input('cod_OS', sql.Int, id);
         
-        if (orderData.codigo_vehiculo !== undefined) {
-            request.input('codigo_vehiculo', sql.Int, orderData.codigo_vehiculo);
-        } else {
-            request.input('codigo_vehiculo', sql.Int, null);
-        }
-        
-        if (orderData.fecha_entrada !== undefined) {
-            request.input('fecha_entrada', sql.Date, orderData.fecha_entrada);
-        } else {
-            request.input('fecha_entrada', sql.Date, null);
-        }
-        
-        if (orderData.hora_entrada !== undefined) {
-            request.input('hora_entrada', sql.Time, new Date(`2000-01-01T${orderData.hora_entrada}:00`));
-        } else {
-            request.input('hora_entrada', sql.Time, null);
-        }
         
         if (orderData.hora_estimada_salida !== undefined) {
             request.input('hora_estimada_salida', sql.Time, new Date(`2000-01-01T${orderData.hora_estimada_salida}:00`));
@@ -163,17 +146,6 @@ export class OrdenesServicioModel {
             request.input('hora_estimada_salida', sql.Time, null);
         }
         
-        if (orderData.persona_autoriza !== undefined) {
-            request.input('persona_autorizada', sql.VarChar(50), orderData.persona_autoriza);
-        } else {
-            request.input('persona_autorizada', sql.VarChar(50), null);
-        }
-        
-        if (orderData.id_rif !== undefined) {
-            request.input('RIF_establecimiento', sql.VarChar(20), orderData.id_rif);
-        } else {
-            request.input('RIF_establecimiento', sql.VarChar(20), null);
-        }
         
         const result = await request.execute('ActualizarOrdenServicio');
         return {rowsAffected: Array.isArray(result['rowsAffected']) ? result['rowsAffected'][0] : result['rowsAffected']};

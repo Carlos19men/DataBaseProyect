@@ -41,7 +41,7 @@ BEGIN
     INNER JOIN inserted i
         ON ia.id_producto = i.id_producto
         AND ia.RIF_Establecimiento = (
-            SELECT oc.RIF_Establecimiento
+            SELECT oc.RIF_est
             FROM OrdenesCompra oc
             WHERE oc.nro_OC = i.nro_compra
         )
