@@ -1,0 +1,152 @@
+.container {
+  background: transparent;
+  min-height: 100vh;
+  padding: 2rem 0;
+  font-family: 'Poppins', Arial, sans-serif;
+  position: relative;
+  z-index: 1;
+}
+
+.header {
+  background: #3ad07c;
+  color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem 0 0.5rem 0;
+  font-size: 2.1rem;
+  font-weight: 700;
+  border-radius: 0 0 12px 12px;
+  gap: 0.7rem;
+}
+
+.icon {
+  font-size: 2.2rem;
+  margin-right: 0.5rem;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 1.5em;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #222;
+  margin-bottom: 2rem;
+  margin-top: 0.2rem;
+}
+
+.section {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(60, 200, 120, 0.08);
+  margin: 2rem auto;
+  max-width: 700px;
+  padding: 2.2rem 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.sectionTitle {
+  color: #1a7f37;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.5px;
+}
+
+.aboutRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.2rem;
+}
+
+.image {
+  width: 160px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #eafbe6;
+  box-shadow: 0 2px 8px rgba(60, 200, 120, 0.10);
+}
+
+.aboutText {
+  font-size: 1.08rem;
+  color: #222;
+  line-height: 1.7;
+  font-weight: 400;
+  flex: 1;
+}
+
+.planetRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.2rem;
+}
+
+.planetText {
+  font-size: 1.08rem;
+  color: #222;
+  line-height: 1.7;
+  font-weight: 400;
+  flex: 2;
+}
+
+.sdgsBox {
+  background: #f7a942;
+  color: #fff;
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+  min-height: 120px;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(247, 169, 66, 0.15);
+}
+
+.sdgsNumber {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.sdgsText {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.ods12Img {
+  max-height: 180px;
+  width: auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(60, 200, 120, 0.10);
+  margin-left: 2.2rem;
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .section {
+    padding: 1.2rem 0.7rem;
+  }
+  .aboutRow, .planetRow {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .image {
+    width: 100%;
+    height: 120px;
+    margin-bottom: 1rem;
+  }
+  .ods12Img {
+    margin-left: 0;
+    margin-top: 1.2rem;
+    max-width: 100%;
+    height: auto;
+  }
+} 

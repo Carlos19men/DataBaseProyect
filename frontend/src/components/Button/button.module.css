@@ -6,7 +6,7 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  height: 13vh;
+  min-height: 13vh;
   padding-left: 0%;
 }
 

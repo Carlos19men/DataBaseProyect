@@ -23,6 +23,7 @@ import { createActivityRouter } from "./routers/routerActividad";
 import { createActivityProductRouter } from "./routers/routerActividadProductos";
 import { createRouterServiceOrder } from "./routers/routerOrdenServicio";
 import { createInvoiceRouter } from "./routers/routerFactura";
+import { createAlertasRouter } from "./routers/routerAlertas";
 
 connectToDatabase()
 
@@ -59,6 +60,7 @@ export const createApp = () =>{
     app.use('/activity-product', createActivityProductRouter());
     app.use('/service-order', createRouterServiceOrder());
     app.use('/invoice',createInvoiceRouter());
+    app.use('/alertas', createAlertasRouter());
 
     const PORT = process.env.PORT ?? 1234
 

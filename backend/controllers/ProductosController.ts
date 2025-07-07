@@ -71,7 +71,9 @@ export class ProductosController {
 
     // Crear nuevo producto
     create = async (req: Request, res: Response): Promise<void> => {
-        const { nombre, tipo, precio, descripcion, minimo, maximo, tratamiento, nivelCon, inf_manejo, id_familia } = req.body as Product;
+        const { nombre, tipo, precio, descripcion, minimo, maximo, nivelCon, inf_manejo, id_familia } = req.body as Product;
+            
+       
 
         if (!nombre || nombre.length === 0) {
             res.status(400).json({ message: 'El nombre del producto es requerido.' });
@@ -96,11 +98,12 @@ export class ProductosController {
                 descripcion || null,
                 minimo || null,
                 maximo || null,
-                tratamiento || null,
                 nivelCon || null,
                 inf_manejo || null,
                 id_familia || null
             );
+             
+            
 
             if (result && typeof result === 'object' && 'error' in result) {
                 res.status(400).json({ message: result.error });

@@ -3,22 +3,25 @@ import TopBar from "../../components/TopBar/TopBar";
 import styles from "./RegistrarEstablecimiento.module.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import ArrowBack from '../../assets/arrow_back_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24(1).svg';
+import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
+
 
 interface Empleado {
-  CI_emp: string;
-  empleado: string;
-  direccion: string;
-  sueldo: string;
-  Establecimiento: string;
-  RIF_establecimiento: string;
+    CI_emp: string;
+    empleado: string;
+    direccion: string;
+    sueldo: string;
+    Establecimiento: string;
+    RIF_establecimiento: string;
 }
 
 interface Establecimiento {
-  RIF: string;
-  nombre: string;
-  ciudad: string;
-  encargado: string;
-  fecha_encargado: string;
+    RIF: string;
+    nombre: string;
+    ciudad: string;
+    encargado: string;
+    fecha_encargado: string;
 }
 
 const RegistrarEstablecimiento: React.FC = () => {
@@ -28,13 +31,13 @@ const RegistrarEstablecimiento: React.FC = () => {
     const [empleadoSeleccionado, setEmpleadoSeleccionado] = useState<Empleado | null>(null);
     const [menuAbierto, setMenuAbierto] = useState(false);
     const [busquedaEmpleado, setBusquedaEmpleado] = useState("");
-    
+
     // Estados para el formulario
     const [rifEstablecimiento, setRifEstablecimiento] = useState("");
     const [nombreEstablecimiento, setNombreEstablecimiento] = useState("");
     const [ciudadEstablecimiento, setCiudadEstablecimiento] = useState("");
     const [fechaEncargado, setFechaEncargado] = useState("");
-    
+
     // Estados para mensajes de error individuales
     const [errorRIF, setErrorRIF] = useState("");
     const [errorNombre, setErrorNombre] = useState("");
@@ -53,25 +56,25 @@ const RegistrarEstablecimiento: React.FC = () => {
         "Guárico", "Lara", "Mérida", "Miranda", "Monagas", "Nueva Esparta",
         "Portuguesa", "Sucre", "Táchira", "Trujillo", "Vargas", "Yaracuy", "Zulia"
     ];
-    
+
     // Fetch de empleados y establecimientos
     useEffect(() => {
         Promise.all([
             fetch("http://localhost:1234/employee"),
             fetch("http://localhost:1234/establishement")
         ])
-        .then(responses => Promise.all(responses.map(r => r.json())))
-        .then(([empleadosData, establecimientosData]) => {
-            if (Array.isArray(empleadosData)) {
-                setEmpleados(empleadosData);
-            }
-            if (Array.isArray(establecimientosData)) {
-                setEstablecimientos(establecimientosData);
-            }
-        })
-        .catch(error => {
-            console.error("Error al cargar datos:", error);
-        });
+            .then(responses => Promise.all(responses.map(r => r.json())))
+            .then(([empleadosData, establecimientosData]) => {
+                if (Array.isArray(empleadosData)) {
+                    setEmpleados(empleadosData);
+                }
+                if (Array.isArray(establecimientosData)) {
+                    setEstablecimientos(establecimientosData);
+                }
+            })
+            .catch(error => {
+                console.error("Error al cargar datos:", error);
+            });
     }, []);
 
     // Validaciones individuales
@@ -84,7 +87,7 @@ const RegistrarEstablecimiento: React.FC = () => {
             setErrorRIF("El RIF debe tener al menos 10 caracteres");
             return false;
         }
-        const establecimientoExistente = establecimientos.find(est => 
+        const establecimientoExistente = establecimientos.find(est =>
             est.RIF.toLowerCase() === rif.toLowerCase()
         );
         if (establecimientoExistente) {
@@ -118,7 +121,7 @@ const RegistrarEstablecimiento: React.FC = () => {
             return false;
         }
         // Verificar si es un estado válido
-        const estadoValido = estadosVenezuela.find(estado => 
+        const estadoValido = estadosVenezuela.find(estado =>
             estado.toLowerCase() === ciudad.toLowerCase()
         );
         if (!estadoValido) {
@@ -285,54 +288,52 @@ const RegistrarEstablecimiento: React.FC = () => {
         }
     };
 
-    return(
+    return (
         <div>
             <TopBar text="Registrar Establecimiento" menu={false}></TopBar>
             <div className={styles.container}>
                 <div className={styles.detailCard}>
                     <form className={styles.form} onSubmit={handleSubmit}>
                         <div className={styles.formRow}>
-                            <label className={styles.formLabel}>RIF del Establecimiento</label>
-                            <input
-                                className={styles.formInput}
-                                type="text"
-                                placeholder="Ej: J-12345678-9"
+                            <TextBoxMU
+                                etiqueta="RIF"
+                                ejemplo="Ej: J-12345678-9"
+                                viewWidth={20}
                                 value={rifEstablecimiento}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRifEstablecimiento(e.target.value)}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                    setRifEstablecimiento(e.target.value.replace(/[^A-Za-z0-9-]/g, "").slice(0, 15))
+                                }
                             />
                             {errorRIF && <div className={styles.errorField}>{errorRIF}</div>}
-                        </div>
-                        
-                        <div className={styles.formRow}>
-                            <label className={styles.formLabel}>Nombre</label>
-                            <input
-                                className={styles.formInput}
-                                type="text"
-                                placeholder="Ej: Establecimiento Central"
+
+                            <TextBoxMU
+                                etiqueta="Nombre"
+                                ejemplo="Ej: Establecimiento Central"
+                                viewWidth={20}
                                 value={nombreEstablecimiento}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNombreEstablecimiento(e.target.value)}
-                            />
-                            {errorNombre && <div className={styles.errorField}>{errorNombre}</div>}
-                        </div>
-                        
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                    setNombreEstablecimiento(e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]/g, "").slice(0, 50))
+                                }
+                            /></div>
+                        {errorNombre && <div className={styles.errorField}>{errorNombre}</div>}
+
                         <div className={styles.formRow}>
-                            <label className={styles.formLabel}>Ciudad</label>
+                            <TextBoxMU
+                                etiqueta="Ciudad"
+                                ejemplo="Buscar estado..."
+                                viewWidth={20}
+                                value={busquedaCiudad}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                    setBusquedaCiudad(e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]/g, "").slice(0, 30));
+                                    setMenuCiudadesAbierto(true);
+                                }}
+                            />
                             <div className={styles.dropdownContainer}>
-                                <input
-                                    className={styles.formInput}
-                                    type="text"
-                                    placeholder="Buscar estado..."
-                                    value={busquedaCiudad}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                        setBusquedaCiudad(e.target.value);
-                                        setMenuCiudadesAbierto(true);
-                                    }}
-                                />
                                 {menuCiudadesAbierto && ciudadesFiltradas.length > 0 && (
                                     <div className={styles.dropdown}>
                                         {ciudadesFiltradas.map((ciudad, index) => (
-                                            <div 
-                                                key={index} 
+                                            <div
+                                                key={index}
                                                 className={styles.dropdownItem}
                                                 onClick={() => seleccionarCiudad(ciudad)}
                                             >
@@ -343,26 +344,23 @@ const RegistrarEstablecimiento: React.FC = () => {
                                 )}
                             </div>
                             {errorCiudad && <div className={styles.errorField}>{errorCiudad}</div>}
-                        </div>
                         
-                        <div className={styles.formRow}>
-                            <label className={styles.formLabel}>Empleado Encargado</label>
+                            <TextBoxMU
+                                etiqueta="Empleado Encargado"
+                                ejemplo="Buscar empleado..."
+                                viewWidth={20}
+                                value={busquedaEmpleado}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                    setBusquedaEmpleado(e.target.value.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚüÜñÑ\s]/g, "").slice(0, 50));
+                                    setMenuAbierto(true);
+                                }}
+                            />
                             <div className={styles.dropdownContainer}>
-                                <input
-                                    className={styles.formInput}
-                                    type="text"
-                                    placeholder="Buscar empleado..."
-                                    value={busquedaEmpleado}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                        setBusquedaEmpleado(e.target.value);
-                                        setMenuAbierto(true);
-                                    }}
-                                />
                                 {menuAbierto && empleadosFiltrados.length > 0 && (
                                     <div className={styles.dropdown}>
                                         {empleadosFiltrados.map((empleado, index) => (
-                                            <div 
-                                                key={index} 
+                                            <div
+                                                key={index}
                                                 className={styles.dropdownItem}
                                                 onClick={() => seleccionarEmpleado(empleado)}
                                             >
@@ -374,9 +372,9 @@ const RegistrarEstablecimiento: React.FC = () => {
                             </div>
                             {errorEmpleado && <div className={styles.errorField}>{errorEmpleado}</div>}
                         </div>
-                        
                         <div className={styles.formRow}>
-                            <label className={styles.formLabel}>Fecha de Encargo</label>
+
+                            <TextBoxMU  ejemplo=""  viewWidth={0}  etiqueta="Fecha de encargo"></TextBoxMU>
                             <input
                                 type="date"
                                 className={styles.formInput}
@@ -385,8 +383,8 @@ const RegistrarEstablecimiento: React.FC = () => {
                             />
                             {errorFecha && <div className={styles.errorField}>{errorFecha}</div>}
                         </div>
-                        
-                        <div className={styles.buttonContainer}>
+
+                        <div className={styles.centrado}>
                             <Button texto="Registrar Establecimiento" viewHeight={7} fuente={3} />
                         </div>
                     </form>
@@ -394,7 +392,7 @@ const RegistrarEstablecimiento: React.FC = () => {
             </div>
             {/* Floating Action Button - Back */}
             <button className={styles.backFab} onClick={handleBackClick}>
-                ←
+                <img src={ArrowBack} alt="Volver" style={{ width: 24, height: 24 }} />
             </button>
 
             {/* Success Popup */}
@@ -407,13 +405,13 @@ const RegistrarEstablecimiento: React.FC = () => {
                             El establecimiento con RIF: {nuevoEstablecimientoRIF} ha sido registrado correctamente.
                         </p>
                         <div className={styles.popupButtons}>
-                            <button 
+                            <button
                                 className={styles.popupButtonPrimary}
                                 onClick={handleViewEstablecimientoDetail}
                             >
                                 Ver Detalle del Establecimiento
                             </button>
-                            <button 
+                            <button
                                 className={styles.popupButtonSecondary}
                                 onClick={handleClosePopup}
                             >

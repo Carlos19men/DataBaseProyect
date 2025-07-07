@@ -1,6 +1,6 @@
 																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																									import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import MenuDespegable from "../../components/Menu Desplegable/MenuDesplegable";
+import MenuDespegable from "../../components/Menu Desplegable/MenuDespegable";
 import styles from "./Busqueda.module.css";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Button from "../../components/Button/button";
@@ -11,8 +11,11 @@ type Establecimiento = { nombre: string;[key: string]: any };
 type Cliente = { nombre: string;[key: string]: any };
 type Proveedor = { nombre: string;[key: string]: any };
 type Producto = { nombre: string;[key: string]: any };
+type Vehiculo = { nombre: string;[key: string]: any };
+type Marca = { nombre: string;[key: string]: any };
+type Modelo = { nombre: string;[key: string]: any };
 
-type TipoDato = "employee" | "establishement" | "customer" | "suppliers" | "product";
+type TipoDato = "employee" | "establishement" | "customer" | "suppliers" | "product" | "vehicles" | "brand" | "model";
 
 const Busquedas2: React.FC = () => {
 	const navigate = useNavigate();
@@ -25,6 +28,9 @@ const Busquedas2: React.FC = () => {
 	const [clientes, setClientes] = useState<Cliente[]>([]);
 	const [proveedores, setProveedores] = useState<Proveedor[]>([]);
 	const [productos, setProductos] = useState<Producto[]>([]);
+	const [vehiculos, setVehiculos] = useState<Vehiculo[]>([]);
+	const [marcas, setMarcas] = useState<Marca[]>([]);
+	const [modelos, setModelos] = useState<Modelo[]>([]);
 
 	// Estados de carga y error
 	const [loading, setLoading] = useState<boolean>(true);
@@ -55,6 +61,18 @@ const Busquedas2: React.FC = () => {
 		navigate('/producto-detalle', { state: { producto, id: producto.id_producto } });
 	};
 
+	const handleVehiculoClick = (vehiculo: any) => {
+		navigate('/vehiculo-detalle', { state: { vehiculo, placa: vehiculo.placa } });
+	};
+
+	const handleMarcaClick = (marca: any) => {
+		navigate('/marca-detalle', { state: { marca, codigo: marca.cod_marca } });
+	};
+
+	const handleModeloClick = (modelo: any) => {
+		navigate('/modelo-detalle', { state: { modelo, codigo: modelo.cod_modelo, cod_marca: modelo.cod_marca } });
+	};
+
   // Función para manejar el clic del FAB según el tipo de entidad
   const handleFabClick = () => {
     switch (tipo) {
@@ -73,6 +91,15 @@ const Busquedas2: React.FC = () => {
       case "product":
         navigate('/RegistrarProducto');
         break;
+      case "vehicles":
+        navigate('/RegistrarVehiculo');
+        break;
+      case "brand":
+        navigate('/RegistrarMarca');
+        break;
+      case "model":
+        navigate('/RegistrarModelo');
+        break;
       default:
         navigate('/RegistrarEmpleado');
     }
@@ -88,14 +115,20 @@ const Busquedas2: React.FC = () => {
       fetch("http://localhost:1234/customer").then(r => r.json()),
       fetch("http://localhost:1234/suppliers").then(r => r.json()),
       fetch("http://localhost:1234/product").then(r => r.json()),
+      fetch("http://localhost:1234/vehicles").then(r => r.json()),
+      fetch("http://localhost:1234/brand").then(r => r.json()),
+      fetch("http://localhost:1234/model").then(r => r.json()),
     ])
-      .then(([emp, est, cli, prov, prod]) => {
+      .then(([emp, est, cli, prov, prod, veh, mar, mod]) => {
         console.log("Datos de empleados:", emp);
         setEmpleados(Array.isArray(emp) ? emp : []);
         setEstablecimientos(Array.isArray(est) ? est : []);
         setClientes(Array.isArray(cli) ? cli : []);
         setProveedores(Array.isArray(prov) ? prov : []);
         setProductos(Array.isArray(prod) ? prod : []);
+        setVehiculos(Array.isArray(veh) ? veh : []);
+        setMarcas(Array.isArray(mar) ? mar : []);
+        setModelos(Array.isArray(mod) ? mod : []);
       })
       .catch(() => setError("No se pueden cargar los datos"))
       .finally(() => setLoading(false));
@@ -114,6 +147,12 @@ const Busquedas2: React.FC = () => {
 				return proveedores;
 			case "product":
 				return productos;
+			case "vehicles":
+				return vehiculos;
+			case "brand":
+				return marcas;
+			case "model":
+				return modelos;
 			default:
 				return [];
 		}
@@ -255,6 +294,71 @@ const Busquedas2: React.FC = () => {
 				</div>
 			);
 		}
+		if (tipo === "vehicles") {
+			const placa = item.placa || "";
+			const marca = item.nombre_marca || "";
+			const modelo = item.nombre || "";
+			const nombreCliente = item.nombre_cli || "";
+			const apellidoCliente = item.apellido_cli || "";
+			const nombreCompleto = nombreCliente && apellidoCliente ? `${nombreCliente} ${apellidoCliente}` : nombreCliente || apellidoCliente || "Sin dueño";
+
+			// Función para truncar texto si excede 200 caracteres
+			const truncarTexto = (texto: string) => {
+				if (texto.length > 200) {
+					return texto.substring(0, 200) + '...';
+				}
+				return texto;
+			};
+
+			return (
+				<div className={styles.vehiculoCard} onClick={() => handleVehiculoClick(item)}>
+					<h3 className={styles.vehiculoTitulo}>{truncarTexto(placa)}</h3>
+					<p className={styles.vehiculoEtiqueta}>Marca: <span className={styles.vehiculoValor}>{truncarTexto(marca)}</span></p>
+					<p className={styles.vehiculoEtiqueta}>Modelo: <span className={styles.vehiculoValor}>{truncarTexto(modelo)}</span></p>
+					<p className={styles.vehiculoEtiqueta}>Dueño: <span className={styles.vehiculoValor}>{truncarTexto(nombreCompleto)}</span></p>
+				</div>
+			);
+		}
+		if (tipo === "brand") {
+			const codigo = item.cod_marca || "";
+			const nombre = item.nombre_marca || "";
+
+			// Función para truncar texto si excede 200 caracteres
+			const truncarTexto = (texto: string) => {
+				if (texto.length > 200) {
+					return texto.substring(0, 200) + '...';
+				}
+				return texto;
+			};
+
+			return (
+				<div className={styles.marcaCard} onClick={() => handleMarcaClick(item)}>
+					<h3 className={styles.marcaTitulo}>{truncarTexto(nombre)}</h3>
+					<p className={styles.marcaEtiqueta}>Código: <span className={styles.marcaValor}>{codigo}</span></p>
+				</div>
+			);
+		}
+		if (tipo === "model") {
+			const codigo = item.cod_modelo || "";
+			const nombre = item.modelo || "";
+			const marca = item.marca || "";
+
+			// Función para truncar texto si excede 200 caracteres
+			const truncarTexto = (texto: string) => {
+				if (texto.length > 200) {
+					return texto.substring(0, 200) + '...';
+				}
+				return texto;
+			};
+
+			return (
+				<div className={styles.modeloCard} onClick={() => handleModeloClick(item)}>
+					<h3 className={styles.modeloTitulo}>{truncarTexto(nombre)}</h3>
+					<p className={styles.modeloEtiqueta}>Código: <span className={styles.modeloValor}>{codigo}</span></p>
+					<p className={styles.modeloEtiqueta}>Marca: <span className={styles.modeloValor}>{truncarTexto(marca)}</span></p>
+				</div>
+			);
+		}
 		// Default: renderizado genérico
 		return (
 			<div>
@@ -306,6 +410,9 @@ const Busquedas2: React.FC = () => {
 					<Button texto="Clientes" viewHeight={5} onClick={() => setTipo("customer")} selected={tipo === "customer"} />
 					<Button texto="Proveedores" viewHeight={5} onClick={() => setTipo("suppliers")} selected={tipo === "suppliers"} />
 					<Button texto="Productos" viewHeight={5} onClick={() => setTipo("product")} selected={tipo === "product"} />
+					<Button texto="Vehículos" viewHeight={5} onClick={() => setTipo("vehicles")} selected={tipo === "vehicles"} />
+					<Button texto="Marcas" viewHeight={5} onClick={() => setTipo("brand")} selected={tipo === "brand"} />
+					<Button texto="Modelos" viewHeight={5} onClick={() => setTipo("model")} selected={tipo === "model"} />
 				</div>
 			</div>
 			{/* Floating Action Button */}

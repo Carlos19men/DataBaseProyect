@@ -88,6 +88,32 @@ export class OrdenesServicioModel {
 
             // Crear request con parámetros correctos
             const request = new sql.Request(transaction);
+            
+            // Validar que la fecha sea un objeto Date válido
+            if (!(order.fecha_entrada instanceof Date) || isNaN(order.fecha_entrada.getTime())) {
+                throw new Error('El campo fecha_entrada debe ser un objeto Date válido.');
+            }
+            
+            console.log("🔧 ENVIANDO PARÁMETROS AL PROCEDIMIENTO ALMACENADO:");
+            console.log("RIF_establecimiento:", order.id_rif);
+            console.log("codigo_vehiculo:", order.codigo_vehiculo);
+            console.log("fecha_entrada:", order.fecha_entrada);
+            console.log("fecha_entrada tipo:", typeof order.fecha_entrada);
+            console.log("fecha_entrada.toISOString():", order.fecha_entrada.toISOString());
+            console.log("hora_entrada:", order.hora_entrada);
+            console.log("hora_estimada_salida:", order.hora_estimada_salida);
+            console.log("persona_autorizada:", order.persona_autoriza);
+            console.log("actividades:", order.actividades);
+            
+            console.log("🔍 VALORES EXACTOS QUE SE ENVÍAN AL PROCEDIMIENTO:");
+            console.log("RIF_establecimiento:", order.id_rif, "tipo:", typeof order.id_rif);
+            console.log("codigo_vehiculo:", order.codigo_vehiculo, "tipo:", typeof order.codigo_vehiculo);
+            console.log("fecha_entrada:", order.fecha_entrada, "tipo:", typeof order.fecha_entrada, "es Date:", order.fecha_entrada instanceof Date);
+            console.log("hora_entrada:", order.hora_entrada, "tipo:", typeof order.hora_entrada);
+            console.log("hora_estimada_salida:", order.hora_estimada_salida, "tipo:", typeof order.hora_estimada_salida);
+            console.log("persona_autorizada:", order.persona_autoriza, "tipo:", typeof order.persona_autoriza);
+            console.log("actividades count:", order.actividades.length);
+            
             request.input('RIF_establecimiento', sql.VarChar(20), order.id_rif);
             request.input('codigo_vehiculo', sql.Int, order.codigo_vehiculo);
             request.input('fecha_entrada', sql.Date, order.fecha_entrada);
