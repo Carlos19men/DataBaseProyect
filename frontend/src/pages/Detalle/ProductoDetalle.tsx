@@ -12,6 +12,20 @@ const ProductoDetalle: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [editingData, setEditingData] = useState({
+    nombre: "",
+    precio: "",
+    descripcion: "",
+    minimo: "",
+    maximo: "",
+    tratamiento_residuos: "",
+    nivel_contaminacion: "",
+    info_manejo: ""
+  });
+  const [loadingAction, setLoadingAction] = useState(false);
+  const [actionMessage, setActionMessage] = useState("");
   
   useEffect(() => {
     const checkMenuState = () => {
@@ -120,6 +134,99 @@ const ProductoDetalle: React.FC = () => {
     );
   }
 
+  const handleEdit = () => {
+    setEditingData({
+      nombre: productoData?.nombre || "",
+      precio: productoData?.precio || "",
+      descripcion: productoData?.descripcion || "",
+      minimo: productoData?.minimo || "",
+      maximo: productoData?.maximo || "",
+      tratamiento_residuos: productoData?.tratamiento_residuos || "",
+      nivel_contaminacion: productoData?.nivel_contaminacion || "",
+      info_manejo: productoData?.info_manejo || ""
+    });
+    setShowEditModal(true);
+  };
+
+  const handleDelete = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleUpdateProducto = async () => {
+    if (!editingData.nombre.trim() || !editingData.precio.trim() || !editingData.descripcion.trim() || !editingData.minimo.trim() || !editingData.maximo.trim()) {
+      setActionMessage("Los campos básicos son obligatorios");
+      return;
+    }
+
+    if (productoData?.tipo === "NO ECOLÓGICO" && (!editingData.tratamiento_residuos.trim() || !editingData.nivel_contaminacion.trim() || !editingData.info_manejo.trim())) {
+      setActionMessage("Los campos de producto no ecológico son obligatorios");
+      return;
+    }
+
+    setLoadingAction(true);
+    try {
+      const body: any = {
+        id_producto: productoData?.id_producto,
+        nombre: editingData.nombre,
+        precio: editingData.precio,
+        descripcion: editingData.descripcion,
+        minimo: editingData.minimo,
+        maximo: editingData.maximo
+      };
+
+      if (productoData?.tipo === "NO ECOLÓGICO") {
+        body.tratamiento_residuos = editingData.tratamiento_residuos;
+        body.nivel_contaminacion = editingData.nivel_contaminacion;
+        body.info_manejo = editingData.info_manejo;
+      }
+
+      const response = await fetch(`http://localhost:1234/product`, {
+        method: "PATCH",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+
+      if (response.ok) {
+        setActionMessage("Producto actualizado exitosamente");
+        setShowEditModal(false);
+        window.location.reload();
+      } else {
+        const errorData = await response.json();
+        setActionMessage(errorData.message || "Error al actualizar el producto");
+      }
+    } catch (err) {
+      setActionMessage("Error de conexión");
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+
+  const handleDeleteProducto = async () => {
+    setLoadingAction(true);
+    try {
+      const response = await fetch(`http://localhost:1234/product`, {
+        method: "DELETE",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id_producto: productoData?.id_producto
+        })
+      });
+
+      if (response.ok) {
+        setActionMessage("Producto eliminado exitosamente");
+        setShowDeleteModal(false);
+        navigate('/Search');
+      } else {
+        const errorData = await response.json();
+        setActionMessage(errorData.message || "Error al eliminar el producto");
+      }
+    } catch (err) {
+      setActionMessage("Error de conexión");
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+
   return (
     <div>
       <div className={styles.bar}>
@@ -140,6 +247,22 @@ const ProductoDetalle: React.FC = () => {
         </button>
       )}
       <div className={styles.container}>
+        {/* Botones de acción */}
+        <div className={styles.actionButtons}>
+          <button 
+            className={styles.editButton}
+            onClick={handleEdit}
+          >
+            ✏️ Editar Producto
+          </button>
+          <button 
+            className={styles.deleteButton}
+            onClick={handleDelete}
+          >
+            🗑️ Eliminar Producto
+          </button>
+        </div>
+
         <div className={styles.detailCard}>
           <div className={styles.clientHeader}>
             <h2>{productoData?.nombre || "Nombre no disponible"}</h2>
@@ -263,6 +386,148 @@ const ProductoDetalle: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal de Edición */}
+      {showEditModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3>Editar Producto</h3>
+            <div className={styles.formGroup}>
+              <label>Nombre:</label>
+              <input
+                type="text"
+                value={editingData.nombre}
+                onChange={(e) => setEditingData({...editingData, nombre: e.target.value})}
+                className={styles.modalInput}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Precio:</label>
+              <input
+                type="number"
+                value={editingData.precio}
+                onChange={(e) => setEditingData({...editingData, precio: e.target.value})}
+                className={styles.modalInput}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Descripción:</label>
+              <input
+                type="text"
+                value={editingData.descripcion}
+                onChange={(e) => setEditingData({...editingData, descripcion: e.target.value})}
+                className={styles.modalInput}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Cantidad Mínima:</label>
+              <input
+                type="number"
+                value={editingData.minimo}
+                onChange={(e) => setEditingData({...editingData, minimo: e.target.value})}
+                className={styles.modalInput}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Cantidad Máxima:</label>
+              <input
+                type="number"
+                value={editingData.maximo}
+                onChange={(e) => setEditingData({...editingData, maximo: e.target.value})}
+                className={styles.modalInput}
+              />
+            </div>
+            {productoData?.tipo === "NO ECOLÓGICO" && (
+              <>
+                <div className={styles.formGroup}>
+                  <label>Tratamiento de Residuos:</label>
+                  <input
+                    type="text"
+                    value={editingData.tratamiento_residuos}
+                    onChange={(e) => setEditingData({...editingData, tratamiento_residuos: e.target.value})}
+                    className={styles.modalInput}
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label>Nivel de Contaminación:</label>
+                  <select
+                    value={editingData.nivel_contaminacion}
+                    onChange={(e) => setEditingData({...editingData, nivel_contaminacion: e.target.value})}
+                    className={styles.modalInput}
+                  >
+                    <option value="">Seleccione</option>
+                    <option value="1">1 - Muy Bajo</option>
+                    <option value="2">2 - Bajo</option>
+                    <option value="3">3 - Medio</option>
+                    <option value="4">4 - Alto</option>
+                    <option value="5">5 - Muy Alto</option>
+                  </select>
+                </div>
+                <div className={styles.formGroup}>
+                  <label>Información de Manejo:</label>
+                  <input
+                    type="text"
+                    value={editingData.info_manejo}
+                    onChange={(e) => setEditingData({...editingData, info_manejo: e.target.value})}
+                    className={styles.modalInput}
+                  />
+                </div>
+              </>
+            )}
+            {actionMessage && (
+              <div className={styles.message}>
+                {actionMessage}
+              </div>
+            )}
+            <div className={styles.modalButtons}>
+              <button 
+                onClick={handleUpdateProducto}
+                disabled={loadingAction}
+                className={styles.confirmButton}
+              >
+                {loadingAction ? "Actualizando..." : "Actualizar"}
+              </button>
+              <button 
+                onClick={() => setShowEditModal(false)}
+                className={styles.cancelButton}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Eliminación */}
+      {showDeleteModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3>Confirmar Eliminación</h3>
+            <p>¿Está seguro que desea eliminar el producto {productoData?.nombre}?</p>
+            <p>Esta acción no se puede deshacer.</p>
+            {actionMessage && (
+              <div className={styles.message}>
+                {actionMessage}
+              </div>
+            )}
+            <div className={styles.modalButtons}>
+              <button 
+                onClick={handleDeleteProducto}
+                disabled={loadingAction}
+                className={styles.deleteConfirmButton}
+              >
+                {loadingAction ? "Eliminando..." : "Eliminar"}
+              </button>
+              <button 
+                onClick={() => setShowDeleteModal(false)}
+                className={styles.cancelButton}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

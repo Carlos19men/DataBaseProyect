@@ -12,6 +12,14 @@ const EstablecimientoDetalle: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [editingData, setEditingData] = useState({
+    name: "",
+    city: ""
+  });
+  const [loadingAction, setLoadingAction] = useState(false);
+  const [actionMessage, setActionMessage] = useState("");
   
   useEffect(() => {
     const checkMenuState = () => {
@@ -124,6 +132,73 @@ const EstablecimientoDetalle: React.FC = () => {
     );
   }
 
+  const handleEdit = () => {
+    setEditingData({
+      name: establecimientoData?.nombre || "",
+      city: establecimientoData?.ciudad || ""
+    });
+    setShowEditModal(true);
+  };
+
+  const handleDelete = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleUpdateEstablecimiento = async () => {
+    if (!editingData.name.trim() || !editingData.city.trim()) {
+      setActionMessage("Todos los campos son obligatorios");
+      return;
+    }
+
+    setLoadingAction(true);
+    try {
+      const response = await fetch(`http://localhost:1234/establishement/`, {
+        method: "PATCH",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          RIF: establecimientoData?.RIF,
+          name: editingData.name,
+          city: editingData.city
+        })
+      });
+
+      if (response.ok) {
+        setActionMessage("Establecimiento actualizado exitosamente");
+        setShowEditModal(false);
+        window.location.reload();
+      } else {
+        const errorData = await response.json();
+        setActionMessage(errorData.message || "Error al actualizar el establecimiento");
+      }
+    } catch (err) {
+      setActionMessage("Error de conexión");
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+
+  const handleDeleteEstablecimiento = async () => {
+    setLoadingAction(true);
+    try {
+      const response = await fetch(`http://localhost:1234/establishement/${establecimientoData?.RIF}`, {
+        method: "DELETE"
+      });
+
+      if (response.ok) {
+        setActionMessage("Establecimiento eliminado exitosamente");
+        setShowDeleteModal(false);
+        navigate('/Search');
+      } else {
+        const errorData = await response.json();
+        setActionMessage(errorData.message || "Error al eliminar el establecimiento");
+      }
+    } catch (err) {
+      setActionMessage("Error de conexión");
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+
   return (
     <div>
       <div className={styles.bar}>
@@ -144,6 +219,22 @@ const EstablecimientoDetalle: React.FC = () => {
         </button>
       )}
       <div className={styles.container}>
+        {/* Botones de acción */}
+        <div className={styles.actionButtons}>
+          <button 
+            className={styles.editButton}
+            onClick={handleEdit}
+          >
+            ✏️ Editar Establecimiento
+          </button>
+          <button 
+            className={styles.deleteButton}
+            onClick={handleDelete}
+          >
+            🗑️ Eliminar Establecimiento
+          </button>
+        </div>
+
         <div className={styles.detailCard}>
           <div className={styles.clientHeader}>
             <h2>{establecimientoData?.nombre || "Nombre no disponible"}</h2>
@@ -231,6 +322,84 @@ const EstablecimientoDetalle: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal de Edición */}
+      {showEditModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3>Editar Establecimiento</h3>
+            <div className={styles.formGroup}>
+              <label>Nombre:</label>
+              <input
+                type="text"
+                value={editingData.name}
+                onChange={(e) => setEditingData({...editingData, name: e.target.value})}
+                className={styles.modalInput}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Ciudad:</label>
+              <input
+                type="text"
+                value={editingData.city}
+                onChange={(e) => setEditingData({...editingData, city: e.target.value})}
+                className={styles.modalInput}
+              />
+            </div>
+            {actionMessage && (
+              <div className={styles.message}>
+                {actionMessage}
+              </div>
+            )}
+            <div className={styles.modalButtons}>
+              <button 
+                onClick={handleUpdateEstablecimiento}
+                disabled={loadingAction}
+                className={styles.confirmButton}
+              >
+                {loadingAction ? "Actualizando..." : "Actualizar"}
+              </button>
+              <button 
+                onClick={() => setShowEditModal(false)}
+                className={styles.cancelButton}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Eliminación */}
+      {showDeleteModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3>Confirmar Eliminación</h3>
+            <p>¿Está seguro que desea eliminar el establecimiento {establecimientoData?.nombre}?</p>
+            <p>Esta acción no se puede deshacer.</p>
+            {actionMessage && (
+              <div className={styles.message}>
+                {actionMessage}
+              </div>
+            )}
+            <div className={styles.modalButtons}>
+              <button 
+                onClick={handleDeleteEstablecimiento}
+                disabled={loadingAction}
+                className={styles.deleteConfirmButton}
+              >
+                {loadingAction ? "Eliminando..." : "Eliminar"}
+              </button>
+              <button 
+                onClick={() => setShowDeleteModal(false)}
+                className={styles.cancelButton}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

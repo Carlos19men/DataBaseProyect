@@ -12,6 +12,15 @@ const ClienteDetalle: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [editingData, setEditingData] = useState({
+    name: "",
+    lastName: "",
+    email: ""
+  });
+  const [loadingAction, setLoadingAction] = useState(false);
+  const [actionMessage, setActionMessage] = useState("");
   
   useEffect(() => {
     const checkMenuState = () => {
@@ -124,6 +133,76 @@ const ClienteDetalle: React.FC = () => {
     );
   }
 
+  const handleEdit = () => {
+    setEditingData({
+      name: clienteData?.nombre || "",
+      lastName: clienteData?.apellido || "",
+      email: clienteData?.correo || ""
+    });
+    setShowEditModal(true);
+  };
+
+  const handleDelete = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleUpdateCliente = async () => {
+    if (!editingData.name.trim() || !editingData.lastName.trim() || !editingData.email.trim()) {
+      setActionMessage("Todos los campos son obligatorios");
+      return;
+    }
+
+    setLoadingAction(true);
+    try {
+      const response = await fetch(`http://localhost:1234/customer`, {
+        method: "PATCH",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          CI: clienteData?.CI,
+          name: editingData.name,
+          lastName: editingData.lastName,
+          email: editingData.email
+        })
+      });
+
+      if (response.ok) {
+        setActionMessage("Cliente actualizado exitosamente");
+        setShowEditModal(false);
+        // Recargar datos del cliente
+        window.location.reload();
+      } else {
+        const errorData = await response.json();
+        setActionMessage(errorData.message || "Error al actualizar el cliente");
+      }
+    } catch (err) {
+      setActionMessage("Error de conexión");
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+
+  const handleDeleteCliente = async () => {
+    setLoadingAction(true);
+    try {
+      const response = await fetch(`http://localhost:1234/customer/${clienteData?.CI}`, {
+        method: "DELETE"
+      });
+
+      if (response.ok) {
+        setActionMessage("Cliente eliminado exitosamente");
+        setShowDeleteModal(false);
+        navigate('/Search');
+      } else {
+        const errorData = await response.json();
+        setActionMessage(errorData.message || "Error al eliminar el cliente");
+      }
+    } catch (err) {
+      setActionMessage("Error de conexión");
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+
   return (
     <div>
       <div className={styles.bar}>
@@ -144,6 +223,22 @@ const ClienteDetalle: React.FC = () => {
         </button>
       )}
       <div className={styles.container}>
+        {/* Botones de acción */}
+        <div className={styles.actionButtons}>
+          <button 
+            className={styles.editButton}
+            onClick={handleEdit}
+          >
+            ✏️ Editar Cliente
+          </button>
+          <button 
+            className={styles.deleteButton}
+            onClick={handleDelete}
+          >
+            🗑️ Eliminar Cliente
+          </button>
+        </div>
+
         {/* Cabecera con información detallada */}
         <div className={styles.detailCard}>
           <div className={styles.clientHeader}>
@@ -228,6 +323,93 @@ const ClienteDetalle: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal de Edición */}
+      {showEditModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3>Editar Cliente</h3>
+            <div className={styles.formGroup}>
+              <label>Nombre:</label>
+              <input
+                type="text"
+                value={editingData.name}
+                onChange={(e) => setEditingData({...editingData, name: e.target.value})}
+                className={styles.modalInput}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Apellido:</label>
+              <input
+                type="text"
+                value={editingData.lastName}
+                onChange={(e) => setEditingData({...editingData, lastName: e.target.value})}
+                className={styles.modalInput}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Email:</label>
+              <input
+                type="email"
+                value={editingData.email}
+                onChange={(e) => setEditingData({...editingData, email: e.target.value})}
+                className={styles.modalInput}
+              />
+            </div>
+            {actionMessage && (
+              <div className={styles.message}>
+                {actionMessage}
+              </div>
+            )}
+            <div className={styles.modalButtons}>
+              <button 
+                onClick={handleUpdateCliente}
+                disabled={loadingAction}
+                className={styles.confirmButton}
+              >
+                {loadingAction ? "Actualizando..." : "Actualizar"}
+              </button>
+              <button 
+                onClick={() => setShowEditModal(false)}
+                className={styles.cancelButton}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Eliminación */}
+      {showDeleteModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3>Confirmar Eliminación</h3>
+            <p>¿Está seguro que desea eliminar al cliente {clienteData?.nombre} {clienteData?.apellido}?</p>
+            <p>Esta acción no se puede deshacer.</p>
+            {actionMessage && (
+              <div className={styles.message}>
+                {actionMessage}
+              </div>
+            )}
+            <div className={styles.modalButtons}>
+              <button 
+                onClick={handleDeleteCliente}
+                disabled={loadingAction}
+                className={styles.deleteConfirmButton}
+              >
+                {loadingAction ? "Eliminando..." : "Eliminar"}
+              </button>
+              <button 
+                onClick={() => setShowDeleteModal(false)}
+                className={styles.cancelButton}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

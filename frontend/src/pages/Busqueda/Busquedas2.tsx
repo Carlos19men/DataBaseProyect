@@ -44,6 +44,10 @@ const Busquedas2: React.FC = () => {
 	};
 
 	const handleProveedorClick = (proveedor: any) => {
+		console.log("=== DEBUG NAVEGACIÓN PROVEEDOR ===");
+		console.log("Proveedor completo:", proveedor);
+		console.log("RIF del proveedor:", proveedor.RIF);
+		console.log("Navegando a proveedor-detalle con state:", { proveedor, rif: proveedor.RIF });
 		navigate('/proveedor-detalle', { state: { proveedor, rif: proveedor.RIF } });
 	};
 

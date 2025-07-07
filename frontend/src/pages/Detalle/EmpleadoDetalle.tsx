@@ -14,6 +14,16 @@ const EmpleadoDetalle: React.FC = () => {
   const [error, setError] = useState<string>("");
   const [nombre, apellido] = (empleadoData?.empleado || "").split(" ");
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [editingData, setEditingData] = useState({
+    name: "",
+    lastName: "",
+    salary: "",
+    address: ""
+  });
+  const [loadingAction, setLoadingAction] = useState(false);
+  const [actionMessage, setActionMessage] = useState("");
   
   useEffect(() => {
     const checkMenuState = () => {
@@ -108,6 +118,77 @@ const EmpleadoDetalle: React.FC = () => {
     );
   }
 
+  const handleEdit = () => {
+    setEditingData({
+      name: empleadoData?.nombre || "",
+      lastName: empleadoData?.apellido || "",
+      salary: empleadoData?.sueldo || "",
+      address: empleadoData?.direccion || ""
+    });
+    setShowEditModal(true);
+  };
+
+  const handleDelete = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleUpdateEmpleado = async () => {
+    if (!editingData.name.trim() || !editingData.lastName.trim() || !editingData.salary.trim() || !editingData.address.trim()) {
+      setActionMessage("Todos los campos son obligatorios");
+      return;
+    }
+
+    setLoadingAction(true);
+    try {
+      const response = await fetch(`http://localhost:1234/employee/`, {
+        method: "PATCH",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          CI: empleadoData?.CI_emp,
+          name: editingData.name,
+          lastName: editingData.lastName,
+          salary: parseInt(editingData.salary),
+          address: editingData.address
+        })
+      });
+
+      if (response.ok) {
+        setActionMessage("Empleado actualizado exitosamente");
+        setShowEditModal(false);
+        window.location.reload();
+      } else {
+        const errorData = await response.json();
+        setActionMessage(errorData.message || "Error al actualizar el empleado");
+      }
+    } catch (err) {
+      setActionMessage("Error de conexión");
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+
+  const handleDeleteEmpleado = async () => {
+    setLoadingAction(true);
+    try {
+      const response = await fetch(`http://localhost:1234/employee/${empleadoData?.CI_emp}`, {
+        method: "DELETE"
+      });
+
+      if (response.ok) {
+        setActionMessage("Empleado eliminado exitosamente");
+        setShowDeleteModal(false);
+        navigate('/Search');
+      } else {
+        const errorData = await response.json();
+        setActionMessage(errorData.message || "Error al eliminar el empleado");
+      }
+    } catch (err) {
+      setActionMessage("Error de conexión");
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+
   return (
     
     <div>
@@ -119,6 +200,22 @@ const EmpleadoDetalle: React.FC = () => {
         </button>
       )}
       <div className={styles.container}>
+        {/* Botones de acción */}
+        <div className={styles.actionButtons}>
+          <button 
+            className={styles.editButton}
+            onClick={handleEdit}
+          >
+            ✏️ Editar Empleado
+          </button>
+          <button 
+            className={styles.deleteButton}
+            onClick={handleDelete}
+          >
+            🗑️ Eliminar Empleado
+          </button>
+        </div>
+
         <div className={styles.detailCard}>
           <div className={styles.clientHeader}>
            
@@ -215,6 +312,102 @@ const EmpleadoDetalle: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal de Edición */}
+      {showEditModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3>Editar Empleado</h3>
+            <div className={styles.formGroup}>
+              <label>Nombre:</label>
+              <input
+                type="text"
+                value={editingData.name}
+                onChange={(e) => setEditingData({...editingData, name: e.target.value})}
+                className={styles.modalInput}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Apellido:</label>
+              <input
+                type="text"
+                value={editingData.lastName}
+                onChange={(e) => setEditingData({...editingData, lastName: e.target.value})}
+                className={styles.modalInput}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Sueldo:</label>
+              <input
+                type="number"
+                value={editingData.salary}
+                onChange={(e) => setEditingData({...editingData, salary: e.target.value})}
+                className={styles.modalInput}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Dirección:</label>
+              <input
+                type="text"
+                value={editingData.address}
+                onChange={(e) => setEditingData({...editingData, address: e.target.value})}
+                className={styles.modalInput}
+              />
+            </div>
+            {actionMessage && (
+              <div className={styles.message}>
+                {actionMessage}
+              </div>
+            )}
+            <div className={styles.modalButtons}>
+              <button 
+                onClick={handleUpdateEmpleado}
+                disabled={loadingAction}
+                className={styles.confirmButton}
+              >
+                {loadingAction ? "Actualizando..." : "Actualizar"}
+              </button>
+              <button 
+                onClick={() => setShowEditModal(false)}
+                className={styles.cancelButton}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Eliminación */}
+      {showDeleteModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3>Confirmar Eliminación</h3>
+            <p>¿Está seguro que desea eliminar al empleado {empleadoData?.empleado}?</p>
+            <p>Esta acción no se puede deshacer.</p>
+            {actionMessage && (
+              <div className={styles.message}>
+                {actionMessage}
+              </div>
+            )}
+            <div className={styles.modalButtons}>
+              <button 
+                onClick={handleDeleteEmpleado}
+                disabled={loadingAction}
+                className={styles.deleteConfirmButton}
+              >
+                {loadingAction ? "Eliminando..." : "Eliminar"}
+              </button>
+              <button 
+                onClick={() => setShowDeleteModal(false)}
+                className={styles.cancelButton}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
