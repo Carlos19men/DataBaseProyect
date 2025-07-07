@@ -25,6 +25,7 @@ import { createRouterServiceOrder } from "./routers/routerOrdenServicio";
 import { createInvoiceRouter } from "./routers/routerFactura";
 import { createAlertasRouter } from "./routers/routerAlertas";
 
+
 connectToDatabase()
 
 export const createApp = () =>{

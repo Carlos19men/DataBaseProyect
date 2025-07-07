@@ -5,6 +5,7 @@ import styles from "./Login.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import TextBoxMU from "../../components/TextBoxMU/TextBoxMU";
 import { usegetAllAPI } from "../PseudoAPI/PseudoAPI";
+import { useUser } from '../../components/UserContext';
 /*import { customerModel } from "../../../../backend/models/Clientes";
 import { employeeModel } from "../../../../backend/models/Empleados";*/
 
@@ -13,33 +14,18 @@ const Login: React.FC = () => {
     const navigator = useNavigate();
     const [cedulaEmpleado, setCedulaE] = useState<any>('');
     const [textoErr,setTextoErr] = useState<string>("");
+    const { login } = useUser();
 
 
     // Llama al hook aquí, pasando la cédula correspondiente
     
     const handleLogin = async () => {
-        try {
-            const res = await fetch(`http://localhost:1234/employee/${cedulaEmpleado}`, {
-                method: "GET",
-                headers: { 'Content-Type': 'application/json' }
-            });
-            const empleadoData = await res.json();
-            if (
-                empleadoData &&
-                empleadoData !== "Cargando" &&
-                empleadoData !== null &&
-                empleadoData.message === undefined &&
-                Array.isArray(empleadoData) === false
-            ) {
-                localStorage.setItem("isLoggedIn", "true"); // <--- Guarda login
-                navigator("/HomePage");
-            } else {
-
-                setTextoErr("Empleado no encontrado");
-            }
-        } catch (err) {
-            
-            setTextoErr("Error de conexión");
+        // Simulación de login exitoso (puedes agregar validación real si quieres)
+        if (cedulaEmpleado && cedulaEmpleado.length > 0) {
+            login();
+            navigator("/HomePage");
+        } else {
+            setTextoErr("Debe ingresar su cédula");
         }
     };
 

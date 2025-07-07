@@ -26,6 +26,8 @@ import OrdenServicio from "./pages/OrdenServicio/OrdenServicio";
 import Inventario from "./pages/Inventario/Inventario";
 import RegistrarInventario from "./pages/RegistrarInventario/RegistrarInventario";
 import SobreNosotros from "./pages/SobreNosotros/SobreNosotros";
+import { UserProvider } from './components/UserContext';
+import Unauthorized from './pages/Login/Unauthorized';
 
 
 // Importar páginas de detalle
@@ -39,48 +41,52 @@ import VehiculoDetalle from "./pages/Detalle/VehiculoDetalle";
 import MarcaDetalle from "./pages/Detalle/MarcaDetalle";
 import ModeloDetalle from "./pages/Detalle/ModeloDetalle";
 
-const App = () => (
-
-  <Router>
-    <Routes>
-      <Route path="/" element={<Landing/>}></Route>
-      <Route path="/Registro" element={<Registro/>}></Route>
-      <Route path="/Login" element={<Login/>}></Route>
-      <Route path="/HomePage" element={<ProtectedRoute><HomePage/></ProtectedRoute>}></Route>
-      <Route path="/API" element={<ProtectedRoute><PseudoAPI/></ProtectedRoute>}></Route>
-      <Route path="/Search" element={<ProtectedRoute><Busqueda/></ProtectedRoute>}></Route>                                                                      
-      <Route path="/Inventario" element={<ProtectedRoute><Inventario/></ProtectedRoute>}></Route>
-      <Route path="/RegistrarInventario" element={<ProtectedRoute><RegistrarInventario/></ProtectedRoute>}></Route>
-      <Route path="/Stats" element={<ProtectedRoute><Estadisticas/></ProtectedRoute>}></Route>
-      <Route path="/Factura" element={<ProtectedRoute><VisualizarFactura cod_OS={4}/></ProtectedRoute>}></Route>
-      <Route path="/factura/:nro_factura" element={<ProtectedRoute><VisualizarFactura/></ProtectedRoute>}></Route>
-      <Route path="/RegistrarModelo" element={<ProtectedRoute><RegistrarModelo/></ProtectedRoute>}></Route>
-      <Route path="/RegistrarVehiculo" element={<ProtectedRoute><RegistrarVehiculo/></ProtectedRoute>}></Route>
-      <Route path="/RegistrarProveedor" element={<ProtectedRoute><RegistrarProveedor/></ProtectedRoute>}></Route>
-      <Route path="/RegistrarOrdenCompra" element={<ProtectedRoute><RegistrarOrdenCompra/></ProtectedRoute>}></Route>
-      <Route path="/RegistrarPlan" element={<ProtectedRoute><RegistrarPlan/></ProtectedRoute>}></Route>
-      <Route path="/RegistrarActividad" element={<ProtectedRoute><RegistrarActividad/></ProtectedRoute>}></Route>
-      <Route path="/RegistrarServicio" element={<ProtectedRoute><RegistrarServicio/></ProtectedRoute>}></Route>
-      <Route path="/RegistrarFamilia" element={<ProtectedRoute><RegistrarFamilia/></ProtectedRoute>}></Route>
-      <Route path="/RegistrarMarca" element={<ProtectedRoute><RegistrarMarca/></ProtectedRoute>}></Route>
-      <Route path="/RegistrarOrdenServicio" element={<ProtectedRoute><RegistrarOrdenServicio/></ProtectedRoute>}></Route>
-      <Route path="/RegistrarProducto" element={<ProtectedRoute><RegistrarProducto/></ProtectedRoute>}></Route>
-      <Route path="/RegistrarEstablecimiento" element={<ProtectedRoute><RegistrarEstablecimiento/></ProtectedRoute>}></Route>
-      <Route path="/RegistrarEmpleado" element={<ProtectedRoute><RegistrarEmpleado/></ProtectedRoute>}></Route>
-      <Route path="/RegistrarCliente" element={<ProtectedRoute><RegistrarCliente/></ProtectedRoute>}></Route>
-      <Route path="/empleado-detalle" element={<ProtectedRoute><EmpleadoDetalle/></ProtectedRoute>}></Route>
-      <Route path="/establecimiento-detalle" element={<ProtectedRoute><EstablecimientoDetalle/></ProtectedRoute>}></Route>
-      <Route path="/cliente-detalle" element={<ProtectedRoute><ClienteDetalle/></ProtectedRoute>}></Route>
-      <Route path="/proveedor-detalle" element={<ProtectedRoute><ProveedorDetalle/></ProtectedRoute>}></Route>
-      <Route path="/producto-detalle" element={<ProtectedRoute><ProductoDetalle/></ProtectedRoute>}></Route>
-      <Route path="/vehiculo-detalle" element={<ProtectedRoute><VehiculoDetalle/></ProtectedRoute>}></Route>
-      <Route path="/marca-detalle" element={<ProtectedRoute><MarcaDetalle/></ProtectedRoute>}></Route>
-      <Route path="/modelo-detalle" element={<ProtectedRoute><ModeloDetalle/></ProtectedRoute>}></Route>
-      <Route path="/ordenes-servicio" element={<ProtectedRoute><OrdenServicio/></ProtectedRoute>}></Route>
-      <Route path="/ordenservicio-detalle/:cod_OS" element={<ProtectedRoute><OrdenServicioDetalle/></ProtectedRoute>}></Route>
-      <Route path="/AboutUs" element={<SobreNosotros/>}></Route>
-    </Routes>             
-  </Router>
-)
+function App() {
+  return (
+    <UserProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Landing/>}></Route>
+          <Route path="/Registro" element={<Registro/>}></Route>
+          <Route path="/Login" element={<Login/>}></Route>
+          <Route path="/HomePage" element={<ProtectedRoute><HomePage/></ProtectedRoute>}></Route>
+          <Route path="/API" element={<ProtectedRoute><PseudoAPI/></ProtectedRoute>}></Route>
+          <Route path="/Search" element={<ProtectedRoute><Busqueda/></ProtectedRoute>}></Route>                                                                      
+          <Route path="/Inventario" element={<ProtectedRoute><Inventario/></ProtectedRoute>}></Route>
+          <Route path="/RegistrarInventario" element={<ProtectedRoute><RegistrarInventario/></ProtectedRoute>}></Route>
+          <Route path="/Stats" element={<ProtectedRoute roles={['Administrador']}><Estadisticas/></ProtectedRoute>}></Route>
+          <Route path="/Factura" element={<ProtectedRoute><VisualizarFactura cod_OS={4}/></ProtectedRoute>}></Route>
+          <Route path="/factura/:nro_factura" element={<ProtectedRoute><VisualizarFactura/></ProtectedRoute>}></Route>
+          <Route path="/RegistrarModelo" element={<ProtectedRoute><RegistrarModelo/></ProtectedRoute>}></Route>
+          <Route path="/RegistrarVehiculo" element={<ProtectedRoute><RegistrarVehiculo/></ProtectedRoute>}></Route>
+          <Route path="/RegistrarProveedor" element={<ProtectedRoute><RegistrarProveedor/></ProtectedRoute>}></Route>
+          <Route path="/RegistrarOrdenCompra" element={<ProtectedRoute><RegistrarOrdenCompra/></ProtectedRoute>}></Route>
+          <Route path="/RegistrarPlan" element={<ProtectedRoute><RegistrarPlan/></ProtectedRoute>}></Route>
+          <Route path="/RegistrarActividad" element={<ProtectedRoute><RegistrarActividad/></ProtectedRoute>}></Route>
+          <Route path="/RegistrarServicio" element={<ProtectedRoute><RegistrarServicio/></ProtectedRoute>}></Route>
+          <Route path="/RegistrarFamilia" element={<ProtectedRoute><RegistrarFamilia/></ProtectedRoute>}></Route>
+          <Route path="/RegistrarMarca" element={<ProtectedRoute><RegistrarMarca/></ProtectedRoute>}></Route>
+          <Route path="/RegistrarOrdenServicio" element={<ProtectedRoute><RegistrarOrdenServicio/></ProtectedRoute>}></Route>
+          <Route path="/RegistrarProducto" element={<ProtectedRoute><RegistrarProducto/></ProtectedRoute>}></Route>
+          <Route path="/RegistrarEstablecimiento" element={<ProtectedRoute><RegistrarEstablecimiento/></ProtectedRoute>}></Route>
+          <Route path="/RegistrarEmpleado" element={<ProtectedRoute><RegistrarEmpleado/></ProtectedRoute>}></Route>
+          <Route path="/RegistrarCliente" element={<ProtectedRoute><RegistrarCliente/></ProtectedRoute>}></Route>
+          <Route path="/empleado-detalle" element={<ProtectedRoute><EmpleadoDetalle/></ProtectedRoute>}></Route>
+          <Route path="/establecimiento-detalle" element={<ProtectedRoute><EstablecimientoDetalle/></ProtectedRoute>}></Route>
+          <Route path="/cliente-detalle" element={<ProtectedRoute><ClienteDetalle/></ProtectedRoute>}></Route>
+          <Route path="/proveedor-detalle" element={<ProtectedRoute><ProveedorDetalle/></ProtectedRoute>}></Route>
+          <Route path="/producto-detalle" element={<ProtectedRoute><ProductoDetalle/></ProtectedRoute>}></Route>
+          <Route path="/vehiculo-detalle" element={<ProtectedRoute><VehiculoDetalle/></ProtectedRoute>}></Route>
+          <Route path="/marca-detalle" element={<ProtectedRoute><MarcaDetalle/></ProtectedRoute>}></Route>
+          <Route path="/modelo-detalle" element={<ProtectedRoute><ModeloDetalle/></ProtectedRoute>}></Route>
+          <Route path="/ordenes-servicio" element={<ProtectedRoute><OrdenServicio/></ProtectedRoute>}></Route>
+          <Route path="/ordenservicio-detalle/:cod_OS" element={<ProtectedRoute><OrdenServicioDetalle/></ProtectedRoute>}></Route>
+          <Route path="/AboutUs" element={<SobreNosotros/>}></Route>
+          <Route path="/unauthorized" element={<Unauthorized />} />
+        </Routes>             
+      </Router>
+    </UserProvider>
+  );
+}
 
 export default App;                     
