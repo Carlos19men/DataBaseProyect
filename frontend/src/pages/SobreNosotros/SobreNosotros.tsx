@@ -3,10 +3,12 @@ import styles from './SobreNosotros.module.css';
 import logo from '../../assets/logo.png';
 import ods12 from '../../assets/ODS12.jpg';
 import TopBar from '../../components/TopBar/TopBar';
+import LandingBG from '../../components/LandingBG/LandingBG';
 
 const SobreNosotros: React.FC = () => {
   return (
     <div className={styles.container}>
+      <LandingBG />
       <TopBar text="Sobre Nosotros" menu={false} />
 
       <div className={styles.section}>
