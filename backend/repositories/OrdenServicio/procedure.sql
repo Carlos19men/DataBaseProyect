@@ -155,96 +155,30 @@ GO
 
 CREATE PROCEDURE ActualizarOrdenServicio
     @cod_OS INT,
-    @codigo_vehiculo INT = NULL,
-    @fecha_entrada DATE = NULL,
-    @hora_entrada TIME = NULL,
     @hora_estimada_salida TIME = NULL,
     @hora_real_salida TIME = NULL,
-    @fecha_salida DATE = NULL,
-    @justificacion VARCHAR(255) = NULL,
-    @persona_autorizada VARCHAR(50) = NULL,
-    @RIF_establecimiento VARCHAR(20) = NULL
+    @fecha_salida DATE = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
-    
-    DECLARE @ErrorMessage NVARCHAR(4000);
-    DECLARE @ErrorSeverity INT;
-    DECLARE @ErrorState INT;
-    
-    BEGIN TRY
-        -- Verificar que la orden de servicio existe
-        IF NOT EXISTS (SELECT 1 FROM OrdenesServicio WHERE cod_OS = @cod_OS)
-        BEGIN
-            ;THROW 50003, 'La orden de servicio especificada no existe', 1;
-        END;
-        
-        -- Verificar que el vehículo existe si se proporciona
-        IF @codigo_vehiculo IS NOT NULL AND NOT EXISTS (SELECT 1 FROM Vehiculos WHERE codigo = @codigo_vehiculo)
-        BEGIN
-            ;THROW 50004, 'El vehículo especificado no existe', 1;
-        END;
-        
-        -- Verificar que el establecimiento existe si se proporciona
-        IF @RIF_establecimiento IS NOT NULL AND NOT EXISTS (SELECT 1 FROM Establecimientos WHERE RIF = @RIF_establecimiento)
-        BEGIN
-            ;THROW 50005, 'El establecimiento especificado no existe', 1;
-        END;
-        
-        -- Construir la consulta de actualización dinámicamente
-        DECLARE @SQL NVARCHAR(MAX) = 'UPDATE OrdenesServicio SET ';
-        DECLARE @Updates NVARCHAR(MAX) = '';
-        
-        IF @codigo_vehiculo IS NOT NULL
-            SET @Updates = @Updates + 'codigo_vehiculo = @codigo_vehiculo, ';
-            
-        IF @fecha_entrada IS NOT NULL
-            SET @Updates = @Updates + 'fecha_entrada = @fecha_entrada, ';
-            
-        IF @hora_entrada IS NOT NULL
-            SET @Updates = @Updates + 'hora_entrada = @hora_entrada, ';
-            
-        IF @hora_estimada_salida IS NOT NULL
-            SET @Updates = @Updates + 'hora_estimada_salida = @hora_estimada_salida, ';
-            
-        IF @hora_real_salida IS NOT NULL
-            SET @Updates = @Updates + 'hora_real_salida = @hora_real_salida, ';
-            
-        IF @fecha_salida IS NOT NULL
-            SET @Updates = @Updates + 'fecha_salida = @fecha_salida, ';
-            
-        IF @justificacion IS NOT NULL
-            SET @Updates = @Updates + 'justificacion = @justificacion, ';
-            
-        IF @persona_autorizada IS NOT NULL
-            SET @Updates = @Updates + 'persona_autorizada = @persona_autorizada, ';
-            
-        IF @RIF_establecimiento IS NOT NULL
-            SET @Updates = @Updates + 'RIF_establecimiento = @RIF_establecimiento, ';
-        
-        -- Remover la última coma y espacio
-        IF LEN(@Updates) > 0
-            SET @Updates = LEFT(@Updates, LEN(@Updates) - 2);
-        
-        SET @SQL = @SQL + @Updates + ' WHERE cod_OS = @cod_OS';
-        
-        -- Ejecutar la actualización
-        EXEC sp_executesql @SQL, 
-            N'@cod_OS INT, @codigo_vehiculo INT, @fecha_entrada DATE, @hora_entrada TIME, 
-              @hora_estimada_salida TIME, @hora_real_salida TIME, @fecha_salida DATE, 
-              @justificacion VARCHAR(255), @persona_autorizada VARCHAR(50), @RIF_establecimiento VARCHAR(20)',
-            @cod_OS, @codigo_vehiculo, @fecha_entrada, @hora_entrada, @hora_estimada_salida,
-            @hora_real_salida, @fecha_salida, @justificacion, @persona_autorizada, @RIF_establecimiento;
-            
-    END TRY
-    BEGIN CATCH
-        SELECT 
-            @ErrorMessage = ERROR_MESSAGE(),
-            @ErrorSeverity = ERROR_SEVERITY(),
-            @ErrorState = ERROR_STATE();
-        
-        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
-    END CATCH;
+
+    -- Verificar si la orden de servicio existe
+    IF NOT EXISTS (SELECT 1 FROM OrdenesServicio WHERE cod_OS = @cod_OS)
+    BEGIN
+        RAISERROR('La orden de servicio no existe.', 16, 1);
+    END;
+
+    -- Actualizar solo los campos permitidos
+    UPDATE OrdenesServicio
+    SET 
+        hora_estimada_salida = ISNULL(@hora_estimada_salida, hora_estimada_salida),
+        hora_real_salida = ISNULL(@hora_real_salida, hora_real_salida),
+        fecha_salida = ISNULL(@fecha_salida, fecha_salida)
+    WHERE cod_OS = @cod_OS;
+
+    -- Confirmar la transacción si todo salió bien
+    IF @@TRANCOUNT > 0
+        COMMIT TRANSACTION;
 END;
 GO
 

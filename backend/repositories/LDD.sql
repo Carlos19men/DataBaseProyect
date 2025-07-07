@@ -144,7 +144,7 @@ create table Vehiculos(
     foreign key(CI_dueño) references Clientes(CI_cliente) ON DELETE CASCADE
 );
 
-create table 																					vicio(
+create table OrdenesServicio ( 
 	cod_OS int identity(1,1) not null,
 	fecha_entrada date not null,
 	hora_entrada time not null,
