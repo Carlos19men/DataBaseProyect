@@ -60,18 +60,16 @@ export class OrdenCompraController {
 
     newOrdenCompra = async (req: Request, res: Response<{ message: string }>): Promise<void> => {
         
-        const {nro_OC, fecha_compra,RIF_Est,total} = req.body;
+        const {fecha_compra,RIF_Est,RIF_proveedor,id_producto,cant_producto,precio} = req.body;
 
         try {
-            
-            const ordenCompraData = await buysOrderModel.create(fecha_compra,RIF_Est,);
+            const ordenCompraData = await buysOrderModel.create(fecha_compra,RIF_Est,RIF_proveedor,id_producto,cant_producto,precio);
 
-            if (!ordenCompraData || !ordenCompraData.CI_empleado || !ordenCompraData.fecha_orden || !ordenCompraData.total) {
+            if (ordenCompraData['rowsAffected'] === 0) {
                 res.status(400).json({ message: "Datos incompletos para crear una nueva orden de compra" });
                 return;
             }
 
-            await this.model.create(ordenCompraData);
             res.status(201).json({ message: "Orden de compra creada exitosamente" });
         } catch (error) {
             console.error("Error al crear la orden de compra", error);
