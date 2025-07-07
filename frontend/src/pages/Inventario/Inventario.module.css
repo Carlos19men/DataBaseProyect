@@ -1,0 +1,336 @@
+.bar{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 12vh;
+    margin: 0;
+    
+    background-color: var(--primary-green);
+}
+
+.serviceBox{
+    grid-column: auto;
+}
+
+.subtitle{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600; /* SemiBold suele ser 600 */
+    line-height: 100%;
+    letter-spacing: 0.5px;  
+    text-align: center; 
+    font-size: 5vh; 
+    padding: 0%;
+    margin: 0%;
+    margin-top: 2vh;
+
+
+}
+
+.texto{
+    width: 100%;
+    height: 100%;
+    padding-inline: 2vw;
+    padding-top: 2vh;
+    color: #000000;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+/* Ajuste para la barra de búsqueda */
+.busquedaBarContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 3vh;
+  margin-bottom: 1.5vh;
+}
+
+.busquedaBarInput {
+  padding: 1.2vh 2vw;
+  border-radius: 8px;
+  border: 1px solid #b2dfdb;
+  font-size: 2.2vh;
+  outline: none;
+  background: #f8fafc;
+  width: 40vw;
+  max-width: 260px;
+}
+
+
+.columnas {
+    padding:1vw;
+    display: grid;
+    grid-template-columns: 75% 15%;
+    gap: 2vw;
+    margin-top: 2vh;
+}
+
+.resultados {
+    padding: 2vw;
+    display:grid;
+    grid-template-columns:repeat(3, 33%);
+    gap : 1vw;
+
+}
+
+.item{
+    background: #fff;
+    border-radius: 14px;
+    border: 1.5px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2vh;
+    padding: 2vh 2vw;
+    font-size: 3vh;
+    gap: 1vh;
+}
+
+.filtros {
+
+
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 2vh 2vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  align-items: stretch;
+  min-width: 220px;
+  max-width: 320px;
+
+}
+
+.filtros button {
+  width: 100%;
+  margin-bottom: 1vh;
+}
+
+/* Estilos para el filtro de RIF */
+.filtroRIFContainer {
+  margin-top: 2vh;
+  padding: 1vh 1vw;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.filtroRIFLabel {
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.8vh;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1vh;
+  text-align: center;
+}
+
+.filtroRIFSelect {
+  width: 100%;
+  padding: 1vh 1vw;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 1.6vh;
+  font-family: 'Poppins', sans-serif;
+  background: #fff;
+  color: #333;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.filtroRIFSelect:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 1px rgba(76, 175, 80, 0.2);
+}
+
+.filtroRIFSelect:hover {
+  border-color: #ccc;
+}
+
+.filtroRIFSelect option {
+  padding: 1vh 1vw;
+  font-size: 1.6vh;
+}
+
+/* Card específica para inventario */
+.inventarioCard {
+  background: #f8fafc;
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+  padding: 2vh 2vw;
+  margin-bottom: 2vh;
+  font-size: 2.5vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  min-width: 260px;
+  max-width: 320px;
+  min-height: 220px;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.inventarioCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: #2196F3;
+}
+
+.inventarioTitulo {
+  font-size: 1.3em;
+  color: #000000;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+  margin-top: 0.2em;
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.inventarioEtiqueta {
+  color: #333;
+  margin-bottom: 0.3em;
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+.inventarioValor {
+  color: #555;
+  font-weight: 400;
+}
+
+/* Card específica para alertas */
+.alertaCard {
+  background: #fff3e0;
+  border-radius: 14px;
+  border: 1.5px solid #ff9800;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  padding: 2vh 2vw;
+  margin-bottom: 2vh;
+  font-size: 2.5vh;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  min-width: 260px;
+  max-width: 320px;
+  min-height: 220px;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.alertaCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: #ff5722;
+}
+
+.alertaTitulo {
+  font-size: 1.3em;
+  color: #d84315;
+  font-weight: 800;
+  margin-bottom: 0.5em;
+  margin-top: 0.2em;
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.alertaEtiqueta {
+  color: #444;
+  margin-bottom: 0.3em;
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+.alertaValor {
+  color: #666;
+  font-weight: 400;
+}
+
+.alertaUrgente {
+  background: #ffebee;
+  border-color: #f44336;
+}
+
+.alertaUrgente .alertaTitulo {
+  color: #c62828;
+}
+
+.alertaModerada {
+  background: #fff8e1;
+  border-color: #ff9800;
+}
+
+.alertaModerada .alertaTitulo {
+  color: #ef6c00;
+}
+
+.alertaLeve {
+  background: #f1f8e9;
+  border-color: #8bc34a;
+}
+
+.alertaLeve .alertaTitulo {
+  color: #558b2f;
+}
+
+/* FAB para agregar nuevo inventario */
+.fab {
+  position: fixed;
+  bottom: 2vh;
+  right: 2vw;
+  width: 6vh;
+  height: 6vh;
+  border-radius: 50%;
+  background: var(--primary-green);
+  border: none;
+  color: white;
+  font-size: 3vh;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+.fab:active {
+  transform: scale(0.95);
+}
+
+/* Estados del stock */
+.stockStatus {
+  margin-top: 1vh;
+  padding: 0.5vh 1vw;
+  border-radius: 6px;
+  font-size: 0.9em;
+  font-weight: 600;
+  text-align: center;
+}
+
+.stock-bajo {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #f44336;
+}
+
+.stock-alto {
+  background: #e8f5e8;
+  color: #2e7d32;
+  border: 1px solid #4caf50;
+}
+
+.stock-normal {
+  background: #e3f2fd;
+  color: #1565c0;
+  border: 1px solid #2196f3;
+} 

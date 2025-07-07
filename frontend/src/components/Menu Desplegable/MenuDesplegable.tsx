@@ -4,11 +4,9 @@ import styles from "./MenuDespegable.module.css";
 //icons
 import arrowLeft_circle from "../../assets/Arrow left-circle.png";
 import box from "../../assets/Box.png";
-import home from "../../assets/Home.png";
-import menu from "../../assets/Menu.png";
+import home from "../../assets/Home.png";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 import more_horizontal from "../../assets/More horizontal.png";
 import search from "../../assets/Search.png";
-import user from "../../assets/User.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -39,14 +37,13 @@ const MenuDespegable: React.FC = () => {
 
                         <li><a href="/"><img src={home} alt="Inicio" /> Inicio</a></li>
                         <li><a href="/Search"><img src={search} alt="Buscar" /> Busqueda</a></li>
-                        <li><a href="/Proveedores"><img src={box} alt="Proveedores" /> Proveedores</a></li>
+                        <li><a href="/Inventario"><img src={box} alt="Inventario" /> Inventario</a></li>
                         <li>
                             <a onClick={() => {cerrarMenu(); navigator("/ordenes-servicio");}} style={{cursor: "pointer"}}>
                                 <img src={box} alt="Ordenes Servicio" /> Ordenes Servicio
                             </a>
                         </li>
                         <li><a href="/AboutUs"><img src={more_horizontal} alt="Sobre nosotros" /> Sobre M&U</a></li>
-                        <li><a href="/Usuario"><img src={user} alt="Usuario" /> Usuario</a></li>
                         <li><a onClick={() => {localStorage.removeItem("isLoggedIn");navigator("/login");} }><img src={arrowLeft_circle} alt="Salir" onClick={() => {localStorage.removeItem("isLoggedIn");navigator("/login");}} /> Salir</a></li>
                     </ul>
                 </div>

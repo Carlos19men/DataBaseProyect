@@ -3,7 +3,11 @@ import { getDbPool } from "../config/SQLserverConection";
 export class inventoryModel {
     static async getAll() {
         const pool = await getDbPool();
-        const result = await pool.query("SELECT * FROM Inventario;");
+        const result = await pool.query(`
+            SELECT i.*, p.nombre, p.minimo, p.maximo 
+            FROM Inventario i 
+            LEFT JOIN Productos p ON i.id_producto = p.id_producto
+        `);
         return result['recordset'];
     }
 
@@ -11,7 +15,12 @@ export class inventoryModel {
         const request = await getDbPool().request()
         request.input("RIF", RIF)
 
-        const result = await request.query("SELECT * FROM Inventario WHERE RIF_establecimiento = @RIF");
+        const result = await request.query(`
+            SELECT i.*, p.nombre, p.minimo, p.maximo 
+            FROM Inventario i 
+            LEFT JOIN Productos p ON i.id_producto = p.id_producto 
+            WHERE i.RIF_establecimiento = @RIF
+        `);
         return result['recordset'];
     }
 
