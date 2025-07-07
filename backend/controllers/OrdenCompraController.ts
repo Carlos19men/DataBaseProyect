@@ -58,14 +58,13 @@ export class OrdenCompraController {
         }
     }
 
-    /*
     newOrdenCompra = async (req: Request, res: Response<{ message: string }>): Promise<void> => {
         
         const {nro_OC, fecha_compra,RIF_Est,total} = req.body;
 
         try {
             
-            const ordenCompraData: BuysOrder = await buysOrderModel.create({fecha_compra,RIF_Est,});
+            const ordenCompraData = await buysOrderModel.create(fecha_compra,RIF_Est,);
 
             if (!ordenCompraData || !ordenCompraData.CI_empleado || !ordenCompraData.fecha_orden || !ordenCompraData.total) {
                 res.status(400).json({ message: "Datos incompletos para crear una nueva orden de compra" });
@@ -97,5 +96,4 @@ export class OrdenCompraController {
             res.status(500).json({ message: "Error interno del servidor al actualizar una orden de compra" });
         }
     }
-    */
 }

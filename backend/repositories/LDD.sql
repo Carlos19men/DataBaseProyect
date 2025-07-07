@@ -32,8 +32,9 @@ DROP TABLE Modelos;
 DROP TABLE Marcas;
 
 
-DROP DATABASE MU_DB; 
-*/
+DROP DATABASE MU_DB; */
+
+
 -- Esquema de la base de datos.
 create database MU_DB;
 
@@ -80,7 +81,6 @@ alter table Empleados
     add constraint RIF_establecimiento 
     foreign key (RIF_establecimiento) 
     references Establecimientos(RIF) 
-    ON DELETE SET NULL
     ON UPDATE CASCADE; 
 
 alter table Empleados
@@ -158,7 +158,7 @@ create table OrdenesServicio (
 	
 	primary key(cod_OS),
 	foreign key(codigo_vehiculo) references Vehiculos(codigo) ON DELETE CASCADE,
-	foreign key(RIF_establecimiento) REFERENCES Establecimientos(RIF) ON DELETE CASCADE
+	foreign key(RIF_establecimiento) REFERENCES Establecimientos(RIF) ON DELETE CASCADE 
 );
 
 create table Facturas(
