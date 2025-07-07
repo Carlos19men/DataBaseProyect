@@ -117,7 +117,7 @@ const Busquedas2: React.FC = () => {
       fetch("http://localhost:1234/product").then(r => r.json()),
       fetch("http://localhost:1234/vehicles").then(r => r.json()),
       fetch("http://localhost:1234/brand").then(r => r.json()),
-      fetch("http://localhost:1234/model").then(r => r.json()),
+      fetch("http://localhost:1234/model/").then(r => r.json()),
     ])
       .then(([emp, est, cli, prov, prod, veh, mar, mod]) => {
         console.log("Datos de empleados:", emp);
@@ -320,12 +320,13 @@ const Busquedas2: React.FC = () => {
 			);
 		}
 		if (tipo === "brand") {
-			const codigo = item.cod_marca || "";
 			const nombre = item.nombre_marca || "";
+			const vehiculos = item.vehiculos ?? 0;
+			const modelos = item.modelos ?? 0;
 
 			// Función para truncar texto si excede 200 caracteres
 			const truncarTexto = (texto: string) => {
-				if (texto.length > 200) {
+				if (typeof texto === "string" && texto.length > 200) {
 					return texto.substring(0, 200) + '...';
 				}
 				return texto;
@@ -334,18 +335,21 @@ const Busquedas2: React.FC = () => {
 			return (
 				<div className={styles.marcaCard} onClick={() => handleMarcaClick(item)}>
 					<h3 className={styles.marcaTitulo}>{truncarTexto(nombre)}</h3>
-					<p className={styles.marcaEtiqueta}>Código: <span className={styles.marcaValor}>{codigo}</span></p>
+					<p className={styles.marcaEtiqueta}>Cantidad de vehículos: <span className={styles.marcaValor}>{vehiculos}</span></p>
+					<p className={styles.marcaEtiqueta}>Cantidad de modelos: <span className={styles.marcaValor}>{modelos}</span></p>
 				</div>
 			);
 		}
 		if (tipo === "model") {
-			const codigo = item.cod_modelo || "";
 			const nombre = item.modelo || "";
 			const marca = item.marca || "";
+			const octanaje = item.octanaje || "";
+			const peso = item.peso || "";
+			const nroPuestos = item.nro_puestos || "";
 
 			// Función para truncar texto si excede 200 caracteres
 			const truncarTexto = (texto: string) => {
-				if (texto.length > 200) {
+				if (typeof texto === "string" && texto.length > 200) {
 					return texto.substring(0, 200) + '...';
 				}
 				return texto;
@@ -354,8 +358,10 @@ const Busquedas2: React.FC = () => {
 			return (
 				<div className={styles.modeloCard} onClick={() => handleModeloClick(item)}>
 					<h3 className={styles.modeloTitulo}>{truncarTexto(nombre)}</h3>
-					<p className={styles.modeloEtiqueta}>Código: <span className={styles.modeloValor}>{codigo}</span></p>
 					<p className={styles.modeloEtiqueta}>Marca: <span className={styles.modeloValor}>{truncarTexto(marca)}</span></p>
+					<p className={styles.modeloEtiqueta}>Octanaje: <span className={styles.modeloValor}>{truncarTexto(octanaje)}</span></p>
+					<p className={styles.modeloEtiqueta}>Peso: <span className={styles.modeloValor}>{truncarTexto(peso)}</span></p>
+					<p className={styles.modeloEtiqueta}>N° de puestos: <span className={styles.modeloValor}>{truncarTexto(nroPuestos)}</span></p>
 				</div>
 			);
 		}

@@ -3,7 +3,7 @@ import { getDbPool } from "../config/SQLserverConection";
 export class brandModel {
     static async getAll(){
         const pool = getDbPool();
-        const result = await pool.query('SELECT * FROM Marcas ORDER BY cod_marca;');
+        const result = await pool.query('SELECT * FROM ObtenerMarcas ORDER BY cod_marca;');
         return result['recordset'];
     }
 
@@ -11,7 +11,7 @@ export class brandModel {
         const request = getDbPool().request();
         request.input('id', id);
 
-        const result = await request.query('SELECT * FROM Marcas WHERE cod_marca = @id;');
+        const result = await request.query('SELECT * FROM ObtenerMarcas WHERE id = @id;');
         return result['recordset'][0];
     }
 

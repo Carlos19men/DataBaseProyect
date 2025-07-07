@@ -476,7 +476,7 @@
   gap: 0.5em;
   min-width: 260px;
   max-width: 320px;
-  min-height: 220px;
+  min-height: 100px;
   box-sizing: border-box;
   justify-content: flex-start;
   cursor: pointer;
@@ -509,6 +509,24 @@
 .marcaValor {
   color: #7f8c8d;
   font-weight: 400;
+}
+
+.marcaCardCorta {
+  padding: 6px 10px !important;
+  min-width: 120px !important;
+  max-width: 180px !important;
+  min-height: unset !important;
+  font-size: 1.1em !important;
+}
+
+.marcaCardCorta .marcaTitulo {
+  font-size: 1em !important;
+  margin: 2px 0 !important;
+}
+
+.marcaCardCorta .marcaEtiqueta {
+  margin: 1px 0 !important;
+  font-size: 0.95em !important;
 }
 
 /* Card específica para modelo */
@@ -590,4 +608,35 @@
 
 .fab:active {
   transform: scale(0.95);
+}
+
+.registroAcceso {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  background: #f8fafc;
+  border: 1.5px solid #b2dfdb;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 1.1em;
+  font-family: 'Poppins', sans-serif;
+  color: #222;
+  font-weight: 500;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.registroAcceso:hover {
+  background: #e0f7fa;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-color: #22c55e;
+}
+
+.registroAccesoIcon {
+  width: 22px;
+  height: 22px;
+  margin-right: 8px;
+  filter: grayscale(0.2);
 }
