@@ -164,3 +164,96 @@ select {
   justify-content: center;
   z-index: 1000;
 }
+
+.backFab {
+  position: fixed;
+  top: 100px;
+  left: 30px;
+  width: 60px;
+  height: 60px;
+  background: var(--primary-green, #22b86c);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 2.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 1200;
+}
+
+.backFab:hover {
+  transform: scale(1.1);
+  background: #1a7f37;
+}
+
+.backFab:active {
+  transform: scale(0.95);
+}
+
+.detailCard {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  margin-bottom: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.formLabel {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.formInput, .select, .textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  background: white;
+  color: #333;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.formInput:focus, .select:focus, .textarea:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.formInput:hover, .select:hover, .textarea:hover {
+  border-color: #bbb;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
