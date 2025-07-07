@@ -14,7 +14,7 @@ AS
 RETURN(
 	--GET customer by CI
 	SELECT *
-	FROM ObtenerClientes
+	FROM ObtenerClientes 
 	WHERE CI = @CI
 );
 GO

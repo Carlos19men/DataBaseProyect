@@ -43,7 +43,11 @@ const MenuDespegable: React.FC = () => {
                                 <img src={box} alt="Ordenes Servicio" /> Ordenes Servicio
                             </a>
                         </li>
-                        <li><a href="/AboutUs"><img src={more_horizontal} alt="Sobre nosotros" /> Sobre M&U</a></li>
+                        <li>
+                            <a onClick={() => {cerrarMenu(); navigator("/AboutUs");}} style={{cursor: "pointer"}}>
+                                <img src={more_horizontal} alt="Sobre nosotros" /> Sobre Nosotros
+                            </a>
+                        </li>
                         <li><a onClick={() => {localStorage.removeItem("isLoggedIn");navigator("/login");} }><img src={arrowLeft_circle} alt="Salir" onClick={() => {localStorage.removeItem("isLoggedIn");navigator("/login");}} /> Salir</a></li>
                     </ul>
                 </div>

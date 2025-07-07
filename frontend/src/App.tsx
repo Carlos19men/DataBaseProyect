@@ -25,6 +25,7 @@ import RegistrarCliente from "./pages/RegistrarCliente/RegistrarCliente";
 import OrdenServicio from "./pages/OrdenServicio/OrdenServicio";
 import Inventario from "./pages/Inventario/Inventario";
 import RegistrarInventario from "./pages/RegistrarInventario/RegistrarInventario";
+import SobreNosotros from "./pages/SobreNosotros/SobreNosotros";
 
 
 // Importar páginas de detalle
@@ -77,6 +78,7 @@ const App = () => (
       <Route path="/modelo-detalle" element={<ProtectedRoute><ModeloDetalle/></ProtectedRoute>}></Route>
       <Route path="/ordenes-servicio" element={<ProtectedRoute><OrdenServicio/></ProtectedRoute>}></Route>
       <Route path="/ordenservicio-detalle/:cod_OS" element={<ProtectedRoute><OrdenServicioDetalle/></ProtectedRoute>}></Route>
+      <Route path="/AboutUs" element={<SobreNosotros/>}></Route>
     </Routes>             
   </Router>
 )
