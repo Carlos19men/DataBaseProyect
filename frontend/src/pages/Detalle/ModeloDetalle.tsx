@@ -15,6 +15,20 @@ const ModeloDetalle: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [editingData, setEditingData] = useState({
+    modelo: '',
+    peso: '',
+    nro_puestos: '',
+    octanaje: '',
+    tipo_refrigerante: '',
+    descripcion: '',
+    aceite_motor: '',
+    aceite_caja: ''
+  });
+  const [loadingAction, setLoadingAction] = useState(false);
+  const [actionMessage, setActionMessage] = useState("");
   
   useEffect(() => {
     const checkMenuState = () => {
@@ -107,6 +121,78 @@ const ModeloDetalle: React.FC = () => {
     );
   }
 
+  const handleEdit = () => {
+    setEditingData({
+      modelo: modeloData?.modelo || '',
+      peso: modeloData?.peso || '',
+      nro_puestos: modeloData?.nro_puestos || '',
+      octanaje: modeloData?.octanaje || '',
+      tipo_refrigerante: modeloData?.tipo_refrigerante || '',
+      descripcion: modeloData?.descripcion || '',
+      aceite_motor: modeloData?.aceite_motor || '',
+      aceite_caja: modeloData?.aceite_caja || ''
+    });
+    setShowEditModal(true);
+  };
+  const handleDelete = () => setShowDeleteModal(true);
+  const handleUpdateModelo = async () => {
+    if (!editingData.modelo.trim() || !editingData.peso.trim() || !editingData.nro_puestos.trim()) {
+      setActionMessage("Modelo, peso y número de puestos son obligatorios");
+      return;
+    }
+    setLoadingAction(true);
+    try {
+      const response = await fetch(`http://localhost:1234/model`, {
+        method: "PATCH",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id_marca: modeloData?.cod_marca,
+          id_modelo: modeloData?.cod_modelo,
+          nombre: editingData.modelo,
+          peso_str: editingData.peso,
+          nro_puesto_str: editingData.nro_puestos,
+          octanaje: editingData.octanaje,
+          tipo_refrigerante: editingData.tipo_refrigerante,
+          descripcion: editingData.descripcion,
+          aceite_motor: editingData.aceite_motor,
+          aceite_caja: editingData.aceite_caja
+        })
+      });
+      if (response.ok) {
+        setActionMessage("Modelo actualizado exitosamente");
+        setShowEditModal(false);
+        window.location.reload();
+      } else {
+        const errorData = await response.json();
+        setActionMessage(errorData.message || "Error al actualizar el modelo");
+      }
+    } catch (err) {
+      setActionMessage("Error de conexión");
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+  const handleDeleteModelo = async () => {
+    setLoadingAction(true);
+    try {
+      const response = await fetch(`http://localhost:1234/model/${modeloData?.cod_marca}/${modeloData?.cod_modelo}`, {
+        method: "DELETE"
+      });
+      if (response.ok) {
+        setActionMessage("Modelo eliminado exitosamente");
+        setShowDeleteModal(false);
+        navigate('/Search');
+      } else {
+        const errorData = await response.json();
+        setActionMessage(errorData.message || "Error al eliminar el modelo");
+      }
+    } catch (err) {
+      setActionMessage("Error de conexión");
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+
   return (
     <div>
       <TopBar text='Detalles del Modelo' menu={true} />
@@ -117,6 +203,11 @@ const ModeloDetalle: React.FC = () => {
         </button>
       )}
       <div className={styles.container}>
+        {/* Botones de acción */}
+        <div className={styles.actionButtons}>
+          <button className={styles.editButton} onClick={handleEdit}>✏️ Editar Modelo</button>
+          <button className={styles.deleteButton} onClick={handleDelete}>🗑️ Eliminar Modelo</button>
+        </div>
         {/* Cabecera con información detallada */}
         <div className={styles.detailCard}>
           <div className={styles.clientHeader}>
@@ -219,6 +310,66 @@ const ModeloDetalle: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* Modal de Edición */}
+      {showEditModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3>Editar Modelo</h3>
+            <div className={styles.formGroup}>
+              <label>Nombre:</label>
+              <input type="text" value={editingData.modelo} onChange={e => setEditingData({ ...editingData, modelo: e.target.value })} className={styles.modalInput} />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Peso:</label>
+              <input type="number" value={editingData.peso} onChange={e => setEditingData({ ...editingData, peso: e.target.value })} className={styles.modalInput} />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Número de puestos:</label>
+              <input type="number" value={editingData.nro_puestos} onChange={e => setEditingData({ ...editingData, nro_puestos: e.target.value })} className={styles.modalInput} />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Octanaje:</label>
+              <input type="text" value={editingData.octanaje} onChange={e => setEditingData({ ...editingData, octanaje: e.target.value })} className={styles.modalInput} />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Tipo de refrigerante:</label>
+              <input type="text" value={editingData.tipo_refrigerante} onChange={e => setEditingData({ ...editingData, tipo_refrigerante: e.target.value })} className={styles.modalInput} />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Descripción:</label>
+              <input type="text" value={editingData.descripcion} onChange={e => setEditingData({ ...editingData, descripcion: e.target.value })} className={styles.modalInput} />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Aceite Motor:</label>
+              <input type="text" value={editingData.aceite_motor} onChange={e => setEditingData({ ...editingData, aceite_motor: e.target.value })} className={styles.modalInput} />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Aceite Caja:</label>
+              <input type="text" value={editingData.aceite_caja} onChange={e => setEditingData({ ...editingData, aceite_caja: e.target.value })} className={styles.modalInput} />
+            </div>
+            {actionMessage && <div className={styles.message}>{actionMessage}</div>}
+            <div className={styles.modalButtons}>
+              <button onClick={handleUpdateModelo} disabled={loadingAction} className={styles.confirmButton}>{loadingAction ? "Actualizando..." : "Actualizar"}</button>
+              <button onClick={() => setShowEditModal(false)} className={styles.cancelButton}>Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Modal de Eliminación */}
+      {showDeleteModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3>Confirmar Eliminación</h3>
+            <p>¿Está seguro que desea eliminar el modelo {modeloData?.modelo}?</p>
+            <p>Esta acción no se puede deshacer.</p>
+            {actionMessage && <div className={styles.message}>{actionMessage}</div>}
+            <div className={styles.modalButtons}>
+              <button onClick={handleDeleteModelo} disabled={loadingAction} className={styles.deleteConfirmButton}>{loadingAction ? "Eliminando..." : "Eliminar"}</button>
+              <button onClick={() => setShowDeleteModal(false)} className={styles.cancelButton}>Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

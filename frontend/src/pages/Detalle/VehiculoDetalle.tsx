@@ -14,6 +14,17 @@ const VehiculoDetalle: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [editingData, setEditingData] = useState({
+    kilometraje: '',
+    meses_uso: '',
+    aceite_utilizado_motor: '',
+    aceite_utilizado_caja: '',
+    resumen_mantenimiento: ''
+  });
+  const [loadingAction, setLoadingAction] = useState(false);
+  const [actionMessage, setActionMessage] = useState("");
   
   useEffect(() => {
     const checkMenuState = () => {
@@ -106,6 +117,73 @@ const VehiculoDetalle: React.FC = () => {
     );
   }
 
+  const handleEdit = () => {
+    setEditingData({
+      kilometraje: vehiculoData?.kilometraje || '',
+      meses_uso: vehiculoData?.meses_uso || '',
+      aceite_utilizado_motor: vehiculoData?.aceite_utilizado_motor || '',
+      aceite_utilizado_caja: vehiculoData?.aceite_utilizado_caja || '',
+      resumen_mantenimiento: vehiculoData?.resumen_mantenimiento || ''
+    });
+    setShowEditModal(true);
+  };
+  const handleDelete = () => setShowDeleteModal(true);
+  const handleUpdateVehiculo = async () => {
+    if (!editingData.kilometraje.trim() || !editingData.meses_uso.trim()) {
+      setActionMessage("Kilometraje y meses de uso son obligatorios");
+      return;
+    }
+    setLoadingAction(true);
+    try {
+      const response = await fetch(`http://localhost:1234/vehicles`, {
+        method: "PATCH",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          plate: vehiculoData?.placa,
+          kilometraje: editingData.kilometraje,
+          meses_uso: editingData.meses_uso,
+          aceite_utilizado_motor: editingData.aceite_utilizado_motor,
+          aceite_utilizado_caja: editingData.aceite_utilizado_caja,
+          resumen_mantenimiento: editingData.resumen_mantenimiento
+        })
+      });
+      if (response.ok) {
+        setActionMessage("Vehículo actualizado exitosamente");
+        setShowEditModal(false);
+        window.location.reload();
+      } else {
+        const errorData = await response.json();
+        setActionMessage(errorData.message || "Error al actualizar el vehículo");
+      }
+    } catch (err) {
+      setActionMessage("Error de conexión");
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+  const handleDeleteVehiculo = async () => {
+    setLoadingAction(true);
+    try {
+      const response = await fetch(`http://localhost:1234/vehicles`, {
+        method: "DELETE",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plate: vehiculoData?.placa })
+      });
+      if (response.ok) {
+        setActionMessage("Vehículo eliminado exitosamente");
+        setShowDeleteModal(false);
+        navigate('/Search');
+      } else {
+        const errorData = await response.json();
+        setActionMessage(errorData.message || "Error al eliminar el vehículo");
+      }
+    } catch (err) {
+      setActionMessage("Error de conexión");
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+
   return (
     <div>
       <TopBar text='Detalles del vehículo' menu={true} />
@@ -116,6 +194,11 @@ const VehiculoDetalle: React.FC = () => {
         </button>
       )}
       <div className={styles.container}>
+        {/* Botones de acción */}
+        <div className={styles.actionButtons}>
+          <button className={styles.editButton} onClick={handleEdit}>✏️ Editar Vehículo</button>
+          <button className={styles.deleteButton} onClick={handleDelete}>🗑️ Eliminar Vehículo</button>
+        </div>
         {/* Cabecera con información detallada */}
         <div className={styles.detailCard}>
           <div className={styles.clientHeader}>
@@ -235,6 +318,54 @@ const VehiculoDetalle: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* Modal de Edición */}
+      {showEditModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3>Editar Vehículo</h3>
+            <div className={styles.formGroup}>
+              <label>Kilometraje:</label>
+              <input type="number" value={editingData.kilometraje} onChange={e => setEditingData({ ...editingData, kilometraje: e.target.value })} className={styles.modalInput} />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Meses de uso:</label>
+              <input type="number" value={editingData.meses_uso} onChange={e => setEditingData({ ...editingData, meses_uso: e.target.value })} className={styles.modalInput} />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Aceite Motor:</label>
+              <input type="text" value={editingData.aceite_utilizado_motor} onChange={e => setEditingData({ ...editingData, aceite_utilizado_motor: e.target.value })} className={styles.modalInput} />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Aceite Caja:</label>
+              <input type="text" value={editingData.aceite_utilizado_caja} onChange={e => setEditingData({ ...editingData, aceite_utilizado_caja: e.target.value })} className={styles.modalInput} />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Resumen Mantenimiento:</label>
+              <input type="text" value={editingData.resumen_mantenimiento} onChange={e => setEditingData({ ...editingData, resumen_mantenimiento: e.target.value })} className={styles.modalInput} />
+            </div>
+            {actionMessage && <div className={styles.message}>{actionMessage}</div>}
+            <div className={styles.modalButtons}>
+              <button onClick={handleUpdateVehiculo} disabled={loadingAction} className={styles.confirmButton}>{loadingAction ? "Actualizando..." : "Actualizar"}</button>
+              <button onClick={() => setShowEditModal(false)} className={styles.cancelButton}>Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Modal de Eliminación */}
+      {showDeleteModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3>Confirmar Eliminación</h3>
+            <p>¿Está seguro que desea eliminar el vehículo {vehiculoData?.placa}?</p>
+            <p>Esta acción no se puede deshacer.</p>
+            {actionMessage && <div className={styles.message}>{actionMessage}</div>}
+            <div className={styles.modalButtons}>
+              <button onClick={handleDeleteVehiculo} disabled={loadingAction} className={styles.deleteConfirmButton}>{loadingAction ? "Eliminando..." : "Eliminar"}</button>
+              <button onClick={() => setShowDeleteModal(false)} className={styles.cancelButton}>Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

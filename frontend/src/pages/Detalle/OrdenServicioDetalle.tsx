@@ -17,6 +17,9 @@ const OrdenServicioDetalle: React.FC = () => {
   const [creatingInvoice, setCreatingInvoice] = useState<boolean>(false);
   const [facturaExistente, setFacturaExistente] = useState<any>(null);
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [loadingAction, setLoadingAction] = useState(false);
+  const [actionMessage, setActionMessage] = useState("");
   
   useEffect(() => {
     const checkMenuState = () => {
@@ -126,6 +129,28 @@ const OrdenServicioDetalle: React.FC = () => {
     navigate(`/Factura?cod_OS=${cod_OS}`);
   };
 
+  const handleDelete = () => setShowDeleteModal(true);
+  const handleDeleteOrden = async () => {
+    setLoadingAction(true);
+    try {
+      const response = await fetch(`http://localhost:1234/service-order/${cod_OS}`, {
+        method: "DELETE"
+      });
+      if (response.ok) {
+        setActionMessage("Orden de servicio eliminada exitosamente");
+        setShowDeleteModal(false);
+        navigate('/Search');
+      } else {
+        const errorData = await response.json();
+        setActionMessage(errorData.message || "Error al eliminar la orden de servicio");
+      }
+    } catch (err) {
+      setActionMessage("Error de conexión");
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+
   if (loading) {
     return (
       <div>
@@ -174,6 +199,10 @@ const OrdenServicioDetalle: React.FC = () => {
         </button>
       )}
       <div className={styles.container}>
+        {/* Botón de eliminar */}
+        <div className={styles.actionButtons}>
+          <button className={styles.deleteButton} onClick={handleDelete}>🗑️ Eliminar Orden</button>
+        </div>
         <div className={styles.detailCard}>
           <div className={styles.clientHeader}>
             <h2>Orden #{ordenData.cod_OS}</h2>
@@ -247,6 +276,21 @@ const OrdenServicioDetalle: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* Modal de Eliminación */}
+      {showDeleteModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3>Confirmar Eliminación</h3>
+            <p>¿Está seguro que desea eliminar la orden de servicio #{ordenData?.cod_OS}?</p>
+            <p>Esta acción no se puede deshacer.</p>
+            {actionMessage && <div className={styles.message}>{actionMessage}</div>}
+            <div className={styles.modalButtons}>
+              <button onClick={handleDeleteOrden} disabled={loadingAction} className={styles.deleteConfirmButton}>{loadingAction ? "Eliminando..." : "Eliminar"}</button>
+              <button onClick={() => setShowDeleteModal(false)} className={styles.cancelButton}>Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

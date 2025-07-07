@@ -17,6 +17,11 @@ const MarcaDetalle: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [editingData, setEditingData] = useState({ nombre: '' });
+  const [loadingAction, setLoadingAction] = useState(false);
+  const [actionMessage, setActionMessage] = useState("");
   
   useEffect(() => {
     const checkMenuState = () => {
@@ -140,6 +145,58 @@ const MarcaDetalle: React.FC = () => {
     );
   }
 
+  const handleEdit = () => {
+    setEditingData({ nombre: marcaData?.nombre_marca || '' });
+    setShowEditModal(true);
+  };
+  const handleDelete = () => setShowDeleteModal(true);
+  const handleUpdateMarca = async () => {
+    if (!editingData.nombre.trim()) {
+      setActionMessage("El nombre es obligatorio");
+      return;
+    }
+    setLoadingAction(true);
+    try {
+      const response = await fetch(`http://localhost:1234/brand/`, {
+        method: "PATCH",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: marcaData?.cod_marca, name: editingData.nombre })
+      });
+      if (response.ok) {
+        setActionMessage("Marca actualizada exitosamente");
+        setShowEditModal(false);
+        window.location.reload();
+      } else {
+        const errorData = await response.json();
+        setActionMessage(errorData.message || "Error al actualizar la marca");
+      }
+    } catch (err) {
+      setActionMessage("Error de conexión");
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+  const handleDeleteMarca = async () => {
+    setLoadingAction(true);
+    try {
+      const response = await fetch(`http://localhost:1234/brand/${marcaData?.cod_marca}`, {
+        method: "DELETE"
+      });
+      if (response.ok) {
+        setActionMessage("Marca eliminada exitosamente");
+        setShowDeleteModal(false);
+        navigate('/Search');
+      } else {
+        const errorData = await response.json();
+        setActionMessage(errorData.message || "Error al eliminar la marca");
+      }
+    } catch (err) {
+      setActionMessage("Error de conexión");
+    } finally {
+      setLoadingAction(false);
+    }
+  };
+
   return (
     <div>
       <TopBar text='Detalles de la Marca' menu={true} />
@@ -150,6 +207,11 @@ const MarcaDetalle: React.FC = () => {
         </button>
       )}
       <div className={styles.container}>
+        {/* Botones de acción */}
+        <div className={styles.actionButtons}>
+          <button className={styles.editButton} onClick={handleEdit}>✏️ Editar Marca</button>
+          <button className={styles.deleteButton} onClick={handleDelete}>🗑️ Eliminar Marca</button>
+        </div>
         {/* Cabecera con información detallada */}
         <div className={styles.detailCard}>
           <div className={styles.clientHeader}>
@@ -228,6 +290,38 @@ const MarcaDetalle: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* Modal de Edición */}
+      {showEditModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3>Editar Marca</h3>
+            <div className={styles.formGroup}>
+              <label>Nombre:</label>
+              <input type="text" value={editingData.nombre} onChange={e => setEditingData({ ...editingData, nombre: e.target.value })} className={styles.modalInput} />
+            </div>
+            {actionMessage && <div className={styles.message}>{actionMessage}</div>}
+            <div className={styles.modalButtons}>
+              <button onClick={handleUpdateMarca} disabled={loadingAction} className={styles.confirmButton}>{loadingAction ? "Actualizando..." : "Actualizar"}</button>
+              <button onClick={() => setShowEditModal(false)} className={styles.cancelButton}>Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Modal de Eliminación */}
+      {showDeleteModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h3>Confirmar Eliminación</h3>
+            <p>¿Está seguro que desea eliminar la marca {marcaData?.nombre_marca}?</p>
+            <p>Esta acción no se puede deshacer.</p>
+            {actionMessage && <div className={styles.message}>{actionMessage}</div>}
+            <div className={styles.modalButtons}>
+              <button onClick={handleDeleteMarca} disabled={loadingAction} className={styles.deleteConfirmButton}>{loadingAction ? "Eliminando..." : "Eliminar"}</button>
+              <button onClick={() => setShowDeleteModal(false)} className={styles.cancelButton}>Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
