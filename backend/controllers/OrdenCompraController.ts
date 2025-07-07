@@ -1,11 +1,18 @@
-import { Request,Response } from "express";
+import { Request, Response } from "express";
 import { buysOrderModel } from "../models/OrdenCompra";
+
+interface ProductOrder {
+    id_producto: number;
+    cant_producto: number;
+    precio: number;
+}
 
 interface BuysOrder {
     id_orden: number;
     RIF_establecimiento: string;
     fecha_orden: string;
     total: number;
+    productos: ProductOrder[];
 }
 
 export class OrdenCompraController {
@@ -59,14 +66,23 @@ export class OrdenCompraController {
     }
 
     newOrdenCompra = async (req: Request, res: Response<{ message: string }>): Promise<void> => {
-        
-        const {fecha_compra,RIF_Est,RIF_proveedor,id_producto,cant_producto,precio} = req.body;
+        const { fecha_compra, RIF_Est, RIF_proveedor, productos } = req.body;
+
+        if (!fecha_compra || !RIF_Est || !RIF_proveedor || !productos || !Array.isArray(productos) || productos.length === 0) {
+            res.status(400).json({ message: "Datos incompletos para crear una nueva orden de compra" });
+            return;
+        }
 
         try {
-            const ordenCompraData = await buysOrderModel.create(fecha_compra,RIF_Est,RIF_proveedor,id_producto,cant_producto,precio);
+            const result = await buysOrderModel.create(
+                new Date(fecha_compra),
+                RIF_Est,
+                RIF_proveedor,
+                productos
+            );
 
-            if (ordenCompraData['rowsAffected'] === 0) {
-                res.status(400).json({ message: "Datos incompletos para crear una nueva orden de compra" });
+            if (!result.success) {
+                res.status(400).json({ message: "Error al crear la orden de compra" });
                 return;
             }
 

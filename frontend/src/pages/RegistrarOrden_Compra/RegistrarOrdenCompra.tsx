@@ -10,6 +10,7 @@ const BASE_URL = "http://localhost:1234";
 interface ProductoSeleccionado {
     id: string;
     cantidad: number;
+    precio?: number;
 }
 
 const RegistrarOrdenCompra: React.FC = () => {
@@ -18,6 +19,8 @@ const RegistrarOrdenCompra: React.FC = () => {
     const [producto, setProducto] = useState("");
     const [productosSeleccionados, setProductosSeleccionados] = useState<ProductoSeleccionado[]>([]);
     const [cantidadTemp, setCantidadTemp] = useState<number>(1);
+    const [submitting, setSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState("");
     
     // Obtener la fecha actual en formato YYYY-MM-DD
     const fechaActual = new Date().toISOString().split('T')[0];
@@ -52,9 +55,11 @@ const RegistrarOrdenCompra: React.FC = () => {
 
     const agregarProducto = () => {
         if (producto && !productosSeleccionados.some(p => p.id === producto)) {
+            const productoInfo = productos.find(p => String(p.id) === String(producto) || String(p.codigo) === String(producto));
             setProductosSeleccionados(prev => [...prev, { 
                 id: producto, 
-                cantidad: cantidadTemp 
+                cantidad: cantidadTemp,
+                precio: productoInfo?.precio || 0
             }]);
             setProducto(""); // Limpiar el select después de agregar
             setCantidadTemp(1); // Resetear la cantidad temporal
@@ -65,6 +70,54 @@ const RegistrarOrdenCompra: React.FC = () => {
         setProductosSeleccionados(prev =>
             prev.map(p => p.id === id ? { ...p, cantidad: nuevaCantidad } : p)
         );
+    };
+
+    const handleSubmit = async () => {
+        if (!proveedor || !establecimiento || productosSeleccionados.length === 0) {
+            setSubmitError("Por favor complete todos los campos requeridos");
+            return;
+        }
+
+        setSubmitting(true);
+        setSubmitError("");
+
+        try {
+            const response = await fetch(`${BASE_URL}/buys-order/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    fecha_compra: fechaActual,
+                    RIF_Est: establecimiento,
+                    RIF_proveedor: proveedor,
+                    productos: productosSeleccionados.map(p => ({
+                        id_producto: parseInt(p.id),
+                        cant_producto: p.cantidad,
+                        precio: p.precio
+                    }))
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Error al crear la orden de compra');
+            }
+
+            // Limpiar el formulario después de un envío exitoso
+            setProveedor("");
+            setEstablecimiento("");
+            setProductosSeleccionados([]);
+            setSubmitError("");
+            
+            // Opcional: Mostrar mensaje de éxito o redirigir
+            alert("Orden de compra creada exitosamente");
+
+        } catch (error) {
+            setSubmitError(error instanceof Error ? error.message : "Error al crear la orden de compra");
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     // Utilidades para mostrar el nombre en base al id seleccionado
@@ -86,92 +139,99 @@ const RegistrarOrdenCompra: React.FC = () => {
             <TopBar text="Registrar Orden de Compra" menu={true}></TopBar>
             <div className={styles.container}>
                 <div className={styles.detailCard}>
-                    {loading && <div>Cargando datos...</div>}
-                    {error && <div style={{color: 'red'}}>{error}</div>}
-                    {!loading && !error && <>
-                    <div className={styles.formRow}>
-                        <div className={styles.fieldGroup}>
-                            <span className={styles.label}>Proveedor:</span>
-                            <select className={styles.select} value={proveedor} onChange={e => setProveedor(e.target.value)}>
+                {loading && <div>Cargando datos...</div>}
+                {error && <div style={{color: 'red'}}>{error}</div>}
+                {submitError && <div style={{color: 'red', marginBottom: '1rem'}}>{submitError}</div>}
+                {!loading && !error && <>
+                <div className={styles.formRow}>
+                    <div className={styles.fieldGroup}>
+                        <span className={styles.label}>Proveedor:</span>
+                        <select className={styles.select} value={proveedor} onChange={e => setProveedor(e.target.value)}>
+                            <option value="">Seleccione</option>
+                            {proveedores.map((p: any) => (
+                                <option key={p.id || p.RIF} value={p.id || p.RIF}>{p.nombre || p.razon_social || p.RIF}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className={styles.fieldGroup}>
+                        <span className={styles.label}>Establecimiento:</span>
+                        <select className={styles.select} value={establecimiento} onChange={e => setEstablecimiento(e.target.value)}>
+                            <option value="">Seleccione</option>
+                            {establecimientos.map((e: any) => (
+                                <option key={e.id || e.RIF} value={e.id || e.RIF}>{e.nombre || e.razon_social || e.RIF}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+                <div className={styles.formRow}>
+                    <div className={styles.fieldGroup}>
+                        <span className={styles.label}>Agregar Productos:</span>
+                        <div className={styles.productInputGroup}>
+                            <select className={styles.select} value={producto} onChange={e => setProducto(e.target.value)}>
                                 <option value="">Seleccione</option>
-                                {proveedores.map((p: any) => (
-                                    <option key={p.id || p.RIF} value={p.id || p.RIF}>{p.nombre || p.razon_social || p.RIF}</option>
+                                {productos.map((p: any) => (
+                                    <option key={p.id || p.codigo} value={p.id || p.codigo}>{p.nombre || p.descripcion || p.codigo}</option>
                                 ))}
                             </select>
-                        </div>
-                        <div className={styles.fieldGroup}>
-                            <span className={styles.label}>Establecimiento:</span>
-                            <select className={styles.select} value={establecimiento} onChange={e => setEstablecimiento(e.target.value)}>
-                                <option value="">Seleccione</option>
-                                {establecimientos.map((e: any) => (
-                                    <option key={e.id || e.RIF} value={e.id || e.RIF}>{e.nombre || e.razon_social || e.RIF}</option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
-                    <div className={styles.formRow}>
-                        <div className={styles.fieldGroup}>
-                            <span className={styles.label}>Agregar Productos:</span>
-                            <div className={styles.productInputGroup}>
-                                <select className={styles.select} value={producto} onChange={e => setProducto(e.target.value)}>
-                                    <option value="">Seleccione</option>
-                                    {productos.map((p: any) => (
-                                        <option key={p.id || p.codigo} value={p.id || p.codigo}>{p.nombre || p.descripcion || p.codigo}</option>
-                                    ))}
-                                </select>
-                                <input
-                                    type="number"
-                                    min="1"
-                                    value={cantidadTemp}
-                                    onChange={(e) => setCantidadTemp(Math.max(1, parseInt(e.target.value) || 1))}
-                                    className={styles.cantidadInput}
-                                />
-                                <button 
-                                    className={styles.addButton} 
-                                    onClick={agregarProducto}
-                                    disabled={!producto}
-                                >
-                                    +
-                                </button>
-                            </div>
+                            <input
+                                type="number"
+                                min="1"
+                                value={cantidadTemp}
+                                onChange={(e) => setCantidadTemp(Math.max(1, parseInt(e.target.value) || 1))}
+                                className={styles.cantidadInput}
+                            />
+                            <button 
+                                className={styles.addButton} 
+                                onClick={agregarProducto}
+                                disabled={!producto}
+                            >
+                                +
+                            </button>
                         </div>
                     </div>
+                </div>
 
-                    {/* Sección de productos seleccionados en forma de stack */}
-                    {productosSeleccionados.length > 0 && (
-                        <div className={styles.productosStack}>
-                            <span className={styles.label}>Productos Seleccionados:</span>
-                            <div className={styles.stackContainer}>
-                                {productosSeleccionados.map((prod) => (
-                                    <div key={prod.id} className={styles.stackItem}>
-                                        <div className={styles.stackContent}>
-                                            <span className={styles.productName}>{getProductoNombre(prod.id)}</span>
-                                            <div className={styles.cantidadContainer}>
-                                                <input
-                                                    type="number"
-                                                    min="1"
-                                                    value={prod.cantidad}
-                                                    onChange={(e) => actualizarCantidad(prod.id, Math.max(1, parseInt(e.target.value) || 1))}
-                                                    className={styles.cantidadInput}
-                                                />
-                                                <button 
-                                                    className={styles.removeButton}
-                                                    onClick={() => handleRemoveProduct(prod.id)}
-                                                >
-                                                    ×
-                                                </button>
-                                            </div>
+                {/* Sección de productos seleccionados en forma de stack */}
+                {productosSeleccionados.length > 0 && (
+                    <div className={styles.productosStack}>
+                        <span className={styles.label}>Productos Seleccionados:</span>
+                        <div className={styles.stackContainer}>
+                            {productosSeleccionados.map((prod) => (
+                                <div key={prod.id} className={styles.stackItem}>
+                                    <div className={styles.stackContent}>
+                                        <span className={styles.productName}>{getProductoNombre(prod.id)}</span>
+                                        <div className={styles.cantidadContainer}>
+                                            <input
+                                                type="number"
+                                                min="1"
+                                                value={prod.cantidad}
+                                                onChange={(e) => actualizarCantidad(prod.id, Math.max(1, parseInt(e.target.value) || 1))}
+                                                className={styles.cantidadInput}
+                                            />
+                                            <button 
+                                                className={styles.removeButton}
+                                                onClick={() => handleRemoveProduct(prod.id)}
+                                            >
+                                                ×
+                                            </button>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
                         </div>
-                    )}
-
-                    <div className={styles.centrado}>
-                        <Button texto="Registrar Orden" viewHeight={7} fuente={3} />
                     </div>
-                    </>}
+                )}
+
+                <div className={styles.centrado}>
+                    <Button 
+                        texto={submitting ? "Registrando..." : "Registrar Orden"} 
+                        viewHeight={7} 
+                        fuente={3}
+                        onClick={handleSubmit}
+                        disabled={submitting || productosSeleccionados.length === 0}
+                    />
+                </div>
+                </>}
                 </div>
             </div>
         </div>
