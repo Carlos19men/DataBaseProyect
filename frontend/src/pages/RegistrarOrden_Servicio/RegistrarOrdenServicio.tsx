@@ -194,6 +194,11 @@ const RegistrarOrdenServicio = () => {
 
   // Función para agregar actividad seleccionada
   const agregarActividad = async () => {
+    console.log("➕ AGREGANDO ACTIVIDAD:");
+    console.log("Actividad seleccionada:", actividadSeleccionada);
+    console.log("Servicio seleccionado:", servicioSeleccionado);
+    console.log("Actividades disponibles:", actividades);
+    
     if (
       actividadSeleccionada &&
       !actividadesSeleccionadas.find(
@@ -205,20 +210,28 @@ const RegistrarOrdenServicio = () => {
       const actividad = actividades.find(
         (a) => a.nro_correlativo === Number(actividadSeleccionada)
       );
+      console.log("Actividad encontrada:", actividad);
+      
       if (actividad) {
         // Buscar en /activity-product/ todas las relaciones
         try {
+          console.log("🔍 Buscando relaciones producto-actividad...");
           const response = await fetch("http://localhost:1234/activity-product/");
           if (response.ok) {
             const relaciones = await response.json();
+            console.log("Relaciones encontradas:", relaciones);
+            
             // Buscar la relación para esta actividad
             const relacion = relaciones.find(
               (rel: any) =>
                 rel.nro_servicio === actividad.nro_servicio &&
                 rel.nro_correlativo === actividad.nro_correlativo
             );
+            console.log("Relación encontrada para la actividad:", relacion);
+            
             if (relacion) {
               // Buscar el precio del producto
+              console.log("🔍 Buscando precio del producto...");
               const responseProd = await fetch(
                 `http://localhost:1234/product`
               );
@@ -230,42 +243,60 @@ const RegistrarOrdenServicio = () => {
                 );
                 if (producto) {
                   precio_producto = producto.precio;
+                  console.log("Producto encontrado:", producto);
+                  console.log("Precio del producto:", precio_producto);
                 }
               }
+              
+              // Crear la actividad completa
+              const actividadCompleta = {
+                ...actividad,
+                nro_servicio: Number(actividad.nro_servicio),
+                nro_correlativo: Number(actividad.nro_correlativo),
+                id_producto: Number(relacion.id_producto),
+                cantidad_producto: Number(relacion.cant_utilizada),
+                precio_producto: Number(precio_producto),
+                ci_empleAsig: "12345678", // Placeholder
+              };
+              
+              console.log("✅ ACTIVIDAD COMPLETA CREADA:", actividadCompleta);
+              
               // Guardar la actividad con los datos completos y los IDs numéricos
               setActividadesSeleccionadas([
                 ...actividadesSeleccionadas,
-                {
-                  ...actividad,
-                  nro_servicio: Number(actividad.nro_servicio),
-                  nro_correlativo: Number(actividad.nro_correlativo),
-                  id_producto: Number(relacion.id_producto),
-                  cantidad_producto: Number(relacion.cant_utilizada),
-                  precio_producto: Number(precio_producto),
-                  ci_empleAsig: "12345678", // Placeholder
-                },
+                actividadCompleta,
               ]);
+              
               // --- AGREGAR SERVICIO AUTOMÁTICAMENTE SI NO ESTÁ ---
               if (!serviciosSeleccionados.find(s => s.nro_servicio === actividad.nro_servicio)) {
                 const servicio = servicios.find(s => s.nro_servicio === actividad.nro_servicio);
                 if (servicio) {
+                  console.log("➕ Agregando servicio automáticamente:", servicio);
                   setServiciosSeleccionados([...serviciosSeleccionados, servicio]);
                 }
               }
               // ---------------------------------------------------
               setActividadSeleccionada("");
+              console.log("✅ ACTIVIDAD AGREGADA EXITOSAMENTE");
             } else {
+              console.log("❌ ERROR: No se encontró relación producto-actividad");
               alert(
                 "No se encontró relación producto-actividad para esta actividad."
               );
             }
           } else {
+            console.log("❌ ERROR: Error al buscar relaciones producto-actividad");
             alert("Error al buscar relaciones producto-actividad");
           }
         } catch (error) {
+          console.log("💥 ERROR: Error al buscar datos de producto:", error);
           alert("Error al buscar datos de producto para la actividad");
         }
+      } else {
+        console.log("❌ ERROR: No se encontró la actividad seleccionada");
       }
+    } else {
+      console.log("❌ ERROR: Actividad ya existe o no se seleccionó");
     }
   };
 
@@ -325,53 +356,77 @@ const RegistrarOrdenServicio = () => {
 
   // Función para crear actividades para el backend
   const crearActividadesBackend = (): ServiceActivity[] => {
-    return actividadesSeleccionadas.map((actividad: any) => ({
-      nro_servicio: actividad.nro_servicio,
-      nro_correlativo: actividad.nro_correlativo,
-      id_producto: actividad.id_producto,
-      precio_producto: actividad.precio_producto,
-      precio_actividad: actividad.costo,
-      cantidad_producto: actividad.cantidad_producto,
-      ci_empleAsig: actividad.ci_empleAsig,
-    }));
+    console.log("🔧 CREANDO ACTIVIDADES PARA BACKEND:");
+    console.log("Actividades seleccionadas:", actividadesSeleccionadas);
+    
+    const actividadesBackend = actividadesSeleccionadas.map((actividad: any) => {
+      const actividadBackend = {
+        nro_servicio: actividad.nro_servicio,
+        nro_correlativo: actividad.nro_correlativo,
+        id_producto: actividad.id_producto,
+        precio_producto: actividad.precio_producto,
+        precio_actividad: actividad.costo,
+        cantidad_producto: actividad.cantidad_producto,
+        ci_empleAsig: actividad.ci_empleAsig,
+      };
+      
+      console.log("Actividad original:", actividad);
+      console.log("Actividad para backend:", actividadBackend);
+      
+      return actividadBackend;
+    });
+    
+    console.log("📦 ACTIVIDADES FINALES PARA BACKEND:", actividadesBackend);
+    return actividadesBackend;
   };
 
   // Función para enviar la orden de servicio
   const enviarOrdenServicio = async () => {
+    console.log("=== INICIANDO ENVÍO DE ORDEN DE SERVICIO ===");
+    
     // Validaciones
     if (!establecimientoSeleccionado) {
+      console.log("❌ ERROR: No se seleccionó establecimiento");
       alert("Debe seleccionar un establecimiento");
       return;
     }
 
     if (actividadesSeleccionadas.length === 0) {
+      console.log("❌ ERROR: No se seleccionaron actividades");
       alert("Debe seleccionar al menos una actividad");
       return;
     }
 
     if (!placaVehiculo.trim()) {
+      console.log("❌ ERROR: No se ingresó placa del vehículo");
       alert("Debe ingresar la placa del vehículo");
       return;
     }
 
     if (!validarFecha(fechaEntradaDD, fechaEntradaMM, fechaEntradaAA)) {
+      console.log("❌ ERROR: Fecha de entrada inválida");
       alert("Fecha de entrada inválida");
       return;
     }
 
     if (!validarHora(horaEntradaHH, horaEntradaMM)) {
+      console.log("❌ ERROR: Hora de entrada inválida");
       alert("Hora de entrada inválida");
       return;
     }
 
     if (!validarHora(horaEstimadaSalidaHH, horaEstimadaSalidaMM)) {
+      console.log("❌ ERROR: Hora estimada de salida inválida");
       alert("Hora estimada de salida inválida");
       return;
     }
 
+    console.log("✅ Validaciones pasadas correctamente");
+
     setEnviandoOrden(true);
 
     try {
+      // Crear el objeto de datos para enviar
       const ordenData = {
         codigo_vehiculo: parseInt(placaVehiculo) || 1, // Por ahora usamos 1 como valor por defecto
         fecha_entrada: formatearFecha(fechaEntradaDD, fechaEntradaMM, fechaEntradaAA),
@@ -382,6 +437,23 @@ const RegistrarOrdenServicio = () => {
         id_rif: establecimientoSeleccionado
       };
 
+      console.log("📋 DATOS A ENVIAR:");
+      console.log("Establecimiento seleccionado:", establecimientoSeleccionado);
+      console.log("Placa del vehículo:", placaVehiculo);
+      console.log("Fecha entrada DD/MM/AA:", `${fechaEntradaDD}/${fechaEntradaMM}/${fechaEntradaAA}`);
+      console.log("Fecha entrada formateada:", formatearFecha(fechaEntradaDD, fechaEntradaMM, fechaEntradaAA));
+      console.log("Hora entrada HH:MM:", `${horaEntradaHH}:${horaEntradaMM}`);
+      console.log("Hora entrada formateada:", formatearHora(horaEntradaHH, horaEntradaMM));
+      console.log("Hora estimada salida HH:MM:", `${horaEstimadaSalidaHH}:${horaEstimadaSalidaMM}`);
+      console.log("Hora estimada salida formateada:", formatearHora(horaEstimadaSalidaHH, horaEstimadaSalidaMM));
+      console.log("Persona autorizada:", personaAutorizada);
+      console.log("Actividades seleccionadas:", actividadesSeleccionadas);
+      console.log("Actividades para backend:", crearActividadesBackend());
+      console.log("Objeto completo a enviar:", ordenData);
+      console.log("JSON.stringify del objeto:", JSON.stringify(ordenData, null, 2));
+
+      console.log("🚀 ENVIANDO PETICIÓN POST A: http://localhost:1234/service-order");
+      
       const response = await fetch('http://localhost:1234/service-order', {
         method: 'POST',
         headers: {
@@ -390,8 +462,15 @@ const RegistrarOrdenServicio = () => {
         body: JSON.stringify(ordenData)
       });
 
+      console.log("📡 RESPUESTA DEL SERVIDOR:");
+      console.log("Status:", response.status);
+      console.log("Status Text:", response.statusText);
+      console.log("Headers:", response.headers);
+
       if (response.ok) {
         const result = await response.json();
+        console.log("✅ ORDEN CREADA EXITOSAMENTE");
+        console.log("Respuesta del servidor:", result);
         alert("Orden de servicio creada exitosamente");
         
         // Limpiar formulario
@@ -410,13 +489,17 @@ const RegistrarOrdenServicio = () => {
         setPersonaAutorizada("");
       } else {
         const errorData = await response.json();
+        console.log("❌ ERROR EN LA RESPUESTA:");
+        console.log("Error data:", errorData);
         alert(`Error al crear la orden: ${errorData.message || 'Error desconocido'}`);
       }
     } catch (error) {
+      console.log("💥 ERROR DE CONEXIÓN:");
       console.error('Error al enviar la orden:', error);
       alert('Error al enviar la orden de servicio');
     } finally {
       setEnviandoOrden(false);
+      console.log("=== FINALIZADO ENVÍO DE ORDEN DE SERVICIO ===");
     }
   };
 

@@ -127,10 +127,27 @@ export class OrdenesServicioController {
         try {
             const orderData: CompleteServiceOrder = req.body;
 
-            //parseamos las fecha 
+            // Validar que la fecha exista y sea string
+            if (!orderData.fecha_entrada || typeof orderData.fecha_entrada !== 'string') {
+                res.status(400).json({ message: 'La fecha de entrada es requerida y debe ser un string con formato YYYY-MM-DD.' });
+                return;
+            }
+
+            // Validar formato de fecha YYYY-MM-DD
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(orderData.fecha_entrada)) {
+                res.status(400).json({ message: 'La fecha de entrada debe tener formato YYYY-MM-DD.' });
+                return;
+            }
+
+            // Convertir a Date
             orderData.fecha_entrada = new Date(orderData.fecha_entrada);
 
-            console.log(orderData); 
+            if (isNaN(orderData.fecha_entrada.getTime())) {
+                res.status(400).json({ message: 'La fecha de entrada no es válida.' });
+                return;
+            }
+
+            console.log("📋 orderData completo después de procesar:", orderData); 
 
             // Validaciones básicas
             if (!orderData.codigo_vehiculo || orderData.codigo_vehiculo <= 0) {

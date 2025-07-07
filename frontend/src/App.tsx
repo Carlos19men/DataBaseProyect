@@ -23,6 +23,8 @@ import RegistrarEstablecimiento from "./pages/Registrar Establecimiento/Registra
 import RegistrarEmpleado from "./pages/RegistrarEmpleado/RegistrarEmpleado";
 import RegistrarCliente from "./pages/RegistrarCliente/RegistrarCliente";
 import OrdenServicio from "./pages/OrdenServicio/OrdenServicio";
+import Inventario from "./pages/Inventario/Inventario";
+import RegistrarInventario from "./pages/RegistrarInventario/RegistrarInventario";
 
 
 // Importar páginas de detalle
@@ -46,6 +48,8 @@ const App = () => (
       <Route path="/HomePage" element={<ProtectedRoute><HomePage/></ProtectedRoute>}></Route>
       <Route path="/API" element={<ProtectedRoute><PseudoAPI/></ProtectedRoute>}></Route>
       <Route path="/Search" element={<ProtectedRoute><Busqueda/></ProtectedRoute>}></Route>                                                                      
+      <Route path="/Inventario" element={<ProtectedRoute><Inventario/></ProtectedRoute>}></Route>
+      <Route path="/RegistrarInventario" element={<ProtectedRoute><RegistrarInventario/></ProtectedRoute>}></Route>
       <Route path="/Stats" element={<ProtectedRoute><Estadisticas/></ProtectedRoute>}></Route>
       <Route path="/Factura" element={<ProtectedRoute><VisualizarFactura cod_OS={4}/></ProtectedRoute>}></Route>
       <Route path="/factura/:nro_factura" element={<ProtectedRoute><VisualizarFactura/></ProtectedRoute>}></Route>

@@ -12,7 +12,7 @@ DROP TABLE InventarioAuditable;
 
 -- Crear trigger que verifica la cantidad en stock
 CREATE TRIGGER StockBajo
-ON Inventario
+ON Inventario																																																																				
 AFTER UPDATE
 AS
 BEGIN

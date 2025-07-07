@@ -184,10 +184,16 @@ const OrdenServicioDetalle: React.FC = () => {
                 <div className={styles.infoRow}><span className={styles.label}>Fecha Entrada:</span> <span className={styles.value}>{ordenData.fecha_entrada ? new Date(ordenData.fecha_entrada).toLocaleDateString('es-VE') : 'No disponible'}</span></div>
                 <div className={styles.infoRow}><span className={styles.label}>Hora Entrada:</span> <span className={styles.value}>{ordenData.hora_entrada ? new Date(ordenData.hora_entrada).toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' }) : 'No disponible'}</span></div>
                 <div className={styles.infoRow}><span className={styles.label}>Hora Estimada Salida:</span> <span className={styles.value}>{ordenData.hora_estimada_salida ? new Date(ordenData.hora_estimada_salida).toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' }) : 'No disponible'}</span></div>
-                <div className={styles.infoRow}><span className={styles.label}>Hora Real Salida:</span> <span className={styles.value}>{ordenData.hora_real_salida ? new Date(ordenData.hora_real_salida).toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' }) : 'No disponible'}</span></div>
-                <div className={styles.infoRow}><span className={styles.label}>Fecha Salida:</span> <span className={styles.value}>{ordenData.fecha_salida ? new Date(ordenData.fecha_salida).toLocaleDateString('es-VE') : 'No disponible'}</span></div>
+                {ordenData.hora_real_salida && (
+                  <div className={styles.infoRow}><span className={styles.label}>Hora Real Salida:</span> <span className={styles.value}>{new Date(ordenData.hora_real_salida).toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit' })}</span></div>
+                )}
+                {ordenData.fecha_salida && (
+                  <div className={styles.infoRow}><span className={styles.label}>Fecha Salida:</span> <span className={styles.value}>{new Date(ordenData.fecha_salida).toLocaleDateString('es-VE')}</span></div>
+                )}
                 <div className={styles.infoRow}><span className={styles.label}>Persona Autorizada:</span> <span className={styles.value}>{ordenData.persona_autorizada || 'No disponible'}</span></div>
-                <div className={styles.infoRow}><span className={styles.label}>Justificación:</span> <span className={styles.value}>{ordenData.justificacion || 'No disponible'}</span></div>
+                {ordenData.justificacion && (
+                  <div className={styles.infoRow}><span className={styles.label}>Justificación:</span> <span className={styles.value}>{ordenData.justificacion}</span></div>
+                )}
               </div>
             </div>
           </div>
