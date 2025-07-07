@@ -1,7 +1,6 @@
 import {Router} from 'express'
 import { employeeModel } from '../models/Empleados'
 import { EmployeeController } from '../controllers/EmpleadosController'
-import { authorize } from '../middelware/auth';
 
 export const createEmployeeRouter = () => {
     const EmployeeRouter = Router();
@@ -9,7 +8,7 @@ export const createEmployeeRouter = () => {
     const employeeController = new EmployeeController(employeeModel);
 
     // Rutas.
-    EmployeeRouter.get('/', authorize(['Administrador']), employeeController.getAll);
+    EmployeeRouter.get('/', employeeController.getAll);
 
     EmployeeRouter.get('/:CI', employeeController.getbyCI)
 

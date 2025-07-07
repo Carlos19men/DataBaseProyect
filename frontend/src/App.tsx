@@ -16,7 +16,7 @@ import RegistrarActividad from "./pages/RegistrarActividad/RegistrarActividad";
 import RegistrarServicio from "./pages/RegistrarServicio/RegistrarServicio";
 import RegistrarFamilia from "./pages/RegistrarFamilia/RegistrarFamilia";
 import RegistrarMarca from "./pages/RegistrarMarca/RegistrarMarca";
-import ProtectedRoute from "./components/RutaProtegida/ProtectedRoute";
+// import ProtectedRoute from "./components/RutaProtegida/ProtectedRoute";  // Temporarily commented out
 import RegistrarOrdenServicio from "./pages/RegistrarOrden_Servicio/RegistrarOrdenServicio";
 import RegistrarProducto from "./pages/RegistrarProducto/RegistrarProducto";
 import RegistrarEstablecimiento from "./pages/Registrar Establecimiento/RegistrarEstablecimiento";
@@ -27,8 +27,6 @@ import Inventario from "./pages/Inventario/Inventario";
 import RegistrarInventario from "./pages/RegistrarInventario/RegistrarInventario";
 import SobreNosotros from "./pages/SobreNosotros/SobreNosotros";
 import { UserProvider } from './components/UserContext';
-import Unauthorized from './pages/Login/Unauthorized';
-
 
 // Importar páginas de detalle
 import EmpleadoDetalle from "./pages/Detalle/EmpleadoDetalle";
@@ -49,40 +47,39 @@ function App() {
           <Route path="/" element={<Landing/>}></Route>
           <Route path="/Registro" element={<Registro/>}></Route>
           <Route path="/Login" element={<Login/>}></Route>
-          <Route path="/HomePage" element={<ProtectedRoute><HomePage/></ProtectedRoute>}></Route>
-          <Route path="/API" element={<ProtectedRoute><PseudoAPI/></ProtectedRoute>}></Route>
-          <Route path="/Search" element={<ProtectedRoute><Busqueda/></ProtectedRoute>}></Route>                                                                      
-          <Route path="/Inventario" element={<ProtectedRoute><Inventario/></ProtectedRoute>}></Route>
-          <Route path="/RegistrarInventario" element={<ProtectedRoute><RegistrarInventario/></ProtectedRoute>}></Route>
-          {/*<Route path="/Stats" element={<ProtectedRoute roles={['Administrador']}><Estadisticas/></ProtectedRoute>}></Route>*/}
-          <Route path="/Factura" element={<ProtectedRoute><VisualizarFactura cod_OS={4}/></ProtectedRoute>}></Route>
-          <Route path="/factura/:nro_factura" element={<ProtectedRoute><VisualizarFactura/></ProtectedRoute>}></Route>
-          <Route path="/RegistrarModelo" element={<ProtectedRoute><RegistrarModelo/></ProtectedRoute>}></Route>
-          <Route path="/RegistrarVehiculo" element={<ProtectedRoute><RegistrarVehiculo/></ProtectedRoute>}></Route>
-          <Route path="/RegistrarProveedor" element={<ProtectedRoute><RegistrarProveedor/></ProtectedRoute>}></Route>
-          <Route path="/RegistrarOrdenCompra" element={<ProtectedRoute><RegistrarOrdenCompra/></ProtectedRoute>}></Route>
-          <Route path="/RegistrarPlan" element={<ProtectedRoute><RegistrarPlan/></ProtectedRoute>}></Route>
-          <Route path="/RegistrarActividad" element={<ProtectedRoute><RegistrarActividad/></ProtectedRoute>}></Route>
-          <Route path="/RegistrarServicio" element={<ProtectedRoute><RegistrarServicio/></ProtectedRoute>}></Route>
-          <Route path="/RegistrarFamilia" element={<ProtectedRoute><RegistrarFamilia/></ProtectedRoute>}></Route>
-          <Route path="/RegistrarMarca" element={<ProtectedRoute><RegistrarMarca/></ProtectedRoute>}></Route>
-          <Route path="/RegistrarOrdenServicio" element={<ProtectedRoute><RegistrarOrdenServicio/></ProtectedRoute>}></Route>
-          <Route path="/RegistrarProducto" element={<ProtectedRoute><RegistrarProducto/></ProtectedRoute>}></Route>
-          <Route path="/RegistrarEstablecimiento" element={<ProtectedRoute><RegistrarEstablecimiento/></ProtectedRoute>}></Route>
-          <Route path="/RegistrarEmpleado" element={<ProtectedRoute><RegistrarEmpleado/></ProtectedRoute>}></Route>
-          <Route path="/RegistrarCliente" element={<ProtectedRoute><RegistrarCliente/></ProtectedRoute>}></Route>
-          <Route path="/empleado-detalle" element={<ProtectedRoute><EmpleadoDetalle/></ProtectedRoute>}></Route>
-          <Route path="/establecimiento-detalle" element={<ProtectedRoute><EstablecimientoDetalle/></ProtectedRoute>}></Route>
-          <Route path="/cliente-detalle" element={<ProtectedRoute><ClienteDetalle/></ProtectedRoute>}></Route>
-          <Route path="/proveedor-detalle" element={<ProtectedRoute><ProveedorDetalle/></ProtectedRoute>}></Route>
-          <Route path="/producto-detalle" element={<ProtectedRoute><ProductoDetalle/></ProtectedRoute>}></Route>
-          <Route path="/vehiculo-detalle" element={<ProtectedRoute><VehiculoDetalle/></ProtectedRoute>}></Route>
-          <Route path="/marca-detalle" element={<ProtectedRoute><MarcaDetalle/></ProtectedRoute>}></Route>
-          <Route path="/modelo-detalle" element={<ProtectedRoute><ModeloDetalle/></ProtectedRoute>}></Route>
-          <Route path="/ordenes-servicio" element={<ProtectedRoute><OrdenServicio/></ProtectedRoute>}></Route>
-          <Route path="/ordenservicio-detalle/:cod_OS" element={<ProtectedRoute><OrdenServicioDetalle/></ProtectedRoute>}></Route>
+          <Route path="/HomePage" element={<HomePage/>}></Route>
+          <Route path="/API" element={<PseudoAPI/>}></Route>
+          <Route path="/Search" element={<Busqueda/>}></Route>                                                                      
+          <Route path="/Inventario" element={<Inventario/>}></Route>
+          <Route path="/RegistrarInventario" element={<RegistrarInventario/>}></Route>
+          <Route path="/Stats" element={<Estadisticas/>}></Route>
+          <Route path="/Factura" element={<VisualizarFactura cod_OS={4}/>}></Route>
+          <Route path="/factura/:nro_factura" element={<VisualizarFactura/>}></Route>
+          <Route path="/RegistrarModelo" element={<RegistrarModelo/>}></Route>
+          <Route path="/RegistrarVehiculo" element={<RegistrarVehiculo/>}></Route>
+          <Route path="/RegistrarProveedor" element={<RegistrarProveedor/>}></Route>
+          <Route path="/RegistrarOrdenCompra" element={<RegistrarOrdenCompra/>}></Route>
+          <Route path="/RegistrarPlan" element={<RegistrarPlan/>}></Route>
+          <Route path="/RegistrarActividad" element={<RegistrarActividad/>}></Route>
+          <Route path="/RegistrarServicio" element={<RegistrarServicio/>}></Route>
+          <Route path="/RegistrarFamilia" element={<RegistrarFamilia/>}></Route>
+          <Route path="/RegistrarMarca" element={<RegistrarMarca/>}></Route>
+          <Route path="/RegistrarOrdenServicio" element={<RegistrarOrdenServicio/>}></Route>
+          <Route path="/RegistrarProducto" element={<RegistrarProducto/>}></Route>
+          <Route path="/RegistrarEstablecimiento" element={<RegistrarEstablecimiento/>}></Route>
+          <Route path="/RegistrarEmpleado" element={<RegistrarEmpleado/>}></Route>
+          <Route path="/RegistrarCliente" element={<RegistrarCliente/>}></Route>
+          <Route path="/empleado-detalle" element={<EmpleadoDetalle/>}></Route>
+          <Route path="/establecimiento-detalle" element={<EstablecimientoDetalle/>}></Route>
+          <Route path="/cliente-detalle" element={<ClienteDetalle/>}></Route>
+          <Route path="/proveedor-detalle" element={<ProveedorDetalle/>}></Route>
+          <Route path="/producto-detalle" element={<ProductoDetalle/>}></Route>
+          <Route path="/vehiculo-detalle" element={<VehiculoDetalle/>}></Route>
+          <Route path="/marca-detalle" element={<MarcaDetalle/>}></Route>
+          <Route path="/modelo-detalle" element={<ModeloDetalle/>}></Route>
+          <Route path="/ordenes-servicio" element={<OrdenServicio/>}></Route>
+          <Route path="/ordenservicio-detalle/:cod_OS" element={<OrdenServicioDetalle/>}></Route>
           <Route path="/AboutUs" element={<SobreNosotros/>}></Route>
-          <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>             
       </Router>
     </UserProvider>
