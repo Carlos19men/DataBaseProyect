@@ -199,8 +199,9 @@ BEGIN
     FROM ActividadesOS
     WHERE cod_OS = @cod_OS;
 
-    IF @monto_total IS NULL OR @monto_total = 0
-        SET @monto_total = 50.00;
+    -- Si no hay actividades, el monto total debe ser 0
+    IF @monto_total IS NULL
+        SET @monto_total = 0.00;
 
     -- Aplicar descuento e IVA
     DECLARE @monto_con_descuento DECIMAL(10,2) = @monto_total - (@monto_total * @descuento);
@@ -224,4 +225,6 @@ BEGIN
         @monto_final AS monto_total,
         @fecha_emision AS fecha_emision;
 END;
+
+drop procedure CrearFacturaDesdeOrdenServicio;
 																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																

@@ -163,24 +163,6 @@ export class OrdenesServicioModel {
             request.input('hora_estimada_salida', sql.Time, null);
         }
         
-        if (orderData.hora_real_salida !== undefined) {
-            request.input('hora_real_salida', sql.Time, new Date(`2000-01-01T${orderData.hora_real_salida}:00`));
-        } else {
-            request.input('hora_real_salida', sql.Time, null);
-        }
-        
-        if (orderData.fecha_salida !== undefined) {
-            request.input('fecha_salida', sql.Date, orderData.fecha_salida);
-        } else {
-            request.input('fecha_salida', sql.Date, null);
-        }
-        
-        if (orderData.justificacion !== undefined) {
-            request.input('justificacion', sql.VarChar(255), orderData.justificacion);
-        } else {
-            request.input('justificacion', sql.VarChar(255), null);
-        }
-        
         if (orderData.persona_autoriza !== undefined) {
             request.input('persona_autorizada', sql.VarChar(50), orderData.persona_autoriza);
         } else {

@@ -265,16 +265,6 @@ export class OrdenesServicioController {
                 orderData.fecha_entrada = fecha;
             }
 
-            // Validar fecha de salida si se proporciona
-            if (orderData.fecha_salida) {
-                const fecha = new Date(orderData.fecha_salida);
-                if (isNaN(fecha.getTime())) {
-                    res.status(400).json({ message: 'Valid exit date is required.' });
-                    return;
-                }
-                orderData.fecha_salida = fecha;
-            }
-
             // Validar horas si se proporcionan
             if (orderData.hora_entrada && !isValidTime(orderData.hora_entrada)) {
                 res.status(400).json({ message: 'Valid entry time is required.' });
@@ -283,11 +273,6 @@ export class OrdenesServicioController {
 
             if (orderData.hora_estimada_salida && !isValidTime(orderData.hora_estimada_salida)) {
                 res.status(400).json({ message: 'Valid estimated exit time is required.' });
-                return;
-            }
-
-            if (orderData.hora_real_salida && !isValidTime(orderData.hora_real_salida)) {
-                res.status(400).json({ message: 'Valid real exit time is required.' });
                 return;
             }
 
